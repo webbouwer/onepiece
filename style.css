@@ -1,0 +1,372 @@
+
+/*
+Theme Name: onepiece
+Theme URI: http://www.webdesigndenhaag.net/onepiece
+Description: WP Theme for development & custom design now hosted on github
+Version: 0.6.4.3
+Details URI: http://webdesigndenhaag.net/onepiece/wordpress-theme/onepiece-news/theme-updates/feed/
+Author: Oddsized
+Author URI: http://www.webdesigndenhaag.net
+License: GPL 3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: onepiece
+Tags: theme-options, translation-ready, one-column, two-columns, three-columns, left-sidebar, right-sidebar, custom-menu, full-width-template, flexible-header, custom-header, featured-image-header, featured-images
+GitHub Theme URI: https://github.com/Oddsized/onepiece
+GitHub Branch: development
+*/
+
+/* sources:	https://wordpress.org/themes/getting-started/ 
+        https://make.wordpress.org/themes/handbook/review/required/theme-tags
+        now testing with 
+        https://github.com/afragen/github-updater
+        
+ developments
+ > finnish the childpage options inc. a menu on childpages
+ > redefine theme global, page and post options
+ > implement slider in widget / header / category view isotope popup
+ - tested an anythingslider implementation for popups(isotope item selected)
+   problems come with dynamic links and parent category selection
+   For a new test i'll use a single basic rich html output and handle the slider in  javascript as much as possible..
+ > Extend the onepiece widget 
+ - the widget should be multi purpose, easy to configure
+ - featured options to implement
+     execute custom php code
+     show media (slides/banner)
+     show content (single/list/pagenav)
+ > Create more standards for customized functions and variables
+ 
+*/
+/************************* THEME FONTS **************************/
+/* @font-face {
+font-family: 'FONT_NAME';
+src: url('FOLDER/FONT_NAME.eot'); 
+src: url('FOLDER/FONT_NAME.eot?#iefix') format('embedded-opentype');
+src: local('FONT_NAME'), url('FOLDER/FONT_NAME.ttf') format('truetype');
+} */
+/******************** THEME MINIMAL DEFAULT  ********************/
+*
+{
+margin:0;
+padding:0;
+}
+html, 
+body
+{
+position:relative;
+height:100%;
+width:100%;
+}
+a img
+{
+border:none;
+}
+img.attachment-thumbnail, img.attachment-tiny-thumb, img.attachment-big-thumb, img.attachment-post-thumbnail 
+{
+width:100%;
+height:auto;
+}
+.clr
+{
+clear:both;
+height:0;
+line-height:0;
+}
+
+#pagecontainer
+{
+position:relative;
+min-height:100%;
+width:100%;
+}
+#headercontainer
+{
+position:relative;
+width:100%;
+min-height:320px;
+max-height:100%;
+}
+
+/*************************** WP CORE ***************************/
+.wp-caption
+{
+}
+.wp-caption-text
+{
+}
+.sticky
+{
+}
+.screen-reader-text
+{
+}
+.gallery-caption
+{
+}
+.bypostauthor
+{
+}
+.alignright
+{
+}
+.alignleft
+{
+}
+.aligncenter
+{
+}
+
+
+/******************** HEADER MENUS FOOTER (SMALL)  ********************/
+#topbar
+{
+}
+#topmenubar
+{
+text-align:center;
+}
+#topmenubar .logobox
+{
+    width:100%;
+    max-width:100%;
+    margin:0 auto;
+}
+.logobox img
+{
+max-width:100%;
+}
+#topmenubar #topbar-navigation
+{
+}
+
+#topmenubar #topbar-navigation .menu li,
+#headercontainer #site-navigation ul li,
+#footercontainer #footer-navigation .menu li
+{
+    display:block;
+    list-style-type:none;
+}
+.menu li a
+{
+padding:2px 1px;
+}
+
+
+img.header-image
+{
+    width:100%;
+    max-width:100%;
+    height:auto;
+}
+
+
+/******************** CONTENT & SIDEBARS (SMALL)  ********************/
+#maincontent,
+#mainsidebar,
+#sidebar2,
+#pagesidebarcontainer
+{
+}
+
+.leftside .sidebarpadding
+{
+margin-right:0px;
+}
+.rightside .sidebarpadding
+{
+margin-left:0px;
+}
+
+#mainsidebar ul li,
+#sidebar2 ul li,
+#pagesidebar ul li,
+#specialpagewidgets ul li
+{
+list-style-type:none;
+}
+
+#maincontent .first-group-post .post-coverimage
+{
+max-height:140px;
+overflow:hidden;
+}
+
+#maincontent .type-post .contentpadding,
+#maincontent .type-page .contentpadding,
+#maincontent .category-titlebar,
+#mainsidebar .widgetpadding,
+#sidebar2 .widgetpadding,
+#specialpagewidgets .widgetpadding,
+#pagesidebar .widgetpadding
+{
+padding:4px 0px 6px 0;
+}
+.post-coverimage img,
+#maincontent .follow-post.has-post-thumbnail .post-title,
+#maincontent .follow-post.has-post-thumbnail .post-content,
+#maincontent .follow-post.has-post-thumbnail .post-content,
+#maincontent .follow-post .post-coverimage
+{   
+width:100%;
+height:auto;
+}
+
+
+
+
+
+/******************** GALLERY THEME (SMALL)  ********************/
+.item .coverbox img
+{
+width:100%;
+height:auto;
+}
+
+
+.item .hidden
+{
+display:none;
+}
+.item.active .hidden
+{
+display:block;
+}
+
+
+
+
+
+@media screen and (min-width: 512px) {
+  
+
+/******************** HEADER MENUS FOOTER (MEDIUM)  ********************/
+#topmenubar
+{
+text-align:left;
+}
+#topmenubar .logobox,
+#footercontainer .logobox
+{
+    width:30%;
+}
+#topmenubar #topbar-navigation
+{
+    width:auto;
+}
+
+#topmenubar #topbar-navigation .menu li,
+#headercontainer #site-navigation ul li,
+.menu-mainsitemenu-container ul li,
+#footercontainer #footer-navigation .menu li
+{
+    display:inline-block;
+}
+
+.menu li a
+{
+padding:4px 2px;
+}
+  
+
+
+#topmenubar.right .logobox,
+#footercontainer.menu-right .logobox
+{
+    float:left;
+}
+#topmenubar.right #topbar-navigation,
+#site-navigation.right ul,
+#footercontainer.menu-right #footer-navigation
+{
+    float:right;
+}
+#headercontainer #topmenubar.left .logobox,
+#footercontainer.menu-left .logobox
+{
+    float:right;
+}
+#topmenubar.left #topbar-navigation,
+#site-navigation.left ul,
+#footercontainer.menu-left #footer-navigation
+{
+    float:left;
+}
+#topmenubar.center,
+#site-navigation.center,
+#footercontainer.menu-center
+{
+    text-align:center;
+}
+
+#topmenubar.center .logobox,
+#topmenubar.center #topbar-navigation,
+#site-navigation.center,
+#footercontainer.menu-center .logobox
+{
+    float:none;
+    margin:0 auto;
+}    
+
+    
+
+
+/******************** CONTENT & SIDEBARS (MEDIUM)  ********************/
+#maincontent,
+#mainsidebar,
+#sidebar2,
+#pagesidebar
+{
+}
+
+.leftside .sidebarpadding
+{
+margin-right:15px;
+}
+.rightside .sidebarpadding
+{
+margin-left:15px;
+}
+
+#maincontent .first-group-post .post-coverimage
+{
+max-height:320px;
+overflow:hidden;
+}
+
+#maincontent .type-post .contentpadding,
+#maincontent .type-page .contentpadding,
+#maincontent .category-titlebar,
+#mainsidebar .widgetpadding,
+#sidebar2 .widgetpadding,
+#specialpagewidgets .widgetpadding,
+#pagesidebar .widgetpadding
+{
+padding:8px 0px 8px 0;
+}
+
+#maincontent .follow-post.has-post-thumbnail .post-title,
+#maincontent .follow-post.has-post-thumbnail .post-content,
+#maincontent .follow-post.has-post-thumbnail .post-content
+{
+    width:68%;
+    float:right;
+}
+#maincontent .follow-post .post-coverimage
+{
+    width:28%;
+    float:left;
+    margin-right:4%;
+}
+
+
+/******************** GALLERY THEME (MEDIUM)  ********************/
+.categorymenu li,
+.tagmenu li
+{
+    display:inline-block;
+}
+
+}
+
+
+@media screen and (min-width: 960px) {
+}

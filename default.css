@@ -1,0 +1,54 @@
+/* Default style */
+
+html,
+body
+{
+    font-family: "Helvetica", Arial, Verdana, Geneva;
+}
+
+/*************************** WP CORE ***************************/
+.wp-caption
+{
+}
+.wp-caption-text
+{
+}
+.sticky
+{
+}
+.screen-reader-text
+{
+}
+.gallery-caption
+{
+}
+.bypostauthor
+{
+}
+.alignright
+{
+}
+.alignleft
+{
+}
+.aligncenter
+{
+}
+
+
+/* Theme core */
+.widget
+{
+}
+.widgetpadding
+{
+}
+.widgetpadding h3
+{
+}
+.widgetpadding ul
+{
+}
+.widgetpadding ul li
+{
+}
