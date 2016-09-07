@@ -86,7 +86,7 @@ if( $sliderdisplay == 'topfooter' ){
 jQuery(function($) {
 
 $(window).resize(function() {
-<?php if( $displaytype != 'variable' && $useheaderimage != 'hide' ){ 
+<?php if( $displaytype != 'variable' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
 echo  '$("#sliderbox-head").css("min-height", ( $(window).height() / 100) * '.$displaytype.' );';
 }
 if( $sliderdisplay == 'topfooter' || $sliderdefaultdisplay == 'topfooter' ){

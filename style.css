@@ -1,4 +1,3 @@
-
 /*
 Theme Name: onepiece
 Theme URI: http://www.webdesigndenhaag.net/onepiece
@@ -82,7 +81,7 @@ width:100%;
 {
 position:relative;
 width:100%;
-min-height:320px;
+min-height:120px;
 max-height:100%;
 }
 
