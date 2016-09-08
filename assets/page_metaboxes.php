@@ -28,6 +28,7 @@ $secondsidebardisplay = get_post_meta($object->ID, "meta-page-secondsidebardispl
 <option value="default" <?php selected( $useheaderimage, 'default' ); ?>><?php echo __('Top content (default)', 'onepiece'); ?></option>
 <option value="replace" <?php selected( $useheaderimage, 'replace' ); ?>><?php echo __('Replace header', 'onepiece'); ?></option>
 
+
 <option value="hide" <?php selected( $useheaderimage, 'hide' ); ?>><?php echo __('top content, hide header', 'onepiece'); ?></option>
 </select>
 </p>
@@ -84,16 +85,16 @@ add_action("add_meta_boxes", "add_childpage_section_box");
 function childpage_section_fields($object)
 {
 wp_nonce_field(basename(__FILE__), "meta-box-nonce");
-//$values = get_post_custom( $object->ID );
-//$dsp = isset( $values['meta-box-display-childpages'] ) ? esc_attr( $values['meta-box-display-childpages'][0] ) : '';
 $dsp = get_post_meta($object->ID, "meta-box-display-childpages", true);
+$link = get_post_meta($object->ID, "meta-box-link-childpages", true);
 ?>
 <p><label for="meta-box-display-childpages"><?php echo __('Display Childpages', 'onepiece'); ?></label>
 <select name="meta-box-display-childpages" id="meta-box-display-childpages">
 <option value="none" <?php selected( $dsp, 'basic' ); ?>><?php echo __('Do not display', 'onepiece'); ?></option>
-<option value="bloc" <?php selected( $dsp, 'bloc' ); ?>><?php echo __('Intro content blocks', 'onepiece'); ?></option>
+<option value="bloc" <?php selected( $dsp, 'bloc' ); ?>><?php echo __('Intro text  pagelink', 'onepiece'); ?></option>
+<option value="pop" <?php selected( $dsp, 'pop' ); ?>><?php echo __('Intro text popuplink content', 'onepiece'); ?></option>
 <option value="menu" <?php selected( $dsp, 'menu' ); ?>><?php echo __('Subpage menu', 'onepiece'); ?></option>
-<option value="fade" <?php selected( $dsp, 'fade' ); ?>><?php echo __('Image fade blocks', 'onepiece'); ?></option>
+<option value="fade" <?php selected( $dsp, 'fade' ); ?>><?php echo __('Header, Tabs & text', 'onepiece'); ?></option>
 <option value="slddwn" <?php selected( $dsp, 'slddwn' ); ?>><?php echo __('Vertical slide blocks', 'onepiece'); ?></option>
 </select>
 </p>
@@ -214,13 +215,6 @@ function save_page_meta_box($post_id, $post, $update)
         update_post_meta( $post_id, 'pagetheme_slide_displayheight', $_POST['pagetheme_slide_displayheight'] );
     if( isset( $_POST['pagetheme_slide_displaywidth'] ) )
         update_post_meta( $post_id, 'pagetheme_slide_displaywidth', $_POST['pagetheme_slide_displaywidth'] );
-
-    // childpage sections
-    if( isset( $_POST['meta-box-display-childpages'] ) )
-        update_post_meta( $post_id, 'meta-box-display-childpages', $_POST['meta-box-display-childpages'] );
-}
-add_action("save_post", "save_page_meta_box", 10, 3);
-?>
 
     // childpage sections
     if( isset( $_POST['meta-box-display-childpages'] ) )
