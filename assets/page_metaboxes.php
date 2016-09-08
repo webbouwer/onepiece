@@ -1,10 +1,4 @@
-
-
-
-
-
 <?php 
-
 /********** PAGE CUSTOM META FIELDS **********/
 function add_page_meta_box()
 {
@@ -107,10 +101,6 @@ $dsp = get_post_meta($object->ID, "meta-box-display-childpages", true);
 }
 
 
-
-
-
-
 /* SLIDER template category selection */
 add_action('add_meta_boxes', 'add_slider_meta');
 function add_slider_meta()
@@ -192,12 +182,7 @@ $slidedisplaywidth = isset( $values['pagetheme_slide_displaywidth'] ) ? esc_attr
 <option value="full" <?php selected( $slidedisplaywidth, 'full' ); ?>>Full (window) width</option>
 </select>
 </p>
-<?php } ?>
-
-
-
-
-<?php
+<?php } 
 
 function save_page_meta_box($post_id, $post, $update)
 {
@@ -235,5 +220,4 @@ function save_page_meta_box($post_id, $post, $update)
         update_post_meta( $post_id, 'meta-box-display-childpages', $_POST['meta-box-display-childpages'] );
 }
 add_action("save_post", "save_page_meta_box", 10, 3);
-
 ?>
