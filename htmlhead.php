@@ -134,6 +134,9 @@ $content_width = 960;
 $useheaderimage = get_post_meta($post->ID, "meta-page-headerimage", true);
 $usepostfeaturedimage = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');
 
+// get childpage options
+$childpagedisplay = get_post_meta($post->ID, "meta-box-display-childpages", true);
+
 // detect variables for available sliders
 // add slider code if not hidden by page settings
 // 1 default slider is set with category available
@@ -147,8 +150,7 @@ get_theme_mod('onepiece_content_sliderbar_display', 'default' ) != 'none'
 ) // 2
 && ( get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replacemargin' || get_post_meta($post->ID, "onepiece_content_sliderbar_display", true) == 'topfooter')
 && ( get_post_meta($post->ID, "meta-page-headerimage", true) != 'replace' || get_post_meta($post->ID, "pagetheme_slide_displaytype", true) == 'topfooter' )  
-){ // 3  
-if( !is_single() || get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replace' ){ // 4
+&& (!is_single() || get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replace') ){ // 4
 
 // include jquery and anythingslider javascript libs
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/jquery.tools.min.js"></script>';
@@ -157,6 +159,7 @@ echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_t
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/jquery.anythingslider.min.js"></script>';
 // Anything Slider optional FX extension
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/jquery.anythingslider.fx.min.js"></script>'; 
+
 
 // get default slider options
 $sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'default' );
@@ -171,7 +174,7 @@ $sliderheight = get_post_meta($post->ID, "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta($post->ID, "pagetheme_slide_displaywidth", true);
 
 // get html for default slider and page slider if available
-if( ( $sliderdefaultdisplay == 'replaceheader' || $sliderdefaultdisplay == 'belowheader') && $sliderdefaultcat != 'uncategorized' ){
+if( ( $sliderdefaultdisplay == 'replaceheader' || $sliderdefaultdisplay == 'belowheader' ) && $sliderdefaultcat != 'uncategorized' ){
     //$headerstyle = 'style="height:'.$sliderdefaultheight.'%;min-height:'.$sliderdefaultheight.'%;"';
 	$displaytype = $sliderdefaultheight;
 }
@@ -192,7 +195,7 @@ jQuery(function($) {
 $(window).resize(function() {
 <?php 
 // start php to js
-if( $displaytype != 'variable' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
+if( $displaytype != 'variable' && $childpagedisplay != 'fade' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
 echo  '$("#sliderbox-head").css("min-height", ( $(window).height() / 100) * '.$displaytype.' );';
 }
 if( $sliderdisplay == 'topfooter' || $sliderdefaultdisplay == 'topfooter' ){
@@ -250,7 +253,8 @@ $('.sliderarea').anythingSlider({
 <style type="text/css">
 
 <?php // detect topbar overlay 
-if( ( $displaytype == '50' && $mobile ) || $displaytype == '66' || $displaytype == '75' || $displaytype == '80' || $displaytype == '100' ){ 
+if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
+|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
 ?>
 div#topbar
 {
@@ -364,7 +368,6 @@ div.slidebox
 }
 </style>
 <?php 
-}
 }
 
 /**

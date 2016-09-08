@@ -221,3 +221,10 @@ function save_page_meta_box($post_id, $post, $update)
 }
 add_action("save_post", "save_page_meta_box", 10, 3);
 ?>
+
+    // childpage sections
+    if( isset( $_POST['meta-box-display-childpages'] ) )
+        update_post_meta( $post_id, 'meta-box-display-childpages', $_POST['meta-box-display-childpages'] );
+}
+add_action("save_post", "save_page_meta_box", 10, 3);
+?>

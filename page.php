@@ -1,28 +1,8 @@
-
 <?php 
 $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
-
 // htmlhead
 get_template_part('htmlhead');
-
-
-
-/*
-// slider options
-$sliderdisplay = get_post_meta(get_the_ID(), "pagetheme_slide_displaytype", true);
-$slidercat = get_post_meta(get_the_ID(), "pagetheme_slide_selectbox", true);
-$sliderheight = get_post_meta(get_the_ID(), "pagetheme_slide_displayheight", true);
-$sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true);
-
-$sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'default' );
-$sliderdefaultcat = get_theme_mod('onepiece_content_sliderbar_category', 'uncategorized' );
-$sliderdefaultheight = get_theme_mod('onepiece_content_sliderbar_height', '60%' );
-$sliderdefaultwidth = get_theme_mod('onepiece_content_sliderbar_width', 'full' );
-
-$pgslider = sliderhtml($slidercat, $mobile);
-$dfslider = sliderhtml($sliderdefaultcat, $mobile);
-*/
 
 // main content area
 $useheaderimage = get_post_meta( get_the_ID() , "meta-page-headerimage", true);
@@ -33,12 +13,10 @@ $afterwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-afterwidgetsdispla
 $secondsidebardisplay = get_post_meta(get_the_ID(), "meta-page-secondsidebardisplay", true);
 $childpagedisplay = get_post_meta(get_the_ID(), "meta-box-display-childpages", true);
 
-
 // header
 get_template_part('header');
 
 echo '<div id="contentcontainer"><div class="outermargin">';
-
 
 /************** PAGE SIDEBARS ******************/
 $contentpercentage = 100;
@@ -114,16 +92,6 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 echo '<div class="clr"></div></nav></div>';
 }
 
-/*
-// slider topcontent
-if( $sliderdisplay == 'topcontent' && $slidercat != 'uncategorized'){
-// slider content here
-echo '<h2>'.$sliderdisplay.' page</h2>'. $pgslider;
-}else if( $sliderdefaultdisplay == "topcontent" && $sliderdefaultcat != 'uncategorized' && $sliderdisplay != 'none' && $sliderdisplay != 'replaceheader' ){
-// default slider content here
-echo '<h2>'.$sliderdefaultdisplay.' default</h2>'. $dfslider;
-}
-*/
 
 /* MAIN CONTENT */
 if ( have_posts() ) :    
@@ -153,10 +121,6 @@ $pagefeaturedimage = wp_get_attachment_image_src( get_post_thumbnail_id( get_the
 echo '</a></div>'; // default, 'thumb' or 'medium'
 }
 
-
-
-
-
 // editor
 if ( is_super_admin() ) {
 edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>' );
@@ -164,12 +128,15 @@ edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>'
 $mainpageoption = '';
 $mainpagecontent = '';
 
-
-
+/** CHILDPAGES
+ *  Page theme childpages display
+ */
+ 
 if( $childpagedisplay != 'fade' && $childpagedisplay != 'slddwn' ){ 
-    
+ 
+// normal title and author display  
 echo '<div class="post-title"><h1>'. get_the_title().'</h1></div>';
-
+// use default page date/author settings
 if( get_theme_mod('onepiece_content_panel_page_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_page_authortime') == 'date' ){
 echo '<span class="post-date">'.get_the_date().'</span>';
@@ -178,26 +145,18 @@ if( get_theme_mod('onepiece_content_panel_page_authortime') == 'both' ||
 get_theme_mod('onepiece_content_panel_page_authortime') == 'author'){
 echo '<span class="post-author">'.get_the_author().'</span>';
 }
-
-// Page full content
+// normal page content display
 echo '<div class="page-content mainpage">';
 echo apply_filters('the_content', get_the_content()).'</div>';
-
 }else{
-    
+// otherwise display main content adjusted for box/tab/slides 
 $thumb_id = get_post_thumbnail_id();
 $thumb_url = wp_get_attachment_image_src($thumb_id,'medium', true);
-    
-    
 $mainpageoption .= '<li id="button-'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'"><a href="'.get_permalink($post_obj->ID).'" target="_self">'.$post_obj->post_title.'</a></li>';
-$mainpagecontent .= '<li id="'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'" class="childcontent"><div class="subtitle"><h3>'.$post_obj->post_title.'</h3></div><div class="subcontent">'.
-            apply_filters('the_content', get_the_content())
-            .'</div></li>';
-
+$mainpagecontent .= '<li id="'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'" class="childcontent"><div class="subtitle"><h3>'.$post_obj->post_title.'</h3></div><div class="subcontent">'. apply_filters('the_content', get_the_content()) .'</div></li>';
 }
 
-
-
+// prepare childpages box/pop/tab/slide content
 if( isset($childpagedisplay) && $childpagedisplay != 'none'){  
 
     $args = array(
@@ -221,7 +180,7 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
             $menu .= '<li id="button-'.$page->post_name.'" data-imgurl="'.$contentimage.'"><a href="'.get_permalink($page->ID).'" target="_self">'.$page->post_title.'</a></li>';
             $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent"><div class="subtitle"><h3>'.$page->post_title.'</h3></div><div class="subcontent">'.
             apply_filters('the_content',$pieces['main'])
-            .'</div><div class="childcontent moretextbox">'.apply_filters('the_content',$pieces['extended']).'</div></li>';
+            .'</div><a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.$page->post_title.'</a><div class="childcontent moretextbox">'.apply_filters('the_content',$pieces['extended']).'</div></li>';
         }
         
         echo '<div class="page-content childpages">';
@@ -238,20 +197,14 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
         //print_r($page);
     }
 
-
-
 } // end childpage content
 
-/*
-if( $sliderdisplay == 'bottomcontent' && $slidercat != 'uncategorized'){
-// slider content here
-echo '<h2>'.$sliderdisplay.'</h2>';
-}else if( $sliderdefaultdisplay == "bottomcontent" && $sliderdefaultcat != 'uncategorized' && $sliderdisplay != 'none' && $sliderdisplay != 'replaceheader' ){
-// default slider content here
-echo '<h2>'.$sliderdefaultdisplay.'</h2>';
-}
-*/
 
+
+
+/** PAGE RELATED
+ *  Page theme childpages display
+ */
 
 	// Page comments
     if ( comments_open() || get_comments_number() ) {
@@ -281,6 +234,7 @@ echo '<div class="clr"></div></div></div>';
 endwhile;	
 endif;   
 
+// after widgets
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-after') && $afterwidgetsdisplay != 'hide'){
 echo '<div id="widgets-after">';
 dynamic_sidebar('widgets-after');
@@ -294,65 +248,72 @@ echo '<div class="clr"></div></div></div>';
 
 // footer
 get_template_part('footer');
-
 wp_footer();
 
+echo '</div>';
+
+/** JS CHILDPAGES
+ *  Page theme childpages display
+ */
+ 
+// move to custom js
 if( $childpagedisplay == 'fade' ){
 ?>
 <script type="text/javascript"> 
-jQuery(function($) {
-	$(document).load(function(){
+/**
+ * Tab menu
+ * Fade header 
+ * Slide down text
+ */
+jQuery(document).ready(function($) {
+    
 		function change_header_image(src){
-			var m = 'url('+src+')';
-			var bg = $('#headerbar').css('background-image');
-			$('#headerbar .bglayer').css("background-image", bg );
-			$('#headerbar').css("background-image", m );
-			$('#headerbar .bglayer').fadeOut('slow' , function(){
-				 $(this).css("background-image", 'none' ); 
-                                 $('#headerbar .bglayer').fadeIn('fast');
-                        });
+			var m = 'url('+src+')'; // new bg image url
+			var bg = $('#headerbar').css('background-image'); // current bg image url to move to bglayer
+			$('#headerbar .bglayer').css("background-image", bg ); // set current in bglayer, in front of #headerbar
+			$('#headerbar').css("background-image", m );  // load new in #headerbar, behind bglayer
+			$('#headerbar .bglayer').fadeOut('slow' , function(){ // fadeout bglayer (current)
+				$(this).css("background-image", 'none' ); // on end clear bglayer bg image
+                $('#headerbar .bglayer').fadeIn('fast'); // reset bglayer opacity/fade
+            });
 		}
-                function set_header_height(){
-		    var h = $(window).height() / 5 * 3 + 'px';
-		    $('#headerbar .bglayer').css("height", h );
-                }
+        
+        function set_header_height(){
+		    var h = $(window).height() / 5 * 3 + 'px'; // get a height relative to the window size
+		    $('#headerbar .bglayer').css("height", h ); // set this on the innner container
+        }
 
 		$(window).on('resize', function(){
 		    set_header_height();
-                });
-
+        });
 		set_header_height();
 
 		$('ul#childpagecontent li.childcontent').hide();
-                $('ul#childpagecontent li.childcontent').eq(0).addClass('active').slideDown();
-                var poimg = $('ul#childpagecontent li.active').attr('data-imgurl');
+        $('ul#childpagecontent li.childcontent').eq(0).addClass('active').slideDown();
+        $('ul#childpagemenu li').eq(0).addClass('active');
+        var poimg = $('ul#childpagecontent li.active').attr('data-imgurl');
 		change_header_image(poimg);
 		$('ul#childpagemenu li').on('click', function(){
-			$('ul#childpagemenu li').removeClass('active');
-			$('ul#childpagecontent li.childcontent').removeClass('active');
-                	$(this).addClass('active');
-			$('ul#childpagecontent li.childcontent').slideUp();
-    			$('ul#childpagecontent li.childcontent').eq(
-                          $(this).index()
-                        ).addClass('active').slideDown();
-                        poimg = $('ul#childpagecontent li.childcontent').eq(
-                          $(this).index()
-                        ).attr('data-imgurl');
-		        change_header_image(poimg);
-			return false;
+		$('ul#childpagemenu li').removeClass('active');
+		$('ul#childpagecontent li.childcontent').removeClass('active');
+        $(this).addClass('active');
+		$('ul#childpagecontent li.childcontent').slideUp();
+    	$('ul#childpagecontent li.childcontent').eq( $(this).index() ).addClass('active').slideDown();
+        poimg = $('ul#childpagecontent li.childcontent').eq(
+        $(this).index()).attr('data-imgurl');
+		change_header_image(poimg);
+		return false;
 		});
-		$('ul#childpagemenu li').hover(
+		$('ul#childpagemenu li a').hover(
   		    function() {
     			$( this ).addClass('hovered');
   		    }, function() {
     			$( this ).removeClass('hovered');
   		    }
 		);
-	});
 });
 </script>
 <?php
 }
-
-
-echo '</div></body>';
+echo '</body>';
+?>

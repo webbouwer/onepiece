@@ -785,4 +785,25 @@ function onepiece_sanitize_default($obj){
     	//.. global sanitizer
     	return $obj;
 }
+?>customize->add_setting( 'onepiece_responsive_large_outermargin' , array(
+		'default' => '1200', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_responsive_large_outermargin', array(
+            	'label'          => __( 'Outermargin', 'onepiece' ),
+            	'section'        => 'onepiece_responsive_large',
+            	'settings'       => 'onepiece_responsive_large_outermargin',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Outermargin for large screens (px).', 'onepiece' ),
+    	)));
+    	
+		
+}
+add_action( 'customize_register', 'onepiece_register_theme_customizer' );
+
+// default sanitize function
+function onepiece_sanitize_default($obj){
+    	//.. global sanitizer
+    	return $obj;
+}
 ?>

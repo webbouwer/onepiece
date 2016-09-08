@@ -22,7 +22,7 @@ GitHub Branch: development
  developments
  > finnish the childpage options inc. a menu on childpages
  > redefine theme global, page and post options
- > implement slider in widget / header / category view isotope popup
+ > implement slider in widget / category view isotope popup
  - tested an anythingslider implementation for popups(isotope item selected)
    problems come with dynamic links and parent category selection
    For a new test i'll use a single basic rich html output and handle the slider in  javascript as much as possible..
@@ -139,6 +139,7 @@ max-width:100%;
 
 #topmenubar #topbar-navigation .menu li,
 #headercontainer #site-navigation ul li,
+#contentcontainer #site-navigation ul li,
 #footercontainer #footer-navigation .menu li
 {
     display:block;
@@ -150,12 +151,40 @@ padding:2px 1px;
 }
 
 
+
+
+/******************** HEADER / SLIDER / FEATURED IMAGE  ********************/
 img.header-image
 {
     width:100%;
     max-width:100%;
     height:auto;
 }
+
+/* CHILDPAGES HEADER */
+#headerbar,
+#headerbar .bglayer
+{
+position:relative;
+background-position:center;
+background-size: 150%;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}
+#headerbar
+{
+background-color:#fff;
+/* border-top:8px solid #D85326;
+border-bottom:8px solid #D85326; */
+}
+#headerbar .bglayer
+{
+min-height:180px;
+}
+
+
 
 
 /******************** CONTENT & SIDEBARS (SMALL)  ********************/
@@ -209,6 +238,100 @@ width:100%;
 height:auto;
 }
 
+/******************** CHILDPAGES CONTENT (SMALL)  ********************/
+
+#headertextbox
+{
+position:absolute;
+left:16%;
+top:140px;
+width:200px;
+height:190px;
+color:#fff;
+padding:90px 80px 40px 80px;
+background-image:url(https://www.discriminatiezaken.nl/wp-content/uploads/2016/06/bg_baloon.png);
+background-position:center;
+background-repeat:no-repeat;
+}
+
+#headertextbox a
+{
+color:#fff;
+}
+#headertextbox a:hover
+{
+color:#cccccc;
+}
+
+#childpagecontent
+{
+position:relative;
+margin:0px auto;
+}
+
+
+#childpagecontent p
+{
+display:block;
+padding:4px 0px 6px;
+}
+#childpagecontent li.childcontent ul li
+{
+display:block;
+padding:4px 0px 6px 0px;
+list-style-type:disc;
+}
+
+
+
+#childpagemenu
+{
+position:relative;
+}
+#childpagemenu li
+{
+list-style-type:none;
+float:left;
+font-size:21px;
+font-weight:bold;
+text-transform:uppercase;
+margin:-8px 3px 0px;
+background-color:transparent;
+color:#333333;
+cursor:hand;
+cursor:pointer;
+}
+#childpagemenu li a
+{
+display:block;
+}
+#childpagemenu li.hovered a
+{
+}
+#childpagemenu li.active a
+{
+background-color:#232323;
+color:#ffffff;
+}
+
+#childpagecontent
+{
+position:relative;
+border-top:2px solid #232323;
+padding:10px 7px;
+}
+#childpagecontent li.childcontent
+{
+list-style-type:none;
+}
+#childpagecontent li.childcontent .subtitle h3
+{
+padding:4px 0px 6px;
+}
+#childpagecontent li.childcontent .subcontent
+{
+}
+
 
 
 
@@ -234,6 +357,10 @@ display:block;
 
 
 
+
+
+
+
 @media screen and (min-width: 512px) {
   
 
@@ -254,7 +381,8 @@ text-align:left;
 
 #topmenubar #topbar-navigation .menu li,
 #headercontainer #site-navigation ul li,
-.menu-mainsitemenu-container ul li,
+#contentcontainer #site-navigation ul li,
+/*.menu-mainsitemenu-container ul li,*/
 #footercontainer #footer-navigation .menu li
 {
     display:inline-block;

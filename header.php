@@ -13,7 +13,7 @@ global $wp_query;
 $postid = $wp_query->post->ID;
 $useheaderimage = get_post_meta($postid, "meta-page-headerimage", true);
 $usepostfeaturedimage = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');
-$childpagedisplay = get_post_meta(get_the_ID(), "meta-box-display-childpages", true);
+$childpagedisplay = get_post_meta($postid, "meta-box-display-childpages", true);
 $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($postid));
 wp_reset_query();
 }
@@ -105,7 +105,7 @@ echo '<div class="clr"></div></nav></div></div>';
 
 
 // Slider or (featured) headerimage
-if( $sliderdisplay == 'replaceheader' && $slidercat != 'uncategorized'){
+if( $sliderdisplay == 'replaceheader' && $slidercat != 'uncategorized' && ( $useheaderimage != 'replace' ||  $childpagedisplay != 'fade') ){
 // slider content here 
 if( $sliderwidth == 'full' ){
 echo '</div>';
@@ -116,13 +116,17 @@ if( $sliderwidth == 'full' ){
 echo '<div class="outermargin">';
 }
 
-}else if( ( $usepostfeaturedimage == 'replace' ||  $usepostfeaturedimage == 'replacemargin') && is_single() && has_post_thumbnail() ){
+}else if(  $childpagedisplay == 'fade' || ( ($usepostfeaturedimage == 'replace' ||  $usepostfeaturedimage == 'replacemargin') && is_single() ) && has_post_thumbnail() ){
 if( $usepostfeaturedimage == 'replace' ){
 echo '</div>';
 }
-$thumbelarge = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));
+$thumbelarge = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));// the_post_thumbnail('big-thumb');
+if($childpagedisplay == 'fade'){
+echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
+}else{
 echo '<img src="'.esc_url( $thumbelarge ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
-// the_post_thumbnail('big-thumb');
+}
+
 if( $usepostfeaturedimage == 'replace' ){
 echo '<div class="outermargin">';
 }
