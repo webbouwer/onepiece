@@ -48,7 +48,7 @@ $topbarclass = 'right';
 if( get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') ){
     $topbarclass = get_theme_mod( 'onepiece_elements_topmenubar_position', 'right');
 }
-echo '<div id="topmenubar" class="'.$topbarclass.'">';
+echo '<div class="outermargin"><div id="topmenubar" class="'.$topbarclass.'">';
 
 // logobox menu
 echo '<div class="logobox medium">';
@@ -71,7 +71,7 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 echo '<div class="clr"></div></nav></div>';
 }
 
-echo '<div class="clr"></div></div>';
+echo '<div class="clr"></div></div></div>';
 
 // mainmenu in topbar
 if($mainmenuplace == 'topbar' && $mainbarclass != 'none'){
