@@ -1,11 +1,9 @@
 <?php 
 $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
-
 // main menu markup
 $mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'); 
-
 
 // header image or slider
 if ( is_page() || is_single() ){
@@ -30,17 +28,12 @@ $slidercat = get_post_meta(get_the_ID(), "pagetheme_slide_selectbox", true);
 $sliderheight = get_post_meta(get_the_ID(), "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true);
 
-/*
-// get html for default slider and page slider if available
-if( $sliderdefaultdisplay == 'replaceheader' && $sliderdefaultcat != 'uncategorized' ){
-    $headerstyle = 'style="height:'.$sliderdefaultheight.'%;min-height:'.$sliderdefaultheight.'%;"';
-}
-if( $sliderdisplay == 'replaceheader' && $slidercat != 'uncategorized' && $sliderheight != 'variable' ){
-    $headerstyle = 'style="height:'.$sliderheight.'%;min-height:'.$sliderheight.'%;"';
-}
-*/
-echo '<div id="headercontainer"><div id="topbar"><div class="outermargin">';
+// headercontent container
+echo '<div id="headercontainer">';
 
+echo '<div class="outermargin"><div id="topbar">';
+
+// widgets top 
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-top') ){
 $count = is_sidebar_active('widgets-top');
 echo '<div id="widgets-top" class="colset-'.$count.'">';
@@ -49,12 +42,15 @@ echo '<div class="clr"></div></div>';
 } 
 
 
+
+// topbar menu
 $topbarclass = 'right';
 if( get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') ){
     $topbarclass = get_theme_mod( 'onepiece_elements_topmenubar_position', 'right');
 }
 echo '<div id="topmenubar" class="'.$topbarclass.'">';
 
+// logobox menu
 echo '<div class="logobox medium">';
 if ( get_theme_mod( 'onepiece_identity_logo_m' ) ){
 echo '<a href="'.esc_url( home_url( '/' ) ).'" class="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home"><img src="'.get_theme_mod( 'onepiece_identity_logo_m' ).'" alt="'.esc_attr( get_bloginfo( 'name', 'display' ) ).' - '.get_bloginfo( 'description' ).'"></a>';
@@ -64,7 +60,7 @@ echo '<h2 class="site-description">'.get_bloginfo( 'description' ).'</h2></hgrou
 }
 echo '</div>';
 
-
+// topmenu
 if ( has_nav_menu( 'topmenu' ) && get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') != 'none' ) {
 echo '<div id="topbar-navigation" class="main-navigation" role="navigation"><nav>';
 if ( has_nav_menu( 'topmenu' ) ) {
@@ -74,12 +70,10 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 } 
 echo '<div class="clr"></div></nav></div>';
 }
+
 echo '<div class="clr"></div></div>';
 
-
-
-
-
+// mainmenu in topbar
 if($mainmenuplace == 'topbar' && $mainbarclass != 'none'){
 echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
@@ -133,7 +127,7 @@ echo '<div class="outermargin">';
 
    
 }else if( $sliderdefaultdisplay == "replaceheader" && ( $useheaderimage != 'replace' && $childpagedisplay != 'fade' && $sliderdisplay != 'none')){
-/*&& $sliderdefaultcat != 'uncategorized' && $sliderdisplay != 'none' && $sliderdisplay != 'belowheader' && ( !is_page() && $useheaderimage != 'replace')){*/
+
 
 // default slider content here
 if( $sliderdefaultwidth == 'full' ){
@@ -169,7 +163,6 @@ if( $sliderdisplay == 'belowheader' && $slidercat != 'uncategorized'){
 if( $sliderwidth == 'full' ){
 echo '</div>';
 }
-echo '<h2>'.$sliderdisplay.' pageslider </h2>';
 echo '<div id="sliderbox-head">'. sliderhtml($slidercat, $mobile, 'header-page'). '<div class="clr"></div></div>';
 if( $sliderwidth == 'full' ){
 echo '<div class="outermargin">';
