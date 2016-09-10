@@ -238,7 +238,7 @@ $('.sliderarea').anythingSlider({
 	$('#current').html(window.location.hash); // get current
     },
     onInitialized: function(e, slider) {
-        //setupSwipe(slider);
+        setupSwipe(slider);
     }
     /*	add a menu
     navigationFormatter : function(i, panel){
@@ -248,7 +248,105 @@ $('.sliderarea').anythingSlider({
 
 }); // end anythingSlider
 }); // end ready
-}); // end jQuery $		
+}); // end jQuery $	
+
+
+
+
+var setupSwipe = function(slider) {
+    var time = 1000,
+        // allow movement if < 1000 ms (1 sec)
+        range = 50,
+        // swipe movement of 50 pixels triggers the slider
+        x = 0,
+        y = 0,
+        t = 0,
+        touch = "ontouchend" in document,
+        st = (touch) ? 'touchstart' : 'mousedown',
+        mv = (touch) ? 'touchmove' : 'mousemove',
+        en = (touch) ? 'touchend' : 'mouseup';
+
+    slider.$window
+        .bind(st, function(e) {
+            // prevent image drag (Firefox)
+            e.preventDefault();
+            t = (new Date()).getTime();
+            x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
+            y = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
+        })
+        .bind(en, function(e) {
+            t = 0;
+            x = 0;
+            y = 0;
+        })
+        .bind(mv, function(e) {
+            e.preventDefault();
+            var newx = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX,
+                r = (x === 0) ? 0 : Math.abs(newx - x),
+                // allow if movement < 1 sec
+                ct = (new Date()).getTime();
+            
+	    var newy = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY,
+                v = (y === 0) ? 0 : Math.abs(newy - y),
+                // allow if movement < 1 sec
+                dt = (new Date()).getTime();
+		
+            if (t !== 0 && ct - t < time && r > range) {
+                if (newx < x) {
+                    slider.goForward();
+                }
+                if (newx > x) {
+                    slider.goBack();
+                }
+          
+                t = 0;
+                x = 0;
+            }
+
+	    var yscrolling = 0;
+
+	    if (t !== 0 && dt - t < time && v > range && yscrolling == 0) {
+
+
+                if ( newy < y ) {
+                    //alert('scroll down'); 
+			$('html, body').animate({
+				scrollTop: $("#contentcontainer").offset().top 
+			},{
+        			duration: 800,
+        			complete: function () { 
+                		
+        			}
+      			});
+                }
+
+                if ( newy > y ) {
+
+			 $('html, body').animate({
+				scrollTop: $("#topbar").offset().top 
+			},{
+        			duration: 400,
+        			complete: function () {
+        			}
+      			});
+
+                }
+          
+                t = 0;
+                y = 0;
+
+            }
+        });
+}; // END TOUCH SCROLL SLIDER
+
+
+
+	
+
+
+
+
+
 </script>			
 <style type="text/css">
 
@@ -289,6 +387,7 @@ echo 'height: 100%';
 /* Slider default styles
 .. should move to style.css */
 .sliderarea {
+position:relative;
 width: 100%; 
 min-height: 100%; 
 list-style: none;
@@ -308,6 +407,7 @@ padding-top:0px;
 margin-bottom:0px;
 }
 div.anythingSlider {
+    position:relative;
 	display: block;
 	margin: 0 auto;
 	overflow: visible !important; 
@@ -338,6 +438,7 @@ right:5px;
 }
 div.slidebox
 {
+position:relative;
 }
 .anythingBase {
 	background: transparent;
