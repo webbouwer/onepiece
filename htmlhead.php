@@ -134,6 +134,8 @@ $content_width = 960;
 $useheaderimage = get_post_meta($post->ID, "meta-page-headerimage", true);
 $usepostfeaturedimage = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');
 
+$thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
+
 // get childpage options
 $childpagedisplay = get_post_meta($post->ID, "meta-box-display-childpages", true);
 
@@ -143,14 +145,18 @@ $childpagedisplay = get_post_meta($post->ID, "meta-box-display-childpages", true
 // 2 page slider is set with category available
 // 3 sliders are not replaced by page/post featured images when positioned in the header
 // 4 not showing a single post with feautured image replacement
-if( get_post_meta($post->ID, "pagetheme_slide_displaytype", true) != 'none' && ( ( 
+if(
+ (get_post_meta($post->ID, "pagetheme_slide_displaytype", true) != 'none' && ( ( 
 get_theme_mod('onepiece_content_sliderbar_display', 'default' ) != 'none' 
 && get_theme_mod('onepiece_content_sliderbar_category', 'uncategorized' ) != 'uncategorized') // 1
 || ( get_post_meta($post->ID, "pagetheme_slide_displaytype", true) != 'none' && get_post_meta($post->ID, "pagetheme_slide_selectbox", true) != 'uncategorized' ) 
 ) // 2
 && ( get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replacemargin' || get_post_meta($post->ID, "onepiece_content_sliderbar_display", true) == 'topfooter')
 && ( get_post_meta($post->ID, "meta-page-headerimage", true) != 'replace' || get_post_meta($post->ID, "pagetheme_slide_displaytype", true) == 'topfooter' )  
-&& (!is_single() || get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replace') ){ // 4
+&& (!is_single() || get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replace')  )
+|| get_theme_mod('onepiece_content_sliderbar_display', 'default' ) != 'hide'
+
+){ // 4
 
 // include jquery and anythingslider javascript libs
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/jquery.tools.min.js"></script>';
