@@ -29,10 +29,9 @@ $sliderheight = get_post_meta(get_the_ID(), "pagetheme_slide_displayheight", tru
 $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true);
 
 // headercontent container
-echo '<div id="headercontainer">';
+echo '<div id="headercontainer">'; 
 
-echo '<div class="outermargin"><div id="topbar">';
-
+echo '<div id="topbar">';
 // widgets top 
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-top') ){
 $count = is_sidebar_active('widgets-top');
@@ -41,15 +40,13 @@ dynamic_sidebar('widgets-top');
 echo '<div class="clr"></div></div>';
 } 
 
-
-
 // topbar menu
 $topbarclass = 'right';
 if( get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') ){
     $topbarclass = get_theme_mod( 'onepiece_elements_topmenubar_position', 'right');
 }
-echo '<div id="topmenubar" class="'.$topbarclass.'">';
 
+echo '<div id="topmenubar" class="'.$topbarclass.'"><div class="outermargin">';
 // logobox menu
 echo '<div class="logobox medium">';
 if ( get_theme_mod( 'onepiece_identity_logo_m' ) ){
@@ -59,7 +56,6 @@ echo '<hgroup><h1 class="site-title"><a href="'.esc_url( home_url( '/' ) ).'" id
 echo '<h2 class="site-description">'.get_bloginfo( 'description' ).'</h2></hgroup>';
 }
 echo '</div>';
-
 // topmenu
 if ( has_nav_menu( 'topmenu' ) && get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') != 'none' ) {
 echo '<div id="topbar-navigation" class="main-navigation" role="navigation"><nav>';
@@ -70,8 +66,8 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 } 
 echo '<div class="clr"></div></nav></div>';
 }
+echo '<div class="clr"></div></div></div>';
 
-echo '<div class="clr"></div></div>';
 
 // mainmenu in topbar
 if($mainmenuplace == 'topbar' && $mainbarclass != 'none'){
@@ -86,8 +82,10 @@ echo '<div class="clr"></div></nav></div>';
 
 echo '</div>'; // end topbar
 
+
+
 if($mainmenuplace == 'above' && $mainbarclass != 'none'){
-echo '<div class="outermargin"><div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><nav>';
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><div class="outermargin"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{
@@ -101,18 +99,18 @@ echo '<div class="clr"></div></nav></div></div>';
 // Slider or (featured) headerimage
 if( $sliderdisplay == 'replaceheader' && $slidercat != 'uncategorized' && ( $useheaderimage != 'replace' ||  $childpagedisplay != 'fade') ){
 // slider content here 
-if( $sliderwidth == 'full' ){
-echo '</div>';
+if( $sliderwidth != 'full' ){
+echo '<div class="outermargin">';
 }
 // page slider
 echo '<div id="sliderbox-head">'. sliderhtml($slidercat, $mobile, 'header-page') .'</div>';
-if( $sliderwidth == 'full' ){
-echo '<div class="outermargin">';
+if( $sliderwidth != 'full' ){
+echo '</div>';
 }
 
 }else if(  $childpagedisplay == 'fade' || ( ($usepostfeaturedimage == 'replace' ||  $usepostfeaturedimage == 'replacemargin') && is_single() ) && has_post_thumbnail() ){
-if( $usepostfeaturedimage == 'replace' ){
-echo '</div>';
+if( $usepostfeaturedimage == 'replacemargin' ){
+echo '<div class="outermargin">';
 }
 $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));// the_post_thumbnail('big-thumb');
 if($childpagedisplay == 'fade'){
@@ -121,8 +119,8 @@ echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge )
 echo '<img src="'.esc_url( $thumbelarge ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
 }
 
-if( $usepostfeaturedimage == 'replace' ){
-echo '<div class="outermargin">';
+if( $usepostfeaturedimage == 'replacemargin' ){
+echo '</div>';
 }
 
    
@@ -130,13 +128,13 @@ echo '<div class="outermargin">';
 
 
 // default slider content here
-if( $sliderdefaultwidth == 'full' ){
-echo '</div>';
+if( $sliderdefaultwidth != 'full' ){
+echo '<div class="outermargin">';
 }
 // default slider
 echo '<div id="sliderbox-head">'. sliderhtml($sliderdefaultcat, $mobile, 'header-default'). '<div class="clr"></div></div>';
-if( $sliderdefaultwidth == 'full' ){
-echo '<div class="outermargin">';
+if( $sliderdefaultwidth != 'full' ){
+echo '</div>';
 }
 
 }else{ // headerimage
@@ -146,12 +144,12 @@ $header_image = $thumbelarge;
 }
 
 if (( !empty( $header_image ) && $useheaderimage != 'hide'  ) || $childpagedisplay == 'fade' ) :
-if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') == 'full' ){
-echo '</div>';
+if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){
+echo '<div class="outermargin">';
 }
 echo '<img src="'.esc_url( $header_image ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
-if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') == 'full' ){
-echo '<div class="clr"></div><div class="outermargin">';
+if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){
+echo '<div class="clr"></div></div>';
 }
 endif; 
 } // end headerimage
@@ -160,22 +158,22 @@ endif;
 
 if( $sliderdisplay == 'belowheader' && $slidercat != 'uncategorized'){
 // slider content here
-if( $sliderwidth == 'full' ){
-echo '</div>';
+if( $sliderwidth != 'full' ){
+echo '<div class="outermargin">';
 }
 echo '<div id="sliderbox-head">'. sliderhtml($slidercat, $mobile, 'header-page'). '<div class="clr"></div></div>';
-if( $sliderwidth == 'full' ){
-echo '<div class="outermargin">';
+if( $sliderwidth != 'full' ){
+echo '</div>';
 }
 }elseif( $sliderdefaultdisplay == "belowheader" && $sliderdefaultcat != 'uncategorized' && $sliderdisplay != 'none' && $sliderdisplay != 'replaceheader' ){
 
 // default slider content here
-if( $sliderdefaultwidth == 'full' ){
-echo '</div>';
+if( $sliderdefaultwidth != 'full' ){
+echo '<div class="outermargin">';
 }
 echo '<div id="sliderbox-head">'. sliderhtml($sliderdefaultcat, $mobile, 'header-default') .'<div class="clr"></div></div>';
-if( $sliderdefaultwidth == 'full' ){
-echo '<div class="outermargin">';
+if( $sliderdefaultwidth != 'full' ){
+echo '</div>';
 }
 }
 
@@ -190,21 +188,17 @@ echo '<div class="clr"></div></div>';
 
 
 if($mainmenuplace == 'below' && $mainbarclass != 'none' ){
-if( $sliderdisplay != 'replaceheader' && $sliderdefaultdisplay != 'replaceheader' && empty( $header_image )){
-echo '<div class="outermargin">';
-}
-echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><nav>';
+
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><div class="outermargin"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 echo wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{
 echo wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) );
 } 
-echo '<div class="clr"></div></nav></div>';
-if( $sliderdisplay != 'replaceheader' && $sliderdefaultdisplay != 'replaceheader' && empty( $header_image )){
-echo '</div>';
-}
+echo '<div class="clr"></div></nav></div></div>';
+
 }
 
 
-echo '<div class="clr"></div></div></div>';
+echo '<div class="clr"></div></div>';
 ?>
