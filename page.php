@@ -257,6 +257,7 @@ echo '</div>';
  */
  
 // move to custom js
+
 if( $childpagedisplay == 'fade' ){
 ?>
 <script type="text/javascript"> 
@@ -311,6 +312,62 @@ jQuery(document).ready(function($) {
     			$( this ).removeClass('hovered');
   		    }
 		);
+});
+</script>
+<?php
+}
+
+if( $childpagedisplay == 'pop' ){
+?>
+<script type="text/javascript"> 
+/**
+ * Tab menu
+ * Fade header 
+ * Slide down text
+ */
+jQuery(document).ready(function($) {
+
+		$('ul#childpagecontent li.childcontent .moretextbox').hide();
+        //$('ul#childpagecontent li.childcontent .moretextbox').eq(0).addClass('active').slideDown();
+        //$('ul#childpagemenu li').eq(0).addClass('active');
+        
+		$('.childcontent a.readmore').on('click', function(){ 
+		$('ul#childpagecontent li.childcontent').removeClass('active');
+        $(this).parent().addClass('active');
+		$('ul#childpagecontent li.childcontent .moretextbox').slideUp();
+    	$('ul#childpagecontent li.active .moretextbox').slideDown();
+        // https://www.loginradius.com/engineering/simple-popup-tutorial/
+		return false;
+		});
+		
+});
+</script>
+<?php
+}
+
+if( $childpagedisplay == 'slddwn' ){
+?>
+<script type="text/javascript"> 
+/**
+ * Tab menu
+ * Fade header 
+ * Slide down text
+ */
+jQuery(document).ready(function($) {
+
+		$('ul#childpagecontent li.childcontent .moretextbox').hide();
+        //$('ul#childpagecontent li.childcontent .moretextbox').eq(0).addClass('active').slideDown();
+        //$('ul#childpagemenu li').eq(0).addClass('active');
+        
+		$('.childcontent a.readmore').on('click', function(){ 
+		$('ul#childpagecontent li.childcontent').removeClass('active');
+        $(this).parent().addClass('active');
+		$('ul#childpagecontent li.childcontent .moretextbox').slideUp();
+    	$('ul#childpagecontent li.active .moretextbox').slideDown();
+        
+		return false;
+		});
+		
 });
 </script>
 <?php
