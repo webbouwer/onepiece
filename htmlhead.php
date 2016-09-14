@@ -7,8 +7,13 @@
  * incl. in all pages (pagetemplate specific)
  */
 
-// $mobile true/false from function mobile_device_detect() from http://detectmobilebrowsers.mobi 
-// @require functions.php (include /assets/mobile_detect.php)
+/**
+ * PAGE TEMPLATE GALLERY
+ * gallery.php
+ * 
+ * $mobile true/false from function mobile_device_detect() from http://detectmobilebrowsers.mobi 
+ * @require functions.php (include /assets/mobile_detect.php)
+ */
 $mobile = mobile_device_detect(true,false,true,true,true,true,true,false,false);
 
 // $post object document 
@@ -516,8 +521,12 @@ echo '.outermargin { max-width:'.get_theme_mod('onepiece_responsive_large_outerm
 echo '}';
 echo '</style>';
 
+
+
+
+
 /**
- * STYLING / JS TOPBAR BEHAVIOR
+ * CSS TOPBAR MINIFIED BEHAVIOR
  * htmlhead.php, assets/customizer.php, assets/global.js, 
  */ 
 if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){
@@ -537,32 +546,57 @@ z-index:59;
 echo '</style>';
 } // end fixed positioning 
 
+
+
+
+/**
+ * JS TOPBAR MINIFIED BEHAVIOR
+ * htmlhead.php, assets/customizer.php, assets/global.js, 
+ */ 
 // add js code for minified behavior
 if( $topbarbehavior == 'mini' ){
 ?>
 <script type="text/javascript" language="javascript">
 jQuery(function ($) { 
 
-//$(window).ready(function() {
-
 $(window).on("mousewheel scroll", function() {
-if( $(window).scrollTop() > 50 && !$("#topbar").hasClass('minified')){
-   $("#topbar").addClass('minified');
+if( $(window).scrollTop() > 30 && !$("#topbar").hasClass('minified')){
+   $("#topbar").addClass('minified').append( $("<div>")
+      .attr('class', 'minifiedtopbarbg')
+      .css({
+        backgroundColor:'#ffffff', /* customize variable */
+        position: 'absolute',
+        top:0,
+        left:0,
+        opacity:0,
+        zIndex:-1,
+        width:'100%', 
+        height:'100%'
+      }) 
+    );
+   $("#topbar .minifiedtopbarbg").animate({
+       opacity:1,
+   }, 800);
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px'; ?>',
    }, 800);
-}else if( $(window).scrollTop() <= 50 && $("#topbar").hasClass('minified') ){
+}else if( $(window).scrollTop() <= 30 && $("#topbar").hasClass('minified') ){
    $("#topbar").removeClass('minified');
+   $("#topbar .minifiedtopbarbg").animate({
+       opacity:0,
+   }, 800, function(){
+      this.remove();
+   });
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px'; ?>',
    }, 800);
 }
 });
 
-
-	
 });
 </script>
+
+
 <?php
 }
 
@@ -573,7 +607,7 @@ if( $(window).scrollTop() > 50 && !$("#topbar").hasClass('minified')){
  */ 
 if($pageTemplate == 'gallery.php'){
 
-// inlcude Isotope & Imagesloaded javascript libs
+// include Isotope & Imagesloaded javascript libs
 echo '<script src="'.get_template_directory_uri().'/assets/isotope.js" type="text/javascript" language="javascript"></script>';
 echo '<script src="'.get_template_directory_uri().'/assets/isotope-packery.js" type="text/javascript" language="javascript"></script>';
 echo '<script src="'.get_template_directory_uri().'/assets/imagesloaded.js" type="text/javascript" language="javascript"></script>';
