@@ -3,6 +3,11 @@ jQuery(function ($) {
 
 $(document).ready(function() {    
 
+/**
+ * HTML RESIZE RESPONSIVE
+ * on resize
+ * reorder sidebar html (index.php, page.php, gallery.php)
+ */  
     /* on resize */
 	var resizeId;
 	$(window).resize(function() {
@@ -52,8 +57,32 @@ $(document).ready(function() {
 });
 
 $(window).load(function() { 
+    
+    
+/**
+ * HTML THEME PAGE SCROLL
+ * smooth scroll
+ * html content anchors (index.php, page.php, gallery.php)
+ */  
+$('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == 	this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+            $('html,body').animate({
+            scrollTop: target.offset().top
+            }, 800);
+            return false;
+        }
+    }
+}); 
+
 
 
 });
+ 
+ 
+
+ 
  
 });
