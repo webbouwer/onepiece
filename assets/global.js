@@ -16,7 +16,7 @@ $(document).ready(function() {
 	});
 	function doneGlobalResizing(){
 		ResponsiveReorder(); // replace sidebar elements below content
-		$('#topbar').css('width', $(window).width() .'px'); // add topbar width resize
+		$('#topbar').css('width', $(window).width() +'px'); // add topbar width resize
 	}
 	function ResponsiveReorder(){
 	    var small = 512;
