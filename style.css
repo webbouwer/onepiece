@@ -119,16 +119,24 @@ max-height:100%;
 #topbar
 {
 }
+
+#topmenubar .logobox
+{
+float:left;
+}
+
+/*
 #topmenubar
 {
 text-align:center;
 }
 #topmenubar .logobox
 {
-width:100%;
 max-width:100%;
+width:100%;
 margin:0 auto;
 }
+*/
 .logobox img
 {
 max-width:100%;
@@ -138,6 +146,7 @@ max-width:100%;
 }
 
 #topmenubar #topbar-navigation .menu li,
+#topmenubar nav.sticky ul li,
 #headercontainer #site-navigation ul li,
 #contentcontainer #site-navigation ul li,
 #footercontainer #footer-navigation .menu li
@@ -347,9 +356,9 @@ text-align:left;
 }
 
 #topmenubar #topbar-navigation .menu li,
+#topmenubar nav.sticky ul li,
 #headercontainer #site-navigation ul li,
 #contentcontainer #site-navigation ul li,
-/*.menu-mainsitemenu-container ul li,*/
 #footercontainer #footer-navigation .menu li
 {
     display:inline-block;
@@ -362,6 +371,9 @@ padding:4px 2px;
   
 
 
+
+
+
 #topmenubar.right .logobox,
 #footercontainer.menu-right .logobox
 {
@@ -369,6 +381,7 @@ padding:4px 2px;
 }
 #topmenubar.right #topbar-navigation,
 #site-navigation.right ul,
+#topmenubar.right nav.sticky,
 #footercontainer.menu-right #footer-navigation
 {
     float:right;
@@ -380,6 +393,7 @@ padding:4px 2px;
 }
 #topmenubar.left #topbar-navigation,
 #site-navigation.left ul,
+#topmenubar.left nav.sticky,
 #footercontainer.menu-left #footer-navigation
 {
     float:left;
@@ -394,6 +408,7 @@ padding:4px 2px;
 #topmenubar.center .logobox,
 #topmenubar.center #topbar-navigation,
 #site-navigation.center,
+#topmenubar.center nav.sticky,
 #footercontainer.menu-center .logobox
 {
     float:none;
