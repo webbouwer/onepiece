@@ -17,6 +17,8 @@ global $post;
 // $pageTemplate 'TEMPLATE_FILENAME' (gallery.php,page.php,index.php)
 $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
 
+
+
 /**
  * PAGE TEMPLATE GALLERY
  * gallery.php
@@ -129,6 +131,11 @@ $content_width = 960;
  * PAGE HEADER IMAGE / REPLACE / SLIDER 
  * :jquery anythingslider 
  */ 
+ 
+ 
+// topbar
+$topbarbehavior = get_theme_mod('onepiece_elements_topmenubar_behavior', 'rela');
+
  
 // get header replacement variables for page/post feautured images
 $useheaderimage = get_post_meta($post->ID, "meta-page-headerimage", true);
@@ -359,6 +366,8 @@ var setupSwipe = function(slider) {
 <?php // detect topbar overlay 
 if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
 || $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
+
+if( $topbarbehavior != 'rela' ){
 ?>
 div#topbar
 {
@@ -369,7 +378,10 @@ top:0px;
 left:0px;
 z-index:59;
 }
-<?php } ?>
+<?php 
+} // end relative positioning 
+} // end absolute positioning 
+?>
 
 div#sliderbox-head,
 div#sliderbox-footer
@@ -502,6 +514,29 @@ echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_
 echo '.outermargin { max-width:'.get_theme_mod('onepiece_responsive_large_outermargin', 1600 ).'px; }';
 echo '}';
 echo '</style>';
+
+/**
+ * STYLING TOPBAR BEHAVIOR
+ * htmlhead.php, assets/customizer.php, assets/global.js, 
+ */ 
+if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){
+echo '<style type="text/css">';
+?>
+div#topbar
+{
+position:fixed;
+z-index:99;
+width:100%;
+top:0px;
+left:0px;
+z-index:59;
+}
+<?php 
+
+echo '</style>';
+} // end fixed positioning 
+
+
 
 
 
