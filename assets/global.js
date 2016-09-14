@@ -15,7 +15,8 @@ $(document).ready(function() {
     		resizeId = setTimeout(doneGlobalResizing, 20);
 	});
 	function doneGlobalResizing(){
-		ResponsiveReorder(); 
+		ResponsiveReorder(); // replace sidebar elements below content
+		$('#topbar').css('width', $(window).width() .'px'); // add topbar width resize
 	}
 	function ResponsiveReorder(){
 	    var small = 512;
