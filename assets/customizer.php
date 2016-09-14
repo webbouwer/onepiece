@@ -210,7 +210,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
     	
 		$wp_customize->add_section('onepiece_elements_topmenubar', array( 
-        	'title'    => __('Top menubar', 'onepiece'),
+        	'title'    => __('Topbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
 		'priority' => 20,
     	));
@@ -536,6 +536,24 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		
 		// ELEMENTS - TOP MENU BAR
+		//above / fixed overlay / absolute overlay
+    	$wp_customize->add_setting( 'onepiece_elements_topmenubar_behavior' , array(
+		'default' => 'rela', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_topmenubar_behavior', array(
+            	'label'          => __( 'Topbar behavior', 'onepiece' ),
+            	'section'        => 'onepiece_elements_topmenubar',
+            	'settings'       => 'onepiece_elements_topmenubar_behavior',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select topbar vertical behavior.', 'onepiece' ),
+            	'choices'        => array(
+                	'rela'   => __( 'Header top, scroll along', 'onepiece' ),
+            		'abso'   => __( 'Overlay header, scroll along', 'onepiece' ),
+                	'fixe'   => __( 'Overlay header, scroll fixed', 'onepiece' ),
+            		'mini'   => __( 'Overlay header, scroll fixed minified', 'onepiece' ),
+            	)
+    	)));
 		$wp_customize->add_setting( 'onepiece_elements_topmenubar_position' , array(
 		'default' => 'right', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -545,7 +563,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'section'        => 'onepiece_elements_topmenubar',
             	'settings'       => 'onepiece_elements_topmenubar_position',
             	'type'           => 'select',
- 	    	'description'    => __( 'Select topmenubar display/position.', 'onepiece' ),
+ 	    	'description'    => __( 'Select topmenubar horizontal display/position.', 'onepiece' ),
             	'choices'        => array(
                 	'none'   => __( 'center logo, hide menu', 'onepiece' ),
                 	'left'   => __( 'left', 'onepiece' ),
@@ -553,7 +571,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'right'   => __( 'right', 'onepiece' ),
             	)
     	)));
-    	
+		
     	
     	
 		
