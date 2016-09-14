@@ -26,7 +26,7 @@ Identity:
     
     Featured site-image
         image
-	..content max width
+	    width (replace/replacemargin)
 		
     Style & Layout
 	select style (css file)
@@ -37,6 +37,12 @@ Identity:
 Content:
     Static front page (default)
 	
+	Slider
+		display ( replace header/below header / footer top)
+		category 
+		height (percentage)
+		width type (full/margin)
+		
     Pages
         date/author display
 
@@ -59,7 +65,7 @@ Elements:
 
     Top menu bar
         Display none/position
-        .. above / fixed overlay / absolute overlay
+        Behavior relative, absolute, fixed, minified
     
     .. Login tabbar    
         .. Display none/position
@@ -68,15 +74,10 @@ Elements:
 		Image
 		Headerimage width (content/full)
 	
-    ..Slider
-		display
-		category 
-		height
-		width type
-		
     Main menu bar
         Display hide/position horizontal
 		Positioning vertical/placement
+		Behavior
 		
     Main Sidebar
         Display hide/alignment
@@ -582,7 +583,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainmenubar_position', array(
-            	'label'          => __( 'Main Menu Position', 'onepiece' ),
+            	'label'          => __( 'Mainmenu Display', 'onepiece' ),
             	'section'        => 'onepiece_elements_mainmenubar',
             	'settings'       => 'onepiece_elements_mainmenubar_position',
             	'type'           => 'select',
@@ -599,7 +600,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainmenubar_placement', array(
-            	'label'          => __( 'Main Menu Position', 'onepiece' ),
+            	'label'          => __( 'Mainmenu Vertical Position', 'onepiece' ),
             	'section'        => 'onepiece_elements_mainmenubar',
             	'settings'       => 'onepiece_elements_mainmenubar_placement',
             	'type'           => 'select',
@@ -611,6 +612,22 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'content'   => __( 'Top Main Content', 'onepiece' ),
             	)
     	)));
+		$wp_customize->add_setting( 'onepiece_elements_mainmenubar_behavior' , array(
+		'default' => 'stat', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainmenubar_behavior', array(
+            	'label'          => __( 'Mainmenubar behavior', 'onepiece' ),
+            	'section'        => 'onepiece_elements_mainmenubar',
+            	'settings'       => 'onepiece_elements_mainmenubar_behavior',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select mainmenubar behavior.', 'onepiece' ),
+            	'choices'        => array(
+                	'stat'   => __( 'Static scroll', 'onepiece' ),
+                	'stic'   => __( 'Stick to top', 'onepiece' ),
+            	)
+    	)));
+		
     	
 		
 		// MAIN SIDEBAR
