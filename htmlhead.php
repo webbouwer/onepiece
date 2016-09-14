@@ -141,6 +141,9 @@ $content_width = 960;
 // topbar
 $topbarbehavior = get_theme_mod('onepiece_elements_topmenubar_behavior', 'rela');
 
+// mainmenubar
+$mainmenubarbehavior = get_theme_mod('onepiece_elements_mainmenubar_behavior', 'stat');
+
 
  
 // get header replacement variables for page/post feautured images
@@ -382,7 +385,7 @@ z-index:99;
 width:100%;
 top:0px;
 left:0px;
-z-index:59;
+z-index:79;
 }
 <?php 
 } // end relative positioning 
@@ -450,7 +453,7 @@ position:absolute;
 top:48%;
 padding:10px;
 background-color:#ffffff;
-z-index:89;
+z-index:59;
 }
 div.anythingSlider span.back
 {
@@ -535,11 +538,10 @@ echo '<style type="text/css">';
 div#topbar
 {
 position:fixed;
-z-index:99;
 width:100%;
 top:0px;
 left:0px;
-z-index:59;
+z-index:69;
 }
 <?php 
 
@@ -554,12 +556,16 @@ echo '</style>';
  * htmlhead.php, assets/customizer.php, assets/global.js, 
  */ 
 // add js code for minified behavior
-if( $topbarbehavior == 'mini' ){
+
 ?>
 <script type="text/javascript" language="javascript">
 jQuery(function ($) { 
 
 $(window).on("mousewheel scroll", function() {
+
+<?php
+if( $topbarbehavior == 'mini' ){
+?>
 if( $(window).scrollTop() > 30 && !$("#topbar").hasClass('minified')){
    $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
@@ -590,7 +596,36 @@ if( $(window).scrollTop() > 30 && !$("#topbar").hasClass('minified')){
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px'; ?>',
    }, 800);
+} // end minify logobox
+
+
+<?php  
 }
+if($mainmenubarbehavior == 'stic' && ($topbarbehavior == 'fixe' || $topbarbehavior == 'mini') ){ 
+// #site-navigation
+// or #topbar-navigation 
+?>
+var offset = $('#site-navigation').offset();
+if( (offset.top - $(window).scrollTop()) < $("#topbar").height() && !$("#site-navigation .outermargin nav").hasClass('sticky')){
+	// move mainmenu to topbar menu
+	$("#site-navigation .outermargin nav").addClass('sticky');
+	if( $('#topbar-navigation').length > 0 ){
+	$('#topbar-navigation').after($("#site-navigation .outermargin nav"));
+	}else{
+	$('#topmenubar .outermargin .logobox').after($("#site-navigation .outermargin nav"));
+	//$('#site-navigation .outermargin nav').prependTo( $('#topmenubar .outermargin') );
+	}
+}else if( (offset.top - $(window).scrollTop()) >= $("#topbar").height() && $("#topmenubar .outermargin nav").hasClass('sticky')){
+	// move mainmenu back in place
+	$("#topmenubar .outermargin nav.sticky")
+	.removeClass('sticky')
+	.appendTo("#site-navigation .outermargin");
+}
+<?php 
+}
+?>
+
+
 });
 
 });
@@ -598,7 +633,6 @@ if( $(window).scrollTop() > 30 && !$("#topbar").hasClass('minified')){
 
 
 <?php
-}
 
 
 /**
