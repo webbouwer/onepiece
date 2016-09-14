@@ -136,6 +136,7 @@ $content_width = 960;
 // topbar
 $topbarbehavior = get_theme_mod('onepiece_elements_topmenubar_behavior', 'rela');
 
+
  
 // get header replacement variables for page/post feautured images
 $useheaderimage = get_post_meta($post->ID, "meta-page-headerimage", true);
@@ -516,7 +517,7 @@ echo '}';
 echo '</style>';
 
 /**
- * STYLING TOPBAR BEHAVIOR
+ * STYLING / JS TOPBAR BEHAVIOR
  * htmlhead.php, assets/customizer.php, assets/global.js, 
  */ 
 if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){
@@ -536,8 +537,34 @@ z-index:59;
 echo '</style>';
 } // end fixed positioning 
 
+// add js code for minified behavior
+if( $topbarbehavior == 'mini' ){
+?>
+<script type="text/javascript" language="javascript">
+jQuery(function ($) { 
+
+//$(window).ready(function() {
+
+$(window).on("mousewheel scroll", function() {
+if( $(window).scrollTop() > 50 && !$("#topbar").hasClass('minified')){
+   $("#topbar").addClass('minified');
+   $(".logobox a img").stop().animate({
+				width:'<?php echo get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px'; ?>',
+   }, 800);
+}else if( $(window).scrollTop() <= 50 && $("#topbar").hasClass('minified') ){
+   $("#topbar").removeClass('minified');
+   $(".logobox a img").stop().animate({
+				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px'; ?>',
+   }, 800);
+}
+});
 
 
+	
+});
+</script>
+<?php
+}
 
 
 /**
