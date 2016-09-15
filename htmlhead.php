@@ -570,7 +570,7 @@ if( $(window).scrollTop() > 30 && !$("#topbar").hasClass('minified')){
    $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
       .css({
-        backgroundColor:'#ffffff', /* customize variable */
+        /*backgroundColor:'#ffffff',  customize variable */
         position: 'absolute',
         top:0,
         left:0,
