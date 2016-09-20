@@ -128,6 +128,8 @@ edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>'
 $mainpageoption = '';
 $mainpagecontent = '';
 
+
+
 /** CHILDPAGES
  *  Page theme childpages display
  */
@@ -180,10 +182,14 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
             $menu .= '<li id="button-'.$page->post_name.'" data-imgurl="'.$contentimage.'"><a href="'.get_permalink($page->ID).'" target="_self">'.$page->post_title.'</a></li>';
             $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent"><div class="subtitle"><h3>'.$page->post_title.'</h3></div><div class="subcontent">'.
             apply_filters('the_content',$pieces['main'])
-            .'</div><a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.$page->post_title.'</a><div class="childcontent moretextbox">'.apply_filters('the_content',$pieces['extended']).'</div></li>';
+            .'</div>';
+            if($childpagedisplay != 'fade' && !empty($pieces['extended'])){
+            $content .= '<a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.__('Read more', 'onepiece').'</a>';
+            }
+            $content .= '<div class="childcontent moretextbox">'.apply_filters('the_content',$pieces['extended']).'</div></li>';
         }
         
-        echo '<div class="page-content childpages">';
+        echo '<div class="page-content childpages '.$childpagedisplay.'">';
         // subpagemenu
         if( $childpagedisplay == 'menu' || $childpagedisplay == 'fade'){ 
         //echo '<h3>Sub Pages</h3>';
@@ -312,34 +318,6 @@ jQuery(document).ready(function($) {
     			$( this ).removeClass('hovered');
   		    }
 		);
-});
-</script>
-<?php
-}
-
-if( $childpagedisplay == 'pop' ){
-?>
-<script type="text/javascript"> 
-/**
- * Tab menu
- * Fade header 
- * Slide down text
- */
-jQuery(document).ready(function($) {
-
-		$('ul#childpagecontent li.childcontent .moretextbox').hide();
-        //$('ul#childpagecontent li.childcontent .moretextbox').eq(0).addClass('active').slideDown();
-        //$('ul#childpagemenu li').eq(0).addClass('active');
-        
-		$('.childcontent a.readmore').on('click', function(){ 
-		$('ul#childpagecontent li.childcontent').removeClass('active');
-        $(this).parent().addClass('active');
-		$('ul#childpagecontent li.childcontent .moretextbox').slideUp();
-    	$('ul#childpagecontent li.active .moretextbox').slideDown();
-        // https://www.loginradius.com/engineering/simple-popup-tutorial/
-		return false;
-		});
-		
 });
 </script>
 <?php

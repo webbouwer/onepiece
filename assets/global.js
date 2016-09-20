@@ -8,7 +8,7 @@ $(document).ready(function() {
  * on resize
  * reorder sidebar html (index.php, page.php, gallery.php)
  */  
-    /* on resize */
+    /* On resize */
 	var resizeId;
 	$(window).resize(function() {
     		clearTimeout(resizeId);
@@ -18,6 +18,10 @@ $(document).ready(function() {
 		ResponsiveReorder(); // replace sidebar elements below content
 		$('#topbar').css('width', $(window).width() +'px'); // add topbar width resize
 	}
+/**
+ * RESPONSIVE ORDER
+ * #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
+ */
 	function ResponsiveReorder(){
 	    var small = 512;
 	    if( $(window).width() > small ){
@@ -37,7 +41,7 @@ $(document).ready(function() {
 	    if( $(window).width() < small ){
 	        // append    
 	        if( $("#sidebar2").hasClass('ins') ){ // inside first
-	        $("#sidebar2").appendTo("#contentcontainer .outermargin");
+	        $("#sidebar2").appendTo("#contentcontainer . ");
 	        }
 	        if($("#pagesidebarcontainer").length){ 
 	        $("#pagesidebarcontainer").appendTo("#contentcontainer .outermargin");
@@ -51,10 +55,64 @@ $(document).ready(function() {
 	}
 	ResponsiveReorder();
 	
-
+/**
+ * LOADING MESSAGEBOX
+ * body (index.php, page.php, gallery.php)
+ */ 
+	$('body').append('<div class="loadbox"><span>Loading</span></div>');
+	$('body > .loadbox').hide().fadeIn(400);
+	
+/**
+ * SCROLL TO TOP
+ * window top (index.php, page.php, gallery.php)
+ */ 
+	$('#maincontent').append('<a href="#" class="scrollToTop"><span>Scroll To Top</span></a>');
+	$('.scrollToTop').hide();
+	$('.scrollToTop, .site-logo').click(function(){
+		$('html, body').animate({scrollTop : 0},800);
+		return false;
+	});
     $(window).scroll(function(s){
+		if ($(this).scrollTop() > 100) {
+			$('.scrollToTop').fadeIn();
+		} else {
+			$('.scrollToTop').fadeOut();
+		}			  
     });
- 
+
+/**
+ * CONTENT POPUPBOX
+ * body (index.php, page.php, gallery.php)
+ */ 
+	$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent"></div></div>');
+    $('#mainpopupbox').hide();
+    $('.popupcloak').hide();
+    $('div.childpages.pop .moretextbox').hide();
+    
+    function loadpopup( popcontent ){
+		$('.popupcloak').fadeIn(300);
+		$('#mainpopupbox .popupcontent').html( popcontent )
+		$('#mainpopupbox').fadeIn(300);
+    }
+	function closepopup(){
+		$('.popupcloak').fadeOut(300);
+		
+		$('#mainpopupbox').fadeOut(300, function(){
+			$('#mainpopupbox .popupcontent').html('');										 
+		});
+	}
+    
+    $('div.childpages.pop .readmore').click(function(){
+		var content =  $(this).parent().find('.subtitle').html() + $(this).next('.moretextbox').html();
+		loadpopup( content );
+		return false;
+	});
+	
+	$('.popupcloak').click(function(){
+		closepopup();
+		return false;
+	});
+    
 });
 
 $(window).load(function() { 
@@ -79,6 +137,11 @@ $('a[href*=#]:not([href=#])').click(function() {
 }); 
 
 
+/**
+ * LOADER BOX
+ * onload/content loaded
+ */  
+$('body > .loadbox').fadeOut(1200);
 
 });
  

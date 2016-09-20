@@ -155,6 +155,15 @@ $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
 // get childpage options
 $childpagedisplay = get_post_meta($post->ID, "meta-box-display-childpages", true);
 
+
+// get main popup options
+$popupdefaultdisplay = get_theme_mod('onepiece_content_mainpopup_display', 'medium' );
+$popupoverlaycolor = get_theme_mod('onepiece_content_mainpopup_overlaycolor', '#ffffff' );
+$popupoverlayopacity = get_theme_mod('onepiece_content_mainpopup_overlayopacity', 20 );
+
+
+
+
 // detect variables for available sliders
 // add slider code if not hidden by page settings
 // 1 default slider is set with category available
@@ -194,6 +203,8 @@ $sliderdisplay = get_post_meta($post->ID, "pagetheme_slide_displaytype", true);
 $slidercat = get_post_meta($post->ID, "pagetheme_slide_selectbox", true);
 $sliderheight = get_post_meta($post->ID, "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta($post->ID, "pagetheme_slide_displaywidth", true);
+
+
 
 // get html for default slider and page slider if available
 if( ( $sliderdefaultdisplay == 'replaceheader' || $sliderdefaultdisplay == 'belowheader' ) && $sliderdefaultcat != 'uncategorized' ){
@@ -392,6 +403,56 @@ z-index:79;
 } // end absolute positioning 
 ?>
 
+/* POPUP STYLING */
+<?php // popup variable display
+if($mobile){
+$w = 96;
+$l = 2;
+}else{
+$w = 80;
+$l = 10;
+if( $popupdefaultdisplay == 'large'){
+$w = 100;
+$l = 0;
+}elseif( $popupdefaultdisplay == 'small'){
+$w = 60;
+$l = 20;
+}
+$c = $popupoverlaycolor;
+$o = ( 100 - $popupoverlayopacity) / 100;
+}
+?>
+.popupcloak
+{
+position:fixed;
+top:0px;
+left:0px;
+height:100%;
+width:100%;
+z-index:80;
+background-color:<?php echo $c; ?>;
+opacity:<?php echo $o; ?>;
+}
+#mainpopupbox
+{
+position:fixed;
+top:10%;
+left:<?php echo $l; ?>%;
+width:<?php echo $w; ?>%;
+height:80%;
+z-index:81;
+background-color:#ffffff;
+overflow:auto; 
+}
+#mainpopupbox .popupcontent
+{
+position:relative;
+width:auto;
+padding:4% 5%;
+}
+
+
+/* SLIDER STYLES */
 div#sliderbox-head,
 div#sliderbox-footer
 {

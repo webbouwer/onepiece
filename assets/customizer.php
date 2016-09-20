@@ -47,6 +47,12 @@ Content:
 		height (percentage)
 		width type (full/margin)
 		
+	Popup
+		display ( wide, medium, small )  
+		.. color bg overlay
+		.. transparency bg overlay (0-1)
+		.. display close button
+		
     Pages
         date/author display
 
@@ -206,6 +212,12 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Slider', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
 			'priority' => 50,
+    	));
+		
+    	$wp_customize->add_section('onepiece_content_mainpopup', array( 
+        	'title'    => __('Popup', 'onepiece'),
+        	'panel'  => 'onepiece_content_panel',
+			'priority' => 60,
     	));
     	$wp_customize->add_section('onepiece_content_panel_page', array( 
         	'title'    => __('Pages', 'onepiece'),
@@ -387,6 +399,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 
 
+
 		// COLORS
 		// body bg 
 		$wp_customize->add_setting( 'onepiece_identity_colors_bodybg' , array(
@@ -455,7 +468,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		
 		
-		
+	/* More colors	
 		
 		// mainmenu bg
 		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubg' , array(
@@ -532,7 +545,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'settings' => 'onepiece_identity_colors_mainmenubutlinkactive',
     	) ) ); 
 		
-		
+	*/	
 		
 		
 
@@ -611,6 +624,49 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
+		
+		
+		// CONTENT - POPUP 
+		$wp_customize->add_setting( 'onepiece_content_mainpopup_display' , array(
+		'default' => 'medium', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_mainpopup_display', array(
+            	'label'          => __( 'Popup display size', 'onepiece' ),
+            	'section'        => 'onepiece_content_mainpopup',
+            	'settings'       => 'onepiece_content_mainpopup_display',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select popup default display size.', 'onepiece'),
+            	'choices'        => array(
+                	'large'   => __( 'Wide screen', 'onepiece' ),
+                	'medium'   => __( 'Medium box', 'onepiece' ),
+            		'small'   => __( 'Small box', 'onepiece' ),
+            	)
+    	)));
+		
+		
+		// Popup overlay color bg
+		$wp_customize->add_setting( 'onepiece_content_mainpopup_overlaycolor' , array(
+		'default' => '#ffffff', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_content_mainpopup_overlaycolor', array(
+		'label' => __( 'Background overlay color', 'fndtn' ),
+		'section' => 'onepiece_content_mainpopup',
+		'settings' => 'onepiece_content_mainpopup_overlaycolor',
+    	) ) ); 
+		
+		$wp_customize->add_setting( 'onepiece_content_mainpopup_overlayopacity' , array(
+		'default' => '80', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_mainpopup_overlayopacity', array(
+            	'label'          => __( 'Background overlay transparency', 'onepiece' ),
+            	'section'        => 'onepiece_content_mainpopup',
+            	'settings'       => 'onepiece_content_mainpopup_overlayopacity',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Overlay transparency (percentage).', 'onepiece' ),
+    	)));
 
 
 

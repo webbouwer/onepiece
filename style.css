@@ -2,7 +2,7 @@
 Theme Name: onepiece
 Theme URI: http://www.webdesigndenhaag.net/onepiece
 Description: WP Theme for development & custom design now hosted on github
-Version: 0.6.4.8
+Version: 0.6.4.7.1
 Details URI: http://webdesigndenhaag.net/onepiece/wordpress-theme/onepiece-news/theme-updates/feed/
 Author: Oddsized
 Author URI: http://www.webdesigndenhaag.net
@@ -22,6 +22,16 @@ GitHub Branch: development
  developments
  > finnish the childpage options inc. a menu on childpages
  > redefine theme global, page and post options
+ > implement slider in widget / category view isotope popup
+ - tested an anythingslider implementation for popups(isotope item selected)
+   problems come with dynamic links and parent category selection
+   For a new test i'll use a single basic rich html output and handle the slider in  javascript as much as possible..
+ > Extend the onepiece widget 
+ - the widget should be multi purpose, easy to configure
+ - featured options to implement
+     execute custom php code
+     show media (slides/banner)
+     show content (single/list/pagenav)
  > Create more standards for customized functions and variables
  
 */
@@ -45,6 +55,14 @@ position:relative;
 height:100%;
 width:100%;
 }
+
+.clr
+{
+clear:both;
+height:0;
+line-height:0;
+}
+
 a img
 {
 border:none;
@@ -54,12 +72,45 @@ img.attachment-thumbnail, img.attachment-tiny-thumb, img.attachment-big-thumb, i
 width:100%;
 height:auto;
 }
-.clr
-{
-clear:both;
-height:0;
-line-height:0;
+
+
+
+.scrollToTop{
+position:fixed;
+display:block;
+bottom:30px;
+right:4%;
+background-color:white;
+color:black;
+padding:5px 6px;
+z-index:79;
 }
+
+
+
+
+
+body .loadbox
+{
+position:fixed;
+left:45%;
+width:10%;
+top:0px;
+text-align:center;
+z-index:90;
+}
+body .loadbox span
+{
+display:block;
+padding:5px;
+background-color:#000;
+color:#CCCCCC;
+text-transform:uppercase;
+}
+
+
+
+
 
 #pagecontainer
 {
@@ -74,6 +125,36 @@ width:100%;
 min-height:120px;
 max-height:100%;
 }
+
+
+
+/*********************** default popup styling ********************
+.popupcloak
+{
+position:fixed;
+top:0px;
+left:0px;
+height:100%;
+width:100%;
+z-index:80;
+}
+#mainpopupbox
+{
+position:fixed;
+top:10%;
+left:8%;
+height:80%;
+width:auto;
+background-color:#ffffff;
+z-index:81;
+}
+#mainpopupbox .popupcontent
+{
+}
+
+
+*/
+
 
 /*************************** WP CORE ***************************/
 .wp-caption
