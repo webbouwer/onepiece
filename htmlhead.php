@@ -132,14 +132,19 @@ $content_width = 960;
 }
 
 
-/**
- * PAGE HEADER IMAGE / REPLACE / SLIDER 
- * :jquery anythingslider 
- */ 
  
- 
+// default style sizes
+$stylelayout_fontsize = get_theme_mod('onepiece_identity_stylelayout_fontsize', 5);
+$stylelayout_spacing = get_theme_mod('onepiece_identity_stylelayout_spacing', 5);
+$stylelayout_speed = 100 * get_theme_mod('onepiece_identity_stylelayout_speed', 5);
+
+
 // topbar
 $topbarbehavior = get_theme_mod('onepiece_elements_topmenubar_behavior', 'rela');
+$topbarbgfixed = get_theme_mod('onepiece_elements_topmenubar_bgfixed', 'keep');
+$topbaropacity = get_theme_mod('onepiece_elements_topmenubar_opacity', 20);
+// + colors 
+
 
 // mainmenubar
 $mainmenubarbehavior = get_theme_mod('onepiece_elements_mainmenubar_behavior', 'stat');
@@ -163,6 +168,10 @@ $popupoverlayopacity = get_theme_mod('onepiece_content_mainpopup_overlayopacity'
 
 
 
+/**
+ * PAGE HEADER IMAGE / REPLACE / SLIDER 
+ * :jquery anythingslider 
+ */ 
 
 // detect variables for available sliders
 // add slider code if not hidden by page settings
@@ -247,9 +256,9 @@ $('.sliderarea').anythingSlider({
     expand		        : true, 
     mode                : 'fade',
     resizeContents      : true,
-    delay               : 5000, 
-    resumeDelay         : 5000,
-    animationTime       : 400,       
+    delay               : <?php echo $stylelayout_speed*4; ?>, 
+    resumeDelay         : <?php echo $stylelayout_speed*5; ?>,
+    animationTime       : <?php echo $stylelayout_speed; ?>,       
     easing              : "swing",
     buildArrows         : true,
     buildNavigation     : false, 
@@ -346,7 +355,7 @@ var setupSwipe = function(slider) {
 			$('html, body').animate({
 				scrollTop: $("#contentcontainer").offset().top 
 			},{
-        			duration: 800,
+        			duration: <?php echo $stylelayout_speed*4; ?>,
         			complete: function () { 
                 		
         			}
@@ -358,7 +367,7 @@ var setupSwipe = function(slider) {
 			 $('html, body').animate({
 				scrollTop: $("#topbar").offset().top 
 			},{
-        			duration: 400,
+        			duration: <?php echo $stylelayout_speed/2; ?>,
         			complete: function () {
         			}
       			});
@@ -382,8 +391,73 @@ var setupSwipe = function(slider) {
 
 </script>			
 <style type="text/css">
+<?php // default font size, spacing and speed 
+$size = ( $stylelayout_fontsize * 0.2 );
+?>
+body
+{
+font-size:<?php echo $size; ?>em;
+}
 
-<?php // detect topbar overlay 
+
+
+<?php /* TOPBAR BEHAVIOR */
+
+if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
+|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
+
+$toppos = 'absolute'; 
+
+}else{
+
+if( $topbarbehavior == 'abso'){ 
+$toppos = 'absolute'; 
+}else{ 
+$toppos = 'relative';
+}
+
+}
+
+if( $mobile && $topbarbehavior == 'mini' ){ 
+$toppos = 'relative';
+}
+
+
+?>
+div#topbar
+{
+position:<?php echo $toppos; ?>;
+width:100%;
+z-index:69;
+}
+div#topbar.minified
+{
+position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
+}
+
+<?php
+/* 
+if( $topbarbehavior != 'rela' ){ 
+?>
+div#topbar
+{
+position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
+width:100%;
+top:0px;
+left:0px;
+z-index:79;
+}
+
+
+<?php 
+}
+
+if( ( $displaytype == '50' && !$mobile ) || $displaytype == '33' || $displaytype == '25' || $displaytype == '20'){
+}
+*/
+
+/*
+// detect topbar overlay 
 if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
 || $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
 
@@ -391,7 +465,7 @@ if( $topbarbehavior != 'rela' ){
 ?>
 div#topbar
 {
-position:absolute;
+position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'fixed';} ?>;
 z-index:99;
 width:100%;
 top:0px;
@@ -400,7 +474,9 @@ z-index:79;
 }
 <?php 
 } // end relative positioning 
+
 } // end absolute positioning 
+*/
 ?>
 
 /* POPUP STYLING */
@@ -421,6 +497,8 @@ $l = 20;
 $c = $popupoverlaycolor;
 $o = ( 100 - $popupoverlayopacity) / 100;
 }
+
+
 ?>
 .popupcloak
 {
@@ -566,6 +644,12 @@ position:relative;
 // default js codes
 echo '<script src="'.get_template_directory_uri().'/assets/global.js" type="text/javascript" language="javascript"></script>';
 
+
+/**
+ * CSS GLOBAL SETTINGS
+ * htmlhead.php, assets/customizer.php, assets/global.js, 
+ */
+
 echo '<style type="text/css">';
 echo '#headercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logo_maxwidth',240 ).'px !important; }';
 echo '#footercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px !important; }';
@@ -583,31 +667,10 @@ echo '}';
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_max', 1200 ).'px) {';
 echo '.outermargin { max-width:'.get_theme_mod('onepiece_responsive_large_outermargin', 1600 ).'px; }';
 echo '}';
-echo '</style>';
 
 
-
-
-
-/**
- * CSS TOPBAR MINIFIED BEHAVIOR
- * htmlhead.php, assets/customizer.php, assets/global.js, 
- */ 
-if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){
-echo '<style type="text/css">';
-?>
-div#topbar
-{
-position:fixed;
-width:100%;
-top:0px;
-left:0px;
-z-index:69;
-}
-<?php 
 
 echo '</style>';
-} // end fixed positioning 
 
 
 
@@ -622,41 +685,75 @@ echo '</style>';
 <script type="text/javascript" language="javascript">
 jQuery(function ($) { 
 
-$(window).on("mousewheel scroll", function() {
 
-<?php
-if( $topbarbehavior == 'mini' ){
-?>
-if( $(window).scrollTop() > 30 && !$("#topbar").hasClass('minified')){
-   $("#topbar").addClass('minified').append( $("<div>")
+$(document).ready(function() {   
+
+	
+
+	<?php if($topbarbgfixed == 'keep'){ ?>
+	
+	$("#topbar").append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
       .css({
         /*backgroundColor:'#ffffff',  customize variable */
         position: 'absolute',
         top:0,
         left:0,
-        opacity:0,
+        opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
+        zIndex:-1,
+        width:'100%', 
+        height:'100%'
+      }) 
+   );
+   <?php } ?>
+});
+
+$(window).on("mousewheel scroll", function() {
+
+<?php
+if( $topbarbehavior == 'mini' ){
+?>
+if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
+	 <?php if($topbarbgfixed != 'keep'){ ?>
+	 $("#topbar .minifiedtopbarbg").remove();
+	 <?php } ?>
+     $("#topbar").addClass('minified').append( $("<div>")
+      .attr('class', 'minifiedtopbarbg')
+      .css({
+        /*backgroundColor:'#ffffff',  customize variable */
+        position: 'absolute',
+        top:0,
+        left:0,
+        opacity:<?php if($topbarbgfixed != 'keep'){ echo ( 100 - $topbaropacity) / 100; }else{ echo 0; } ?>,
         zIndex:-1,
         width:'100%', 
         height:'100%'
       }) 
     );
+
    $("#topbar .minifiedtopbarbg").animate({
-       opacity:1,
-   }, 800);
+       opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
+   }, <?php echo $stylelayout_speed; ?>);
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px'; ?>',
-   }, 800);
-}else if( $(window).scrollTop() <= 30 && $("#topbar").hasClass('minified') ){
-   $("#topbar").removeClass('minified');
+   }, <?php echo $stylelayout_speed; ?>);
+   
+}else if( $(window).scrollTop() <= 1 && $("#topbar").hasClass('minified') ){
+   
+   <?php if($topbarbgfixed != 'keep'){ ?>
    $("#topbar .minifiedtopbarbg").animate({
        opacity:0,
-   }, 800, function(){
+   }, <?php echo $stylelayout_speed; ?>, function(){
       this.remove();
    });
+   <?php } ?>
+   
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px'; ?>',
-   }, 800);
+   }, <?php echo $stylelayout_speed; ?>);
+   
+   $("#topbar").removeClass('minified');
+   
 } // end minify logobox
 
 

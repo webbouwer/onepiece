@@ -27,6 +27,12 @@ background-color:<?php echo get_theme_mod('onepiece_identity_colors_topbarbg' , 
 #topbar {
 color:<?php echo get_theme_mod('onepiece_identity_colors_topbartext' , '#232323'); ?> ;
 }
+#topbar a {
+color:<?php echo get_theme_mod('onepiece_identity_colors_topbartextlink' , '#000000'); ?> ;
+}
+#topbar a:hover {
+color:<?php echo get_theme_mod('onepiece_identity_colors_topbartextlinkhover' , '#232323'); ?> ;
+}
 
 /*
 // mainmenu bg .. onepiece_identity_colors_mainmenubg

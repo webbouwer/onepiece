@@ -34,7 +34,11 @@ Identity:
 		.. spacing 1-10
 		.. speed 1-10
 	
-	.. bold / minified
+	Colors
+		body bg
+		body text
+		body textlink
+		body textlink hover
 	
 	.. Users
 	   
@@ -77,6 +81,9 @@ Elements:
     Top menu bar
         Display none/position
         Behavior relative, absolute, fixed, minified
+		.. bg color 
+		.. text color
+		.. transparency bg (0-1)
     
     .. Login tabbar    
         .. Display none/position
@@ -444,27 +451,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	) ) ); 
 		
 		
-		
-		// topbar bg
-		$wp_customize->add_setting( 'onepiece_identity_colors_topbarbg' , array(
-		'default' => '#ffffff', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbarbg', array(
-		'label' => __( 'Topbar background color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_topbarbg',
-    	) ) ); 
-		// topbar text
-		$wp_customize->add_setting( 'onepiece_identity_colors_topbartext' , array(
-		'default' => '#232323', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartext', array(
-		'label' => __( 'Topbar text color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_topbartext',
-    	) ) ); 
+	
 		
 		
 		
@@ -790,7 +777,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		
 		// ELEMENTS - TOP MENU BAR
-		//above / fixed overlay / absolute overlay
+		// above / fixed overlay / absolute overlay
     	$wp_customize->add_setting( 'onepiece_elements_topmenubar_behavior' , array(
 		'default' => 'rela', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -808,6 +795,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'mini'   => __( 'Overlay header, scroll fixed minified', 'onepiece' ),
             	)
     	)));
+		// topbar menu position
 		$wp_customize->add_setting( 'onepiece_elements_topmenubar_position' , array(
 		'default' => 'right', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -824,6 +812,81 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'center'   => __( 'center', 'onepiece' ),
             		'right'   => __( 'right', 'onepiece' ),
             	)
+    	)));
+			
+		
+		
+		// topbar menu position
+		$wp_customize->add_setting( 'onepiece_elements_topmenubar_bgfixed' , array(
+		'default' => 'keep', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_topmenubar_bgfixed', array(
+            	'label'          => __( 'Topbar bg color display', 'onepiece' ),
+            	'section'        => 'onepiece_elements_topmenubar',
+            	'settings'       => 'onepiece_elements_topmenubar_bgfixed',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Topbar background color.', 'onepiece' ),
+            	'choices'        => array(
+                	'keep'   => __( 'Always use the bg color', 'onepiece' ),
+                	'mini'   => __( 'Only when minified', 'onepiece' ),
+            	)
+    	)));
+		
+		// topbar bg color
+		$wp_customize->add_setting( 'onepiece_identity_colors_topbarbg' , array(
+		'default' => '#ffffff', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbarbg', array(
+		'label' => __( 'Topbar background color', 'fndtn' ),
+		'section' => 'onepiece_elements_topmenubar',
+		'settings' => 'onepiece_identity_colors_topbarbg',
+    	) ) ); 
+		// topbar text color
+		$wp_customize->add_setting( 'onepiece_identity_colors_topbartext' , array(
+		'default' => '#232323', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartext', array(
+		'label' => __( 'Topbar text color', 'fndtn' ),
+		'section' => 'onepiece_elements_topmenubar',
+		'settings' => 'onepiece_identity_colors_topbartext',
+    	) ) ); 
+		
+		// topbar textlink color
+		$wp_customize->add_setting( 'onepiece_identity_colors_topbartextlink' , array(
+		'default' => '#000000', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartextlink', array(
+		'label' => __( 'Topbar textlink color', 'fndtn' ),
+		'section' => 'onepiece_elements_topmenubar',
+		'settings' => 'onepiece_identity_colors_topbartextlink',
+    	) ) ); 
+		
+		
+		// topbar textlink hover color
+		$wp_customize->add_setting( 'onepiece_identity_colors_topbartextlinkhover' , array(
+		'default' => '#232323', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartextlinkhover', array(
+		'label' => __( 'Topbar link hover color', 'fndtn' ),
+		'section' => 'onepiece_elements_topmenubar',
+		'settings' => 'onepiece_identity_colors_topbartextlinkhover',
+    	) ) ); 
+		// topbar bg transparency
+		$wp_customize->add_setting( 'onepiece_elements_topmenubar_opacity' , array(
+		'default' => '15', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_topmenubar_opacity', array(
+            	'label'          => __( 'Topbar background transparency', 'onepiece' ),
+            	'section'        => 'onepiece_elements_topmenubar',
+            	'settings'       => 'onepiece_elements_topmenubar_opacity',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Bg color transparency (percentage).', 'onepiece' ),
     	)));
 		
     	
