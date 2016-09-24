@@ -61,8 +61,13 @@ Content:
         date/author display
 
     Posts
-        ..Exclude categories
+        .. Exclude categories
         Use highlight first posts
+		.. Next / Previous links
+		
+		.. Tags display
+		.. Categories Display
+		.. Next / Previous links
 
         Display date/author
         Featured image header
@@ -71,6 +76,8 @@ Content:
         Display category list Title & Description 
         ..Exclude categories
 
+	Gallary
+		Default category
    
 Elements:
 
@@ -227,15 +234,19 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 			'priority' => 60,
     	));
     	$wp_customize->add_section('onepiece_content_panel_page', array( 
-        	'title'    => __('Pages', 'onepiece'),
+        	'title'    => __('Page', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
     	));
     	$wp_customize->add_section('onepiece_content_panel_posts', array( 
-        	'title'    => __('Posts', 'onepiece'),
+        	'title'    => __('Post', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
     	));
     	$wp_customize->add_section('onepiece_content_panel_category', array( 
-        	'title'    => __('Categories', 'onepiece'),
+        	'title'    => __('Category', 'onepiece'),
+        	'panel'  => 'onepiece_content_panel',
+    	));
+    	$wp_customize->add_section('onepiece_content_panel_gallery', array( 
+        	'title'    => __('Gallery', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
     	));
     	
@@ -734,6 +745,70 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                         'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
             	)
     	)));
+		
+		
+	
+		
+		// CONTENT - POSTS - Tags display not / belowtitle / belowcontent
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_tagdisplay' , array(
+		'default' => 'belowcontent', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_tagdisplay', array(
+            	'label'          => __( 'Tag display', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_tagdisplay',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Tag display in single post view', 'onepiece' ),
+            	'choices'        => array(
+                	'not'   => __( 'No display', 'onepiece' ),
+                	'belowtitle'   => __( 'Below title', 'onepiece' ),
+                    'belowcontent'   => __( 'Below content', 'onepiece' ),
+            	)
+    	)));
+		
+		//.. Post related Categories display not / belowheader / belowcontent
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_catdisplay' , array(
+		'default' => 'belowcontent', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_catdisplay', array(
+            	'label'          => __( 'Category display', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_catdisplay',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Related Categories display in single post view', 'onepiece' ),
+            	'choices'        => array(
+                	'not'   => __( 'No display', 'onepiece' ),
+                	'belowtitle'   => __( 'Below title', 'onepiece' ),
+                    'belowcontent'   => __( 'Below content', 'onepiece' ),
+            	)
+    	)));
+		
+		//.. Next / Previous links not / belowheader / belowcontent / contentside
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_nextprevdisplay' , array(
+		'default' => 'belowcontent', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_nextprevdisplay', array(
+            	'label'          => __( 'Next / Previous link display', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_nextprevdisplay',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Next and Prev link display in single post view', 'onepiece' ),
+            	'choices'        => array(
+                	'not'   => __( 'No display', 'onepiece' ),
+                    'belowcontent'   => __( 'Below content', 'onepiece' ),
+                    'abovefooter'   => __( 'Above footer (end content)', 'onepiece' ),
+                    'contentside'   => __( 'On content sides', 'onepiece' ),
+            	)
+    	)));
+		
+		
+		 
     	
     	// CONTENT - CATEGORIES
     	$wp_customize->add_setting( 'onepiece_content_panel_category_titledisplay' , array(
@@ -753,8 +828,27 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
     	
+    	
+    	
+    	
+    	// GALLERY 
+    	$wp_customize->add_setting( 'onepiece_content_gallery_category' , array(
+		'default' => 'uncategorized', 
+    	//'capability' => 'edit_theme_options',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_gallery_category', array(
+            	'label'          => __( 'Default category', 'fndtn' ),
+            	'section'        => 'onepiece_content_panel_gallery',
+            	'settings'       => 'onepiece_content_gallery_category', 
+ 	    	'description'    => __( 'Select the default category for the gallery.', 'fndtn' ),
+            	'type'    => 'select',
+    		'choices' => get_categories_select()
+    	)));
 		
 		
+
+
 
 		
 		// ELEMENTS - HEADER IMAGE
