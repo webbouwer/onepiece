@@ -68,7 +68,7 @@ $(document).ready(function() {
  */ 
 	$('#maincontent').append('<a href="#" class="scrollToTop"><span>Scroll To Top</span></a>');
 	$('.scrollToTop').hide();
-	$('.scrollToTop, .site-logo').click(function(){
+	$('.scrollToTop').click(function(){
 		$('html, body').animate({scrollTop : 0},800);
 		return false;
 	});
@@ -79,6 +79,16 @@ $(document).ready(function() {
 			$('.scrollToTop').fadeOut();
 		}			  
     });
+    $('.site-logo').click(function(){
+        
+        if ($(window).scrollTop() > 100) {
+		    $('html, body').animate({scrollTop : 0},800);
+		    return false;
+		} else {
+			window.location.href = $(this).href;
+		}
+        
+	});
 
 /**
  * CONTENT POPUPBOX
