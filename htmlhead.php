@@ -7,13 +7,14 @@
  * incl. in all pages (pagetemplate specific)
  */
 
+
 /**
- * PAGE TEMPLATE GALLERY
- * gallery.php
+ * MOBILE DETECT (PHP)
  * 
  * $mobile true/false from function mobile_device_detect() from http://detectmobilebrowsers.mobi 
  * @require functions.php (include /assets/mobile_detect.php)
  */
+ 
 $mobile = mobile_device_detect(true,false,true,true,true,true,true,false,false);
 
 // $post object document 
@@ -36,15 +37,17 @@ $values = get_post_custom( $post->ID );
 
 // $values get variables gallery template settings
 $selected = isset( $values['theme_gallery_category_selectbox'] ) ? $values['theme_gallery_category_selectbox'][0] : '';
+$gallerydefault = isset( $values['onepiece_content_gallery_category'] ) ? $values['onepiece_content_gallery_category'][0] : '';
 $pagetitle = isset( $values['theme_gallery_pagetitle_selectbox'] ) ? $values['theme_gallery_pagetitle_selectbox'][0] : '';
 $filters = isset( $values['theme_gallery_filters_selectbox'] ) ? $values['theme_gallery_filters_selectbox'][0] : '';
 $maxinrow = isset( $values['theme_gallery_items_maxinrow'] ) ? $values['theme_gallery_items_maxinrow'][0] : '5';
 $clickaction = isset( $values['theme_gallery_items_clickaction'] ) ? $values['theme_gallery_items_clickaction'][0] : 'poppost';
 
 // $topcat default gallery category
-// .. add default setting to customizer
 if($selected){
 $topcat = $selected;
+}elseif( $gallerydefault && $gallerydefault != '' ){
+$topcat = $gallerydefault;
 }else{
 $topcat = 'uncategorized';
 }
@@ -251,14 +254,15 @@ jQuery(document).ready(function($) {
     
 /* AnythingSlider */
 $(window).trigger('resize'); // adjust slider on resize
+// see https://github.com/CSS-Tricks/AnythingSlider/wiki/Setup
 $('.sliderarea').anythingSlider({
     theme		        : 'fullscreen', 
     expand		        : true, 
     mode                : 'fade',
     resizeContents      : true,
-    delay               : <?php echo $stylelayout_speed*4; ?>, 
-    resumeDelay         : <?php echo $stylelayout_speed*5; ?>,
-    animationTime       : <?php echo $stylelayout_speed; ?>,       
+    delay               : <?php echo $stylelayout_speed*10; ?>, 
+    resumeDelay         : <?php echo $stylelayout_speed*4; ?>,
+    animationTime       : <?php echo $stylelayout_speed*2; ?>,       
     easing              : "swing",
     buildArrows         : true,
     buildNavigation     : false, 
@@ -273,7 +277,9 @@ $('.sliderarea').anythingSlider({
     stopAtEnd           : false,     
     playRtl             : false,    
     startText           : "Start",   
-    stopText            : "Stop",   
+    stopText            : "Stop",  
+    enableKeyboard      : true,
+    toggleArrows        : true,
     //delayBeforeAnimate : 500,	
     onSlideComplete : function(slider){ // update the hash AFTER the slide is in view (so we can animate)
 	window.location.hash = '#' + slider.$currentPage[0].id;
@@ -667,9 +673,6 @@ echo '}';
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_max', 1200 ).'px) {';
 echo '.outermargin { max-width:'.get_theme_mod('onepiece_responsive_large_outermargin', 1600 ).'px; }';
 echo '}';
-
-
-
 echo '</style>';
 
 
@@ -738,6 +741,10 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
    
+   if(slider){
+   slider.stop();
+   }
+   
 }else if( $(window).scrollTop() <= 1 && $("#topbar").hasClass('minified') ){
    
    <?php if($topbarbgfixed != 'keep'){ ?>
@@ -754,6 +761,9 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
    
    $("#topbar").removeClass('minified');
    
+   if(slider){
+   slider.start();
+   }
 } // end minify logobox
 
 
@@ -1139,7 +1149,23 @@ $(window).load(function() {
  * head end, body start
  * index.php, page.php, gallery.php
  */ 
+ 
+// fontsize 
+$globalfontsize = 0.4 + $stylelayout_fontsize / 10;
+ 
+// buttons
+$vertical_padding_line = ($stylelayout_spacing / 2) * 3;
+$horizontal_padding_line = ($stylelayout_spacing / 3 ) * 2 ;
 
+// headers / boxes
+$vertical_padding_box = $stylelayout_spacing * 2;
+
+
+echo '<style>';
+echo 'body{ font-size:'.$globalfontsize.'em !important; }';
+echo 'ul.menu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
+echo 'h1,.readmore,p { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
+echo '</style>';
 echo '</head><body '; body_class(); 
 echo '><div id="pagecontainer"';
 if($mobile){
