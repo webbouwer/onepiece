@@ -129,7 +129,10 @@ $customlinkbutton .= '<a href="'.$custom_metabox_url.'" target="_blank" ';
 $customlinkbutton .= 'title="'.$linktext.' - '.get_the_title().'">'.$linktext.'</a></div>';
 }
 
-
+// display options
+$tagdisplay = get_theme_mod('onepiece_content_panel_posts_tagdisplay', 'belowcontent');
+$catdisplay = get_theme_mod('onepiece_content_panel_posts_catdisplay', 'belowcontent');
+$nextprevdisplay = get_theme_mod('onepiece_content_panel_posts_nextprevdisplay', 'belowcontent');
 
 // content
 if ( !is_single() && !is_page() ) { 
@@ -139,23 +142,45 @@ if ( !is_single() && !is_page() ) {
     
 }else{
 
+	if( $tagdisplay == 'belowtitle' ){
+    	// post tags
+    	the_tags(', ');  //the_tags('Tags: ',' '); 
+	}
+	
+	
+	if( $catdisplay == 'belowtitle' ){
+    	
+    	// post categories
+    	the_category(', ');
+	}
+
+
     // Post full content
     echo '<div class="post-content">'.apply_filters('the_content', get_the_content());
     echo $customlinkbutton.'</div>';
 
-
-    	// post categories
-    	the_category(', ');
-
+	
+	if( $tagdisplay == 'belowcontent' ){
     	// post tags
     	the_tags(', ');  //the_tags('Tags: ',' '); 
+	}
 
 
-	if( !is_page() ){
+	if( !is_page() && $nextprevdisplay == 'belowcontent' ){
     	// prev / next posts
     	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
     	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
 	}
+
+	
+	if( $catdisplay == 'belowcontent' ){
+    	
+    	// post categories
+    	the_category(', ');
+	}
+
+
+
 	
 	// post comments
     if ( comments_open() || get_comments_number() ) {
@@ -189,6 +214,14 @@ $counter++;
 endwhile;
 
 echo '</div>';
+
+
+if( !is_page() && ($nextprevdisplay == 'contentside' || $nextprevdisplay == 'abovefooter' )){ 
+    	// prev / next posts fixed positioned
+    	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
+    	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
+}
+
 
 
 if ( !is_single() && !is_page() ) {
