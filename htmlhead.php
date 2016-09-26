@@ -126,6 +126,17 @@ echo '<meta name="description" content="'.$site_description.'">'
 	.'<link rel="stylesheet" type="text/css" href="'.esc_url( get_template_directory_uri() ).'/style.css" />'
 	.'<link rel="stylesheet" type="text/css" href="'.esc_url( get_template_directory_uri() ).'/'.get_theme_mod('onepiece_identity_stylelayout_stylesheet', 'default.css').'" />';
 
+/**
+ * share meta info 
+ * ! should get featured image (header)
+ * linkedin - https://www.linkedin.com/help/linkedin/answer/46687
+ */
+echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'"/>'
+	.'<meta property="og:image" content="'.get_theme_mod( 'onepiece_identity_panel_sharing_description' ).'"/>'
+	.'<meta property="og:description" content="'.get_bloginfo( 'description' ).'"/>'
+	.'<meta property="og:url" content="'.esc_url( home_url( '/' ) ).'" />';
+
+
 // mobile meta 
 /* echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>'; */
 if($mobile){

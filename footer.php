@@ -72,6 +72,13 @@ dynamic_sidebar('widgets-bottom');
 echo '<div class="clr"></div></div>';
 } 
 
+
+if(  get_theme_mod('onepiece_elements_bottom_copyrighttext') != '' ){
+echo '<div id="copyright-textbox">';
+echo get_theme_mod('onepiece_elements_bottom_copyrighttext');
+echo '<div class="clr"></div></div>';
+}
+
 echo '<div class="clr"></div></div>';
 echo '</div>';
 ?>

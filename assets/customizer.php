@@ -26,7 +26,7 @@ Identity:
     
     Featured site-image
         image
-	    width (replace/replacemargin)
+	    ..width (replace/replacemargin)
 		
     Style & Layout
 		select style (css file)
@@ -183,7 +183,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'priority' => 10,
     	));
     	$wp_customize->add_section('onepiece_identity_panel_featured_image', array( 
-        	'title'    => __('Featured image', 'onepiece'),
+        	'title'    => __('Sharing', 'onepiece'),
         	'panel'  => 'onepiece_elements_identity',
 		'priority' => 30,
     	));
@@ -351,9 +351,21 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'label'    => __( 'Site featured image', 'onepiece' ),
         	'section'  => 'onepiece_identity_panel_featured_image',
         	'settings' => 'onepiece_identity_featured_image',
-		'description' => __( 'Upload or select a featured site-image, this will be used when no source related image is available.', 'onepiece' ),
+		'description' => __( 'Upload or select a featured site-image, for website sharing in social media.(ie. Facebook 1200 x 630 - 1.91:1)', 'onepiece' ),
         	'priority' => 10,
     	) ) );
+		
+		$wp_customize->add_setting( 'onepiece_identity_panel_sharing_description' , array(
+		'default' => 'Check out this cool website!', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_panel_sharing_description', array(
+            	'label'          => __( 'Site featured(intro) text', 'onepiece' ),
+            	'section'        => 'onepiece_identity_panel_featured_image',
+            	'settings'       => 'onepiece_identity_panel_sharing_description',
+            	'type'           => 'textarea',
+ 	    	'description'    => __( 'A short introduction text to share.', 'onepiece' ),
+    	)));
     	
 
 		// STYLE & LAYOUT
@@ -1133,6 +1145,17 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'center'   => __( 'center', 'onepiece' ),
             		'right'   => __( 'right', 'onepiece' ),
             	)
+    	)));
+		$wp_customize->add_setting( 'onepiece_elements_bottom_copyrighttext' , array(
+		'default' => 'Copyright 2016', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_bottom_copyrighttext', array(
+            	'label'          => __( 'Copyright text', 'onepiece' ),
+            	'section'        => 'onepiece_elements_bottommenubar',
+            	'settings'       => 'onepiece_elements_bottom_copyrighttext',
+            	'type'           => 'textarea',
+ 	    	'description'    => __( 'Copyright information text.', 'onepiece' ),
     	)));
 		
 	
