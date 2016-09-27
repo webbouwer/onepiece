@@ -657,10 +657,14 @@ position:relative;
 /**
  * HTML HEAD THEME DEFAULT CSS/JS
  * assets/global.js, assets/customizer.php
- */ 
-// default js codes
-echo '<script src="'.get_template_directory_uri().'/assets/global.js" type="text/javascript" language="javascript"></script>';
+ 
+ * default js codes
+ */
+ 
+// echo '<script src="'.get_template_directory_uri().'/assets/global.js" type="text/javascript" language="javascript"></script>';
+ 
 
+ 
 
 /**
  * CSS GLOBAL SETTINGS
@@ -1171,12 +1175,12 @@ $horizontal_padding_line = ($stylelayout_spacing / 3 ) * 2 ;
 // headers / boxes
 $vertical_padding_box = $stylelayout_spacing * 2;
 
-
 echo '<style>';
 echo 'body{ font-size:'.$globalfontsize.'em !important; }';
 echo 'ul.menu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
 echo 'h1,.readmore,p { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
 echo '</style>';
+
 echo '</head><body '; body_class(); 
 echo '><div id="pagecontainer"';
 if($mobile){
