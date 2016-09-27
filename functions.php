@@ -29,6 +29,7 @@ function onepiece_editor_styles() {
     add_editor_style( get_theme_mod('onepiece_identity_stylelayout_stylesheet', 'default.css') );
 }
 add_action( 'admin_init', 'onepiece_editor_styles' );
+  
 
 /****** Register menu's ******/
 function basic_setup_register_menus() {
@@ -174,6 +175,23 @@ function basic_setup_widgets_init() {
 	}
 }
 add_action( 'widgets_init', 'basic_setup_widgets_init' );
+
+
+/****** Javascript with customizer variables *****/
+// http://wordpress.stackexchange.com/questions/57386/how-do-i-force-wp-enqueue-scripts-to-load-at-the-end-of-head
+function onepiece_global_js() {
+    // Register the script first.
+    wp_register_script( 'custom_global_js', get_template_directory_uri().'/assets/global.js', 99, '1.0', false);
+
+    // Now we can localize the script with our data.
+    //$color_array = array( 'color1' => get_theme_mod('color1'), 'color2' => '#000099' );
+    //wp_localize_script( 'custom_global_js', 'object_name', $color_array );
+
+    // The script can be enqueued now or later.
+    wp_enqueue_script( 'custom_global_js');
+}
+add_action('wp_enqueue_scripts', 'onepiece_global_js');
+
 
 
 /****** Customize Adminbar ******/
