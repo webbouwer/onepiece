@@ -1,4 +1,10 @@
 /* Global */
+/** JS code with custom variables
+ *  
+ * localize this script  
+ * http://stackoverflow.com/questions/23763442/wordpress-custom-theme-mixing-php-and-javascript
+ *
+ */
 jQuery(function ($) { 
 
 $(document).ready(function() {    

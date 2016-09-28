@@ -52,56 +52,9 @@ $topcat = $gallerydefault;
 $topcat = 'uncategorized';
 }
 
-// build filtermenu     
-// $filters from $values 
-if($filters != 'none'){ // prepare filter menu and create category tag index
-// prepare category query
-$args = array( 
-    'child_of'                 => get_category_by_slug($topcat)->term_id,
-    'orderby'                  => 'name',
-    'order'                    => 'ASC', 
-    'public'                   => true,
-); 
-$categories = get_categories( $args );
-$cat_tags = ''; // string to hold tag menu for each category
-$tag_idx = ''; // string csv tag names
-$filtermenubox = '<ul id="topgridmenu" class="categorymenu">';
-$filtermenubox .= '<li><a class="category" href="#" data-filter="*">All</a></li>';
-
-// wp categories - http://wordpress.stackexchange.com/questions/212923/how-to-list-all-categories-and-tags-in-a-page 
-foreach ( $categories as $category ) {
-    
-if( $category->slug != $topcat ){
-    
-    // category option
-    $filtermenubox .= '<li><a class="category" href="#" data-filter="' . $category->slug . '">' . $category->name . '</a>'; 
-    
-    // tag option submenu
-    if( $filters == 'all'){ // get tags from category post .. get_category_link( $category )
-	query_posts('category_name='.$category->slug);
-    $posttags = ''; // string to hold tags for each post
-    $idxtags =''; // string to hold new part of list cvs tag names
-    if (have_posts()) : while (have_posts()) : the_post();
-        if( get_the_tag_list() ){
-            $posttags .= get_the_tag_list('<li>','</li><li>','</li>');
-            $listtags = get_the_tags();
-            foreach($listtags as $tag) { //$idxtags .= get_the_tag_list('"','","','",');
-                $idxtags .= '"'.$tag->name.'",'; 
-            }
-        }
-    endwhile; endif; 
-    $cat_tags .='<ul class="tagmenu '.$category->slug.'">'.$posttags.'</ul>';
-    $tag_idx .= $idxtags; // add string cvs tag names
-    wp_reset_query(); 
-    }
-	$filtermenubox .= '</li>';
-}
-}
-$filtermenubox .= '</ul>';
-$filtermenubox .= $cat_tags;
-}
 
 }
+
 
 /**
  * HTML HEAD THEME CORE
@@ -880,9 +833,11 @@ $(document).ready(function() {
     var $noloading = 0;
     
     <?php // get tag index from php
+	
+	/*
     if($tag_idx){ 
     echo 'var $tagindex = Array('.rtrim($tag_idx,',').');';
-    } ?>
+    } */ ?>
     
     var phsh = window.location.hash.substr(1);    
     if(phsh.length){    
@@ -1116,6 +1071,7 @@ $(document).ready(function() {
 
     if( $(this).attr('data-filter') == '*'){
         var keyword = '*';
+		$tagList = '';
         $catList = '<?php echo $topcat; ?>';//[];
     }else{ 
         var keyword = '.'+$(this).attr('data-filter');
@@ -1137,6 +1093,7 @@ $(document).ready(function() {
   	    var keyword = '.'+$(this).text();
         $catList = $(this).attr('data-filter');
         $tags = $(this).text();
+		$tagList = $tags; 
 	    loaditems();
      	$container.isotope({ filter: keyword }).isotope('layout'); 
      	var iid = '#' + $tags;

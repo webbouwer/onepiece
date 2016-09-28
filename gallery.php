@@ -16,6 +16,82 @@ $pagesidebardisplay = get_post_meta(get_the_ID(), "meta-page-pagesidebardisplay"
 $specialwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-specialwidgetsdisplay", true);
 $secondsidebardisplay = get_post_meta(get_the_ID(), "meta-page-secondsidebardisplay", true);
 
+
+// $values variables page template
+// .. use for slider functions 
+$values = get_post_custom( $post->ID );
+
+// $values get variables gallery template settings
+$selected = isset( $values['theme_gallery_category_selectbox'] ) ? $values['theme_gallery_category_selectbox'][0] : '';
+$gallerydefault = isset( $values['onepiece_content_gallery_category'] ) ? $values['onepiece_content_gallery_category'][0] : '';
+$pagetitle = isset( $values['theme_gallery_pagetitle_selectbox'] ) ? $values['theme_gallery_pagetitle_selectbox'][0] : '';
+$filters = isset( $values['theme_gallery_filters_selectbox'] ) ? $values['theme_gallery_filters_selectbox'][0] : '';
+$maxinrow = isset( $values['theme_gallery_items_maxinrow'] ) ? $values['theme_gallery_items_maxinrow'][0] : '5';
+$clickaction = isset( $values['theme_gallery_items_clickaction'] ) ? $values['theme_gallery_items_clickaction'][0] : 'poppost';
+
+// $topcat default gallery category
+if($selected){
+$topcat = $selected;
+}elseif( $gallerydefault && $gallerydefault != '' ){
+$topcat = $gallerydefault;
+}else{
+$topcat = 'uncategorized';
+}
+
+// build filtermenu     
+// $filters from $values 
+if($filters != 'none'){ // prepare filter menu and create category tag index
+// prepare category query
+$args = array( 
+    'child_of'                 => get_category_by_slug($topcat)->term_id,
+    'orderby'                  => 'name',
+    'order'                    => 'ASC', 
+    'public'                   => true,
+); 
+$categories = get_categories( $args );
+$cat_tags = ''; // string to hold tag menu for each category
+$tag_idx = ''; // string csv tag names
+$filtermenubox = '<ul id="topgridmenu" class="categorymenu">';
+$filtermenubox .= '<li><a class="category" href="#" data-filter="*">All</a></li>';
+
+// wp categories - http://wordpress.stackexchange.com/questions/212923/how-to-list-all-categories-and-tags-in-a-page 
+foreach ( $categories as $category ) {
+    
+if( $category->slug != $topcat ){
+    
+    // category option
+    $filtermenubox .= '<li><a class="category" href="#" data-filter="' . $category->slug . '">' . $category->name . '</a>'; 
+    
+    // tag option submenu
+    if( $filters == 'all'){ // get tags from category post .. get_category_link( $category )
+	query_posts('category_name='.$category->slug);
+    $posttags = ''; // string to hold tags for each post
+    $idxtags =''; // string to hold new part of list cvs tag names
+    if (have_posts()) : while (have_posts()) : the_post();
+        if( get_the_tag_list() ){
+            $posttags .= get_the_tag_list('<li>','</li><li>','</li>');
+            $listtags = get_the_tags();
+            foreach($listtags as $tag) { //$idxtags .= get_the_tag_list('"','","','",');
+                $idxtags .= '"'.$tag->name.'",'; 
+            }
+        }
+    endwhile; endif; 
+    $cat_tags .='<ul class="tagmenu '.$category->slug.'">'.$posttags.'</ul>';
+    $tag_idx .= $idxtags; // add string cvs tag names
+    wp_reset_query(); 
+    }
+	$filtermenubox .= '</li>';
+}
+}
+$filtermenubox .= '</ul>';
+$filtermenubox .= $cat_tags;
+}
+
+
+
+
+
+
 // start content
 echo '<div id="contentcontainer"><div class="outermargin">';
 
@@ -136,4 +212,21 @@ echo '<div class="clr"></div></div></div>';
 // htmlfooter
 get_template_part('footer');
 wp_footer();
+
+// get tag index from php for isotope filters
+
+if($tag_idx){ 
+?>
+
+<script>
+jQuery(function ($) { 
+$(document).ready(function() {
+<?php echo 'var $tagindex = Array('.rtrim($tag_idx,',').');'; ?>
+});
+
+});
+</script>
+<?php
+}
 echo '</div></body>';
+?>
