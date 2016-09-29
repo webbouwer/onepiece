@@ -63,11 +63,10 @@ Content:
     Posts
         .. Exclude categories
         Use highlight first posts
-		.. Next / Previous links
 		
-		.. Tags display
-		.. Categories Display
-		.. Next / Previous links
+		Tags display
+		Categories Display
+		Next / Previous links
 
         Display date/author
         Featured image header
@@ -437,7 +436,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodybg', array(
-		'label' => __( 'Body background Color', 'fndtn' ),
+		'label' => __( 'Body background Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodybg',
     	) ) ); 
@@ -448,7 +447,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodytext', array(
-		'label' => __( 'Body text Color', 'fndtn' ),
+		'label' => __( 'Body text Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodytext',
     	) ) ); 
@@ -458,7 +457,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylink', array(
-		'label' => __( 'Body textlink Color', 'fndtn' ),
+		'label' => __( 'Body textlink Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodylink',
     	) ) ); 
@@ -468,7 +467,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylinkhover', array(
-		'label' => __( 'Body textlink hover Color', 'fndtn' ),
+		'label' => __( 'Body textlink hover Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodylinkhover',
     	) ) ); 
@@ -486,7 +485,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubg', array(
-		'label' => __( 'Mainmenu background color', 'fndtn' ),
+		'label' => __( 'Mainmenu background color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_mainmenubg',
     	) ) ); 
@@ -496,7 +495,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbg', array(
-		'label' => __( 'Mainmenu button bg color', 'fndtn' ),
+		'label' => __( 'Mainmenu button bg color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_mainmenubutbg',
     	) ) ); 
@@ -507,7 +506,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlink', array(
-		'label' => __( 'Mainmenu button text color', 'fndtn' ),
+		'label' => __( 'Mainmenu button text color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_mainmenubutlink',
     	) ) ); 
@@ -518,7 +517,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbghover', array(
-		'label' => __( 'Mainmenu hover button bg color', 'fndtn' ),
+		'label' => __( 'Mainmenu hover button bg color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_mainmenubutbghover',
     	) ) ); 
@@ -529,7 +528,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkhover', array(
-		'label' => __( 'Mainmenu hover button text color', 'fndtn' ),
+		'label' => __( 'Mainmenu hover button text color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_mainmenubutlinkhover',
     	) ) ); 
@@ -540,7 +539,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbgactive', array(
-		'label' => __( 'Mainmenu active button bg color', 'fndtn' ),
+		'label' => __( 'Mainmenu active button bg color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_mainmenubutbgactive',
     	) ) );
@@ -550,7 +549,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkactive', array(
-		'label' => __( 'Mainmenu active button text color', 'fndtn' ),
+		'label' => __( 'Mainmenu active button text color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_mainmenubutlinkactive',
     	) ) ); 
@@ -585,10 +584,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_sliderbar_category', array(
-            	'label'          => __( 'Slider category', 'fndtn' ),
+            	'label'          => __( 'Slider category', 'onepiece' ),
             	'section'        => 'onepiece_content_sliderbar',
             	'settings'       => 'onepiece_content_sliderbar_category', 
- 	    	'description'    => __( 'Select the post category for the slider. !This function is in development', 'fndtn' ),
+ 	    	'description'    => __( 'Select the post category for the slider.', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => get_categories_select()
     	)));
@@ -599,10 +598,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_sliderbar_height', array(
-            	'label'          => __( 'Slider height', 'fndtn' ),
+            	'label'          => __( 'Slider height', 'onepiece' ),
             	'section'        => 'onepiece_content_sliderbar',
             	'settings'       => 'onepiece_content_sliderbar_height', 
- 	    	'description'    => __( 'Height (%)', 'fndtn' ),
+ 	    	'description'    => __( 'Height (%)', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => array(
                 	'20'   => __( '20', 'onepiece' ),
@@ -622,10 +621,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_sliderbar_width', array(
-            	'label'          => __( 'Slider width', 'fndtn' ),
+            	'label'          => __( 'Slider width', 'onepiece' ),
             	'section'        => 'onepiece_content_sliderbar',
             	'settings'       => 'onepiece_content_sliderbar_width', 
- 	    	'description'    => __( 'Width (relative to)', 'fndtn' ),
+ 	    	'description'    => __( 'Width (relative to)', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => array(
                 	'margin'   => __( 'content outer margin', 'onepiece' ),
@@ -661,7 +660,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_content_mainpopup_overlaycolor', array(
-		'label' => __( 'Background overlay color', 'fndtn' ),
+		'label' => __( 'Background overlay color', 'onepiece' ),
 		'section' => 'onepiece_content_mainpopup',
 		'settings' => 'onepiece_content_mainpopup_overlaycolor',
     	) ) ); 
@@ -757,9 +756,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                         'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
             	)
     	)));
-		
-		
-	
+
 		
 		// CONTENT - POSTS - Tags display not / belowtitle / belowcontent
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_tagdisplay' , array(
@@ -780,7 +777,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
-		//.. Post related Categories display not / belowheader / belowcontent
+		
+		// CONTENT - POSTS -  Post related Categories display not / belowheader / belowcontent
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_catdisplay' , array(
 		'default' => 'belowcontent', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -799,7 +797,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
-		//.. Next / Previous links not / belowheader / belowcontent / contentside
+		// CONTENT - POSTS - Next / Previous links not / belowheader / belowcontent / contentside
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_nextprevdisplay' , array(
 		'default' => 'belowcontent', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -818,6 +816,9 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                     'contentside'   => __( 'On content sides', 'onepiece' ),
             	)
     	)));
+		
+		
+		
 		
 		
 		 
@@ -839,6 +840,26 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'text'   => __( 'Title and description', 'onepiece' ),
             	)
     	)));
+		
+		
+		
+			
+		// CONTENT - POSTS - Exclude categories from main loop
+		$wp_customize->add_setting( 'onepiece_content_panel_category_excludecat' , array(
+		'default' => array(), 
+		'sanitize_callback' => 'onepiece_sanitize_arraytostring',
+    	)); 
+		
+		$wp_customize->add_control( new JT_Customize_Control_Checkbox_Multiple( $wp_customize, 'onepiece_content_panel_category_excludecat', array(
+            	'label'          => __( 'Exclude categories', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_category',
+            	'settings'       => 'onepiece_content_panel_category_excludecat',
+            	'type'           => 'checkbox-multiple',
+ 	    	    'description'    => __( 'Exclude categories and their posts from main post listing (the loop)', 'onepiece' ),
+            	'choices'        => get_categories_select()
+    	)));
+		
+		
     	
     	
     	
@@ -850,10 +871,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_gallery_category', array(
-            	'label'          => __( 'Default category', 'fndtn' ),
+            	'label'          => __( 'Default category', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_gallery',
             	'settings'       => 'onepiece_content_gallery_category', 
- 	    	'description'    => __( 'Select the default category for the gallery.', 'fndtn' ),
+ 	    	'description'    => __( 'Select the default category for the gallery.', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => get_categories_select()
     	)));
@@ -945,7 +966,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbarbg', array(
-		'label' => __( 'Topbar background color', 'fndtn' ),
+		'label' => __( 'Topbar background color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbarbg',
     	) ) ); 
@@ -955,7 +976,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartext', array(
-		'label' => __( 'Topbar text color', 'fndtn' ),
+		'label' => __( 'Topbar text color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbartext',
     	) ) ); 
@@ -966,7 +987,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartextlink', array(
-		'label' => __( 'Topbar textlink color', 'fndtn' ),
+		'label' => __( 'Topbar textlink color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbartextlink',
     	) ) ); 
@@ -978,7 +999,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartextlinkhover', array(
-		'label' => __( 'Topbar link hover color', 'fndtn' ),
+		'label' => __( 'Topbar link hover color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbartextlinkhover',
     	) ) ); 
@@ -1252,10 +1273,39 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 }
 add_action( 'customize_register', 'onepiece_register_theme_customizer' );
+ 
 
 // default sanitize function
 function onepiece_sanitize_default($obj){
     	//.. global sanitizer
     	return $obj;
 }
+
+
+/** Extensions for customizer options 
+ * - multiselect categories
+ */
+add_action( 'customize_register', 'onepiece_load_customize_extend', 0 );
+function onepiece_load_customize_extend() {
+    require_once( get_template_directory() . '/assets/customizer_extend.php' );
+}
+
+/* extensions sanitizers */
+function onepiece_sanitize_arraytostring( $values ) {
+
+    $multi_values = !is_array( $values ) ? explode( ',', $values ) : $values;
+    return !empty( $multi_values ) ? array_map( 'sanitize_text_field', $multi_values ) : array();
+
+	/*
+	if( is_array($values) ){
+		$values = explode( ',' , $values );
+	}else if( !is_array($values) ){
+		$values = implode( ',', $values );
+	}
+	return $values;
+	*/
+}
+
+
+
 ?>

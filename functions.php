@@ -220,7 +220,13 @@ function onepiece_body_class( $classes ) {
 }
 add_filter( 'body_class', 'onepiece_body_class' );
 
-
+/** Exclude specific categories from the loop */
+add_action( 'pre_get_posts', 'exclude_specific_cats' );
+function exclude_specific_cats( $wp_query ) {   
+    if( !is_admin() && is_main_query() && is_home() ) {
+        $wp_query->set( 'cat', '-1,-3' );
+    }
+}
 
 /********* CATEGORY LIST **********/
 function get_categories_select() {

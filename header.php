@@ -36,8 +36,9 @@ echo '<div id="topbar">';
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-top') ){
 $count = is_sidebar_active('widgets-top');
 echo '<div id="widgets-top" class="colset-'.$count.'">';
+echo '<div class="outermargin">';
 dynamic_sidebar('widgets-top');
-echo '<div class="clr"></div></div>';
+echo '<div class="clr"></div></div></div>';
 } 
 
 // topbar menu

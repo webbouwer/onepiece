@@ -604,6 +604,7 @@ position:relative;
 @media screen and (min-width: 780px ){
 }
 </style>
+
 <?php 
 }
 
@@ -614,11 +615,7 @@ position:relative;
  * default js codes
  */
  
-// echo '<script src="'.get_template_directory_uri().'/assets/global.js" type="text/javascript" language="javascript"></script>';
- 
-
- 
-
+/* echo '<script src="'.get_template_directory_uri().'/assets/global.js" type="text/javascript" language="javascript"></script>'; */
 /**
  * CSS GLOBAL SETTINGS
  * htmlhead.php, assets/customizer.php, assets/global.js, 
@@ -642,7 +639,6 @@ echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_
 echo '.outermargin { max-width:'.get_theme_mod('onepiece_responsive_large_outermargin', 1600 ).'px; }';
 echo '}';
 echo '</style>';
-
 
 
 
@@ -1049,7 +1045,7 @@ $(document).ready(function() {
 
 		$container.prepend($this).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // or 'original-order'
 	
-		$('html, body').animate({scrollTop: $('#maincontent').offset().top }, 400); // Scroll to top (bottom of header)
+		$('html, body').animate({ scrollTop: $('#contentcontainer').offset().top - $('#topbar').height() }, 400); // Scroll to top (bottom of header)
 
 <?php } ?>
 
