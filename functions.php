@@ -35,6 +35,7 @@ add_action( 'admin_init', 'onepiece_editor_styles' );
 function basic_setup_register_menus() {
 	register_nav_menus(
 		array(
+		'minimenu' => __( 'Mini menu' , 'onepiece' ),
 		'topmenu' => __( 'Top menu' , 'onepiece' ),
 		'mainmenu' => __( 'Main menu' , 'onepiece' ),
 		'sidemenu' => __( 'Side menu' , 'onepiece' ),

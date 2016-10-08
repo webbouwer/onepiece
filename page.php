@@ -82,8 +82,10 @@ echo '<div class="clr"></div></div>';
 // mainmenu placement
 $mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'); 
+$mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none').'-minisize';
+
 if($mainmenuplace == 'content' && $mainbarclass != 'none'){
-echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><nav>';
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{

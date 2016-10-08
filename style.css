@@ -213,11 +213,24 @@ margin:0 auto;
 {
 max-width:100%;
 }
+#topmenubar #minibar-navigation,
 #topmenubar #topbar-navigation
 {
+    width:auto;
 }
-
-#topmenubar #topbar-navigation .menu li,
+/**
+ * Minibar menu item always inline
+ *
+ */
+#topmenubar #minibar-navigation .menu li
+{
+display:inline-block;
+list-style-type:none;
+}
+/**
+ * Menu's items are block bij default
+ *
+ */
 #topmenubar nav.sticky ul li,
 #headercontainer #site-navigation ul li,
 #contentcontainer #site-navigation ul li,
@@ -230,6 +243,57 @@ list-style-type:none;
 {
 padding:2px 1px;
 }
+
+
+/**
+ * Menu Positioning
+ *
+ */
+#topmenubar.right .logobox,
+#footercontainer.menu-right .logobox
+{
+    float:left;
+}
+#topmenubar.right #minibar-navigation,
+#topmenubar.right #topbar-navigation,
+#site-navigation.right ul,
+#topmenubar.right nav.sticky,
+#footercontainer.menu-right #footer-navigation
+{
+    float:right;
+}
+#headercontainer #topmenubar.left .logobox,
+#footercontainer.menu-left .logobox
+{
+    float:right;
+}
+#topmenubar.left #minibar-navigation,
+#topmenubar.left #topbar-navigation,
+#site-navigation.left ul,
+#topmenubar.left nav.sticky,
+#footercontainer.menu-left #footer-navigation
+{
+    float:left;
+}
+#topmenubar.center,
+#site-navigation.center,
+#footercontainer.menu-center
+{
+    text-align:center;
+}
+
+#topmenubar.center .logobox,
+#topmenubar.center #minibar-navigation,
+#topmenubar.center #topbar-navigation,
+#site-navigation.center,
+#topmenubar.center nav.sticky,
+#footercontainer.menu-center .logobox
+{
+    float:none;
+    margin:0 auto;
+}    
+
+
 
 
 
@@ -445,11 +509,12 @@ text-align:left;
 {
     width:30%;
 }
+#topmenubar #minibar-navigation,
 #topmenubar #topbar-navigation
 {
     width:auto;
 }
-
+#topmenubar #minibar-navigation .menu li,
 #topmenubar #topbar-navigation .menu li,
 #topmenubar nav.sticky ul li,
 #headercontainer #site-navigation ul li,
@@ -474,6 +539,7 @@ padding:4px 2px;
 {
     float:left;
 }
+#topmenubar.right #minibar-navigation,
 #topmenubar.right #topbar-navigation,
 #site-navigation.right ul,
 #topmenubar.right nav.sticky,
@@ -486,6 +552,7 @@ padding:4px 2px;
 {
     float:right;
 }
+#topmenubar.left #minibar-navigation,
 #topmenubar.left #topbar-navigation,
 #site-navigation.left ul,
 #topmenubar.left nav.sticky,
@@ -501,6 +568,7 @@ padding:4px 2px;
 }
 
 #topmenubar.center .logobox,
+#topmenubar.center #minibar-navigation,
 #topmenubar.center #topbar-navigation,
 #site-navigation.center,
 #topmenubar.center nav.sticky,

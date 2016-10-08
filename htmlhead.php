@@ -374,13 +374,13 @@ font-size:<?php echo $size; ?>em;
 <?php /* TOPBAR BEHAVIOR */
 
 if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
-|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
+|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade' && $topbarbehavior != 'rela'){ 
 
 $toppos = 'absolute'; 
 
 }else{
 
-if( $topbarbehavior == 'abso'){ 
+if( $topbarbehavior != 'rela'){ 
 $toppos = 'absolute'; 
 }else{ 
 $toppos = 'relative';
@@ -403,6 +403,8 @@ z-index:69;
 div#topbar.minified
 {
 position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
+top:0px;
+left:0px;
 }
 
 <?php
@@ -655,8 +657,6 @@ jQuery(function ($) {
 
 $(document).ready(function() {   
 
-	
-
 	<?php if($topbarbgfixed == 'keep'){ ?>
 	
 	$("#topbar").append( $("<div>")
@@ -673,17 +673,18 @@ $(document).ready(function() {
       }) 
    );
    <?php } ?>
-});
+}); 
 
 $(window).on("mousewheel scroll", function() {
 
 <?php
-if( $topbarbehavior == 'mini' ){
+if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
 ?>
 if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
 	 <?php if($topbarbgfixed != 'keep'){ ?>
 	 $("#topbar .minifiedtopbarbg").remove();
 	 <?php } ?>
+	 
      $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
       .css({
@@ -691,19 +692,23 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
         position: 'absolute',
         top:0,
         left:0,
-        opacity:<?php if($topbarbgfixed != 'keep'){ echo ( 100 - $topbaropacity) / 100; }else{ echo 0; } ?>,
+        opacity:<?php echo 0;//if($topbarbgfixed != 'keep'){ echo ( 100 - $topbaropacity) / 100; }else{ echo 0; } ?>,
         zIndex:-1,
         width:'100%', 
         height:'100%'
       }) 
     );
-
+ <?php if($topbarbehavior == 'mini'){ ?>
+ 
    $("#topbar .minifiedtopbarbg").animate({
        opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
    }, <?php echo $stylelayout_speed; ?>);
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
+  
+  <?php } ?>
+   
    
    if(slider){
    slider.stop();
@@ -741,17 +746,22 @@ var offset = $('#site-navigation').offset();
 if( (offset.top - $(window).scrollTop()) < $("#topbar").height() && !$("#site-navigation .outermargin nav").hasClass('sticky')){
 	// move mainmenu to topbar menu
 	$("#site-navigation .outermargin nav").addClass('sticky');
-	if( $('#topbar-navigation').length > 0 ){
+	if( $('#minibar-navigation').length > 0 ){
+	$('#minibar-navigation').next().after($("#site-navigation .outermargin nav"));
+	}else if( $('#topbar-navigation').length > 0 ){
 	$('#topbar-navigation').after($("#site-navigation .outermargin nav"));
 	}else{
 	$('#topmenubar .outermargin .logobox').after($("#site-navigation .outermargin nav"));
+	
+	// check for mini-sized class
+	
 	//$('#site-navigation .outermargin nav').prependTo( $('#topmenubar .outermargin') );
 	}
 }else if( (offset.top - $(window).scrollTop()) >= $("#topbar").height() && $("#topmenubar .outermargin nav").hasClass('sticky')){
 	// move mainmenu back in place
 	$("#topmenubar .outermargin nav.sticky")
 	.removeClass('sticky')
-	.appendTo("#site-navigation .outermargin");
+	.appendTo("#site-navigation .outermargin"); 
 }
 <?php 
 }
@@ -765,8 +775,6 @@ if( (offset.top - $(window).scrollTop()) < $("#topbar").height() && !$("#site-na
 
 
 <?php
-
-
 /**
  * PAGE TEMPLATE GALLERY
  * gallery.php

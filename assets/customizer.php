@@ -87,9 +87,11 @@ Elements:
     Top menu bar
         Display none/position
         Behavior relative, absolute, fixed, minified
-		.. bg color 
-		.. text color
-		.. transparency bg (0-1)
+		bg color 
+		text color
+		link color
+		link hover color
+		transparency bg (0-1)
     
     .. Login tabbar    
         .. Display none/position
@@ -477,84 +479,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		
 		
-	/* More colors	
-		
-		// mainmenu bg
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubg' , array(
-		'default' => '#cccccc', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubg', array(
-		'label' => __( 'Mainmenu background color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubg',
-    	) ) ); 
-		// mainmenu button bg
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbg' , array(
-		'default' => '#cecece', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbg', array(
-		'label' => __( 'Mainmenu button bg color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutbg',
-    	) ) ); 
-		
-		// mainmenu button link color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlink' , array(
-		'default' => '#454545', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlink', array(
-		'label' => __( 'Mainmenu button text color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutlink',
-    	) ) ); 
-		
-		// mainmenu button hover bg color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbghover' , array(
-		'default' => '#000000', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbghover', array(
-		'label' => __( 'Mainmenu hover button bg color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutbghover',
-    	) ) ); 
-		
-		// mainmenu button hover link color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlinkhover' , array(
-		'default' => '#cecece', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkhover', array(
-		'label' => __( 'Mainmenu hover button text color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutlinkhover',
-    	) ) ); 
-		
-		// mainmenu button active bg color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbgactive' , array(
-		'default' => '#ffffff', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbgactive', array(
-		'label' => __( 'Mainmenu active button bg color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutbgactive',
-    	) ) );
-		// mainmenu button active link color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlinkactive' , array(
-		'default' => '#232323', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkactive', array(
-		'label' => __( 'Mainmenu active button text color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutlinkactive',
-    	) ) ); 
-		
-	*/	
+
 		
 		
 
@@ -842,25 +767,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
-		
-			
-		// CONTENT - POSTS - Exclude categories from main loop
-		$wp_customize->add_setting( 'onepiece_content_panel_category_excludecat' , array(
-		'default' => array(), 
-		'sanitize_callback' => 'onepiece_sanitize_arraytostring',
-    	)); 
-		
-		$wp_customize->add_control( new JT_Customize_Control_Checkbox_Multiple( $wp_customize, 'onepiece_content_panel_category_excludecat', array(
-            	'label'          => __( 'Exclude categories', 'onepiece' ),
-            	'section'        => 'onepiece_content_panel_category',
-            	'settings'       => 'onepiece_content_panel_category_excludecat',
-            	'type'           => 'checkbox-multiple',
- 	    	    'description'    => __( 'Exclude categories and their posts from main post listing (the loop)', 'onepiece' ),
-            	'choices'        => get_categories_select()
-    	)));
-		
-		
-    	
+	
     	
     	
     	
@@ -1068,6 +975,21 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'choices'        => array(
                 	'stat'   => __( 'Static scroll', 'onepiece' ),
                 	'stic'   => __( 'Stick to top', 'onepiece' ),
+            	)
+    	)));
+		$wp_customize->add_setting( 'onepiece_elements_mainmenubar_minisize' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainmenubar_minisize', array(
+            	'label'          => __( 'Mainmenubar mini-sized', 'onepiece' ),
+            	'section'        => 'onepiece_elements_mainmenubar',
+            	'settings'       => 'onepiece_elements_mainmenubar_minisize',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select to minisize the menubar on small screens.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No minisize', 'onepiece' ),
+                	'slidedown'   => __( 'Button with slide-down menu', 'onepiece' ),
             	)
     	)));
 		
@@ -1285,26 +1207,11 @@ function onepiece_sanitize_default($obj){
 /** Extensions for customizer options 
  * - multiselect categories
  */
-add_action( 'customize_register', 'onepiece_load_customize_extend', 0 );
-function onepiece_load_customize_extend() {
-    require_once( get_template_directory() . '/assets/customizer_extend.php' );
+add_action( 'customize_register', 'onepiecer_theme_customize_register' );
+function onepiecer_theme_customize_register( $wp_customize ) {
+     require_once( get_template_directory() . '/assets/customizer_extend.php' );
 }
 
-/* extensions sanitizers */
-function onepiece_sanitize_arraytostring( $values ) {
-
-    $multi_values = !is_array( $values ) ? explode( ',', $values ) : $values;
-    return !empty( $multi_values ) ? array_map( 'sanitize_text_field', $multi_values ) : array();
-
-	/*
-	if( is_array($values) ){
-		$values = explode( ',' , $values );
-	}else if( !is_array($values) ){
-		$values = implode( ',', $values );
-	}
-	return $values;
-	*/
-}
 
 
 
