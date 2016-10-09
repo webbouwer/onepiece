@@ -681,10 +681,8 @@ $(window).on("mousewheel scroll", function() {
 if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
 ?>
 if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
-	 <?php if($topbarbgfixed != 'keep'){ ?>
+
 	 $("#topbar .minifiedtopbarbg").remove();
-	 <?php } ?>
-	 
      $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
       .css({
@@ -692,12 +690,13 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
         position: 'absolute',
         top:0,
         left:0,
-        opacity:<?php echo 0;//if($topbarbgfixed != 'keep'){ echo ( 100 - $topbaropacity) / 100; }else{ echo 0; } ?>,
+        opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
         zIndex:-1,
         width:'100%', 
         height:'100%'
       }) 
     );
+	
  <?php if($topbarbehavior == 'mini'){ ?>
  
    $("#topbar .minifiedtopbarbg").animate({
