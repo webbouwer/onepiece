@@ -26,13 +26,13 @@ Identity:
     
     Featured site-image
         image
-	    ..width (replace/replacemargin)
+	    width (replace/replacemargin)
 		
     Style & Layout
 		select style (css file)
-		.. fontsize 1-10
-		.. spacing 1-10
-		.. speed 1-10
+		fontsize 1-10
+		spacing 1-10
+		speed 1-10
 	
 	Colors
 		body bg
@@ -53,8 +53,8 @@ Content:
 		
 	Popup
 		display ( wide, medium, small )  
-		.. color bg overlay
-		.. transparency bg overlay (0-1)
+		color bg overlay
+		transparency bg overlay (0-1)
 		.. display close button
 		
     Pages
