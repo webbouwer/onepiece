@@ -708,8 +708,7 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
   
   <?php } ?>
    
-   
-   
+
 }else if( $(window).scrollTop() <= 1 && $("#topbar").hasClass('minified') ){
    
    <?php if($topbarbgfixed != 'keep'){ ?>
@@ -726,7 +725,7 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
    
    $("#topbar").removeClass('minified');
    
-  
+
 } // end minify logobox
 
 

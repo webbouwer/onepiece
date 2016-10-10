@@ -4,6 +4,7 @@
 require get_template_directory() . '/assets/mobile_detect.php';
 require get_template_directory() . '/assets/customizer.php'; // customizer functions
 require get_template_directory() . '/assets/metaboxes.php'; // metabox functions
+require get_template_directory() . '/assets/menu.php'; // metabox functions
 require get_template_directory() . '/assets/widgets-global.php'; // widget functions
 require get_template_directory() . '/assets/widgets-onepiece.php'; // onepiece widget functions
 require get_template_directory() . '/assets/colors.php'; // customizer colors
@@ -15,7 +16,7 @@ function basic_setup_theme_global() {
 	add_theme_support( 'post-thumbnails' );
 	add_image_size( 'big-thumb', 320, 9999 );
     add_theme_support( 'title-tag' );
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support( 'automatic-feed-links' ); 
 
 	add_theme_support( 'custom-header' );
 	add_theme_support( 'custom-background' );
