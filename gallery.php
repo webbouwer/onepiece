@@ -76,7 +76,7 @@ if( $category->slug != $topcat ){
 		 			endif;
 				}
 	  		endif;
-	endwhile; endif;
+	endwhile; endif; 
 	wp_reset_query();
 	
 	$cat_tags = '<ul class="tagmenu '.$category->slug.'">';

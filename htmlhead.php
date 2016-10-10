@@ -351,18 +351,10 @@ var setupSwipe = function(slider) {
         });
 }; // END TOUCH SCROLL SLIDER
 
-
-
-	
-
-
-
-
-
 </script>			
 <style type="text/css">
 <?php // default font size, spacing and speed 
-$size = ( $stylelayout_fontsize * 0.2 );
+$size = ( $stylelayout_fontsize * 0.11 );
 ?>
 body
 {
@@ -392,7 +384,6 @@ if( $mobile && $topbarbehavior == 'mini' ){
 $toppos = 'relative';
 }
 
-
 ?>
 div#topbar
 {
@@ -406,50 +397,6 @@ position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ ech
 top:0px;
 left:0px;
 }
-
-<?php
-/* 
-if( $topbarbehavior != 'rela' ){ 
-?>
-div#topbar
-{
-position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
-width:100%;
-top:0px;
-left:0px;
-z-index:79;
-}
-
-
-<?php 
-}
-
-if( ( $displaytype == '50' && !$mobile ) || $displaytype == '33' || $displaytype == '25' || $displaytype == '20'){
-}
-*/
-
-/*
-// detect topbar overlay 
-if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
-|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
-
-if( $topbarbehavior != 'rela' ){
-?>
-div#topbar
-{
-position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'fixed';} ?>;
-z-index:99;
-width:100%;
-top:0px;
-left:0px;
-z-index:79;
-}
-<?php 
-} // end relative positioning 
-
-} // end absolute positioning 
-*/
-?>
 
 /* POPUP STYLING */
 <?php // popup variable display
@@ -469,8 +416,6 @@ $l = 20;
 $c = $popupoverlaycolor;
 $o = ( 100 - $popupoverlayopacity) / 100;
 }
-
-
 ?>
 .popupcloak
 {
@@ -508,17 +453,12 @@ div#sliderbox-footer
 {
 position:relative;
 width: 100%; 
+height: 100%;
 <?php 
-/* available mobile detect
+/* available mobile detect */ 
 if( $mobile ){ 
-echo 'max-height:780px;'; 
-}
-if( $displaytype == 'variable'){
-echo 'height: auto;'; 
-}else{ 
-echo 'height: 100%'; 
+echo 'max-height:680px;'; 
 } 
-*/ 
 ?>
 }
 
@@ -1120,19 +1060,19 @@ $(window).load(function() {
  */ 
  
 // fontsize 
-$globalfontsize = 0.4 + $stylelayout_fontsize / 10;
+$globalfontsize = 0.6 + $stylelayout_fontsize / 10;
  
 // buttons
-$vertical_padding_line = ($stylelayout_spacing / 2) * 3;
-$horizontal_padding_line = ($stylelayout_spacing / 3 ) * 2 ;
+$vertical_padding_line = ($stylelayout_spacing / 5) * 4;
+$horizontal_padding_line = ($stylelayout_spacing / 6 ) * 3 ;
 
 // headers / boxes
 $vertical_padding_box = $stylelayout_spacing * 2;
 
 echo '<style>';
 echo 'body{ font-size:'.$globalfontsize.'em !important; }';
-echo 'ul.menu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
-echo 'h1,.readmore,p { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
+echo 'ul li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
+echo '.post-title, h1, .readmore, p { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
 echo '</style>';
 
 echo '</head><body '; body_class(); 

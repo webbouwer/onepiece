@@ -56,12 +56,14 @@ edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>'
 if ( !is_single() && !is_page() ) { 
 echo '<div class="post-title"><h2>'. $title_link . get_the_title().'</a></h2>';
 
+
+if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
+echo '<span class="post-author">'.get_the_author().'</span> ';
+}
+
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 echo '<span class="post-date">'.get_the_date().'</span>';
-}
-if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
-echo '<span class="post-author">'.get_the_author().'</span>';
 }
 
 echo '</div>';
