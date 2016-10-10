@@ -3,7 +3,8 @@
 $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
 // amount of top posts (first group in pages)
-$firstcount = get_theme_mod('onepiece_content_panel_postlist_firstcount');
+$firstcount = get_theme_mod('onepiece_content_panel_postlist_firstcount', 3);
+$excerptlength = get_theme_mod('onepiece_content_panel_postlist_excerptlength', 25);
 
 
 if ( is_category() && get_theme_mod( 'onepiece_content_panel_category_titledisplay' ) != 'none') {
@@ -137,14 +138,15 @@ $nextprevdisplay = get_theme_mod('onepiece_content_panel_posts_nextprevdisplay',
 // content
 if ( !is_single() && !is_page() ) { 
     // Post intro content
-    echo '<div class="post-excerpt">'.apply_filters('the_excerpt', get_the_excerpt());
+    echo '<div class="post-excerpt">'.the_excerpt_length( $excerptlength ); //apply_filters('the_excerpt', get_the_excerpt());
     echo $customlinkbutton.'</div>';
     
 }else{
 
 	if( $tagdisplay == 'belowtitle' ){
     	// post tags
-    	the_tags(', ');  //the_tags('Tags: ',' '); 
+    	
+    	the_tags('',', '); // the_tags(', ');  //
 	}
 	
 	
@@ -162,11 +164,11 @@ if ( !is_single() && !is_page() ) {
 	
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags
-    	the_tags(', ');  //the_tags('Tags: ',' '); 
+    	the_tags('Tagged with: ',' '); // the_tags(', ');  //
 	}
 
 
-	if( !is_page() && $nextprevdisplay == 'belowcontent' ){
+	if( is_single() && $nextprevdisplay == 'belowcontent' ){
     	// prev / next posts
     	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
     	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
@@ -216,7 +218,7 @@ endwhile;
 echo '</div>';
 
 
-if( !is_page() && ($nextprevdisplay == 'contentside' || $nextprevdisplay == 'abovefooter' )){ 
+if( is_single() && ($nextprevdisplay == 'contentside' || $nextprevdisplay == 'abovefooter' )){ 
     	// prev / next posts fixed positioned
     	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
     	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);

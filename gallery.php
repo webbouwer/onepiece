@@ -51,7 +51,7 @@ $args = array(
 $categories = get_categories( $args );
 $cat_tags = ''; // string to hold tag menu for each category
 $tag_idx = ''; // string csv tag names
-$filtermenubox = '<ul id="topgridmenu" class="categorymenu">';
+$filtermenubox = '<ul id="topgridmenu" class="categorymenu ">';
 $filtermenubox .= '<li><a class="category" href="#" data-filter="*">All</a></li>';
 
 // wp categories - http://wordpress.stackexchange.com/questions/212923/how-to-list-all-categories-and-tags-in-a-page 
@@ -65,21 +65,28 @@ if( $category->slug != $topcat ){
     // tag option submenu
     if( $filters == 'all'){ // get tags from category post .. get_category_link( $category )
 	query_posts('category_name='.$category->slug);
-    $posttags = ''; // string to hold tags for each post
-    $idxtags =''; // string to hold new part of list cvs tag names
-    if (have_posts()) : while (have_posts()) : the_post();
-        if( get_the_tag_list() ){
-            $posttags .= get_the_tag_list('<li>','</li><li>','</li>');
-            $listtags = get_the_tags();
-            foreach($listtags as $tag) { //$idxtags .= get_the_tag_list('"','","','",');
-                $idxtags .= '"'.$tag->name.'",'; 
-            }
-        }
-    endwhile; endif; 
-    $cat_tags .='<ul class="tagmenu '.$category->slug.'">'.$posttags.'</ul>';
-    $tag_idx .= $idxtags; // add string cvs tag names
-    wp_reset_query(); 
+  
+	if (have_posts()) : while (have_posts()) : the_post();
+	  	$posttags = get_the_tags();
+	  		if ($posttags):
+				foreach($posttags as $tag) {
+					if (!in_array($tag->term_id , $tag_IDs)):
+		   				$tag_IDs[] = $tag->term_id; 
+		   				$tag_names[$tag->term_id] = $tag->name;
+		 			endif;
+				}
+	  		endif;
+	endwhile; endif;
+	wp_reset_query();
+	
+	$cat_tags = '<ul class="tagmenu '.$category->slug.'">';
+	foreach($tag_IDs as $tag_ID){
+    	$cat_tags .= '<li><a href="'.get_tag_link($tag_ID).'">'.$tag_names[$tag_ID].'</a></li>';
+	}
+	$cat_tags .= "</ul>";
+	 
     }
+	
 	$filtermenubox .= '</li>';
 }
 }

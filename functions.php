@@ -196,6 +196,59 @@ add_action('wp_enqueue_scripts', 'onepiece_global_js');
 
 
 
+
+/****** Adjust excerpt num words max ******/
+function the_excerpt_length( $words = null ) { 
+    global $_the_excerpt_length_filter;
+
+    if( isset($words) ) { 
+        $_the_excerpt_length_filter = $words;
+    }   
+
+    add_filter( 'excerpt_length', '_the_excerpt_length_filter' );
+    the_excerpt();
+    remove_filter( 'excerpt_length', '_the_excerpt_length_filter' );
+
+    // reset the global
+    $_the_excerpt_length_filter = null;
+}
+
+function _the_excerpt_length_filter( $default ) { 
+    global $_the_excerpt_length_filter;
+
+    if( isset($_the_excerpt_length_filter) ) { 
+        return $_the_excerpt_length_filter;
+    }   
+
+    return $default;
+}
+// the_excerpt_length( 25 );
+
+
+
+/****** Replace post readmore excerpt link ******/
+function new_excerpt_more($more) {
+    global $post;
+	// define link
+	$custom_metabox_url = get_post_meta( $post->ID, 'meta-box-custom-url', true);
+	$custom_metabox_useurl = get_post_meta( $post->ID, 'meta-box-custom-useurl', true);
+	$custom_metabox_urltext = get_post_meta( $post->ID, 'meta-box-custom-urltext', true);
+	if(!empty($custom_metabox_url) && ($custom_metabox_useurl == 'replaceblank' || $custom_metabox_useurl == 'replaceself')){
+		$readmorelink = $custom_metabox_url;
+	}else{
+		$readmorelink =  get_permalink($post->ID);
+	}
+	$target = "_self";
+	if($custom_metabox_useurl == 'replaceblank'){
+		$target = "_blank";
+	}
+	return ' <a class="readmorelink" href="'.$readmorelink. '" target="'.$target.'">'.__( 'Read more', 'onepiece').'</a>';
+}
+add_filter('excerpt_more', 'new_excerpt_more');
+
+
+
+
 /****** Customize Adminbar ******/
 /* Not allowed for official themes
 function control_display_adminbar() {

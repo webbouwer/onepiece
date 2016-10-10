@@ -12,6 +12,10 @@
 
 OVERVIEW (.. = todo )
 
+// gallery - category tags strip doubled tags
+// post excerpt length to customizer
+
+
 
 Identity:
     Logo image 
@@ -63,6 +67,7 @@ Content:
     Posts
         .. Exclude categories
         Use highlight first posts
+		Excerpt length (amount of words)
 		
 		Tags display
 		Categories Display
@@ -629,18 +634,32 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  
 
 
-    	// CONTENT - POSTS 
+    	// CONTENT - POSTS - HIGHLIGHT
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
 		'default' => '3', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_firstcount', array(
-            	'label'          => __( 'Highlite first posts', 'onepiece' ),
+            	'label'          => __( 'Highlight first posts', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_posts',
             	'settings'       => 'onepiece_content_panel_postlist_firstcount',
             	'type'           => 'text',
- 	    	'description'    => __( 'Amount of first posts to highlite in a (basic)list.', 'onepiece' ),
+ 	    	'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
     	)));
+		
+		// CONTENT - POSTS - EXCERPT LENGTH
+    	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
+		'default' => '25', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_excerptlength', array(
+            	'label'          => __( 'Excerpt Length', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_postlist_excerptlength',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Amount of words for intro texts in a (basic) list.', 'onepiece' ),
+    	)));
+		
 
 		// CONTENT - POSTS - TIME & AUTHOR
 		$wp_customize->add_setting( 'onepiece_content_panel_postlist_authortime' , array(
