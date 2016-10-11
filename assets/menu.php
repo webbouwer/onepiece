@@ -40,7 +40,7 @@ Author URI: http://makeyoulivebetter.org.ua/
 /**
  * Modified Oddsized 20161006 
  * Removed notice.php (GPL2 modification) 
- * original: require_once( 'notice.php' );
+ * original:  require _ once( 'notice.php' ); // get_template_part( 'notice' );  could do in WP
  */
 
 
