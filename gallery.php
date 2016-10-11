@@ -192,7 +192,8 @@ echo '</a></div>'; // default, 'thumb' or 'medium'
 if ( $pagetitle != 'none') {
 echo '<div class="gallery-titlebar"><h1>'.get_the_title().'</h1>';
 if ( $pagetitle == 'text') : 
-echo '<p>'.get_the_content().'</p>'; 
+    // Post full content
+    echo '<div class="post-content">'.apply_filters('the_content', get_the_content()).'</div>';
 endif; 
 echo '</div>';
 }
