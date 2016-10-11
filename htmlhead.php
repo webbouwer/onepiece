@@ -205,7 +205,7 @@ $(window).resize(function() {
 <?php 
 // start php to js
 if( $displaytype != 'variable' && $childpagedisplay != 'fade' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
-echo  '$("#sliderbox-head").css("min-height", ( $(window).height() / 100) * '.$displaytype.' );';
+echo  '$("#sliderbox-head,#headerbar").css("min-height", ( $(window).height() / 100) * '.$displaytype.' );';
 }
 if( $sliderdisplay == 'topfooter' || $sliderdefaultdisplay == 'topfooter' ){
 echo  '$("#sliderbox-footer").css("min-height", ( $(window).height() / 100) * '.$footerheight.' );';
@@ -736,9 +736,21 @@ echo '}';
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_small_max', 512).'px) {';
 echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_medium_width', 95).'%;max-width:'.get_theme_mod('onepiece_responsive_medium_outermargin').'px; }'; 
 // set medium width
-
-echo '#itemcontainer .item{width:'.(100 / 3).'%;}'; 
-echo '#itemcontainer .item.active{ width:'.((100 / 3)*2).'%; }';
+$cr = 2;
+$qr = 2;
+if( $maxinrow > 3){
+$cr = 3;
+}
+if( $maxinrow > 4){
+$cr = 4;
+$qr = $maxinrow-2;
+}
+if( $maxinrow > 5){
+$cr = 5;
+$qr = $maxinrow-3;
+}
+echo '#itemcontainer .item{width:'.(100 / $cr).'%;}'; 
+echo '#itemcontainer .item.active{ width:'.((100 / $cr)*$qr).'%; }';
 echo '}';
 
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_max', 1280).'px) {';
