@@ -7,7 +7,6 @@ $mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'
 $mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none').'-minisize';
 
 // header image or slider
-if ( is_page() || is_single() ){
 global $wp_query;
 $postid = $wp_query->post->ID;
 $useheaderimage = get_post_meta($postid, "meta-page-headerimage", true);
@@ -15,7 +14,6 @@ $usepostfeaturedimage = get_theme_mod('onepiece_content_panel_posts_featuredimag
 $childpagedisplay = get_post_meta($postid, "meta-box-display-childpages", true);
 $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($postid));
 wp_reset_query();
-}
 
 // default slider options
 $sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'default' );
