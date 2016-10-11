@@ -15,6 +15,7 @@ $childpagedisplay = get_post_meta($postid, "meta-box-display-childpages", true);
 $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($postid));
 wp_reset_query();
 
+
 // default slider options
 $sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'default' );
 $sliderdefaultcat = get_theme_mod('onepiece_content_sliderbar_category', 'uncategorized' );
@@ -130,7 +131,7 @@ $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));// the
 if($childpagedisplay == 'fade'){
 echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
 }else{
-echo '<img src="'.esc_url( $thumbelarge ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
+echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
 }
 
 if( $usepostfeaturedimage == 'replacemargin' ){
@@ -161,7 +162,10 @@ if (( !empty( $header_image ) && $useheaderimage != 'hide'  ) || $childpagedispl
 if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){
 echo '<div class="outermargin">';
 }
-echo '<img src="'.esc_url( $header_image ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
+
+echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
+
+//echo '<img src="'.esc_url( $header_image ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
 if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){
 echo '<div class="clr"></div></div>';
 }
