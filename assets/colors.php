@@ -36,7 +36,7 @@ color:<?php echo get_theme_mod('onepiece_identity_colors_topbartextlinkhover' , 
 
 
 </style>
-<?
+<?php
 
 }
 add_action( 'wp_head' , 'onepiece_customize_colors' );
