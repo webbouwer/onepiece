@@ -99,6 +99,10 @@ $content_width = 960;
 }
 
 
+// Frontend user login  
+echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/userlogin.js"></script>'; 
+
+
  
 // default style sizes
 $stylelayout_fontsize = get_theme_mod('onepiece_identity_stylelayout_fontsize', 5);
@@ -652,11 +656,13 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
 }else if( $(window).scrollTop() <= 1 && $("#topbar").hasClass('minified') ){
    
    <?php if($topbarbgfixed != 'keep'){ ?>
+   if( $("#topbar .minifiedtopbarbg") && $("#topbar .minifiedtopbarbg") != 'undefined'){
    $("#topbar .minifiedtopbarbg").animate({
        opacity:0,
    }, <?php echo $stylelayout_speed; ?>, function(){
       this.remove();
    });
+   }
    <?php } ?>
    
    $(".logobox a img").stop().animate({

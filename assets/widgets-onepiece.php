@@ -1,6 +1,9 @@
 <?php
 /* Onepiece widgets */
 
+	
+
+
 /* Add Custom Onepiece Widget */
 class onepiece_widget extends WP_Widget {
 
@@ -20,8 +23,17 @@ public function widget( $args, $instance ) {
     echo $args['before_widget'];
     if ( ! empty( $title ) )
     echo $args['before_title'] . $title . $args['after_title'];
-    // This is where you run the code and display the output
-    echo $instance['function_type'];
+    
+	// This is where you run the code and display the output
+    if($instance['function_type'] == 'login'){
+	
+	display_userpanel();
+	
+	}else{
+	echo $instance['function_type'];
+	}
+	
+	
     echo $args['after_widget'];
 }
 		
@@ -48,6 +60,7 @@ public function form( $instance ) {
     <p><label for="<?php echo $this->get_field_id( 'function_type' ); ?>">Function:</label>
     <select name="<?php echo $this->get_field_name( 'function_type' ); ?>" id="<?php echo $this->get_field_id( 'function_type' ); ?>">
     <option value="code" <?php selected( $function_type, 'code' ); ?>>Code</option>
+    <option value="login" <?php selected( $function_type, 'login' ); ?>>Login</option>
     <option value="content" <?php selected( $function_type, 'content' ); ?>>Content</option>
     <option value="media" <?php selected( $function_type, 'media' ); ?>>Media</option>
     </select>

@@ -32,7 +32,24 @@ Identity:
         image
 	    width (replace/replacemargin)
 		
-    Style & Layout
+	..Personal Accounts
+		..
+		
+	..Business Accounts
+		..
+		
+	..Developer Accounts
+		..
+		
+
+..Users:
+	.. login
+	
+			
+		
+Style & Layout: <
+
+	Style
 		select style (css file)
 		fontsize 1-10
 		spacing 1-10
@@ -43,8 +60,9 @@ Identity:
 		body text
 		body textlink
 		body textlink hover
+		
 	
-	.. Users
+
 	   
 Content:
     Static front page (default)
@@ -98,8 +116,8 @@ Elements:
 		link hover color
 		transparency bg (0-1)
     
-    .. Login tabbar    
-        .. Display none/position
+    ..Login tabbar    
+        Display none/position
       
     Header image
 		Image
@@ -168,9 +186,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Identity', 'onepiece'),
         	'priority' => 10,
     	));
+	    $wp_customize->add_panel('onepiece_content_style', array( 
+        	'title'    => __('Style', 'onepiece'),
+        	'priority' => 20,
+    	));
 	    $wp_customize->add_panel('onepiece_content_panel', array( 
         	'title'    => __('Content', 'onepiece'),
-        	'priority' => 20,
+        	'priority' => 30,
     	));
 	    $wp_customize->add_panel('onepiece_elements_panel', array( 
         	'title'    => __('Elements', 'onepiece'),
@@ -187,7 +209,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Logo image', 'onepiece'),
         	'panel'  => 'onepiece_elements_identity',
 		'priority' => 10,
-    	));
+    	)); 
     	$wp_customize->add_section('onepiece_identity_panel_featured_image', array( 
         	'title'    => __('Sharing', 'onepiece'),
         	'panel'  => 'onepiece_elements_identity',
@@ -196,13 +218,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
         $wp_customize->add_section('onepiece_identity_stylelayout', array( 
         	'title'    => __('Style & Layout', 'onepiece'),
-        	'panel'  => 'onepiece_elements_identity',
+        	'panel'  => 'onepiece_content_style',
 		'priority' => 50,
-    	));
+    	)); 
 
         $wp_customize->add_section('colors', array( 
         	'title'    => __('Colors', 'onepiece'),
-        	'panel'  => 'onepiece_elements_identity',
+        	'panel'  => 'onepiece_content_style',
 		'priority' => 50,
     	));
 
@@ -262,11 +284,19 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'priority' => 20,
     	));
 		
-    	$wp_customize->add_section('onepiece_elements_mainmenubar', array( 
-        	'title'    => __('Main menubar', 'onepiece'),
-        	'panel'  => 'onepiece_elements_panel',
-		'priority' => 40,
+		
+    	$wp_customize->add_section('onepiece_content_sliderbar', array( 
+        	'title'    => __('Slider', 'onepiece'),
+        	'panel'  => 'onepiece_content_panel',
+			'priority' => 30,
     	));
+		
+    	$wp_customize->add_section('onepiece_elements_loginbar', array( 
+        	'title'    => __('Loginbar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 40,
+    	));
+		
     	$wp_customize->add_section('onepiece_elements_sidebar', array( 
         	'title'    => __('Main Sidebar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
@@ -1012,9 +1042,31 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
+		
+		// ELEMENTS - LOGINBAR
+    	$wp_customize->add_setting( 'onepiece_elements_loginbar_option' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_loginbar_option', array(
+            	'label'          => __( 'Display default loginbar', 'onepiece' ),
+            	'section'        => 'onepiece_elements_loginbar',
+            	'settings'       => 'onepiece_elements_loginbar_option',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select loginbar display.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No Display (or use widget)', 'onepiece' ),
+            		'sbtop'   => __( 'Top main sidebar', 'onepiece' ),
+            		'sbbottom'   => __( 'Bottom main sidebar', 'onepiece' ),
+            		'sb2top'   => __( 'Top sidebar 2', 'onepiece' ),
+            		'sb2bottom'   => __( 'Bottom sidebar 2', 'onepiece' ),
+            	)
+    	)));
+		
+		
     	
 		
-		// MAIN SIDEBAR
+		// ELEMENTS - MAIN SIDEBAR
 		$wp_customize->add_setting( 'onepiece_elements_sidebar_position' , array(
 		'default' => 'right', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
