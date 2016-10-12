@@ -730,6 +730,28 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                         'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
             	)
     	)));
+		
+		
+		// CONTENT - POSTS - READMORE
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_readmore' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_readmore', array(
+            	'label'          => __( 'Post Read more', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_readmore',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select display type', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No readmore button', 'onepiece' ),
+                	'inline'   => __( 'Inline after the intro text', 'onepiece' ),
+            		'right'   => __( 'Right side below intro tekst', 'onepiece' ),
+            		'left'   => __( 'Left side below intro tekst', 'onepiece' ),
+            	)
+    	)));
+		 
+		
 
 		
 		// CONTENT - POSTS - Tags display not / belowtitle / belowcontent
@@ -1160,6 +1182,26 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'right'   => __( 'right', 'onepiece' ),
             	)
     	)));
+		
+		// BOTTOM MENU BAR - copyright
+		$wp_customize->add_setting( 'onepiece_elements_bottom_copyrightposition' , array(
+		'default' => 'center', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_bottom_copyrightposition', array(
+            	'label'          => __( 'Copyright display', 'onepiece' ),
+            	'section'        => 'onepiece_elements_bottommenubar',
+            	'settings'       => 'onepiece_elements_bottom_copyrightposition',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select copyright text display/position.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'hide', 'onepiece' ),
+                	'left'   => __( 'left', 'onepiece' ),
+            		'center'   => __( 'center', 'onepiece' ),
+            		'right'   => __( 'right', 'onepiece' ),
+            	)
+    	)));
+		
 		$wp_customize->add_setting( 'onepiece_elements_bottom_copyrighttext' , array(
 		'default' => 'Copyright 2016', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1171,6 +1213,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'textarea',
  	    	'description'    => __( 'Copyright information text.', 'onepiece' ),
     	)));
+		
+		
 		
 	
 

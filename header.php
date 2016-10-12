@@ -32,6 +32,7 @@ $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true)
 echo '<div id="headercontainer">'; 
 
 echo '<div id="topbar">';
+
 // widgets top 
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-top') ){
 $count = is_sidebar_active('widgets-top');
@@ -41,7 +42,7 @@ dynamic_sidebar('widgets-top');
 echo '<div class="clr"></div></div></div>';
 } 
 
-// topbar menu
+// topbar menu position
 $topbarclass = 'right';
 if( get_theme_mod( 'onepiece_elements_topmenubar_position') ){
     $topbarclass = get_theme_mod( 'onepiece_elements_topmenubar_position', 'right');

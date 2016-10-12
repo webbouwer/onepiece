@@ -56,7 +56,8 @@ $filtermenubox .= '<li><a class="category" href="#" data-filter="*">All</a></li>
 
 // wp categories - http://wordpress.stackexchange.com/questions/212923/how-to-list-all-categories-and-tags-in-a-page 
 foreach ( $categories as $category ) {
-    
+
+
 if( $category->slug != $topcat ){
     
     // category option
@@ -65,7 +66,7 @@ if( $category->slug != $topcat ){
     // tag option submenu
     if( $filters == 'all'){ // get tags from category post .. get_category_link( $category )
 	query_posts('category_name='.$category->slug);
-  
+    
 	if (have_posts()) : while (have_posts()) : the_post();
 	  	$posttags = get_the_tags();
 	  		if ($posttags):

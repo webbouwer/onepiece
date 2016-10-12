@@ -11,13 +11,17 @@ echo '<div id="contentcontainer"><div class="outermargin">';
 
 $contentpercentage = 100;
 
+
 if( get_theme_mod('onepiece_elements_sidebar2_position2', 'out') == 'out'
 && function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position', 'none') != 'none' ){
+
 $contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width'); 
 echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2', 'out').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').';width:'.get_theme_mod('onepiece_elements_sidebar2_width', 20).'%;">';
 get_template_part('sidebar2');
 echo '<div class="clr"></div></div>';
+
 }
+
 
 if( function_exists('is_sidebar_active') && is_sidebar_active('sidebar') && get_theme_mod('onepiece_elements_sidebar_position', 'left') != 'none' ){
 $contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_mainsidebar_width', 28); 

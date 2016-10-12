@@ -229,21 +229,39 @@ function _the_excerpt_length_filter( $default ) {
 
 /****** Replace post readmore excerpt link ******/
 function new_excerpt_more($more) {
+
+	$readmore = get_theme_mod('onepiece_content_panel_posts_readmore', 'none');
+	if($readmore != 'none'){
+	
     global $post;
+	
 	// define link
 	$custom_metabox_url = get_post_meta( $post->ID, 'meta-box-custom-url', true);
 	$custom_metabox_useurl = get_post_meta( $post->ID, 'meta-box-custom-useurl', true);
 	$custom_metabox_urltext = get_post_meta( $post->ID, 'meta-box-custom-urltext', true);
+	
+	if(empty($custom_metabox_urltext)){
+		$custom_metabox_urltext = __( 'read more', 'onepiece');
+	}
+	
 	if(!empty($custom_metabox_url) && ($custom_metabox_useurl == 'replaceblank' || $custom_metabox_useurl == 'replaceself')){
 		$readmorelink = $custom_metabox_url;
+		
 	}else{
 		$readmorelink =  get_permalink($post->ID);
 	}
 	$target = "_self";
 	if($custom_metabox_useurl == 'replaceblank'){
-		$target = "_blank";
+		$target = "_blank"; 
 	}
-	return ' <a class="readmorelink" href="'.$readmorelink. '" target="'.$target.'">'.__( 'Read more', 'onepiece').'</a>';
+	
+	if($readmore == 'inline'){
+		return ' <a class="readmorelink" href="'.$readmorelink. '" target="'.$target.'">'.$custom_metabox_urltext.'</a>';
+	}else{
+		return '<br /><a class="readmorelink" style="float:'.$readmore.'" href="'.$readmorelink. '" target="'.$target.'">'.$custom_metabox_urltext.'</a><div class="clr"></div>';
+	}
+	}
+	
 }
 add_filter('excerpt_more', 'new_excerpt_more');
 

@@ -57,14 +57,14 @@ if ( !is_single() && !is_page() ) {
 echo '<div class="post-title"><h2>'. $title_link . get_the_title().'</a></h2>';
 
 
-if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
-echo '<span class="post-author">'.get_the_author().'</span> ';
-}
-
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 echo '<span class="post-date">'.get_the_date().'</span>';
 }
+if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
+echo ' <span class="post-author">'.get_the_author().'</span> ';
+}
+
 
 echo '</div>';
 }
@@ -91,6 +91,8 @@ if($mobile){
     }
 }
 echo '</a></div>'; // default, 'thumb' or 'medium'
+}else{
+echo '<div class="clr"></div>';
 }
 
 } // end featured image 
@@ -103,7 +105,7 @@ if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ||
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'datesingle'){
-echo '<span class="post-date">'.get_the_date().'</span>';
+echo '<span class="post-date">'.get_the_date().' </span>';
 }
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single'){
