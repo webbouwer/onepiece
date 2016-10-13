@@ -17,8 +17,10 @@ if (!$user_ID) { // is not logged in
 		
 		echo '<ul class="tabmenu"><li>'.__( 'Sign in', 'onepiece' ).'</li>';
 		if ( $regallowed ) {
-		echo '<li>'.__( 'Register', 'onepiece' ).'</li></ul>';
+		echo '<li>'.__( 'Register', 'onepiece' ).'</li>';
 		}
+		echo '</ul>';
+		
 		echo '<ul class="tabcontainer"><li class="tab1 tab">';
 		
 		global $user_login; 
