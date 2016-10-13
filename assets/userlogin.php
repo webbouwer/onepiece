@@ -5,27 +5,32 @@
 
 function display_userpanel(){
 
+
+
 echo '<div id="userpanel">';
 
 global $user_ID, $user_identity; get_currentuserinfo(); 
+$regallowed = get_option( 'users_can_register' );
+
 
 if (!$user_ID) { // is not logged in
 		
 		echo '<ul class="tabmenu"><li>'.__( 'Sign in', 'onepiece' ).'</li>';
+		if ( $regallowed ) {
 		echo '<li>'.__( 'Register', 'onepiece' ).'</li></ul>';
-		
+		}
 		echo '<ul class="tabcontainer"><li class="tab1 tab">';
 		
 		global $user_login; 
 		global $user_email;
 		global $register;
 		global $reset;
-		if (isset(  $_GET['register'] )) { $register = $_GET['register']; } 
+		if ($regallowed && isset(  $_GET['register'] )) { $register = $_GET['register']; } 
 
 		if (isset(  $_GET['reset'] )) { $ $reset = $_GET['reset'];} 
 
 
-		if ($register == true) { 
+		if ($register == true && $regallowed) { 
 		
 			// registered with succes
 			echo '<h3>'.__( 'Success!', 'onepiece' ).'</h3>'; 
@@ -51,7 +56,7 @@ if (!$user_ID) { // is not logged in
 			
 		echo '</li>';
 
-
+		if ( $regallowed ) {
 		echo '<li class="tab2 tab">';
 		echo '<h3>'.__( 'Register', 'onepiece' ).'</h3>'; 
 		echo '<p>'.__( 'Sign up with email(or social account)', 'onepiece' ).'</p>';
@@ -76,8 +81,9 @@ if (!$user_ID) { // is not logged in
 			</div>
 			</form>
             
-</li>
-<li class="tab3 tab">
+		</li>
+		<?php } ?>
+		<li class="tab3 tab">
 
 			<?php
 			echo '<h3>'.__( 'Reset password', 'onepiece' ).'</h3>';
