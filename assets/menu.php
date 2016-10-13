@@ -412,7 +412,7 @@ class Menu_Image_Plugin {
 		 * original: wp_register_style( 'menu-image', plugins_url( '', __FILE__ ) . '/menu-image.css', array(), '1.1', 'all' );
 		 * @file Url to theme folder
 		 */
-		wp_register_style( 'onepiece-menu-image', esc_url( get_template_directory_uri() ).'/menu.css', array(), '1.1', 'all' );
+		wp_register_style( 'onepiece-menu-image', esc_url( get_template_directory_uri() ).'/assets/menu.css', array(), '1.1', 'all' );
 		wp_enqueue_style( 'onepiece-menu-image' );
 	}
 	/**

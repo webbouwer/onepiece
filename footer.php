@@ -73,7 +73,7 @@ echo '<div class="clr"></div></div>';
 } 
 
 $copyrighttext = get_theme_mod('onepiece_elements_bottom_copyrighttext' , '');
-$copyrightpos = get_theme_mod('onepiece_elements_bottom_copyrightposition', 'center');
+$copyrightpos = get_theme_mod('onepiece_elements_bottom_copyrightposition', 'hide');
 if(  $copyrighttext != '' && $copyrightpos != 'hide'){
 echo '<div id="copyright-textbox" align="'.$copyrightpos.'">';
 echo $copyrighttext;

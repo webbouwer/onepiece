@@ -1,7 +1,12 @@
 <?php
-/* ...  https://www.smashingmagazine.com/2013/03/the-wordpress-theme-customizer-a-developers-guide/
+/**
+ * Theme Customizer 
+ */
 
-// Sources used
+/* 
+
+// Sources used 
+// https://www.smashingmagazine.com/2013/03/the-wordpress-theme-customizer-a-developers-guide/
 // http://buildwpyourself.com/building-theme-color-options-customizer/
 // https://codex.wordpress.org/Class_Reference/WP_Customize_Control
 // http://wptheming.com/2014/09/customizer-panels-field-types/
@@ -9,19 +14,37 @@
 // >> http://code.tutsplus.com/tutorials/a-guide-to-the-wordpress-theme-customizer-adding-a-new-setting--wp-33180
 // http://www.wpbeginner.com/wp-tutorials/how-to-create-a-custom-wordpress-widget/
 // http://josephfitzsimmons.com/adding-a-select-box-with-categories-into-wordpress-theme-customizer/
-
-OVERVIEW (.. = todo )
-
-// gallery - category tags strip doubled tags
-// post excerpt length to customizer
+// (and many other scriptlet outputs)
 
 
+OVERVIEW 
+This theme is still a development theme, meaning WP Builders can quickly set up content and page structures but need to add there own styling through a .css file.
+
+The theme has 2 customizable sidebars, a Content/Image (Anything) Slider, a customizable header image and an Isotope Packary Filterable Grid display! 
+Set default content settings in the customizer, overwrite those with page specific (metabox) settings.
+Control Post author/time/tags/category/next-prevlinks display and set Single Post Featured Images to be displayed in the header area as default (like every post has it's own page)
+The content for the Slider (AnythingSlider) and Grid(Isotope Packary) derive from posts in a designated category.
+
+Many options are still in development. 
+The Slider works great but AnythingSlider can do much, much more. 
+Theme Gallery Grid is part of the Gallery Page template, Sub categories and Post tags Define a Category/Tag Filter Menu.
+The Isotope Grid can do much, much, much more too.
+Product properties can be assigned to Posts, together with a Shop Page Template and Custom Post Type for products this brings endless options (not started on yet).
+
+A Onepiece widget for multiple functions is in development the most important functions works great already: login and register in tab display. 
+Later on a few stylesheet will be added to set the example for styling options.
+
+
+
+Customizer Sections and Options list:
+( .. = in not ready )
 
 Identity:
-    Logo image 
+    	Logo image 
         image medium
     	max-width
         image small
+    	small max-width
     
     Title, Tagline & Icon image
         Site Title
@@ -31,23 +54,9 @@ Identity:
     Featured site-image
         image
 	    width (replace/replacemargin)
-		
-	..Personal Accounts
-		..
-		
-	..Business Accounts
-		..
-		
-	..Developer Accounts
-		..
-		
 
-..Users:
-	.. login
 	
-			
-		
-Style & Layout: <
+Style & Layout: 
 
 	Style
 		select style (css file)
@@ -61,7 +70,15 @@ Style & Layout: <
 		body textlink
 		body textlink hover
 		
-	
+
+..Media Accounts
+	.. Facebook
+	.. Twitter
+	.. Google+
+	.. Thumblr
+	.. Linkedin
+	.. Github	
+	...
 
 	   
 Content:
@@ -98,7 +115,7 @@ Content:
         Display category list Title & Description 
         ..Exclude categories
 
-	Gallary
+	Gallery
 		Default category
    
 Elements:
@@ -115,14 +132,15 @@ Elements:
 		link color
 		link hover color
 		transparency bg (0-1)
-    
-    ..Login tabbar    
-        Display none/position
+   
       
     Header image
 		Image
 		Headerimage width (content/full)
-	
+		
+	Login tabbar    
+        Default display none/position
+		
     Main menu bar
         Display hide/position horizontal
 		Positioning vertical/placement
@@ -141,32 +159,41 @@ Elements:
         Bottom menu display none/position
 
 Menu's:
+	Mini
     Top
     Main
+	User
     Side
     Bottom
     
-Widgets:
-    Top
-    Header
-    Sidebar
-    Sidebar2
-    Special Widgets
-    Before (content)
-    After (content)
-    Subcontent
-    Bottom
+Widgets: (sidebars positions)
+
+	Top - widgets on top of everything (ie. for banners or hidden menu's etc.)
+    Onepiece Header - widgets below the header image or slider (ie. for a row of buttons, banners or icons or to use as an overlay header area )
+    Sidebar - widgets 'main siderbar' (combined with sidebarmenu and pagemenu) on right- or left- side of main content
+    Sidebar2 - widgets 'second sidebar' on right- or left- side of the main content, outer or inner side of main content if main sidebar available
+	Page sidebar - widgets only displayed on pages (ie. nice for specific menu's or content related with a childpage group)
+    Special Widgets - widgets special is actually just an extra widget area on top of the main content area besides the sidebar(s) (ie. for special offers)
+    Before (content) - widgets just before the main content, after the special widgets (ie. for page related info and banners)
+    After (content) - widgets right the main content, sticking to the main content bottom (ie. for page related info and banners)
+    Subcontent - widgets below the main content and siderbar area, before the header (ie. for a complete info section with site wide value)
+    Bottom - widgets below/besides the bottom menu and logo, before the copyright textbox (ie. for short contact info and sitemap)
+	
+	!Widgets Header - WP default widgets setup is available for admin but not used in the theme view (almost blank start screen) 
+    
+
 
 Responsive
 	Small
-		screen max width (switch to medium)
+		screen max width (switch to medium) in px
 		outermargin default width (%)
-		content max width
+		content max width in px
 	Medium
-		screen max width (switch to large)
+		screen max width (switch to large) in px
 		outermargin default width (%)
-		content max width
+		content max width in px
 	Large
+		content max width in px
 	
 */
 function onepiece_register_theme_customizer( $wp_customize ) {
@@ -1195,7 +1222,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'select',
  	    	'description'    => __( 'Select copyright text display/position.', 'onepiece' ),
             	'choices'        => array(
-                	'none'   => __( 'hide', 'onepiece' ),
+                	'hide'   => __( 'hide', 'onepiece' ),
                 	'left'   => __( 'left', 'onepiece' ),
             		'center'   => __( 'center', 'onepiece' ),
             		'right'   => __( 'right', 'onepiece' ),
