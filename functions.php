@@ -40,6 +40,7 @@ function basic_setup_register_menus() {
 		'minimenu' => __( 'Mini menu' , 'onepiece' ),
 		'topmenu' => __( 'Top menu' , 'onepiece' ),
 		'mainmenu' => __( 'Main menu' , 'onepiece' ),
+		'usermenu' => __( 'User menu' , 'onepiece' ),
 		'sidemenu' => __( 'Side menu' , 'onepiece' ),
 		'bottommenu' => __( 'Bottom menu' , 'onepiece' )
 		)
@@ -298,7 +299,7 @@ add_filter( 'body_class', 'onepiece_body_class' );
 add_action( 'pre_get_posts', 'exclude_specific_cats' );
 function exclude_specific_cats( $wp_query ) {   
     if( !is_admin() && is_main_query() && is_home() ) {
-        $wp_query->set( 'cat', '-1,-3' );
+          $wp_query->set( 'cat', '-3' ); // ! '-1' not allowed = buggy in WP Multisitesq
     }
 }
 
