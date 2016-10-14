@@ -67,8 +67,6 @@ echo wp_nav_menu( array( 'theme_location' => 'minimenu' ) );
 echo '<div class="clr"></div></nav></div><div style="clear:'.$topbarclass.';"></div>';
 }
 
-
-
 // topmenu
 if ( has_nav_menu( 'topmenu' ) && get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') != 'none' ) {
 echo '<div id="topbar-navigation" class="main-navigation" role="navigation"><nav>';
@@ -77,7 +75,7 @@ wp_nav_menu( array( 'theme_location' => 'topmenu' ) );
 }else{
 wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) );
 } 
-echo '<div class="clr"></div></nav></div></div>';
+echo '<div class="clr"></div></nav></div>';
 }
 
 // mainmenu in topbar
@@ -91,12 +89,11 @@ echo wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-men
 echo '<div class="clr"></div></nav></div>';
 }
 
+echo '<div class="clr"></div></div></div>'; // end topmenubar
 
-
-
-echo '<div class="clr"></div></div></div>';
 
 echo '</div>'; // end topbar
+
 
 
 
@@ -125,6 +122,7 @@ echo '</div>';
 }
 
 }else if(  $childpagedisplay == 'fade' || ( ($usepostfeaturedimage == 'replace' ||  $usepostfeaturedimage == 'replacemargin') && is_single() ) && has_post_thumbnail() ){
+
 if( $usepostfeaturedimage == 'replacemargin' ){
 echo '<div class="outermargin">';
 }
@@ -139,9 +137,7 @@ if( $usepostfeaturedimage == 'replacemargin' ){
 echo '</div>';
 }
 
-   
 }else if( $sliderdefaultdisplay == "replaceheader" && ( $useheaderimage != 'replace' && $childpagedisplay != 'fade' && $sliderdisplay != 'none')){
-
 
 // default slider content here
 if( $sliderdefaultwidth != 'full' ){
@@ -153,18 +149,22 @@ if( $sliderdefaultwidth != 'full' ){
 echo '</div>';
 }
 
-}else{ // headerimage
+}else{ 
+
+// headerimage
 $header_image = get_header_image(); 
-if ( (is_page() && ( $useheaderimage == 'replace' || $childpagedisplay == 'fade' ) ) || (is_single() && $usepostfeaturedimage == 'replace') ){
+
+if ( (is_page() && $thumbelarge != '' && ( $useheaderimage == 'replace' || $childpagedisplay == 'fade' ) ) || (is_single() && $usepostfeaturedimage == 'replace' && $thumbelarge != '' ) ){
 $header_image = $thumbelarge;
 }
 
 if (( !empty( $header_image ) && $useheaderimage != 'hide'  ) || $childpagedisplay == 'fade' ) :
+
 if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){
 echo '<div class="outermargin">';
 }
 
-echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
+echo '<div id="headerbar" style="background-image: url('.esc_url( $header_image ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
 
 //echo '<img src="'.esc_url( $header_image ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
 if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){

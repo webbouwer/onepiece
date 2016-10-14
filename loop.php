@@ -238,5 +238,16 @@ if ( !is_single() && !is_page() ) {
         echo '</div>';
 }
 
+endif; 
+
+if ( !have_posts() ) :  
+
+
+echo '<div id="post-undefined"><div class="contentpadding">';
+
+echo '<div class="post-title"><h1>No content available</h1></div>';
+
+echo '</div></div>';
+
 endif;   
 ?>

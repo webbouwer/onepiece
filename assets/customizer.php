@@ -889,7 +889,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 
 		
-		// ELEMENTS - HEADER IMAGE
+		// ELEMENTS - HEADER IMAGE - WIDTH
 		$wp_customize->add_setting( 'onepiece_elements_headerimage_width' , array(
 		'default' => 'outer', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -905,6 +905,18 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'outer'   => __( 'Content (outermargin)', 'onepiece' ),
                 	'full'   => __( 'Full (window)', 'onepiece' ),
             	)
+    	)));
+		// ELEMENTS - HEADER IMAGE (min) HEIGHT
+    	$wp_customize->add_setting( 'onepiece_elements_headerimage_height' , array(
+		'default' => '560', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_headerimage_height', array(
+            	'label'          => __( 'Header Min-height', 'onepiece' ),
+            	'section'        => 'header_image',
+            	'settings'       => 'onepiece_elements_headerimage_height',
+            	'type'           => 'number',
+ 	    	'description'    => __( 'Height (min-height) in px', 'onepiece' ),
     	)));
 		
 		

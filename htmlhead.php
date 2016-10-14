@@ -185,7 +185,6 @@ $sliderheight = get_post_meta($post->ID, "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta($post->ID, "pagetheme_slide_displaywidth", true);
 
 
-
 // get html for default slider and page slider if available
 if( ( $sliderdefaultdisplay == 'replaceheader' || $sliderdefaultdisplay == 'belowheader' ) && $sliderdefaultcat != 'uncategorized' ){
     //$headerstyle = 'style="height:'.$sliderdefaultheight.'%;min-height:'.$sliderdefaultheight.'%;"';
@@ -214,6 +213,7 @@ echo  '$("#sliderbox-head,#headerbar").css("min-height", ( $(window).height() / 
 if( $sliderdisplay == 'topfooter' || $sliderdefaultdisplay == 'topfooter' ){
 echo  '$("#sliderbox-footer").css("min-height", ( $(window).height() / 100) * '.$footerheight.' );';
 }
+
 // end php to js 
 ?>
 });
@@ -369,6 +369,7 @@ font-size:<?php echo $size; ?>em;
 
 <?php /* TOPBAR BEHAVIOR */
 
+
 if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
 || $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade' && $topbarbehavior != 'rela'){ 
 
@@ -462,9 +463,23 @@ height: 100%;
 /* available mobile detect */ 
 if( $mobile ){ 
 echo 'max-height:680px;'; 
-} 
+}
 ?>
 }
+
+
+#headerbar
+{
+<?php 
+/* available mobile detect */ 
+if( $mobile ){ 
+echo 'max-height:680px;'; 
+}
+
+?>
+}
+
+
 
 /* Slider default styles
 .. should move to style.css */
@@ -569,6 +584,9 @@ position:relative;
 
 echo '<style type="text/css">';
 echo '#headercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logo_maxwidth',240 ).'px !important; }';
+
+echo '#headerbar { min-height:'.get_theme_mod('onepiece_elements_headerimage_height','560').'px; }'; 
+
 echo '#footercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px !important; }';
 
 echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_small_width', 512).'%; max-width:'.get_theme_mod('onepiece_responsive_small_outermargin', 480 ).'px; margin:0 auto; }'; 
