@@ -138,17 +138,22 @@ $mainpagecontent = '';
  
 if( $childpagedisplay != 'fade' && $childpagedisplay != 'slddwn' ){ 
  
-// normal title and author display  
-echo '<div class="post-title"><h1>'. get_the_title().'</h1></div>';
-// use default page date/author settings
+
+
+echo '<div class="page-title"><h1>'.get_the_title().'</h1></div>';
+if(get_theme_mod('onepiece_content_panel_page_authortime') != 'none'){
+echo '<div class="page-subtitle">';
 if( get_theme_mod('onepiece_content_panel_page_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_page_authortime') == 'date' ){
-echo '<span class="post-date">'.get_the_date().'</span>';
+echo '<span class="post-date">'.get_the_date().' </span>';
 }
 if( get_theme_mod('onepiece_content_panel_page_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_page_authortime') == 'author'){
 echo '<span class="post-author">'.get_the_author().'</span>';
 }
+echo '</div>';
+}
+
 // normal page content display
 echo '<div class="page-content mainpage">';
 echo apply_filters('the_content', get_the_content()).'</div>';

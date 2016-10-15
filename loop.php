@@ -99,8 +99,10 @@ echo '<div class="clr"></div>';
 
 // Title below image for single/page items
 if ( is_single() || is_page() ) { 
-echo '<div class="post-title"><h1>'. $title_link . get_the_title().'</a></h1>';
+echo '<div class="post-title"><h1>'. $title_link . get_the_title().'</a></h1></div>';
 
+if(get_theme_mod('onepiece_content_panel_postlist_authortime') != 'none'){
+echo '<div class="post-subtitle">';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single' || 
@@ -111,8 +113,9 @@ if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ||
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single'){
 echo '<span class="post-author">'.get_the_author().'</span>';
 }
-
 echo '</div>';
+}
+
 }
 
 
@@ -239,15 +242,4 @@ if ( !is_single() && !is_page() ) {
 }
 
 endif; 
-
-if ( !have_posts() ) :  
-
-
-echo '<div id="post-undefined"><div class="contentpadding">';
-
-echo '<div class="post-title"><h1>No content available</h1></div>';
-
-echo '</div></div>';
-
-endif;   
 ?>

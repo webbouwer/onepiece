@@ -382,6 +382,8 @@ padding:4px 0px 6px 0;
 width:100%;
 height:auto;
 }
+
+
 .contentpadding
 {
 position:relative
@@ -389,8 +391,9 @@ position:relative
 span.edit-link
 {
 position:absolute;
-left:0px;
+right:0px;
 top:0px;
+display:inline-block;
 }
 span.edit-link a
 {
@@ -499,7 +502,7 @@ display:block;
 @media screen and (min-width: 512px) {
   
 
-/******************** HEADER MENUS FOOTER (MEDIUM)  ********************/
+/******************** HEADER / MENUS / FOOTER (MEDIUM)  ********************/
 #topmenubar
 {
 text-align:left;
