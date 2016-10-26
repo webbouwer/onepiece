@@ -8,10 +8,9 @@ Webdesign Den Haag | Oddsized
 **/
 
 Theme to be applied by Wordpress Code Monkeys :-)
-Not available in the Wordpress Theme directory
-Keep track of updates here - https://github.com/Oddsized/onepiece
-Use the github-updater plugin by Andy Fragen - https://github.com/afragen
-
+  Not available in the Wordpress Theme directory
+  Keep track of updates here - https://github.com/Oddsized/onepiece
+  Use the github-updater plugin by Andy Fragen - https://github.com/afragen
 
 HTML and basic css is available, custom theme style can be applied in a custom stylesheet wich can be selected inside the theme customizer. ! Current all Branches testing php fread to get .css files this might result in errors or blank screen on some shared-hosting platforms.
 
@@ -28,6 +27,8 @@ The theme default slider options are set default in the theme customizer and spe
 Menu's can have positioned images.
 Made with the Menu Image code by Alex Davyskiba aka Zviryatko - http://html-and-cms.com/plugins/menu-image/
 
+Views are enhanced with responsive methodes
+Mobile detection made with code by Andy Moore http://detectmobilebrowsers.mobi 
 
 
 Highlights:
