@@ -1,7 +1,7 @@
-# onepiece
+a# onepiece
 Wordpress Theme in Development
 /**
-README.md
+readme.txt
 
 by CP Mueller - 2016 The Hague 
 Webdesign Den Haag | Oddsized
