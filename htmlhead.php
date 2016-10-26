@@ -262,6 +262,12 @@ $('.sliderarea').anythingSlider({
     },
     */
 
+}).anythingSliderFx({
+				// base FX definitions
+				// '.selector' : [ 'effect(s)', 'size', 'time', 'easing' ]
+				// 'size', 'time' and 'easing' are optional parameters, but must be kept in order if added
+				'.contentbox h3'       : [ 'top fade', '200px', '600', 'easeOutExpo' ],
+				'.contentbox div.excerpt'       : [ 'listLR', 'auto', '600', 'easeOutExpo' ],
 }); // end anythingSlider
 }); // end ready
 }); // end jQuery $	
@@ -533,10 +539,23 @@ div.anythingSlider span.forward
 {
 right:5px;
 }
-div.slidebox
+div.anythingSlider div.slidebox,
+div.anythingSlider div.slidebox div.outermargin
 {
 position:relative;
+height:100%;
 }
+
+
+
+div.anythingSlider div.slidebox .contentbox
+{
+position:absolute;
+bottom:10%;
+left:20%;
+width:60%;
+}
+
 .anythingBase {
 	background: transparent;
 	list-style: none;
@@ -978,9 +997,22 @@ $(document).ready(function() {
     
     markup += '</div>';
 
-    if( obj.smallimg ){ 
-    markup += '<div class="coverbox"><img class="coverimage" src="'+obj.smallimg[0]+'" alt="'+obj.title+'" /></div>';
+
+	var smallscreen = false;
+ 	<?php // check for customizer posts display settings
+    if( $mobile ){
+    echo "smallscreen = true;";
+	}
+    ?>
+
+
+ 	if( smallscreen === false && obj.largeimg ){ 
+	markup += '<div class="coverbox"><img class="coverimage" src="'+obj.largeimg[0]+'" alt="'+obj.title+'" /></div>';
+	}else if( obj.mediumimg ){ 
+    markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
     }
+	
+	// markup += JSON.stringify(obj);
   
     // META DATA .. JSON.stringify(obj.meta)
     if( obj.meta['meta-box-custom-url'] && (obj.meta['meta-box-custom-useurl'] == 'external' || obj.meta['meta-box-custom-useurl'] == 'internal') ){

@@ -85,9 +85,9 @@ if($mobile){
     }
 }else{
     if( $counter < $firstcount && !$paged ){
-        the_post_thumbnail('medium');
+        the_post_thumbnail('large');
     }else{
-        the_post_thumbnail('big-thumb');
+        the_post_thumbnail('medium');
     }
 }
 echo '</a></div>'; // default, 'thumb' or 'medium'

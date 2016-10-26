@@ -287,6 +287,15 @@ function is_sidebar_active( $sidebar_id ){
         return count( $the_sidebars[$sidebar_id] );
 }
 
+/**
+ * Set max srcset image width to 1800px
+ */
+function remove_max_srcset_image_width( $max_width ) {
+    $max_width = 2100;
+    return $max_width;
+}
+add_filter( 'max_srcset_image_width', 'remove_max_srcset_image_width' );
+
 
 /********* body tag class **********/
 function onepiece_body_class( $classes ) {
@@ -339,8 +348,8 @@ function sliderhtml($category, $mobile, $id = null){
 	}
 	$sliderhtml .= '>';
     $sliderhtml .= '<div class="slidebox"><div class="outermargin">';
-	$sliderhtml .= '<h3>'.get_the_title().'</h3>';
-	$sliderhtml .= '<div>'.get_the_excerpt().'</div>';
+	$sliderhtml .= '<div class="contentbox"><h3>'.get_the_title().'</h3>';
+	$sliderhtml .= '<div class="excerpt">'.get_the_excerpt().'</div></div>';
 	$sliderhtml .= '</div></div></li>'; 
     
     endwhile; endif; 

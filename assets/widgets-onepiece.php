@@ -25,14 +25,14 @@ public function widget( $args, $instance ) {
     echo $args['before_title'] . $title . $args['after_title'];
     
 	// This is where you run the code and display the output
-    if($instance['function_type'] == 'login'){
+	if($instance['function_type'] == 'login'){
 	
 	display_userpanel();
 	
-	}else{
-	echo $instance['function_type'];
 	}
 	
+	
+	echo '('.$instance['function_type'].')';
 	
     echo $args['after_widget'];
 }

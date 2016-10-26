@@ -3,22 +3,17 @@ Wordpress Theme in Development
 /**
 README.md
 
-by CP Müller - 2016 The Hague 
+by CP Mueller - 2016 The Hague 
 Webdesign Den Haag | Oddsized
 **/
 
-For Wordpress code monkeys only :-) The Worpdress Theme with devil fruits!
+/**** MASTER BRANCH ****/
 
-Contains works with Copyright and Licences:
-	Isotope by David DeSandro aka Metafizzy - http://isotope.metafizzy.co/
-	AnythingSlider by Rob Garrison aka CSS Tricks - https://github.com/CSS-Tricks/AnythingSlider/wiki
-	Menu Image by Alex Davyskiba aka Zviryatko - http://html-and-cms.com/plugins/menu-image/
-
-The Onepiece Theme provides a theme framework with a set of common used display management options. 
-Warning for non-designers/code-nitwits: There is no real layout added, only html markup with css for a minimal responsive positioning of page elements. More css should be added in the style.css or a custom file and enriched with content and media placement.
-
+The Onepiece Theme provides a set of common used theme options for webdesigners and developers.
+There is no real layout added, only html markup with css for a minimal responsive positioning of page elements.
+More css should be added in the style.css or a custom file and enriched with content and media placement.
 Theme options are build in the theme customizer, post metaboxes and page-templates.
-The basic page theme has already extended options by default.
+A basic page has already extended options by default.
 Most common page markups can be achieved without any code hassle.
 
 ! Current all Branches testing php fread to get .css files 
@@ -62,7 +57,6 @@ Default Metabox Posts:
 - Link text (string to link) 
 - Link function (separate button/replacing post permalink current/new window)
 
-Post product metaboxes
 - Product Price  
 - Price Discount(%)  
 - Product Size  (xs,s,m,l,xl)
@@ -71,6 +65,8 @@ Post product metaboxes
 - [implement todo..] Weight (package/product total)  
 - [implement todo..] Weight measurement in mg, gram, kilogram, ton
 - Labeled ( No/New/Special/Featured/Coming soon/All time favourite)
+
+
 
 Customizer Options:
 
@@ -108,6 +104,7 @@ Content:
 
    
 Elements:
+
     Background image    
     Top menu bar
         Display none/position  
