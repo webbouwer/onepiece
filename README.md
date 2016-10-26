@@ -9,10 +9,10 @@ Webdesign Den Haag | Oddsized
 
 For Wordpress code monkeys only :-) The Worpdress Theme with devil fruits!
 
-Contains works from others:
-	Isotope 
-	AnythingSlider
-	
+Contains works with Copyright and Licences:
+	Isotope by David DeSandro aka Metafizzy - http://isotope.metafizzy.co/
+	AnythingSlider by Rob Garrison aka CSS Tricks - https://github.com/CSS-Tricks/AnythingSlider/wiki
+	Menu Image by Alex Davyskiba aka Zviryatko - http://html-and-cms.com/plugins/menu-image/
 
 The Onepiece Theme provides a theme framework with a set of common used display management options. 
 Warning for non-designers/code-nitwits: There is no real layout added, only html markup with css for a minimal responsive positioning of page elements. More css should be added in the style.css or a custom file and enriched with content and media placement.
