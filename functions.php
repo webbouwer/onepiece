@@ -5,6 +5,7 @@ require get_template_directory() . '/assets/mobile_detect.php';
 require get_template_directory() . '/assets/customizer.php'; // customizer functions
 require get_template_directory() . '/assets/metaboxes.php'; // metabox functions
 require get_template_directory() . '/assets/menu.php'; // metabox functions
+require get_template_directory() . '/assets/slider.php'; // metabox functions
 require get_template_directory() . '/assets/userlogin.php'; // login functions
 require get_template_directory() . '/assets/widgets-global.php'; // widget functions
 require get_template_directory() . '/assets/widgets-onepiece.php'; // onepiece widget functions
@@ -324,40 +325,6 @@ function get_categories_select() {
         		$count++;
     	}
   	return $results;
-}
-
-/********* SLIDER CATEGORY ITEM HTML **********/
-function sliderhtml($category, $mobile, $id = null){ 
-    $cat = get_category_by_slug( $category );
-    $sliderhtml = '';
-    if( $cat->term_id ){
-	    query_posts('category_name='.$cat->cat_name);
-        $sliderhtml .= '<ul id="slider-'.$id.'" class="sliderarea">';
-        if (have_posts()) : while (have_posts()) : the_post();
-
-	    $sliderhtml .= '<li class="panel"';
-	if ( get_post_thumbnail_id( get_the_ID() ) ) {
-	$aid = get_post_thumbnail_id( get_the_ID() );
-    	$large_image_url = wp_get_attachment_image_src( $aid, 'full' );
-    	$small_image_url = wp_get_attachment_image_src( $aid, 'big-thumb' );
-	if($mobile){ 
-	$sliderhtml .= ' style="background-image:url('.$small_image_url[0].');"';
-	}else{
-	$sliderhtml .= ' style="background-image:url('.$large_image_url[0].');"';
-	}
-	}
-	$sliderhtml .= '>';
-    $sliderhtml .= '<div class="slidebox"><div class="outermargin">';
-	$sliderhtml .= '<div class="contentbox"><h3>'.get_the_title().'</h3>';
-	$sliderhtml .= '<div class="excerpt">'.get_the_excerpt().'</div></div>';
-	$sliderhtml .= '</div></div></li>'; 
-    
-    endwhile; endif; 
-	wp_reset_query();
-	
-	$sliderhtml .= '</ul>';
-	return $sliderhtml;
-    }    
 }
 
 

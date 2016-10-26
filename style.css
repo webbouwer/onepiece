@@ -2,7 +2,7 @@
 Theme Name: onepiece
 Theme URI: http://www.webdesigndenhaag.net/onepiece
 Description: WP Theme for development & custom design now hosted on github
-Version: 0.6.5.1
+Version: 0.6.5.0
 Details URI: http://webdesigndenhaag.net/onepiece/wordpress-theme/onepiece-news/theme-updates/feed/
 Author: Oddsized
 Author URI: http://www.webdesigndenhaag.net
@@ -315,7 +315,7 @@ img.header-image
 {
 position:relative;
 background-position:center;
-background-size: 150%;
+background-size: 120%;
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
@@ -329,7 +329,7 @@ border-bottom:8px solid #D85326; */
 }
 #headerbar .bglayer
 {
-min-height:180px;
+min-height:100%; 
 }
 
 

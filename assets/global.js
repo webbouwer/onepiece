@@ -9,21 +9,7 @@ jQuery(function ($) {
 
 $(document).ready(function() {    
 
-/**
- * HTML RESIZE RESPONSIVE
- * on resize
- * reorder sidebar html (index.php, page.php, gallery.php)
- */  
-    /* On resize */
-	var resizeId;
-	$(window).resize(function() {
-    		clearTimeout(resizeId);
-    		resizeId = setTimeout(doneGlobalResizing, 20);
-	});
-	function doneGlobalResizing(){
-		ResponsiveReorder(); // replace sidebar elements below content
-		$('#topbar').css('width', $(window).width() +'px'); // add topbar width resize
-	}
+	
 /**
  * RESPONSIVE ORDER
  * #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
@@ -61,12 +47,73 @@ $(document).ready(function() {
 	}
 	ResponsiveReorder();
 	
+
+/**
+ * HTML RESIZE RESPONSIVE
+ * on resize
+ * reorder sidebar html (index.php, page.php, gallery.php)
+ */  
+    /* On resize */
+	var resizeId;
+	$(window).resize(function() {
+    		clearTimeout(resizeId);
+    		resizeId = setTimeout(doneGlobalResizing, 20);
+	});
+	
+		
+		
+	function doneGlobalResizing(){
+		
+		ResponsiveReorder(); // replace sidebar elements below content
+		
+		
+		
+		
+		$('#topbar').css('width', $(window).width() +'px'); // add topbar width resize
+		
+		/* adjust mobile header
+		if( $('#pagecontainer').hasClass("mobile")  ){
+		
+		if(  $("#headercontainer").height() >= ( $(window).height() / 2.5 ) ){
+			
+			$("#sliderbox-head").css( 'height' , $(window).height() + 'px' );
+			
+		}else{
+			
+			$("#sliderbox-head").css( 'height' , 'auto' );
+		
+		}
+		
+	
+		} // end mobile
+		*/
+		
+		
+		
+		// headerbar height (fade bglayer)
+		
+		$('#headerbar').css( 'height' , $(window).height()/3*2 + 'px' );
+		$('#headerbar .bglayer').css( 'height' , $(window).height()/3*2 + 'px' );
+		
+		
+		
+	}
+	
+	doneGlobalResizing();
+	
+	
+	
+	
+	
 /**
  * LOADING MESSAGEBOX
  * body (index.php, page.php, gallery.php)
  */ 
 	$('body').append('<div class="loadbox"><span>Loading</span></div>');
 	$('body > .loadbox').hide().fadeIn(400);
+	
+	
+	
 	
 /**
  * SCROLL TO TOP
@@ -95,6 +142,15 @@ $(document).ready(function() {
 		}
         
 	});
+	
+	
+	
+
+
+	
+
+	
+	
 
 /**
  * CONTENT POPUPBOX
@@ -133,7 +189,11 @@ $(document).ready(function() {
 
 $(window).load(function() { 
     
-    
+	
+	 
+	 
+	 
+	 
 /**
  * HTML THEME PAGE SCROLL
  * smooth scroll

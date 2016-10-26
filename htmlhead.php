@@ -94,6 +94,7 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 /* echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>'; */
 if($mobile){
 echo '<meta name="viewport" content="initial-scale=1.0, width=device-width" />';
+$content_width = 760;
 }else if ( ! isset( $content_width ) ) {
 $content_width = 960;
 }
@@ -207,7 +208,7 @@ jQuery(function($) {
 $(window).resize(function() {
 <?php 
 // start php to js
-if( $displaytype != 'variable' && $childpagedisplay != 'fade' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
+if( $displaytype != 'variable' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
 echo  '$("#sliderbox-head,#headerbar").css("min-height", ( $(window).height() / 100) * '.$displaytype.' );';
 }
 if( $sliderdisplay == 'topfooter' || $sliderdefaultdisplay == 'topfooter' ){
@@ -266,16 +267,22 @@ $('.sliderarea').anythingSlider({
 				// base FX definitions
 				// '.selector' : [ 'effect(s)', 'size', 'time', 'easing' ]
 				// 'size', 'time' and 'easing' are optional parameters, but must be kept in order if added
-				'.contentbox h3'       : [ 'top fade', '200px', '600', 'easeOutExpo' ],
-				'.contentbox div.excerpt'       : [ 'listLR', 'auto', '600', 'easeOutExpo' ],
+				//'.contentbox h3'       : [ 'bottom fade', '200px', '600', 'easeOutExpo' ],
+				
+				
+				// https://github.com/CSS-Tricks/AnythingSlider-Fx-Builder
+				
+				//'.contentbox h3'       : [ 'fade'  ],
+				'.contentbox h3,.contentbox div.excerpt'       : [ 'listLR', 'auto', '1000', 'easeOutExpo' ]
+				
 }); // end anythingSlider
 }); // end ready
 }); // end jQuery $	
 
 
 
-
 var setupSwipe = function(slider) {
+
     var time = 1000,
         // allow movement if < 1000 ms (1 sec)
         range = 50,
@@ -288,10 +295,15 @@ var setupSwipe = function(slider) {
         mv = (touch) ? 'touchmove' : 'mousemove',
         en = (touch) ? 'touchend' : 'mouseup';
 
-    slider.$window
-        .bind(st, function(e) {
-            // prevent image drag (Firefox)
-            e.preventDefault();
+
+
+		/*
+		 * Add swipe events to another layer ( in the background of clickable content elements )
+		 */
+
+		$('<div class="swipe-overlay"></div>').appendTo(slider.$window).bind(st, function(e) {
+            // prevent image drag (Firefox)//
+			e.preventDefault();
             t = (new Date()).getTime();
             x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
             y = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
@@ -308,7 +320,7 @@ var setupSwipe = function(slider) {
                 // allow if movement < 1 sec
                 ct = (new Date()).getTime();
             
-	    var newy = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY,
+	    	var newy = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY,
                 v = (y === 0) ? 0 : Math.abs(newy - y),
                 // allow if movement < 1 sec
                 dt = (new Date()).getTime();
@@ -358,8 +370,14 @@ var setupSwipe = function(slider) {
                 y = 0;
 
             }
-        });
+  
+  
+  });
+  
+  
+
 }; // END TOUCH SCROLL SLIDER
+
 
 </script>			
 <style type="text/css">
@@ -391,9 +409,9 @@ $toppos = 'relative';
 
 }
 
-if( $mobile && $topbarbehavior == 'mini' ){ 
-$toppos = 'relative';
-}
+//if( $mobile && $topbarbehavior == 'mini' ){ 
+//$toppos = 'relative';
+//}
 
 ?>
 div#topbar
@@ -409,56 +427,14 @@ top:0px;
 left:0px;
 }
 
-/* POPUP STYLING */
-<?php // popup variable display
-if($mobile){
-$w = 96;
-$l = 2;
-}else{
-$w = 80;
-$l = 10;
-if( $popupdefaultdisplay == 'large'){
-$w = 100;
-$l = 0;
-}elseif( $popupdefaultdisplay == 'small'){
-$w = 60;
-$l = 20;
-}
-$c = $popupoverlaycolor;
-$o = ( 100 - $popupoverlayopacity) / 100;
-}
-?>
-.popupcloak
-{
-position:fixed;
-top:0px;
-left:0px;
-height:100%;
-width:100%;
-z-index:80;
-background-color:<?php echo $c; ?>;
-opacity:<?php echo $o; ?>;
-}
-#mainpopupbox
-{
-position:fixed;
-top:10%;
-left:<?php echo $l; ?>%;
-width:<?php echo $w; ?>%;
-height:80%;
-z-index:81;
-background-color:#ffffff;
-overflow:auto; 
-}
-#mainpopupbox .popupcontent
-{
-position:relative;
-width:auto;
-padding:4% 5%;
-}
 
 
-/* SLIDER STYLES */
+/*
+ *
+ * SLIDER STYLING 
+ *
+ */
+
 div#sliderbox-head,
 div#sliderbox-footer
 {
@@ -481,14 +457,22 @@ echo 'max-height:680px;';
 if( $mobile ){ 
 echo 'max-height:680px;'; 
 }
-
 ?>
 }
 
 
+/* Slider swipe overlay */
+.swipe-overlay {
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: 50;
+}
 
-/* Slider default styles
-.. should move to style.css */
+ 
+/* Slider default styles */
 .sliderarea {
 position:relative;
 width: 100%; 
@@ -546,15 +530,15 @@ position:relative;
 height:100%;
 }
 
-
-
 div.anythingSlider div.slidebox .contentbox
 {
 position:absolute;
-bottom:10%;
-left:20%;
-width:60%;
+bottom:8%;
+left:4%;
+width:96%;
+z-index: 99;
 }
+
 
 .anythingBase {
 	background: transparent;
@@ -577,12 +561,79 @@ width:60%;
 .anythingBase .panel.vertical {
 	float: none;
 }
+
 .anythingSlider .fade .activePage { z-index: 1; }
 .anythingSlider .fade .panel { z-index: 0; }
 
+
+
 /* add medium/large screen styling */
 @media screen and (min-width: 780px ){
+div.anythingSlider div.slidebox .contentbox
+{
+position:absolute;
+bottom:4%;
+left:2%;
+width:66%;
 }
+}
+
+
+
+/*
+ *
+ * POPUP STYLING 
+ *
+ */
+<?php // popup variable display
+if($mobile){
+$w = 96;
+$l = 2;
+}else{
+$w = 80;
+$l = 10;
+if( $popupdefaultdisplay == 'large'){
+$w = 100;
+$l = 0;
+}elseif( $popupdefaultdisplay == 'small'){
+$w = 60;
+$l = 20;
+}
+$c = $popupoverlaycolor;
+$o = ( 100 - $popupoverlayopacity) / 100;
+}
+?>
+.popupcloak
+{
+position:fixed;
+top:0px;
+left:0px;
+height:100%;
+width:100%;
+z-index:80;
+background-color:<?php echo $c; ?>;
+opacity:<?php echo $o; ?>;
+}
+#mainpopupbox
+{
+position:fixed;
+top:10%;
+left:<?php echo $l; ?>%;
+width:<?php echo $w; ?>%;
+height:80%;
+z-index:81;
+background-color:#ffffff;
+overflow:auto; 
+}
+#mainpopupbox .popupcontent
+{
+position:relative;
+width:auto;
+padding:4% 5%;
+}
+
+
+
 </style>
 
 <?php 

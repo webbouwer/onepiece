@@ -126,7 +126,9 @@ echo '</div>';
 if( $usepostfeaturedimage == 'replacemargin' ){
 echo '<div class="outermargin">';
 }
-$thumbelarge = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));// the_post_thumbnail('big-thumb');
+
+$thumbelarge = wp_get_attachment_url( get_post_thumbnail_id( get_the_ID() , 'large' ) );// 
+
 if($childpagedisplay == 'fade'){
 echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
 }else{

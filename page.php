@@ -208,8 +208,12 @@ echo apply_filters('the_content', get_the_content()).'</div>';
  * display main content adjusted for box/tab/slides 
  *
  */ 
-$thumb_id = get_post_thumbnail_id();
-$thumb_url = wp_get_attachment_image_src($thumb_id,'medium', true);
+//$thumb_id = get_post_thumbnail_id();
+//$thumb_url = wp_get_attachment_image_src($thumb_id,'medium', true);
+
+$thumb_url = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ),'full', false );
+
+
 $mainpageoption .= '<li id="button-'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'"><a href="'.get_permalink($post_obj->ID).'" target="_self">'.$post_obj->post_title.'</a></li>';
 $mainpagecontent .= '<li id="'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'" class="childcontent"><div class="subtitle"><h3>'.$post_obj->post_title.'</h3></div><div class="subcontent">'. apply_filters('the_content', get_the_content()) .'</div></li>';
 }
@@ -358,16 +362,7 @@ jQuery(document).ready(function($) {
             });
 		}
         
-        function set_header_height(){
-		    var h = $(window).height() / 5 * 3 + 'px'; // get a height relative to the window size
-		    $('#headerbar .bglayer').css("height", h ); // set this on the innner container
-        }
-
-		$(window).on('resize', function(){
-		    set_header_height();
-        });
-		set_header_height();
-
+        
 		$('ul#childpagecontent li.childcontent').hide();
         $('ul#childpagecontent li.childcontent').eq(0).addClass('active').slideDown();
         $('ul#childpagemenu li').eq(0).addClass('active');
