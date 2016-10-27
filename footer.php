@@ -72,10 +72,11 @@ dynamic_sidebar('widgets-bottom');
 echo '<div class="clr"></div></div>';
 } 
 
-
-if(  get_theme_mod('onepiece_elements_bottom_copyrighttext') != '' ){
-echo '<div id="copyright-textbox">';
-echo get_theme_mod('onepiece_elements_bottom_copyrighttext');
+$copyrighttext = get_theme_mod('onepiece_elements_bottom_copyrighttext' , '');
+$copyrightpos = get_theme_mod('onepiece_elements_bottom_copyrightposition', 'hide');
+if(  $copyrighttext != '' && $copyrightpos != 'hide'){
+echo '<div id="copyright-textbox" align="'.$copyrightpos.'">';
+echo $copyrighttext;
 echo '<div class="clr"></div></div>';
 }
 

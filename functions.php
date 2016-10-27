@@ -4,6 +4,9 @@
 require get_template_directory() . '/assets/mobile_detect.php';
 require get_template_directory() . '/assets/customizer.php'; // customizer functions
 require get_template_directory() . '/assets/metaboxes.php'; // metabox functions
+require get_template_directory() . '/assets/menu.php'; // metabox functions
+require get_template_directory() . '/assets/slider.php'; // metabox functions
+require get_template_directory() . '/assets/userlogin.php'; // login functions
 require get_template_directory() . '/assets/widgets-global.php'; // widget functions
 require get_template_directory() . '/assets/widgets-onepiece.php'; // onepiece widget functions
 require get_template_directory() . '/assets/colors.php'; // customizer colors
@@ -15,7 +18,7 @@ function basic_setup_theme_global() {
 	add_theme_support( 'post-thumbnails' );
 	add_image_size( 'big-thumb', 320, 9999 );
     add_theme_support( 'title-tag' );
-	add_theme_support( 'automatic-feed-links' );
+	add_theme_support( 'automatic-feed-links' ); 
 
 	add_theme_support( 'custom-header' );
 	add_theme_support( 'custom-background' );
@@ -35,8 +38,10 @@ add_action( 'admin_init', 'onepiece_editor_styles' );
 function basic_setup_register_menus() {
 	register_nav_menus(
 		array(
+		'minimenu' => __( 'Mini menu' , 'onepiece' ),
 		'topmenu' => __( 'Top menu' , 'onepiece' ),
 		'mainmenu' => __( 'Main menu' , 'onepiece' ),
+		'usermenu' => __( 'User menu' , 'onepiece' ),
 		'sidemenu' => __( 'Side menu' , 'onepiece' ),
 		'bottommenu' => __( 'Bottom menu' , 'onepiece' )
 		)
@@ -194,6 +199,77 @@ add_action('wp_enqueue_scripts', 'onepiece_global_js');
 
 
 
+
+/****** Adjust excerpt num words max ******/
+function the_excerpt_length( $words = null ) { 
+    global $_the_excerpt_length_filter;
+
+    if( isset($words) ) { 
+        $_the_excerpt_length_filter = $words;
+    }   
+
+    add_filter( 'excerpt_length', '_the_excerpt_length_filter' );
+    the_excerpt();
+    remove_filter( 'excerpt_length', '_the_excerpt_length_filter' );
+
+    // reset the global
+    $_the_excerpt_length_filter = null;
+}
+
+function _the_excerpt_length_filter( $default ) { 
+    global $_the_excerpt_length_filter;
+
+    if( isset($_the_excerpt_length_filter) ) { 
+        return $_the_excerpt_length_filter;
+    }   
+
+    return $default;
+}
+// the_excerpt_length( 25 );
+
+
+
+/****** Replace post readmore excerpt link ******/
+function new_excerpt_more($more) {
+
+	$readmore = get_theme_mod('onepiece_content_panel_posts_readmore', 'none');
+	if($readmore != 'none'){
+	
+    global $post;
+	
+	// define link
+	$custom_metabox_url = get_post_meta( $post->ID, 'meta-box-custom-url', true);
+	$custom_metabox_useurl = get_post_meta( $post->ID, 'meta-box-custom-useurl', true);
+	$custom_metabox_urltext = get_post_meta( $post->ID, 'meta-box-custom-urltext', true);
+	
+	if(empty($custom_metabox_urltext)){
+		$custom_metabox_urltext = __( 'read more', 'onepiece');
+	}
+	
+	if(!empty($custom_metabox_url) && ($custom_metabox_useurl == 'replaceblank' || $custom_metabox_useurl == 'replaceself')){
+		$readmorelink = $custom_metabox_url;
+		
+	}else{
+		$readmorelink =  get_permalink($post->ID);
+	}
+	$target = "_self";
+	if($custom_metabox_useurl == 'replaceblank'){
+		$target = "_blank"; 
+	}
+	
+	if($readmore == 'inline'){
+		return ' <a class="readmorelink" href="'.$readmorelink. '" target="'.$target.'">'.$custom_metabox_urltext.'</a>';
+	}else{
+		return '<br /><a class="readmorelink" style="float:'.$readmore.'" href="'.$readmorelink. '" target="'.$target.'">'.$custom_metabox_urltext.'</a><div class="clr"></div>';
+	}
+	}
+	
+}
+add_filter('excerpt_more', 'new_excerpt_more');
+
+
+
+
 /****** Customize Adminbar ******/
 /* Not allowed for official themes
 function control_display_adminbar() {
@@ -212,6 +288,15 @@ function is_sidebar_active( $sidebar_id ){
         return count( $the_sidebars[$sidebar_id] );
 }
 
+/**
+ * Set max srcset image width to 1800px
+ */
+function remove_max_srcset_image_width( $max_width ) {
+    $max_width = 2100;
+    return $max_width;
+}
+add_filter( 'max_srcset_image_width', 'remove_max_srcset_image_width' );
+
 
 /********* body tag class **********/
 function onepiece_body_class( $classes ) {
@@ -220,7 +305,13 @@ function onepiece_body_class( $classes ) {
 }
 add_filter( 'body_class', 'onepiece_body_class' );
 
-
+/** Exclude specific categories from the loop */
+add_action( 'pre_get_posts', 'exclude_specific_cats' );
+function exclude_specific_cats( $wp_query ) {   
+    if( !is_admin() && is_main_query() && is_home() ) {
+          $wp_query->set( 'cat', '-3' ); // ! '-1' not allowed = buggy in WP Multisitesq
+    }
+}
 
 /********* CATEGORY LIST **********/
 function get_categories_select() {
@@ -234,40 +325,6 @@ function get_categories_select() {
         		$count++;
     	}
   	return $results;
-}
-
-/********* SLIDER CATEGORY ITEM HTML **********/
-function sliderhtml($category, $mobile, $id = null){ 
-    $cat = get_category_by_slug( $category );
-    $sliderhtml = '';
-    if( $cat->term_id ){
-	    query_posts('category_name='.$cat->cat_name);
-        $sliderhtml .= '<ul id="slider-'.$id.'" class="sliderarea">';
-        if (have_posts()) : while (have_posts()) : the_post();
-
-	    $sliderhtml .= '<li class="panel"';
-	if ( get_post_thumbnail_id( get_the_ID() ) ) {
-	$aid = get_post_thumbnail_id( get_the_ID() );
-    	$large_image_url = wp_get_attachment_image_src( $aid, 'full' );
-    	$small_image_url = wp_get_attachment_image_src( $aid, 'big-thumb' );
-	if($mobile){ 
-	$sliderhtml .= ' style="background-image:url('.$small_image_url[0].');"';
-	}else{
-	$sliderhtml .= ' style="background-image:url('.$large_image_url[0].');"';
-	}
-	}
-	$sliderhtml .= '>';
-    $sliderhtml .= '<div class="slidebox"><div class="outermargin">';
-	$sliderhtml .= '<h3>'.get_the_title().'</h3>';
-	$sliderhtml .= '<div>'.get_the_excerpt().'</div>';
-	$sliderhtml .= '</div></div></li>'; 
-    
-    endwhile; endif; 
-	wp_reset_query();
-	
-	$sliderhtml .= '</ul>';
-	return $sliderhtml;
-    }    
 }
 
 
@@ -319,5 +376,32 @@ function disable_emojicons_tinymce( $plugins ) {
     return array();
   }
 }
+
+/* control (remove) gravatar */
+function bp_remove_gravatar ($image, $params, $item_id, $avatar_dir, $css_id, $html_width, $html_height, $avatar_folder_url, $avatar_folder_dir) {
+	$default = get_stylesheet_directory_uri() .'/images/avatar.png';
+	if( $image && strpos( $image, "gravatar.com" ) ){ 
+		return '<img src="' . $default . '" alt="avatar" class="avatar" ' . $html_width . $html_height . ' />';
+	} else {
+		return $image;
+	}
+}
+add_filter('bp_core_fetch_avatar', 'bp_remove_gravatar', 1, 9 );
+function remove_gravatar ($avatar, $id_or_email, $size, $default, $alt) {
+	$default = get_stylesheet_directory_uri() .'/images/avatar.png';
+	return "<img alt='{$alt}' src='{$default}' class='avatar avatar-{$size} photo avatar-default' height='{$size}' width='{$size}' />";
+}
+add_filter('get_avatar', 'remove_gravatar', 1, 5);
+
+function bp_remove_signup_gravatar ($image) {
+	$default = get_stylesheet_directory_uri() .'/images/avatar.png';
+	if( $image && strpos( $image, "gravatar.com" ) ){ 
+		return '<img src="' . $default . '" alt="avatar" class="avatar" width="60" height="60" />';
+	} else {
+		return $image;
+	}
+}
+add_filter('bp_get_signup_avatar', 'bp_remove_signup_gravatar', 1, 1 );
+/* end control gravatar */
 
 ?>

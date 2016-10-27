@@ -6,20 +6,134 @@
  
 $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
-// htmlhead
+/**
+ *
+ * htmlhead
+ *
+ */	
 get_template_part('htmlhead');
+
 get_template_part('header');
 
-// get header variables
+/**
+ *
+ * get header variables
+ *
+ */	
 $useheaderimage = get_post_meta( get_the_ID() , "meta-page-headerimage", true);
 $pagesidebardisplay = get_post_meta(get_the_ID(), "meta-page-pagesidebardisplay", true);
 $specialwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-specialwidgetsdisplay", true);
 $secondsidebardisplay = get_post_meta(get_the_ID(), "meta-page-secondsidebardisplay", true);
 
-// start content
+/**
+ *
+ * $values variables page template
+ * .. use for slider functions 
+ */	
+$values = get_post_custom( $post->ID );
+
+
+/**
+ *
+ * $values get variables gallery template settings
+ *
+ */	
+$selected = isset( $values['theme_gallery_category_selectbox'] ) ? $values['theme_gallery_category_selectbox'][0] : '';
+$gallerydefault = isset( $values['onepiece_content_gallery_category'] ) ? $values['onepiece_content_gallery_category'][0] : '';
+$pagetitle = isset( $values['theme_gallery_pagetitle_selectbox'] ) ? $values['theme_gallery_pagetitle_selectbox'][0] : '';
+$filters = isset( $values['theme_gallery_filters_selectbox'] ) ? $values['theme_gallery_filters_selectbox'][0] : '';
+$maxinrow = isset( $values['theme_gallery_items_maxinrow'] ) ? $values['theme_gallery_items_maxinrow'][0] : '5';
+$clickaction = isset( $values['theme_gallery_items_clickaction'] ) ? $values['theme_gallery_items_clickaction'][0] : 'poppost';
+
+/**
+ *
+ * $topcat default gallery category
+ *
+ */	
+if($selected){
+$topcat = $selected;
+}elseif( $gallerydefault && $gallerydefault != '' ){
+$topcat = $gallerydefault;
+}else{
+$topcat = 'uncategorized';
+}
+
+
+
+
+
+/**
+ *
+ * FILTER MENU
+ * prepare filter menu and create category tag index
+ * http://wordpress.stackexchange.com/questions/212923/how-to-list-all-categories-and-tags-in-a-page
+ */	
+if($filters != 'none'){ // show filters
+$args = array( 
+    'child_of'                 => get_category_by_slug($topcat)->term_id,
+    'orderby'                  => 'name',
+    'order'                    => 'ASC', 
+    'public'                   => true,
+); 
+$categories = get_categories( $args );
+$cat_tags = ''; // tags by category
+$tag_idx = ''; // tags collected
+$filtermenubox = ''; // output taglists ordered by category filter 
+
+
+$filtermenubox .= '<ul id="topgridmenu" class="categorymenu">';// start filtermenu html
+$filtermenubox .= '<li><a class="category" href="#" data-filter="*">All</a></li>';
+foreach ( $categories as $category ) {
+if( $category->slug != $topcat ){
+$filtermenubox .= '<li><a class="category" href="#" data-filter="' . $category->slug . '">' . $category->name . '</a>'; 
+
+    if( $filters == 'all'){
+	query_posts('category_name='.$category->slug); // or use  something with get_category_link( $category )
+    $posttags = ''; // tags by post
+    $idxtags =''; // tagslisting
+    if (have_posts()) : while (have_posts()) : the_post();
+        if( get_the_tag_list() ){
+            //$posttags .= get_the_tag_list('<li>','</li><li>','</li>'); // WP Function not used
+			$posttags = '';
+            $listtags = get_the_tags();
+			$taglisted = array();
+            foreach($listtags as $tag) {
+				if( !in_array( $tag->name, $taglisted) ){
+                $idxtags .= '"'.$tag->name.'",'; 
+				$taglisted[] = $tag->name;
+				$posttags .='<li><a href="http://webdesigndenhaag.net/project/dev/tag/'.$tag->name.'/" rel="tag">'.$tag->name.'</a></li>';
+				}
+            }
+        }
+    endwhile; endif; 
+    $cat_tags .='<ul class="tagmenu '.$category->slug.'">'.$posttags.'</ul>';
+    $tag_idx .= $idxtags;
+    wp_reset_query(); 
+    }
+	$filtermenubox .= '</li>';
+}
+}
+$filtermenubox .= '</ul>';
+$filtermenubox .='<ul class="tagmenu *">'.$alltags.'</ul>';
+$filtermenubox .= $cat_tags;
+}
+
+
+
+/**
+ * 
+ * start content
+ *
+ */
 echo '<div id="contentcontainer"><div class="outermargin">';
 
-// set sidebars
+
+
+/**
+ * 
+ * set sidebars
+ *
+ */
 $contentpercentage = 100;
 if( get_theme_mod('onepiece_elements_sidebar2_position2') == 'out' && get_theme_mod('onepiece_elements_sidebar2_position') != 'none' && $secondsidebardisplay != 'hide'){
 $contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width'); 
@@ -57,10 +171,22 @@ if( get_theme_mod('onepiece_elements_sidebar2_position2') == 'ins' && get_theme_
 
 $contentfloat = 'left';
 
-// start maincontent
+
+
+
+/**
+ * 
+ * start maincontent
+ *
+ */
 echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
 
-// before widgets
+
+/**
+ * 
+ * before widgets
+ *
+ */
 if( function_exists('is_sidebar_active') && is_sidebar_active('special-page-widgets') && ( $specialwidgetsdisplay == 'top' || $specialwidgetsdisplay == 'replace' ) ){
 echo '<div id="specialpagewidgets">';
 dynamic_sidebar('special-page-widgets');
@@ -77,11 +203,18 @@ dynamic_sidebar('special-page-widgets');
 echo '<div class="clr"></div></div>';
 }
 
-// mainmenu placement
+
+/**
+ * 
+ * mainmenu placement
+ *
+ */
 $mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'); 
+$mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none').'-minisize';
+
 if($mainmenuplace == 'content' && $mainbarclass != 'none'){
-echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><nav>';
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{
@@ -90,7 +223,11 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 echo '<div class="clr"></div></nav></div>';
 }
 
-// cover image
+/**
+ * 
+ * cover image
+ *
+ */
 $title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
 $useheaderimage = get_post_meta( get_the_ID() , "meta-page-headerimage", true);
 if ( has_post_thumbnail() && $useheaderimage != 'replace'  ) {
@@ -103,28 +240,44 @@ the_post_thumbnail('medium');
 echo '</a></div>'; // default, 'thumb' or 'medium'
 }
 
-// main content title and text
+/**
+ * 
+ * main content title and text
+ *
+ */
 if ( $pagetitle != 'none') {
 echo '<div class="gallery-titlebar"><h1>'.get_the_title().'</h1>';
 if ( $pagetitle == 'text') : 
-echo '<p>'.get_the_content().'</p>'; 
+    // Post full content
+    echo '<div class="post-content">'.apply_filters('the_content', get_the_content()).'</div>';
 endif; 
 echo '</div>';
 }
 
-// output filtermenu
-// $filtermenubox string with html list
+/**
+ * 
+ * output filtermenu
+ * $filtermenubox string with html list
+ *
+ */
 if($filters != 'none'){
     // display filter menu
     echo $filtermenubox;
 }
 
-// start isotope item container
-echo '<div id="itemcontainer" class="category-contentbar">';
-// Gallery content
-echo '</div>';
 
-// after widgets
+/**
+ * 
+ * start isotope item container
+ *
+ */
+echo '<div id="itemcontainer" class="category-contentbar"></div>'; // Gallery content container
+
+/**
+ * 
+ * after widgets
+ *
+ */
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-after') ){
 echo '<div id="widgets-after">';
 dynamic_sidebar('widgets-after');
@@ -133,7 +286,31 @@ echo '<div class="clr"></div></div>';
 echo '</div>';
 echo '<div class="clr"></div></div></div>';
 
-// htmlfooter
+/**
+ * 
+ * htmlfooter
+ *
+ */
 get_template_part('footer');
 wp_footer();
+
+
+/**
+ * 
+ * get tag index from php for isotope filters
+ *
+ */
+if($tag_idx){ 
+
+?>
+<script>
+jQuery(function ($) { 
+$(document).ready(function() {
+<?php echo 'var $tagindex = Array('.rtrim($tag_idx,',').');'; ?>
+});
+});
+</script>
+<?php
+}
 echo '</div></body>';
+?>

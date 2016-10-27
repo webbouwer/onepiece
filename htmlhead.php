@@ -52,56 +52,9 @@ $topcat = $gallerydefault;
 $topcat = 'uncategorized';
 }
 
-// build filtermenu     
-// $filters from $values 
-if($filters != 'none'){ // prepare filter menu and create category tag index
-// prepare category query
-$args = array( 
-    'child_of'                 => get_category_by_slug($topcat)->term_id,
-    'orderby'                  => 'name',
-    'order'                    => 'ASC', 
-    'public'                   => true,
-); 
-$categories = get_categories( $args );
-$cat_tags = ''; // string to hold tag menu for each category
-$tag_idx = ''; // string csv tag names
-$filtermenubox = '<ul id="topgridmenu" class="categorymenu">';
-$filtermenubox .= '<li><a class="category" href="#" data-filter="*">All</a></li>';
-
-// wp categories - http://wordpress.stackexchange.com/questions/212923/how-to-list-all-categories-and-tags-in-a-page 
-foreach ( $categories as $category ) {
-    
-if( $category->slug != $topcat ){
-    
-    // category option
-    $filtermenubox .= '<li><a class="category" href="#" data-filter="' . $category->slug . '">' . $category->name . '</a>'; 
-    
-    // tag option submenu
-    if( $filters == 'all'){ // get tags from category post .. get_category_link( $category )
-	query_posts('category_name='.$category->slug);
-    $posttags = ''; // string to hold tags for each post
-    $idxtags =''; // string to hold new part of list cvs tag names
-    if (have_posts()) : while (have_posts()) : the_post();
-        if( get_the_tag_list() ){
-            $posttags .= get_the_tag_list('<li>','</li><li>','</li>');
-            $listtags = get_the_tags();
-            foreach($listtags as $tag) { //$idxtags .= get_the_tag_list('"','","','",');
-                $idxtags .= '"'.$tag->name.'",'; 
-            }
-        }
-    endwhile; endif; 
-    $cat_tags .='<ul class="tagmenu '.$category->slug.'">'.$posttags.'</ul>';
-    $tag_idx .= $idxtags; // add string cvs tag names
-    wp_reset_query(); 
-    }
-	$filtermenubox .= '</li>';
-}
-}
-$filtermenubox .= '</ul>';
-$filtermenubox .= $cat_tags;
-}
 
 }
+
 
 /**
  * HTML HEAD THEME CORE
@@ -141,9 +94,14 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 /* echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>'; */
 if($mobile){
 echo '<meta name="viewport" content="initial-scale=1.0, width=device-width" />';
+$content_width = 760;
 }else if ( ! isset( $content_width ) ) {
 $content_width = 960;
 }
+
+
+// Frontend user login  
+echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/userlogin.js"></script>'; 
 
 
  
@@ -228,7 +186,6 @@ $sliderheight = get_post_meta($post->ID, "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta($post->ID, "pagetheme_slide_displaywidth", true);
 
 
-
 // get html for default slider and page slider if available
 if( ( $sliderdefaultdisplay == 'replaceheader' || $sliderdefaultdisplay == 'belowheader' ) && $sliderdefaultcat != 'uncategorized' ){
     //$headerstyle = 'style="height:'.$sliderdefaultheight.'%;min-height:'.$sliderdefaultheight.'%;"';
@@ -251,12 +208,13 @@ jQuery(function($) {
 $(window).resize(function() {
 <?php 
 // start php to js
-if( $displaytype != 'variable' && $childpagedisplay != 'fade' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
-echo  '$("#sliderbox-head").css("min-height", ( $(window).height() / 100) * '.$displaytype.' );';
+if( $displaytype != 'variable' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
+echo  '$("#sliderbox-head,#headerbar").css("min-height", ( $(window).height() / 100) * '.$displaytype.' );';
 }
 if( $sliderdisplay == 'topfooter' || $sliderdefaultdisplay == 'topfooter' ){
 echo  '$("#sliderbox-footer").css("min-height", ( $(window).height() / 100) * '.$footerheight.' );';
 }
+
 // end php to js 
 ?>
 });
@@ -305,14 +263,26 @@ $('.sliderarea').anythingSlider({
     },
     */
 
+}).anythingSliderFx({
+				// base FX definitions
+				// '.selector' : [ 'effect(s)', 'size', 'time', 'easing' ]
+				// 'size', 'time' and 'easing' are optional parameters, but must be kept in order if added
+				//'.contentbox h3'       : [ 'bottom fade', '200px', '600', 'easeOutExpo' ],
+				
+				
+				// https://github.com/CSS-Tricks/AnythingSlider-Fx-Builder
+				
+				//'.contentbox h3'       : [ 'fade'  ],
+				'.contentbox h3,.contentbox div.excerpt'       : [ 'listLR', 'auto', '1000', 'easeOutExpo' ]
+				
 }); // end anythingSlider
 }); // end ready
 }); // end jQuery $	
 
 
 
-
 var setupSwipe = function(slider) {
+
     var time = 1000,
         // allow movement if < 1000 ms (1 sec)
         range = 50,
@@ -325,10 +295,15 @@ var setupSwipe = function(slider) {
         mv = (touch) ? 'touchmove' : 'mousemove',
         en = (touch) ? 'touchend' : 'mouseup';
 
-    slider.$window
-        .bind(st, function(e) {
-            // prevent image drag (Firefox)
-            e.preventDefault();
+
+
+		/*
+		 * Add swipe events to another layer ( in the background of clickable content elements )
+		 */
+
+		$('<div class="swipe-overlay"></div>').appendTo(slider.$window).bind(st, function(e) {
+            // prevent image drag (Firefox)//
+			e.preventDefault();
             t = (new Date()).getTime();
             x = e.originalEvent.touches ? e.originalEvent.touches[0].pageX : e.pageX;
             y = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY;
@@ -345,7 +320,7 @@ var setupSwipe = function(slider) {
                 // allow if movement < 1 sec
                 ct = (new Date()).getTime();
             
-	    var newy = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY,
+	    	var newy = e.originalEvent.touches ? e.originalEvent.touches[0].pageY : e.pageY,
                 v = (y === 0) ? 0 : Math.abs(newy - y),
                 // allow if movement < 1 sec
                 dt = (new Date()).getTime();
@@ -395,21 +370,19 @@ var setupSwipe = function(slider) {
                 y = 0;
 
             }
-        });
+  
+  
+  });
+  
+  
+
 }; // END TOUCH SCROLL SLIDER
-
-
-
-	
-
-
-
 
 
 </script>			
 <style type="text/css">
 <?php // default font size, spacing and speed 
-$size = ( $stylelayout_fontsize * 0.2 );
+$size = ( $stylelayout_fontsize * 0.11 );
 ?>
 body
 {
@@ -420,14 +393,15 @@ font-size:<?php echo $size; ?>em;
 
 <?php /* TOPBAR BEHAVIOR */
 
+
 if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
-|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
+|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade' && $topbarbehavior != 'rela'){ 
 
 $toppos = 'absolute'; 
 
 }else{
 
-if( $topbarbehavior == 'abso'){ 
+if( $topbarbehavior != 'rela'){ 
 $toppos = 'absolute'; 
 }else{ 
 $toppos = 'relative';
@@ -435,10 +409,9 @@ $toppos = 'relative';
 
 }
 
-if( $mobile && $topbarbehavior == 'mini' ){ 
-$toppos = 'relative';
-}
-
+//if( $mobile && $topbarbehavior == 'mini' ){ 
+//$toppos = 'relative';
+//}
 
 ?>
 div#topbar
@@ -450,125 +423,56 @@ z-index:69;
 div#topbar.minified
 {
 position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
-}
-
-<?php
-/* 
-if( $topbarbehavior != 'rela' ){ 
-?>
-div#topbar
-{
-position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
-width:100%;
 top:0px;
 left:0px;
-z-index:79;
 }
 
 
-<?php 
-}
-
-if( ( $displaytype == '50' && !$mobile ) || $displaytype == '33' || $displaytype == '25' || $displaytype == '20'){
-}
-*/
 
 /*
-// detect topbar overlay 
-if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
-|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade'){ 
+ *
+ * SLIDER STYLING 
+ *
+ */
 
-if( $topbarbehavior != 'rela' ){
-?>
-div#topbar
-{
-position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'fixed';} ?>;
-z-index:99;
-width:100%;
-top:0px;
-left:0px;
-z-index:79;
-}
-<?php 
-} // end relative positioning 
-
-} // end absolute positioning 
-*/
-?>
-
-/* POPUP STYLING */
-<?php // popup variable display
-if($mobile){
-$w = 96;
-$l = 2;
-}else{
-$w = 80;
-$l = 10;
-if( $popupdefaultdisplay == 'large'){
-$w = 100;
-$l = 0;
-}elseif( $popupdefaultdisplay == 'small'){
-$w = 60;
-$l = 20;
-}
-$c = $popupoverlaycolor;
-$o = ( 100 - $popupoverlayopacity) / 100;
-}
-
-
-?>
-.popupcloak
-{
-position:fixed;
-top:0px;
-left:0px;
-height:100%;
-width:100%;
-z-index:80;
-background-color:<?php echo $c; ?>;
-opacity:<?php echo $o; ?>;
-}
-#mainpopupbox
-{
-position:fixed;
-top:10%;
-left:<?php echo $l; ?>%;
-width:<?php echo $w; ?>%;
-height:80%;
-z-index:81;
-background-color:#ffffff;
-overflow:auto; 
-}
-#mainpopupbox .popupcontent
-{
-position:relative;
-width:auto;
-padding:4% 5%;
-}
-
-
-/* SLIDER STYLES */
 div#sliderbox-head,
 div#sliderbox-footer
 {
 position:relative;
 width: 100%; 
+height: 100%;
 <?php 
-/* available mobile detect
+/* available mobile detect */ 
 if( $mobile ){ 
-echo 'max-height:780px;'; 
+echo 'max-height:680px;'; 
 }
-if( $displaytype == 'variable'){
-echo 'height: auto;'; 
-}else{ 
-echo 'height: 100%'; 
-} 
-*/ 
 ?>
 }
 
-/* Slider default styles
-.. should move to style.css */
+
+#headerbar
+{
+<?php 
+/* available mobile detect */ 
+if( $mobile ){ 
+echo 'max-height:680px;'; 
+}
+?>
+}
+
+
+/* Slider swipe overlay */
+.swipe-overlay {
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+z-index: 50;
+}
+
+ 
+/* Slider default styles */
 .sliderarea {
 position:relative;
 width: 100%; 
@@ -619,10 +523,23 @@ div.anythingSlider span.forward
 {
 right:5px;
 }
-div.slidebox
+div.anythingSlider div.slidebox,
+div.anythingSlider div.slidebox div.outermargin
 {
 position:relative;
+height:100%;
 }
+
+div.anythingSlider div.slidebox .contentbox
+{
+position:absolute;
+bottom:8%;
+left:4%;
+width:96%;
+z-index: 99;
+}
+
+
 .anythingBase {
 	background: transparent;
 	list-style: none;
@@ -644,13 +561,81 @@ position:relative;
 .anythingBase .panel.vertical {
 	float: none;
 }
+
 .anythingSlider .fade .activePage { z-index: 1; }
 .anythingSlider .fade .panel { z-index: 0; }
 
+
+
 /* add medium/large screen styling */
 @media screen and (min-width: 780px ){
+div.anythingSlider div.slidebox .contentbox
+{
+position:absolute;
+bottom:4%;
+left:2%;
+width:66%;
 }
+}
+
+
+
+/*
+ *
+ * POPUP STYLING 
+ *
+ */
+<?php // popup variable display
+if($mobile){
+$w = 96;
+$l = 2;
+}else{
+$w = 80;
+$l = 10;
+if( $popupdefaultdisplay == 'large'){
+$w = 100;
+$l = 0;
+}elseif( $popupdefaultdisplay == 'small'){
+$w = 60;
+$l = 20;
+}
+$c = $popupoverlaycolor;
+$o = ( 100 - $popupoverlayopacity) / 100;
+}
+?>
+.popupcloak
+{
+position:fixed;
+top:0px;
+left:0px;
+height:100%;
+width:100%;
+z-index:80;
+background-color:<?php echo $c; ?>;
+opacity:<?php echo $o; ?>;
+}
+#mainpopupbox
+{
+position:fixed;
+top:10%;
+left:<?php echo $l; ?>%;
+width:<?php echo $w; ?>%;
+height:80%;
+z-index:81;
+background-color:#ffffff;
+overflow:auto; 
+}
+#mainpopupbox .popupcontent
+{
+position:relative;
+width:auto;
+padding:4% 5%;
+}
+
+
+
 </style>
+
 <?php 
 }
 
@@ -661,11 +646,7 @@ position:relative;
  * default js codes
  */
  
-// echo '<script src="'.get_template_directory_uri().'/assets/global.js" type="text/javascript" language="javascript"></script>';
- 
-
- 
-
+/* echo '<script src="'.get_template_directory_uri().'/assets/global.js" type="text/javascript" language="javascript"></script>'; */
 /**
  * CSS GLOBAL SETTINGS
  * htmlhead.php, assets/customizer.php, assets/global.js, 
@@ -673,6 +654,9 @@ position:relative;
 
 echo '<style type="text/css">';
 echo '#headercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logo_maxwidth',240 ).'px !important; }';
+
+echo '#headerbar { min-height:'.get_theme_mod('onepiece_elements_headerimage_height','560').'px; }'; 
+
 echo '#footercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px !important; }';
 
 echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_small_width', 512).'%; max-width:'.get_theme_mod('onepiece_responsive_small_outermargin', 480 ).'px; margin:0 auto; }'; 
@@ -692,7 +676,6 @@ echo '</style>';
 
 
 
-
 /**
  * JS TOPBAR MINIFIED BEHAVIOR
  * htmlhead.php, assets/customizer.php, assets/global.js, 
@@ -705,8 +688,6 @@ jQuery(function ($) {
 
 
 $(document).ready(function() {   
-
-	
 
 	<?php if($topbarbgfixed == 'keep'){ ?>
 	
@@ -724,17 +705,16 @@ $(document).ready(function() {
       }) 
    );
    <?php } ?>
-});
+}); 
 
 $(window).on("mousewheel scroll", function() {
 
 <?php
-if( $topbarbehavior == 'mini' ){
+if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
 ?>
 if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
-	 <?php if($topbarbgfixed != 'keep'){ ?>
+
 	 $("#topbar .minifiedtopbarbg").remove();
-	 <?php } ?>
      $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
       .css({
@@ -742,32 +722,35 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
         position: 'absolute',
         top:0,
         left:0,
-        opacity:<?php if($topbarbgfixed != 'keep'){ echo ( 100 - $topbaropacity) / 100; }else{ echo 0; } ?>,
+        opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
         zIndex:-1,
         width:'100%', 
         height:'100%'
       }) 
     );
-
+	
+ <?php if($topbarbehavior == 'mini'){ ?>
+ 
    $("#topbar .minifiedtopbarbg").animate({
        opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
    }, <?php echo $stylelayout_speed; ?>);
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
+  
+  <?php } ?>
    
-   if(slider){
-   slider.stop();
-   }
-   
+
 }else if( $(window).scrollTop() <= 1 && $("#topbar").hasClass('minified') ){
    
    <?php if($topbarbgfixed != 'keep'){ ?>
+   if( $("#topbar .minifiedtopbarbg") && $("#topbar .minifiedtopbarbg") != 'undefined'){
    $("#topbar .minifiedtopbarbg").animate({
        opacity:0,
    }, <?php echo $stylelayout_speed; ?>, function(){
       this.remove();
    });
+   }
    <?php } ?>
    
    $(".logobox a img").stop().animate({
@@ -776,9 +759,7 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
    
    $("#topbar").removeClass('minified');
    
-   if(slider){
-   slider.start();
-   }
+
 } // end minify logobox
 
 
@@ -792,17 +773,22 @@ var offset = $('#site-navigation').offset();
 if( (offset.top - $(window).scrollTop()) < $("#topbar").height() && !$("#site-navigation .outermargin nav").hasClass('sticky')){
 	// move mainmenu to topbar menu
 	$("#site-navigation .outermargin nav").addClass('sticky');
-	if( $('#topbar-navigation').length > 0 ){
+	if( $('#minibar-navigation').length > 0 ){
+	$('#minibar-navigation').next().after($("#site-navigation .outermargin nav"));
+	}else if( $('#topbar-navigation').length > 0 ){
 	$('#topbar-navigation').after($("#site-navigation .outermargin nav"));
 	}else{
 	$('#topmenubar .outermargin .logobox').after($("#site-navigation .outermargin nav"));
+	
+	// check for mini-sized class
+	
 	//$('#site-navigation .outermargin nav').prependTo( $('#topmenubar .outermargin') );
 	}
 }else if( (offset.top - $(window).scrollTop()) >= $("#topbar").height() && $("#topmenubar .outermargin nav").hasClass('sticky')){
 	// move mainmenu back in place
 	$("#topmenubar .outermargin nav.sticky")
 	.removeClass('sticky')
-	.appendTo("#site-navigation .outermargin");
+	.appendTo("#site-navigation .outermargin"); 
 }
 <?php 
 }
@@ -816,8 +802,6 @@ if( (offset.top - $(window).scrollTop()) < $("#topbar").height() && !$("#site-na
 
 
 <?php
-
-
 /**
  * PAGE TEMPLATE GALLERY
  * gallery.php
@@ -846,9 +830,21 @@ echo '}';
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_small_max', 512).'px) {';
 echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_medium_width', 95).'%;max-width:'.get_theme_mod('onepiece_responsive_medium_outermargin').'px; }'; 
 // set medium width
-
-echo '#itemcontainer .item{width:'.(100 / 3).'%;}'; 
-echo '#itemcontainer .item.active{ width:'.((100 / 3)*2).'%; }';
+$cr = 2;
+$qr = 2;
+if( $maxinrow > 3){
+$cr = 3;
+}
+if( $maxinrow > 4){
+$cr = 4;
+$qr = $maxinrow-2;
+}
+if( $maxinrow > 5){
+$cr = 5;
+$qr = $maxinrow-3;
+}
+echo '#itemcontainer .item{width:'.(100 / $cr).'%;}'; 
+echo '#itemcontainer .item.active{ width:'.((100 / $cr)*$qr).'%; }';
 echo '}';
 
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_max', 1280).'px) {';
@@ -880,9 +876,11 @@ $(document).ready(function() {
     var $noloading = 0;
     
     <?php // get tag index from php
+	
+	/*
     if($tag_idx){ 
     echo 'var $tagindex = Array('.rtrim($tag_idx,',').');';
-    } ?>
+    } */ ?>
     
     var phsh = window.location.hash.substr(1);    
     if(phsh.length){    
@@ -1050,9 +1048,22 @@ $(document).ready(function() {
     
     markup += '</div>';
 
-    if( obj.smallimg ){ 
-    markup += '<div class="coverbox"><img class="coverimage" src="'+obj.smallimg[0]+'" alt="'+obj.title+'" /></div>';
+
+	var smallscreen = false;
+ 	<?php // check for customizer posts display settings
+    if( $mobile ){
+    echo "smallscreen = true;";
+	}
+    ?>
+
+
+ 	if( smallscreen === false && obj.largeimg ){ 
+	markup += '<div class="coverbox"><img class="coverimage" src="'+obj.largeimg[0]+'" alt="'+obj.title+'" /></div>';
+	}else if( obj.mediumimg ){ 
+    markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
     }
+	
+	// markup += JSON.stringify(obj);
   
     // META DATA .. JSON.stringify(obj.meta)
     if( obj.meta['meta-box-custom-url'] && (obj.meta['meta-box-custom-useurl'] == 'external' || obj.meta['meta-box-custom-useurl'] == 'internal') ){
@@ -1094,7 +1105,7 @@ $(document).ready(function() {
 
 		$container.prepend($this).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // or 'original-order'
 	
-		$('html, body').animate({scrollTop: $('#maincontent').offset().top }, 400); // Scroll to top (bottom of header)
+		$('html, body').animate({ scrollTop: $('#contentcontainer').offset().top - $('#topbar').height() }, 400); // Scroll to top (bottom of header)
 
 <?php } ?>
 
@@ -1116,6 +1127,7 @@ $(document).ready(function() {
 
     if( $(this).attr('data-filter') == '*'){
         var keyword = '*';
+		$tagList = '';
         $catList = '<?php echo $topcat; ?>';//[];
     }else{ 
         var keyword = '.'+$(this).attr('data-filter');
@@ -1137,6 +1149,7 @@ $(document).ready(function() {
   	    var keyword = '.'+$(this).text();
         $catList = $(this).attr('data-filter');
         $tags = $(this).text();
+		$tagList = $tags; 
 	    loaditems();
      	$container.isotope({ filter: keyword }).isotope('layout'); 
      	var iid = '#' + $tags;
@@ -1166,19 +1179,19 @@ $(window).load(function() {
  */ 
  
 // fontsize 
-$globalfontsize = 0.4 + $stylelayout_fontsize / 10;
+$globalfontsize = 0.6 + $stylelayout_fontsize / 10;
  
 // buttons
-$vertical_padding_line = ($stylelayout_spacing / 2) * 3;
-$horizontal_padding_line = ($stylelayout_spacing / 3 ) * 2 ;
+$vertical_padding_line = ($stylelayout_spacing / 5) * 4;
+$horizontal_padding_line = ($stylelayout_spacing / 6 ) * 3 ;
 
 // headers / boxes
 $vertical_padding_box = $stylelayout_spacing * 2;
 
 echo '<style>';
 echo 'body{ font-size:'.$globalfontsize.'em !important; }';
-echo 'ul.menu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
-echo 'h1,.readmore,p { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
+echo 'ul li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
+echo '.post-title, h1, .readmore, p { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
 echo '</style>';
 
 echo '</head><body '; body_class(); 

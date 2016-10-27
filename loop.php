@@ -3,7 +3,8 @@
 $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
 // amount of top posts (first group in pages)
-$firstcount = get_theme_mod('onepiece_content_panel_postlist_firstcount');
+$firstcount = get_theme_mod('onepiece_content_panel_postlist_firstcount', 3);
+$excerptlength = get_theme_mod('onepiece_content_panel_postlist_excerptlength', 25);
 
 
 if ( is_category() && get_theme_mod( 'onepiece_content_panel_category_titledisplay' ) != 'none') {
@@ -55,13 +56,15 @@ edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>'
 if ( !is_single() && !is_page() ) { 
 echo '<div class="post-title"><h2>'. $title_link . get_the_title().'</a></h2>';
 
+
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 echo '<span class="post-date">'.get_the_date().'</span>';
 }
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
-echo '<span class="post-author">'.get_the_author().'</span>';
+echo ' <span class="post-author">'.get_the_author().'</span> ';
 }
+
 
 echo '</div>';
 }
@@ -82,32 +85,37 @@ if($mobile){
     }
 }else{
     if( $counter < $firstcount && !$paged ){
-        the_post_thumbnail('medium');
+        the_post_thumbnail('large');
     }else{
-        the_post_thumbnail('big-thumb');
+        the_post_thumbnail('medium');
     }
 }
 echo '</a></div>'; // default, 'thumb' or 'medium'
+}else{
+echo '<div class="clr"></div>';
 }
 
 } // end featured image 
 
 // Title below image for single/page items
 if ( is_single() || is_page() ) { 
-echo '<div class="post-title"><h1>'. $title_link . get_the_title().'</a></h1>';
+echo '<div class="post-title"><h1>'. $title_link . get_the_title().'</a></h1></div>';
 
+if(get_theme_mod('onepiece_content_panel_postlist_authortime') != 'none'){
+echo '<div class="post-subtitle">';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'datesingle'){
-echo '<span class="post-date">'.get_the_date().'</span>';
+echo '<span class="post-date">'.get_the_date().' </span>';
 }
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single'){
 echo '<span class="post-author">'.get_the_author().'</span>';
 }
-
 echo '</div>';
+}
+
 }
 
 
@@ -137,14 +145,15 @@ $nextprevdisplay = get_theme_mod('onepiece_content_panel_posts_nextprevdisplay',
 // content
 if ( !is_single() && !is_page() ) { 
     // Post intro content
-    echo '<div class="post-excerpt">'.apply_filters('the_excerpt', get_the_excerpt());
+    echo '<div class="post-excerpt">'.the_excerpt_length( $excerptlength ); //apply_filters('the_excerpt', get_the_excerpt());
     echo $customlinkbutton.'</div>';
     
 }else{
 
 	if( $tagdisplay == 'belowtitle' ){
     	// post tags
-    	the_tags(', ');  //the_tags('Tags: ',' '); 
+    	
+    	the_tags('',', '); // the_tags(', ');  //
 	}
 	
 	
@@ -162,11 +171,11 @@ if ( !is_single() && !is_page() ) {
 	
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags
-    	the_tags(', ');  //the_tags('Tags: ',' '); 
+    	the_tags('Tagged with: ',' '); // the_tags(', ');  //
 	}
 
 
-	if( !is_page() && $nextprevdisplay == 'belowcontent' ){
+	if( is_single() && $nextprevdisplay == 'belowcontent' ){
     	// prev / next posts
     	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
     	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
@@ -216,7 +225,7 @@ endwhile;
 echo '</div>';
 
 
-if( !is_page() && ($nextprevdisplay == 'contentside' || $nextprevdisplay == 'abovefooter' )){ 
+if( is_single() && ($nextprevdisplay == 'contentside' || $nextprevdisplay == 'abovefooter' )){ 
     	// prev / next posts fixed positioned
     	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
     	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
@@ -232,7 +241,5 @@ if ( !is_single() && !is_page() ) {
         echo '</div>';
 }
 
-endif;   
-
-
+endif; 
 ?>

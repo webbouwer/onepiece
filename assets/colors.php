@@ -34,6 +34,13 @@ color:<?php echo get_theme_mod('onepiece_identity_colors_topbartextlink' , '#000
 color:<?php echo get_theme_mod('onepiece_identity_colors_topbartextlinkhover' , '#232323'); ?> ;
 }
 
+
+</style>
+<?php
+
+}
+add_action( 'wp_head' , 'onepiece_customize_colors' );
+
 /*
 // mainmenu bg .. onepiece_identity_colors_mainmenubg
 
@@ -50,9 +57,84 @@ color:<?php echo get_theme_mod('onepiece_identity_colors_topbartextlinkhover' , 
 // mainmenu button active link color .. onepiece_identity_colors_mainmenubutlinkactive
 */
 
-</style>
-<?
+	/* More colors	
+		
+		// mainmenu bg
+		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubg' , array(
+		'default' => '#cccccc', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubg', array(
+		'label' => __( 'Mainmenu background color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_mainmenubg',
+    	) ) ); 
+		// mainmenu button bg
+		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbg' , array(
+		'default' => '#cecece', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbg', array(
+		'label' => __( 'Mainmenu button bg color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_mainmenubutbg',
+    	) ) ); 
+		
+		// mainmenu button link color
+		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlink' , array(
+		'default' => '#454545', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlink', array(
+		'label' => __( 'Mainmenu button text color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_mainmenubutlink',
+    	) ) ); 
+		
+		// mainmenu button hover bg color
+		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbghover' , array(
+		'default' => '#000000', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbghover', array(
+		'label' => __( 'Mainmenu hover button bg color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_mainmenubutbghover',
+    	) ) ); 
+		
+		// mainmenu button hover link color
+		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlinkhover' , array(
+		'default' => '#cecece', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkhover', array(
+		'label' => __( 'Mainmenu hover button text color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_mainmenubutlinkhover',
+    	) ) ); 
+		
+		// mainmenu button active bg color
+		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbgactive' , array(
+		'default' => '#ffffff', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbgactive', array(
+		'label' => __( 'Mainmenu active button bg color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_mainmenubutbgactive',
+    	) ) );
+		// mainmenu button active link color
+		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlinkactive' , array(
+		'default' => '#232323', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkactive', array(
+		'label' => __( 'Mainmenu active button text color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_mainmenubutlinkactive',
+    	) ) ); 
+		
+	*/	
 
-}
-add_action( 'wp_head' , 'onepiece_customize_colors' );
+
 ?>

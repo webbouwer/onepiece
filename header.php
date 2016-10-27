@@ -4,9 +4,9 @@ $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 // main menu markup
 $mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'); 
+$mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none').'-minisize';
 
 // header image or slider
-if ( is_page() || is_single() ){
 global $wp_query;
 $postid = $wp_query->post->ID;
 $useheaderimage = get_post_meta($postid, "meta-page-headerimage", true);
@@ -14,7 +14,7 @@ $usepostfeaturedimage = get_theme_mod('onepiece_content_panel_posts_featuredimag
 $childpagedisplay = get_post_meta($postid, "meta-box-display-childpages", true);
 $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($postid));
 wp_reset_query();
-}
+
 
 // default slider options
 $sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'default' );
@@ -32,21 +32,24 @@ $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true)
 echo '<div id="headercontainer">'; 
 
 echo '<div id="topbar">';
+
 // widgets top 
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-top') ){
 $count = is_sidebar_active('widgets-top');
 echo '<div id="widgets-top" class="colset-'.$count.'">';
+echo '<div class="outermargin">';
 dynamic_sidebar('widgets-top');
-echo '<div class="clr"></div></div>';
+echo '<div class="clr"></div></div></div>';
 } 
 
-// topbar menu
+// topbar menu position
 $topbarclass = 'right';
-if( get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') ){
+if( get_theme_mod( 'onepiece_elements_topmenubar_position') ){
     $topbarclass = get_theme_mod( 'onepiece_elements_topmenubar_position', 'right');
 }
 
 echo '<div id="topmenubar" class="'.$topbarclass.'"><div class="outermargin">';
+
 // logobox menu
 echo '<div class="logobox medium">';
 if ( get_theme_mod( 'onepiece_identity_logo_m' ) ){
@@ -56,6 +59,14 @@ echo '<hgroup><h1 class="site-title"><a href="'.esc_url( home_url( '/' ) ).'" id
 echo '<h2 class="site-description">'.get_bloginfo( 'description' ).'</h2></hgroup>';
 }
 echo '</div>';
+
+// mini menu
+if ( has_nav_menu( 'minimenu' ) ) {
+echo '<div id="minibar-navigation" class="mini-navigation" role="navigation"><nav>';
+echo wp_nav_menu( array( 'theme_location' => 'minimenu' ) );
+echo '<div class="clr"></div></nav></div><div style="clear:'.$topbarclass.';"></div>';
+}
+
 // topmenu
 if ( has_nav_menu( 'topmenu' ) && get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') != 'none' ) {
 echo '<div id="topbar-navigation" class="main-navigation" role="navigation"><nav>';
@@ -66,12 +77,10 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 } 
 echo '<div class="clr"></div></nav></div>';
 }
-echo '<div class="clr"></div></div></div>';
-
 
 // mainmenu in topbar
 if($mainmenuplace == 'topbar' && $mainbarclass != 'none'){
-echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><nav>';
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 echo wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{
@@ -80,12 +89,16 @@ echo wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-men
 echo '<div class="clr"></div></nav></div>';
 }
 
+echo '<div class="clr"></div></div></div>'; // end topmenubar
+
+
 echo '</div>'; // end topbar
 
 
 
+
 if($mainmenuplace == 'above' && $mainbarclass != 'none'){
-echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><div class="outermargin"><nav>';
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><div class="outermargin"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{
@@ -109,23 +122,24 @@ echo '</div>';
 }
 
 }else if(  $childpagedisplay == 'fade' || ( ($usepostfeaturedimage == 'replace' ||  $usepostfeaturedimage == 'replacemargin') && is_single() ) && has_post_thumbnail() ){
+
 if( $usepostfeaturedimage == 'replacemargin' ){
 echo '<div class="outermargin">';
 }
-$thumbelarge = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));// the_post_thumbnail('big-thumb');
+
+$thumbelarge = wp_get_attachment_url( get_post_thumbnail_id( get_the_ID() , 'large' ) );// 
+
 if($childpagedisplay == 'fade'){
 echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
 }else{
-echo '<img src="'.esc_url( $thumbelarge ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
+echo '<div id="headerbar" style="background-image: url('.esc_url( $thumbelarge ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
 }
 
 if( $usepostfeaturedimage == 'replacemargin' ){
 echo '</div>';
 }
 
-   
 }else if( $sliderdefaultdisplay == "replaceheader" && ( $useheaderimage != 'replace' && $childpagedisplay != 'fade' && $sliderdisplay != 'none')){
-
 
 // default slider content here
 if( $sliderdefaultwidth != 'full' ){
@@ -137,17 +151,24 @@ if( $sliderdefaultwidth != 'full' ){
 echo '</div>';
 }
 
-}else{ // headerimage
+}else{ 
+
+// headerimage
 $header_image = get_header_image(); 
-if ( (is_page() && ( $useheaderimage == 'replace' || $childpagedisplay == 'fade' ) ) || (is_single() && $usepostfeaturedimage == 'replace') ){
+
+if ( (is_page() && $thumbelarge != '' && ( $useheaderimage == 'replace' || $childpagedisplay == 'fade' ) ) || (is_single() && $usepostfeaturedimage == 'replace' && $thumbelarge != '' ) ){
 $header_image = $thumbelarge;
 }
 
 if (( !empty( $header_image ) && $useheaderimage != 'hide'  ) || $childpagedisplay == 'fade' ) :
+
 if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){
 echo '<div class="outermargin">';
 }
-echo '<img src="'.esc_url( $header_image ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
+
+echo '<div id="headerbar" style="background-image: url('.esc_url( $header_image ).');"><div class="bglayer" style="width:100%; height: 100%; display: block; background-image: none;"></div></div>';
+
+//echo '<img src="'.esc_url( $header_image ).'" class="header-image" alt="'.get_bloginfo( 'description' ).'" />';
 if( get_theme_mod( 'onepiece_elements_headerimage_width' , 'full') != 'full' ){
 echo '<div class="clr"></div></div>';
 }
@@ -189,7 +210,7 @@ echo '<div class="clr"></div></div>';
 
 if($mainmenuplace == 'below' && $mainbarclass != 'none' ){
 
-echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><div class="outermargin"><nav>';
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'  '.$mainminisize.'" role="navigation"><div class="outermargin"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 echo wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{

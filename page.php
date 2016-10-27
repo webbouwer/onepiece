@@ -1,10 +1,19 @@
 <?php 
 $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
-// htmlhead
+
+/**
+ *
+ * htmlhead
+ *
+ */	
 get_template_part('htmlhead');
 
-// main content area
+/**
+ *
+ * content custom variables
+ *
+ */	
 $useheaderimage = get_post_meta( get_the_ID() , "meta-page-headerimage", true);
 $pagesidebardisplay = get_post_meta(get_the_ID(), "meta-page-pagesidebardisplay", true);
 $specialwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-specialwidgetsdisplay", true);
@@ -13,12 +22,25 @@ $afterwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-afterwidgetsdispla
 $secondsidebardisplay = get_post_meta(get_the_ID(), "meta-page-secondsidebardisplay", true);
 $childpagedisplay = get_post_meta(get_the_ID(), "meta-box-display-childpages", true);
 
-// header
+/**
+ *
+ * header
+ *
+ */	
 get_template_part('header');
 
+/**
+ *
+ * main container
+ *
+ */	
 echo '<div id="contentcontainer"><div class="outermargin">';
 
-/************** PAGE SIDEBARS ******************/
+/**
+ *
+ *  PAGE SIDEBARS 
+ *
+ */	
 $contentpercentage = 100;
 
 if( get_theme_mod('onepiece_elements_sidebar2_position2') == 'out' && function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position') != 'none' && $secondsidebardisplay != 'hide' ){
@@ -58,8 +80,14 @@ get_template_part('sidebar2');
 echo '<div class="clr"></div></div>';
 }
 
-$contentfloat = 'left';
 
+
+/**
+ *
+ *  Start html main content area 
+ *
+ */	
+$contentfloat = 'left';
 
 echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
 
@@ -79,11 +107,17 @@ dynamic_sidebar('special-page-widgets');
 echo '<div class="clr"></div></div>';
 }
 
-// mainmenu placement
+/**
+ *
+ *  mainmenu placement
+ *
+ */	
 $mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'); 
+$mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none').'-minisize';
+
 if($mainmenuplace == 'content' && $mainbarclass != 'none'){
-echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'" role="navigation"><nav>';
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
 }else{
@@ -92,20 +126,26 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 echo '<div class="clr"></div></nav></div>';
 }
 
-
-/* MAIN CONTENT */
+/**
+ *
+ *  MAIN CONTENT LOOP
+ *
+ */	
 if ( have_posts() ) :    
 while( have_posts() ) : the_post();
 echo '<div id="post-'.get_the_ID().'" ';
 post_class();
 echo '><div class="contentpadding">';
 
-
 $page_ID = get_the_ID();
 $values = get_post_custom( $page_ID );
 $post_obj = $wp_query->get_queried_object();
 
-// cover, title & meta
+/**
+ *
+ *  post cover, title & meta
+ *
+ */	
 if ( has_post_thumbnail() && $useheaderimage != 'replace' && $childpagedisplay != 'fade' ) {
     
 $title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
@@ -121,44 +161,68 @@ $pagefeaturedimage = wp_get_attachment_image_src( get_post_thumbnail_id( get_the
 echo '</a></div>'; // default, 'thumb' or 'medium'
 }
 
-// editor
-if ( is_super_admin() ) {
+if ( is_super_admin() ) { // admin/editor options
 edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>' );
 }
+
+
+
 $mainpageoption = '';
 $mainpagecontent = '';
 
 
 
-/** CHILDPAGES
- *  Page theme childpages display
+/** 
+ *
+ * CHILDPAGES
+ * Page theme childpages display
+ *
  */
- 
 if( $childpagedisplay != 'fade' && $childpagedisplay != 'slddwn' ){ 
- 
-// normal title and author display  
-echo '<div class="post-title"><h1>'. get_the_title().'</h1></div>';
-// use default page date/author settings
+
+echo '<div class="page-title"><h1>'.get_the_title().'</h1></div>';
+if(get_theme_mod('onepiece_content_panel_page_authortime') != 'none'){
+echo '<div class="page-subtitle">';
 if( get_theme_mod('onepiece_content_panel_page_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_page_authortime') == 'date' ){
-echo '<span class="post-date">'.get_the_date().'</span>';
+echo '<span class="post-date">'.get_the_date().' </span>';
 }
 if( get_theme_mod('onepiece_content_panel_page_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_page_authortime') == 'author'){
 echo '<span class="post-author">'.get_the_author().'</span>';
 }
-// normal page content display
+echo '</div>';
+}
+
+/** 
+ *
+ * normal page content display
+ *
+ */ 
 echo '<div class="page-content mainpage">';
 echo apply_filters('the_content', get_the_content()).'</div>';
 }else{
-// otherwise display main content adjusted for box/tab/slides 
-$thumb_id = get_post_thumbnail_id();
-$thumb_url = wp_get_attachment_image_src($thumb_id,'medium', true);
+
+/** 
+ *
+ * display main content adjusted for box/tab/slides 
+ *
+ */ 
+//$thumb_id = get_post_thumbnail_id();
+//$thumb_url = wp_get_attachment_image_src($thumb_id,'medium', true);
+
+$thumb_url = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ),'full', false );
+
+
 $mainpageoption .= '<li id="button-'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'"><a href="'.get_permalink($post_obj->ID).'" target="_self">'.$post_obj->post_title.'</a></li>';
 $mainpagecontent .= '<li id="'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'" class="childcontent"><div class="subtitle"><h3>'.$post_obj->post_title.'</h3></div><div class="subcontent">'. apply_filters('the_content', get_the_content()) .'</div></li>';
 }
 
-// prepare childpages box/pop/tab/slide content
+/** 
+ *
+ * prepare childpages box/pop/tab/slide content 
+ *
+ */ 
 if( isset($childpagedisplay) && $childpagedisplay != 'none'){  
 
     $args = array(
@@ -176,8 +240,7 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
             $contentimagedata = wp_get_attachment_image_src( get_post_thumbnail_id( $page->ID ),'full', false );
             $contentimage = $contentimagedata[0];
 			
-			$pieces = get_extended($page->post_content);
-			//print_r($pieces);
+			$pieces = get_extended($page->post_content); //print_r($pieces);
 			
             $menu .= '<li id="button-'.$page->post_name.'" data-imgurl="'.$contentimage.'"><a href="'.get_permalink($page->ID).'" target="_self">'.$page->post_title.'</a></li>';
             $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent"><div class="subtitle"><h3>'.$page->post_title.'</h3></div><div class="subcontent">'.
@@ -190,10 +253,9 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
         }
         
         echo '<div class="page-content childpages '.$childpagedisplay.'">';
-        // subpagemenu
+        
         if( $childpagedisplay == 'menu' || $childpagedisplay == 'fade'){ 
-        //echo '<h3>Sub Pages</h3>';
-        echo '<ul id="childpagemenu">'.$menu.'</ul><div class="clr"></div>';
+        echo '<ul id="childpagemenu">'.$menu.'</ul><div class="clr"></div>'; // subpagemenu
         }
         // subpages
         if( $childpagedisplay != 'menu' ){
@@ -208,8 +270,10 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
 
 
 
-/** PAGE RELATED
- *  Page theme childpages display
+/**
+ * 
+ * PAGE RELATED
+ *
  */
 
 	// Page comments
@@ -240,7 +304,12 @@ echo '<div class="clr"></div></div></div>';
 endwhile;	
 endif;   
 
-// after widgets
+
+/**
+ * 
+ * Widgets after
+ *
+ */
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-after') && $afterwidgetsdisplay != 'hide'){
 echo '<div id="widgets-after">';
 dynamic_sidebar('widgets-after');
@@ -252,14 +321,22 @@ echo '</div>';
 
 echo '<div class="clr"></div></div></div>';
 
-// footer
+
+/**
+ * 
+ * Footer
+ *
+ */
+
 get_template_part('footer');
 wp_footer();
 
 echo '</div>';
 
-/** JS CHILDPAGES
- *  Page theme childpages display
+/** 
+ *
+ * JS CHILDPAGES
+ * Page theme childpages display
  */
  
 // move to custom js
@@ -285,16 +362,7 @@ jQuery(document).ready(function($) {
             });
 		}
         
-        function set_header_height(){
-		    var h = $(window).height() / 5 * 3 + 'px'; // get a height relative to the window size
-		    $('#headerbar .bglayer').css("height", h ); // set this on the innner container
-        }
-
-		$(window).on('resize', function(){
-		    set_header_height();
-        });
-		set_header_height();
-
+        
 		$('ul#childpagecontent li.childcontent').hide();
         $('ul#childpagecontent li.childcontent').eq(0).addClass('active').slideDown();
         $('ul#childpagemenu li').eq(0).addClass('active');

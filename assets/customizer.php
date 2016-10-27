@@ -1,7 +1,12 @@
 <?php
-/* ...  https://www.smashingmagazine.com/2013/03/the-wordpress-theme-customizer-a-developers-guide/
+/**
+ * Theme Customizer 
+ */
 
-// Sources used
+/* 
+
+// Sources used 
+// https://www.smashingmagazine.com/2013/03/the-wordpress-theme-customizer-a-developers-guide/
 // http://buildwpyourself.com/building-theme-color-options-customizer/
 // https://codex.wordpress.org/Class_Reference/WP_Customize_Control
 // http://wptheming.com/2014/09/customizer-panels-field-types/
@@ -9,15 +14,37 @@
 // >> http://code.tutsplus.com/tutorials/a-guide-to-the-wordpress-theme-customizer-adding-a-new-setting--wp-33180
 // http://www.wpbeginner.com/wp-tutorials/how-to-create-a-custom-wordpress-widget/
 // http://josephfitzsimmons.com/adding-a-select-box-with-categories-into-wordpress-theme-customizer/
+// (and many other scriptlet outputs)
 
-OVERVIEW (.. = todo )
 
+OVERVIEW 
+This theme is still a development theme, meaning WP Builders can quickly set up content and page structures but need to add there own styling through a .css file.
+
+The theme has 2 customizable sidebars, a Content/Image (Anything) Slider, a customizable header image and an Isotope Packary Filterable Grid display! 
+Set default content settings in the customizer, overwrite those with page specific (metabox) settings.
+Control Post author/time/tags/category/next-prevlinks display and set Single Post Featured Images to be displayed in the header area as default (like every post has it's own page)
+The content for the Slider (AnythingSlider) and Grid(Isotope Packary) derive from posts in a designated category.
+
+Many options are still in development. 
+The Slider works great but AnythingSlider can do much, much more. 
+Theme Gallery Grid is part of the Gallery Page template, Sub categories and Post tags Define a Category/Tag Filter Menu.
+The Isotope Grid can do much, much, much more too.
+Product properties can be assigned to Posts, together with a Shop Page Template and Custom Post Type for products this brings endless options (not started on yet).
+
+A Onepiece widget for multiple functions is in development the most important functions works great already: login and register in tab display. 
+Later on a few stylesheet will be added to set the example for styling options.
+
+
+
+Customizer Sections and Options list:
+( .. = in not ready )
 
 Identity:
-    Logo image 
+    	Logo image 
         image medium
     	max-width
         image small
+    	small max-width
     
     Title, Tagline & Icon image
         Site Title
@@ -26,21 +53,33 @@ Identity:
     
     Featured site-image
         image
-	    ..width (replace/replacemargin)
-		
-    Style & Layout
+	    width (replace/replacemargin)
+
+	
+Style & Layout: 
+
+	Style
 		select style (css file)
-		.. fontsize 1-10
-		.. spacing 1-10
-		.. speed 1-10
+		fontsize 1-10
+		spacing 1-10
+		speed 1-10
 	
 	Colors
 		body bg
 		body text
 		body textlink
 		body textlink hover
-	
-	.. Users
+		
+
+..Media Accounts
+	.. Facebook
+	.. Twitter
+	.. Google+
+	.. Thumblr
+	.. Linkedin
+	.. Github	
+	...
+
 	   
 Content:
     Static front page (default)
@@ -53,8 +92,8 @@ Content:
 		
 	Popup
 		display ( wide, medium, small )  
-		.. color bg overlay
-		.. transparency bg overlay (0-1)
+		color bg overlay
+		transparency bg overlay (0-1)
 		.. display close button
 		
     Pages
@@ -63,11 +102,11 @@ Content:
     Posts
         .. Exclude categories
         Use highlight first posts
-		.. Next / Previous links
+		Excerpt length (amount of words)
 		
-		.. Tags display
-		.. Categories Display
-		.. Next / Previous links
+		Tags display
+		Categories Display
+		Next / Previous links
 
         Display date/author
         Featured image header
@@ -76,7 +115,7 @@ Content:
         Display category list Title & Description 
         ..Exclude categories
 
-	Gallary
+	Gallery
 		Default category
    
 Elements:
@@ -88,17 +127,20 @@ Elements:
     Top menu bar
         Display none/position
         Behavior relative, absolute, fixed, minified
-		.. bg color 
-		.. text color
-		.. transparency bg (0-1)
-    
-    .. Login tabbar    
-        .. Display none/position
+		bg color 
+		text color
+		link color
+		link hover color
+		transparency bg (0-1)
+   
       
     Header image
 		Image
 		Headerimage width (content/full)
-	
+		
+	Login tabbar    
+        Default display none/position
+		
     Main menu bar
         Display hide/position horizontal
 		Positioning vertical/placement
@@ -117,32 +159,41 @@ Elements:
         Bottom menu display none/position
 
 Menu's:
+	Mini
     Top
     Main
+	User
     Side
     Bottom
     
-Widgets:
-    Top
-    Header
-    Sidebar
-    Sidebar2
-    Special Widgets
-    Before (content)
-    After (content)
-    Subcontent
-    Bottom
+Widgets: (sidebars positions)
+
+	Top - widgets on top of everything (ie. for banners or hidden menu's etc.)
+    Onepiece Header - widgets below the header image or slider (ie. for a row of buttons, banners or icons or to use as an overlay header area )
+    Sidebar - widgets 'main siderbar' (combined with sidebarmenu and pagemenu) on right- or left- side of main content
+    Sidebar2 - widgets 'second sidebar' on right- or left- side of the main content, outer or inner side of main content if main sidebar available
+	Page sidebar - widgets only displayed on pages (ie. nice for specific menu's or content related with a childpage group)
+    Special Widgets - widgets special is actually just an extra widget area on top of the main content area besides the sidebar(s) (ie. for special offers)
+    Before (content) - widgets just before the main content, after the special widgets (ie. for page related info and banners)
+    After (content) - widgets right the main content, sticking to the main content bottom (ie. for page related info and banners)
+    Subcontent - widgets below the main content and siderbar area, before the header (ie. for a complete info section with site wide value)
+    Bottom - widgets below/besides the bottom menu and logo, before the copyright textbox (ie. for short contact info and sitemap)
+	
+	!Widgets Header - WP default widgets setup is available for admin but not used in the theme view (almost blank start screen) 
+    
+
 
 Responsive
 	Small
-		screen max width (switch to medium)
+		screen max width (switch to medium) in px
 		outermargin default width (%)
-		content max width
+		content max width in px
 	Medium
-		screen max width (switch to large)
+		screen max width (switch to large) in px
 		outermargin default width (%)
-		content max width
+		content max width in px
 	Large
+		content max width in px
 	
 */
 function onepiece_register_theme_customizer( $wp_customize ) {
@@ -162,9 +213,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Identity', 'onepiece'),
         	'priority' => 10,
     	));
+	    $wp_customize->add_panel('onepiece_content_style', array( 
+        	'title'    => __('Style', 'onepiece'),
+        	'priority' => 20,
+    	));
 	    $wp_customize->add_panel('onepiece_content_panel', array( 
         	'title'    => __('Content', 'onepiece'),
-        	'priority' => 20,
+        	'priority' => 30,
     	));
 	    $wp_customize->add_panel('onepiece_elements_panel', array( 
         	'title'    => __('Elements', 'onepiece'),
@@ -181,7 +236,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Logo image', 'onepiece'),
         	'panel'  => 'onepiece_elements_identity',
 		'priority' => 10,
-    	));
+    	)); 
     	$wp_customize->add_section('onepiece_identity_panel_featured_image', array( 
         	'title'    => __('Sharing', 'onepiece'),
         	'panel'  => 'onepiece_elements_identity',
@@ -190,13 +245,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
         $wp_customize->add_section('onepiece_identity_stylelayout', array( 
         	'title'    => __('Style & Layout', 'onepiece'),
-        	'panel'  => 'onepiece_elements_identity',
+        	'panel'  => 'onepiece_content_style',
 		'priority' => 50,
-    	));
+    	)); 
 
         $wp_customize->add_section('colors', array( 
         	'title'    => __('Colors', 'onepiece'),
-        	'panel'  => 'onepiece_elements_identity',
+        	'panel'  => 'onepiece_content_style',
 		'priority' => 50,
     	));
 
@@ -256,11 +311,19 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'priority' => 20,
     	));
 		
-    	$wp_customize->add_section('onepiece_elements_mainmenubar', array( 
-        	'title'    => __('Main menubar', 'onepiece'),
-        	'panel'  => 'onepiece_elements_panel',
-		'priority' => 40,
+		
+    	$wp_customize->add_section('onepiece_content_sliderbar', array( 
+        	'title'    => __('Slider', 'onepiece'),
+        	'panel'  => 'onepiece_content_panel',
+			'priority' => 30,
     	));
+		
+    	$wp_customize->add_section('onepiece_elements_loginbar', array( 
+        	'title'    => __('Loginbar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 40,
+    	));
+		
     	$wp_customize->add_section('onepiece_elements_sidebar', array( 
         	'title'    => __('Main Sidebar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
@@ -437,7 +500,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodybg', array(
-		'label' => __( 'Body background Color', 'fndtn' ),
+		'label' => __( 'Body background Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodybg',
     	) ) ); 
@@ -448,7 +511,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodytext', array(
-		'label' => __( 'Body text Color', 'fndtn' ),
+		'label' => __( 'Body text Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodytext',
     	) ) ); 
@@ -458,7 +521,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylink', array(
-		'label' => __( 'Body textlink Color', 'fndtn' ),
+		'label' => __( 'Body textlink Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodylink',
     	) ) ); 
@@ -468,7 +531,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylinkhover', array(
-		'label' => __( 'Body textlink hover Color', 'fndtn' ),
+		'label' => __( 'Body textlink hover Color', 'onepiece' ),
 		'section' => 'colors',
 		'settings' => 'onepiece_identity_colors_bodylinkhover',
     	) ) ); 
@@ -478,84 +541,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		
 		
-	/* More colors	
-		
-		// mainmenu bg
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubg' , array(
-		'default' => '#cccccc', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubg', array(
-		'label' => __( 'Mainmenu background color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubg',
-    	) ) ); 
-		// mainmenu button bg
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbg' , array(
-		'default' => '#cecece', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbg', array(
-		'label' => __( 'Mainmenu button bg color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutbg',
-    	) ) ); 
-		
-		// mainmenu button link color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlink' , array(
-		'default' => '#454545', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlink', array(
-		'label' => __( 'Mainmenu button text color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutlink',
-    	) ) ); 
-		
-		// mainmenu button hover bg color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbghover' , array(
-		'default' => '#000000', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbghover', array(
-		'label' => __( 'Mainmenu hover button bg color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutbghover',
-    	) ) ); 
-		
-		// mainmenu button hover link color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlinkhover' , array(
-		'default' => '#cecece', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkhover', array(
-		'label' => __( 'Mainmenu hover button text color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutlinkhover',
-    	) ) ); 
-		
-		// mainmenu button active bg color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutbgactive' , array(
-		'default' => '#ffffff', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutbgactive', array(
-		'label' => __( 'Mainmenu active button bg color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutbgactive',
-    	) ) );
-		// mainmenu button active link color
-		$wp_customize->add_setting( 'onepiece_identity_colors_mainmenubutlinkactive' , array(
-		'default' => '#232323', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_mainmenubutlinkactive', array(
-		'label' => __( 'Mainmenu active button text color', 'fndtn' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_mainmenubutlinkactive',
-    	) ) ); 
-		
-	*/	
+
 		
 		
 
@@ -585,10 +571,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_sliderbar_category', array(
-            	'label'          => __( 'Slider category', 'fndtn' ),
+            	'label'          => __( 'Slider category', 'onepiece' ),
             	'section'        => 'onepiece_content_sliderbar',
             	'settings'       => 'onepiece_content_sliderbar_category', 
- 	    	'description'    => __( 'Select the post category for the slider. !This function is in development', 'fndtn' ),
+ 	    	'description'    => __( 'Select the post category for the slider.', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => get_categories_select()
     	)));
@@ -599,10 +585,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_sliderbar_height', array(
-            	'label'          => __( 'Slider height', 'fndtn' ),
+            	'label'          => __( 'Slider height', 'onepiece' ),
             	'section'        => 'onepiece_content_sliderbar',
             	'settings'       => 'onepiece_content_sliderbar_height', 
- 	    	'description'    => __( 'Height (%)', 'fndtn' ),
+ 	    	'description'    => __( 'Height (%)', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => array(
                 	'20'   => __( '20', 'onepiece' ),
@@ -622,10 +608,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_sliderbar_width', array(
-            	'label'          => __( 'Slider width', 'fndtn' ),
+            	'label'          => __( 'Slider width', 'onepiece' ),
             	'section'        => 'onepiece_content_sliderbar',
             	'settings'       => 'onepiece_content_sliderbar_width', 
- 	    	'description'    => __( 'Width (relative to)', 'fndtn' ),
+ 	    	'description'    => __( 'Width (relative to)', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => array(
                 	'margin'   => __( 'content outer margin', 'onepiece' ),
@@ -661,7 +647,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_content_mainpopup_overlaycolor', array(
-		'label' => __( 'Background overlay color', 'fndtn' ),
+		'label' => __( 'Background overlay color', 'onepiece' ),
 		'section' => 'onepiece_content_mainpopup',
 		'settings' => 'onepiece_content_mainpopup_overlaycolor',
     	) ) ); 
@@ -705,18 +691,32 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  
 
 
-    	// CONTENT - POSTS 
+    	// CONTENT - POSTS - HIGHLIGHT
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
 		'default' => '3', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_firstcount', array(
-            	'label'          => __( 'Highlite first posts', 'onepiece' ),
+            	'label'          => __( 'Highlight first posts', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_posts',
             	'settings'       => 'onepiece_content_panel_postlist_firstcount',
             	'type'           => 'text',
- 	    	'description'    => __( 'Amount of first posts to highlite in a (basic)list.', 'onepiece' ),
+ 	    	'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
     	)));
+		
+		// CONTENT - POSTS - EXCERPT LENGTH
+    	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
+		'default' => '25', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_excerptlength', array(
+            	'label'          => __( 'Excerpt Length', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_postlist_excerptlength',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Amount of words for intro texts in a (basic) list.', 'onepiece' ),
+    	)));
+		
 
 		// CONTENT - POSTS - TIME & AUTHOR
 		$wp_customize->add_setting( 'onepiece_content_panel_postlist_authortime' , array(
@@ -759,7 +759,27 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
-	
+		// CONTENT - POSTS - READMORE
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_readmore' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_readmore', array(
+            	'label'          => __( 'Post Read more', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_readmore',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select display type', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No readmore button', 'onepiece' ),
+                	'inline'   => __( 'Inline after the intro text', 'onepiece' ),
+            		'right'   => __( 'Right side below intro tekst', 'onepiece' ),
+            		'left'   => __( 'Left side below intro tekst', 'onepiece' ),
+            	)
+    	)));
+		 
+		
+
 		
 		// CONTENT - POSTS - Tags display not / belowtitle / belowcontent
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_tagdisplay' , array(
@@ -780,7 +800,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
-		//.. Post related Categories display not / belowheader / belowcontent
+		
+		// CONTENT - POSTS -  Post related Categories display not / belowheader / belowcontent
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_catdisplay' , array(
 		'default' => 'belowcontent', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -799,7 +820,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
-		//.. Next / Previous links not / belowheader / belowcontent / contentside
+		// CONTENT - POSTS - Next / Previous links not / belowheader / belowcontent / contentside
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_nextprevdisplay' , array(
 		'default' => 'belowcontent', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -818,6 +839,9 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                     'contentside'   => __( 'On content sides', 'onepiece' ),
             	)
     	)));
+		
+		
+		
 		
 		
 		 
@@ -839,7 +863,9 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'text'   => __( 'Title and description', 'onepiece' ),
             	)
     	)));
-    	
+		
+		
+	
     	
     	
     	
@@ -850,10 +876,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_gallery_category', array(
-            	'label'          => __( 'Default category', 'fndtn' ),
+            	'label'          => __( 'Default category', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_gallery',
             	'settings'       => 'onepiece_content_gallery_category', 
- 	    	'description'    => __( 'Select the default category for the gallery.', 'fndtn' ),
+ 	    	'description'    => __( 'Select the default category for the gallery.', 'onepiece' ),
             	'type'    => 'select',
     		'choices' => get_categories_select()
     	)));
@@ -863,7 +889,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 
 		
-		// ELEMENTS - HEADER IMAGE
+		// ELEMENTS - HEADER IMAGE - WIDTH
 		$wp_customize->add_setting( 'onepiece_elements_headerimage_width' , array(
 		'default' => 'outer', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -879,6 +905,18 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'outer'   => __( 'Content (outermargin)', 'onepiece' ),
                 	'full'   => __( 'Full (window)', 'onepiece' ),
             	)
+    	)));
+		// ELEMENTS - HEADER IMAGE (min) HEIGHT
+    	$wp_customize->add_setting( 'onepiece_elements_headerimage_height' , array(
+		'default' => '560', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_headerimage_height', array(
+            	'label'          => __( 'Header Min-height', 'onepiece' ),
+            	'section'        => 'header_image',
+            	'settings'       => 'onepiece_elements_headerimage_height',
+            	'type'           => 'number',
+ 	    	'description'    => __( 'Height (min-height) in px', 'onepiece' ),
     	)));
 		
 		
@@ -945,7 +983,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbarbg', array(
-		'label' => __( 'Topbar background color', 'fndtn' ),
+		'label' => __( 'Topbar background color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbarbg',
     	) ) ); 
@@ -955,7 +993,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartext', array(
-		'label' => __( 'Topbar text color', 'fndtn' ),
+		'label' => __( 'Topbar text color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbartext',
     	) ) ); 
@@ -966,7 +1004,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartextlink', array(
-		'label' => __( 'Topbar textlink color', 'fndtn' ),
+		'label' => __( 'Topbar textlink color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbartextlink',
     	) ) ); 
@@ -978,7 +1016,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_topbartextlinkhover', array(
-		'label' => __( 'Topbar link hover color', 'fndtn' ),
+		'label' => __( 'Topbar link hover color', 'onepiece' ),
 		'section' => 'onepiece_elements_topmenubar',
 		'settings' => 'onepiece_identity_colors_topbartextlinkhover',
     	) ) ); 
@@ -1049,10 +1087,47 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'stic'   => __( 'Stick to top', 'onepiece' ),
             	)
     	)));
+		$wp_customize->add_setting( 'onepiece_elements_mainmenubar_minisize' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainmenubar_minisize', array(
+            	'label'          => __( 'Mainmenubar mini-sized', 'onepiece' ),
+            	'section'        => 'onepiece_elements_mainmenubar',
+            	'settings'       => 'onepiece_elements_mainmenubar_minisize',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select to minisize the menubar on small screens.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No minisize', 'onepiece' ),
+                	'slidedown'   => __( 'Button with slide-down menu', 'onepiece' ),
+            	)
+    	)));
+		
+		
+		// ELEMENTS - LOGINBAR
+    	$wp_customize->add_setting( 'onepiece_elements_loginbar_option' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_loginbar_option', array(
+            	'label'          => __( 'Display default loginbar', 'onepiece' ),
+            	'section'        => 'onepiece_elements_loginbar',
+            	'settings'       => 'onepiece_elements_loginbar_option',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select loginbar display.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No Display (or use widget)', 'onepiece' ),
+            		'sbtop'   => __( 'Top main sidebar', 'onepiece' ),
+            		'sbbottom'   => __( 'Bottom main sidebar', 'onepiece' ),
+            		'sb2top'   => __( 'Top sidebar 2', 'onepiece' ),
+            		'sb2bottom'   => __( 'Bottom sidebar 2', 'onepiece' ),
+            	)
+    	)));
+		
 		
     	
 		
-		// MAIN SIDEBAR
+		// ELEMENTS - MAIN SIDEBAR
 		$wp_customize->add_setting( 'onepiece_elements_sidebar_position' , array(
 		'default' => 'right', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1146,6 +1221,26 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'right'   => __( 'right', 'onepiece' ),
             	)
     	)));
+		
+		// BOTTOM MENU BAR - copyright
+		$wp_customize->add_setting( 'onepiece_elements_bottom_copyrightposition' , array(
+		'default' => 'center', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_bottom_copyrightposition', array(
+            	'label'          => __( 'Copyright display', 'onepiece' ),
+            	'section'        => 'onepiece_elements_bottommenubar',
+            	'settings'       => 'onepiece_elements_bottom_copyrightposition',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select copyright text display/position.', 'onepiece' ),
+            	'choices'        => array(
+                	'hide'   => __( 'hide', 'onepiece' ),
+                	'left'   => __( 'left', 'onepiece' ),
+            		'center'   => __( 'center', 'onepiece' ),
+            		'right'   => __( 'right', 'onepiece' ),
+            	)
+    	)));
+		
 		$wp_customize->add_setting( 'onepiece_elements_bottom_copyrighttext' , array(
 		'default' => 'Copyright 2016', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1157,6 +1252,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'textarea',
  	    	'description'    => __( 'Copyright information text.', 'onepiece' ),
     	)));
+		
+		
 		
 	
 
@@ -1252,10 +1349,24 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 }
 add_action( 'customize_register', 'onepiece_register_theme_customizer' );
+ 
 
 // default sanitize function
 function onepiece_sanitize_default($obj){
     	//.. global sanitizer
     	return $obj;
 }
+
+
+/** Extensions for customizer options 
+ * - multiselect categories
+ */
+add_action( 'customize_register', 'onepiecer_theme_customize_register' );
+function onepiecer_theme_customize_register( $wp_customize ) {
+     require_once( get_template_directory() . '/assets/customizer_extend.php' );
+}
+
+
+
+
 ?>
