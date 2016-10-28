@@ -56,6 +56,10 @@ $topcat = 'uncategorized';
 }
 
 
+
+
+
+
 /**
  * HTML HEAD THEME CORE
  * index.php, page.php, gallery.php
@@ -79,6 +83,11 @@ echo '<meta name="description" content="'.$site_description.'">'
 	.'<link rel="stylesheet" type="text/css" href="'.esc_url( get_template_directory_uri() ).'/style.css" />'
 	.'<link rel="stylesheet" type="text/css" href="'.esc_url( get_template_directory_uri() ).'/'.get_theme_mod('onepiece_identity_stylelayout_stylesheet', 'default.css').'" />';
 
+
+
+
+
+
 /**
  * share meta info 
  * ! should get featured image (header)
@@ -90,14 +99,20 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 	.'<meta property="og:url" content="'.esc_url( home_url( '/' ) ).'" />';
 
 
+
+
+
+
+
 // mobile meta 
 /* echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>'; */
 if($mobile){
-echo '<meta name="viewport" content="initial-scale=1.0, width=device-width" />';
-$content_width = 760;
+	
+	echo '<meta name="viewport" content="initial-scale=1.0, width=device-width" />';
 }else if ( ! isset( $content_width ) ) {
-$content_width = 960;
+	$content_width = 960;
 }
+
 
 
 // Frontend user login  
@@ -111,6 +126,7 @@ $stylelayout_spacing = get_theme_mod('onepiece_identity_stylelayout_spacing', 5)
 $stylelayout_speed = 100 * get_theme_mod('onepiece_identity_stylelayout_speed', 5);
 
 
+
 // topbar
 $topbarbehavior = get_theme_mod('onepiece_elements_topmenubar_behavior', 'rela');
 $topbarbgfixed = get_theme_mod('onepiece_elements_topmenubar_bgfixed', 'keep');
@@ -118,12 +134,13 @@ $topbaropacity = get_theme_mod('onepiece_elements_topmenubar_opacity', 20);
 // + colors 
 
 
+
 // mainmenubar
 $mainmenubarbehavior = get_theme_mod('onepiece_elements_mainmenubar_behavior', 'stat');
 
 
  
-// get header replacement variables for page/post feautured images
+// header replacement variables for page/post feautured images
 $useheaderimage = get_post_meta($post->ID, "meta-page-headerimage", true);
 $usepostfeaturedimage = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');
 
@@ -137,6 +154,8 @@ $childpagedisplay = get_post_meta($post->ID, "meta-box-display-childpages", true
 $popupdefaultdisplay = get_theme_mod('onepiece_content_mainpopup_display', 'medium' );
 $popupoverlaycolor = get_theme_mod('onepiece_content_mainpopup_overlaycolor', '#ffffff' );
 $popupoverlayopacity = get_theme_mod('onepiece_content_mainpopup_overlayopacity', 20 );
+
+
 
 
 
@@ -201,9 +220,17 @@ if( $sliderdisplay == 'topfooter' ){
     $footerheight = $sliderdefaultheight;
 }
 
+
+
+
+
+
+
 // output html slider codes 
 ?>
+
 <script type="text/javascript" language="javascript">
+
 jQuery(function($) {
 $(window).resize(function() {
 <?php 
@@ -218,6 +245,8 @@ echo  '$("#sliderbox-footer").css("min-height", ( $(window).height() / 100) * '.
 // end php to js 
 ?>
 });
+
+
 
 jQuery(document).ready(function($) {
     
@@ -255,7 +284,7 @@ $('.sliderarea').anythingSlider({
 	$('#current').html(window.location.hash); // get current
     },
     onInitialized: function(e, slider) {
-        setupSwipe(slider);
+        setupSwipe(slider); // on overlay element
     }
     /*	add a menu
     navigationFormatter : function(i, panel){
@@ -450,6 +479,9 @@ echo 'max-height:680px;';
 }
 
 
+
+
+
 #headerbar
 {
 <?php 
@@ -458,6 +490,28 @@ if( $mobile ){
 echo 'max-height:680px;'; 
 }
 ?>
+}
+
+
+#sliderbox-head .topelement,
+#sliderbox-head .bottomelement {
+position: absolute;
+z-index: 40;
+}
+
+
+#sliderbox-head .topelement {
+width: 100%;
+height: 50%;
+top: 0;
+right: 0;
+}
+
+#sliderbox-head .bottomelement {
+width: 100%;
+height: 50%;
+bottom: 0;
+left: 0;
 }
 
 
@@ -534,8 +588,8 @@ div.anythingSlider div.slidebox .contentbox
 {
 position:absolute;
 bottom:8%;
-left:4%;
-width:96%;
+left:0%;
+width:40%;
 z-index: 99;
 }
 
@@ -573,8 +627,8 @@ div.anythingSlider div.slidebox .contentbox
 {
 position:absolute;
 bottom:4%;
-left:2%;
-width:66%;
+left:0%;
+width:40%;
 }
 }
 

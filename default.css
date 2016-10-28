@@ -52,3 +52,32 @@ body
 .widgetpadding ul li
 {
 }
+
+/* Slider */
+
+
+
+/* 
+ * top and bottom bg overlay to use 
+ * elements are positioned on top and bottom in header slider html
+ */
+#sliderbox-head .topelement,
+#sliderbox-head .bottomelement {
+position: absolute;
+z-index: 40;
+}
+
+
+#sliderbox-head .topelement {
+width: 100%;
+height: 50%;
+top: 0;
+right: 0;
+}
+
+#sliderbox-head .bottomelement {
+width: 100%;
+height: 50%;
+bottom: 0;
+left: 0;
+}
