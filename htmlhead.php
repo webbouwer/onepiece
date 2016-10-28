@@ -583,6 +583,10 @@ div.anythingSlider div.slidebox div.outermargin
 position:relative;
 height:100%;
 }
+.outermargin div.slidebox div.outermargin
+{
+width:100%; /* if inside another outermargin */
+}
 
 div.anythingSlider div.slidebox .contentbox
 {
