@@ -323,6 +323,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_elements_panel',
 			'priority' => 40,
     	));
+    	$wp_customize->add_section('onepiece_elements_mainmenubar', array( 
+        	'title'    => __('Main menubar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+    	));
 		
     	$wp_customize->add_section('onepiece_elements_sidebar', array( 
         	'title'    => __('Main Sidebar', 'onepiece'),
@@ -1099,7 +1103,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    		'description'    => __( 'Select to minisize the menubar on small screens.', 'onepiece' ),
             	'choices'        => array(
                 	'none'   => __( 'No minisize', 'onepiece' ),
-                	'slidedown'   => __( 'Button with slide-down menu', 'onepiece' ),
+                	'slidedown'   => __( 'Slide-down menu (always)', 'onepiece' ),
+                	'topbar'   => __( 'Slide-down menu (topbar only)', 'onepiece' ),
             	)
     	)));
 		

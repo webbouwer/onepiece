@@ -36,6 +36,7 @@ add_action( 'admin_init', 'onepiece_editor_styles' );
 
 /****** Register menu's ******/
 function basic_setup_register_menus() {
+	
 	register_nav_menus(
 		array(
 		'minimenu' => __( 'Mini menu' , 'onepiece' ),
@@ -46,6 +47,7 @@ function basic_setup_register_menus() {
 		'bottommenu' => __( 'Bottom menu' , 'onepiece' )
 		)
 	);
+	
 }
 add_action( 'init', 'basic_setup_register_menus' );
 

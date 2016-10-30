@@ -137,6 +137,7 @@ $topbaropacity = get_theme_mod('onepiece_elements_topmenubar_opacity', 20);
 
 // mainmenubar
 $mainmenubarbehavior = get_theme_mod('onepiece_elements_mainmenubar_behavior', 'stat');
+$mainmenubarminisize = get_theme_mod('onepiece_elements_mainmenubar_minisize', 'stat');
 
 
  
@@ -747,8 +748,11 @@ jQuery(function ($) {
 
 $(document).ready(function() {   
 
+
 	<?php if($topbarbgfixed == 'keep'){ ?>
-	
+	/**
+	 * TOPBAR ADD BG
+	 */	
 	$("#topbar").append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
       .css({
@@ -763,8 +767,14 @@ $(document).ready(function() {
       }) 
    );
    <?php } ?>
-}); 
+   
+});
 
+ 
+
+/**
+ * TOPBAR FIXED / MINIFY ONSCROLL
+ */ 
 $(window).on("mousewheel scroll", function() {
 
 <?php
@@ -772,6 +782,9 @@ if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
 ?>
 if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
 
+	/**
+	 * FIX TOPBAR & ADD BG
+	 */
 	 $("#topbar .minifiedtopbarbg").remove();
      $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
@@ -787,8 +800,10 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
       }) 
     );
 	
- <?php if($topbarbehavior == 'mini'){ ?>
- 
+ 	<?php if($topbarbehavior == 'mini'){ ?>
+	/**
+	 * MINIFY TOPBAR & BG
+	 */
    $("#topbar .minifiedtopbarbg").animate({
        opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
    }, <?php echo $stylelayout_speed; ?>);
@@ -802,6 +817,9 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
 }else if( $(window).scrollTop() <= 1 && $("#topbar").hasClass('minified') ){
    
    <?php if($topbarbgfixed != 'keep'){ ?>
+	/**
+	 * RELEASE FIXED / MINIFIED TOPBAR & BG
+	 */ 
    if( $("#topbar .minifiedtopbarbg") && $("#topbar .minifiedtopbarbg") != 'undefined'){
    $("#topbar .minifiedtopbarbg").animate({
        opacity:0,
@@ -820,17 +838,32 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
 
 } // end minify logobox
 
-
 <?php  
-}
+} // end minify logobox or fixed topbar
+
+
+
+
+
+
+
+/** 
+ * onscroll for fixed topbar:
+ */
 if($mainmenubarbehavior == 'stic' && ($topbarbehavior == 'fixe' || $topbarbehavior == 'mini') ){ 
-// #site-navigation
-// or #topbar-navigation 
+// #site-navigation or #topbar-navigation 
 ?>
+
+/**
+ * MAIN MENU FIXED IN TOPBAR ONSCROLL
+ */ 
 var offset = $('#site-navigation').offset();
 if( (offset.top - $(window).scrollTop()) < $("#topbar").height() && !$("#site-navigation .outermargin nav").hasClass('sticky')){
-	// move mainmenu to topbar menu
-	$("#site-navigation .outermargin nav").addClass('sticky');
+
+	/**
+	 * POSITION MAIN MENU IN TOPBAR 
+	 */
+ 	$("#site-navigation .outermargin nav").addClass('sticky');
 	if( $('#minibar-navigation').length > 0 ){
 	$('#minibar-navigation').next().after($("#site-navigation .outermargin nav"));
 	}else if( $('#topbar-navigation').length > 0 ){
@@ -838,22 +871,88 @@ if( (offset.top - $(window).scrollTop()) < $("#topbar").height() && !$("#site-na
 	}else{
 	$('#topmenubar .outermargin .logobox').after($("#site-navigation .outermargin nav"));
 	
-	// check for mini-sized class
-	
 	//$('#site-navigation .outermargin nav').prependTo( $('#topmenubar .outermargin') );
 	}
+	
+	// check for mini-sized class
+	<?php 
+	// mobile mainmenu minisize on scroll
+	if( $mobile && $mainmenubarminisize == 'topbar' ){ // not none
+	?>
+	/**
+	 * MAIN MENU MINISIZE TOPBAR ONLY
+	 */
+	if( !$('#topbar nav.sticky .menu-button').length > 0 ){
+	var menubox = $('#topbar nav.sticky').prepend('<div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div>');
+	var menubutton = $('#topbar nav.sticky .menu-button');
+	var menupanel = $('#topbar nav.sticky div ul.menu').hide();
+	}
+	$('#topbar nav.sticky').on( 'click' ,'.menu-button', function(){
+	$('.menu-button').html('<?php echo __('Menu', 'onepiece'); ?>'); // default text / image
+	menupanel.slideToggle();
+	menubutton.toggleClass('open');
+	$('.menu-button.open').html('<?php echo __('Close', 'onepiece'); ?>'); // when open show close text /image
+	});
+	
+	<?php 
+	} // end mainmenubar minisize
+	?>
+	
+	
 }else if( (offset.top - $(window).scrollTop()) >= $("#topbar").height() && $("#topmenubar .outermargin nav").hasClass('sticky')){
-	// move mainmenu back in place
+	
+	/**
+	 * REPOSITION MAIN MENU TOPBAR 
+ 	*/
 	$("#topmenubar .outermargin nav.sticky")
 	.removeClass('sticky')
 	.appendTo("#site-navigation .outermargin"); 
-}
-<?php 
-}
+	
+	
+	<?php 
+	// mobile mainmenu minisize on scroll
+	if( $mobile && $mainmenubarminisize == 'topbar' ){ // not none
+	?>
+	/**
+	 * RELEASE MAIN MENU MINISIZE TOPBAR ONLY
+	 */
+	$('.menu-button').remove();
+	$('#site-navigation div nav div ul.menu').slideDown();
+	<?php 
+	} // end mainmenubar minisize
+	?>
+	
+} // end  onscroll for fixed topbar
+
+
+
+<?php
+} // end topbarbehavior sticky 
 ?>
 
-
 });
+
+<?php
+// mobile mainmenu minisize
+if( $mobile && $mainmenubarminisize == 'slidedown' ){ // not none
+?>
+	/**
+	 * MAIN MENU MINISIZE ALWAYS
+	 */
+	var menubox = $('#site-navigation div nav').prepend('<div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div>');
+	var menubutton = $('#site-navigation div nav .menu-button');
+	var menupanel = $('#site-navigation div nav div ul.menu').hide();
+	menubox.on( 'click' ,'.menu-button', function(){
+	$('.menu-button').html('<?php echo __('Menu', 'onepiece'); ?>'); // default text / image
+	menupanel.slideToggle();
+	menubutton.toggleClass('open');
+	$('.menu-button.open').html('<?php echo __('Close', 'onepiece'); ?>'); // when open show close text /image
+	});
+
+<?
+}
+
+?>
 
 });
 </script>
