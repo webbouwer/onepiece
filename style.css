@@ -2,7 +2,7 @@
 Theme Name: onepiece
 Theme URI: http://www.webdesigndenhaag.net/onepiece
 Description: WP Theme for development & custom design now hosted on github
-Version: 0.6.5.0
+Version: 0.6.5.1
 Details URI: http://webdesigndenhaag.net/onepiece/wordpress-theme/onepiece-news/theme-updates/feed/
 Author: Oddsized
 Author URI: http://www.webdesigndenhaag.net
@@ -14,26 +14,11 @@ GitHub Theme URI: https://github.com/Oddsized/onepiece
 GitHub Branch: development
 */
 
-/* sources:	https://wordpress.org/themes/getting-started/ 
+/* sources:	
+        https://wordpress.org/themes/getting-started/ 
         https://make.wordpress.org/themes/handbook/review/required/theme-tags
         now testing with 
-        https://github.com/afragen/github-updater
-        
- developments
- > finnish the childpage options inc. a menu on childpages
- > redefine theme global, page and post options
- > implement slider in widget / category view isotope popup
- - tested an anythingslider implementation for popups(isotope item selected)
-   problems come with dynamic links and parent category selection
-   For a new test i'll use a single basic rich html output and handle the slider in  javascript as much as possible..
- > Extend the onepiece widget 
- - the widget should be multi purpose, easy to configure
- - featured options to implement
-     execute custom php code
-     show media (slides/banner)
-     show content (single/list/pagenav)
- > Create more standards for customized functions and variables
- 
+        https://github.com/afragen/github-update
 */
 /************************* THEME FONTS **************************/
 /* @font-face {
