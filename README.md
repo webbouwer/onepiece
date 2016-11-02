@@ -14,6 +14,8 @@ Theme to be applied by Wordpress Code Monkeys :-)
   Keep track of updates here - https://github.com/Oddsized/onepiece
   Use the github-updater plugin by Andy Fragen - https://github.com/afragen
 
+https://github.com/Oddsized/onepiece/projects/1
+
 HTML and basic css is available, custom theme style can be applied in a custom stylesheet wich can be selected inside the theme customizer. ! Current all Branches testing php fread to get .css files this might result in errors or blank screen on some shared-hosting platforms.
 
 Most common page markups can be achieved without any code hassle:
