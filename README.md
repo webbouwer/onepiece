@@ -3,8 +3,10 @@ Wordpress Theme in Development
 /**
 README.md
 
-by CP Mueller - 2016 The Hague 
+by CP Müller - 2016 The Hague 
 Webdesign Den Haag | Oddsized
+
+Many thanks to the great work of the Wordpress Team
 **/
 
 Theme to be applied by Wordpress Code Monkeys :-)
@@ -30,6 +32,14 @@ Made with the Menu Image code by Alex Davyskiba aka Zviryatko - http://html-and-
 Views are enhanced with responsive methodes
 Mobile detection made with code by Andy Moore http://detectmobilebrowsers.mobi 
 
+
+WARNING: This theme customizer is without sanitation of data, meaning the customizer variables are passed through by the sanitation function without any real check (customizer.php) 
+
+Version 0.6.5.2
+Update including customizer settings to exclude multiple post categories from the main loop.
+After lot's of hassle and searches I found how to enqueue the class extend the right way inside Onepiece.  
+The multiple selection code comes from http://themefoundation.com/customizer-multiple-category-control/.
+I had a problem with including the extended class file untill I found a usefull tip about the enqueue order at http://jayj.dk/multiple-select-lists-theme-customizer/
 
 Highlights:
 
