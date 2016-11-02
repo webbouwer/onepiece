@@ -100,7 +100,7 @@ Content:
         date/author display
 
     Posts
-        .. Exclude categories
+        Exclude categories
         Use highlight first posts
 		Excerpt length (amount of words)
 		
@@ -113,7 +113,6 @@ Content:
         
     Category
         Display category list Title & Description 
-        ..Exclude categories
 
 	Gallery
 		Default category
@@ -196,6 +195,11 @@ Responsive
 		content max width in px
 	
 */
+
+
+
+
+
 function onepiece_register_theme_customizer( $wp_customize ) {
     
     
@@ -322,6 +326,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Loginbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
 			'priority' => 40,
+    	));
+    	$wp_customize->add_section('onepiece_elements_mainmenubar', array( 
+        	'title'    => __('Main menubar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
     	));
 		
     	$wp_customize->add_section('onepiece_elements_sidebar', array( 
@@ -689,7 +697,35 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
  
-
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 		
+    	// CONTENT - POSTS - EXCLUDE CATEGORIES  Add multi select 
+		// source used: http://themefoundation.com/customizer-multiple-category-control/
+		// .. http://jayj.dk/multiple-select-lists-theme-customizer/
+		 $wp_customize->add_setting( 'onepiece_content_exclude_categories' );
+		 
+		$wp_customize->add_control(
+			new onepiece_multiselect_exclude_categories(
+				$wp_customize,
+				'onepiece_content_exclude_categories',
+				array(
+					'label' => __( 'Exclude Categories', 'onepiece' ),
+ 	    			'description'    => __( 'Select post categories to be excluded from the main loop (post overview)', 'onepiece' ),
+					'section' => 'onepiece_content_panel_posts',
+					'settings' => 'onepiece_content_exclude_categories'
+				)
+			)
+		);
+		 
 
     	// CONTENT - POSTS - HIGHLIGHT
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
@@ -1099,7 +1135,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    		'description'    => __( 'Select to minisize the menubar on small screens.', 'onepiece' ),
             	'choices'        => array(
                 	'none'   => __( 'No minisize', 'onepiece' ),
-                	'slidedown'   => __( 'Button with slide-down menu', 'onepiece' ),
+                	'slidedown'   => __( 'Slide-down menu (always)', 'onepiece' ),
+                	'topbar'   => __( 'Slide-down menu (topbar only)', 'onepiece' ),
             	)
     	)));
 		
@@ -1345,6 +1382,9 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Outermargin for large screens (px).', 'onepiece' ),
     	)));
+		
+		
+		
     	
 		
 }
@@ -1356,16 +1396,22 @@ function onepiece_sanitize_default($obj){
     	//.. global sanitizer
     	return $obj;
 }
+function onepiece_sanitize_array( $values ) {
+    $multi_values = !is_array( $values ) ? explode( ',', $values ) : $values;
+    return !empty( $multi_values ) ? array_map( 'sanitize_text_field', $multi_values ) : array();
+}
 
 
 /** Extensions for customizer options 
  * - multiselect categories
  */
-add_action( 'customize_register', 'onepiecer_theme_customize_register' );
-function onepiecer_theme_customize_register( $wp_customize ) {
-     require_once( get_template_directory() . '/assets/customizer_extend.php' );
-}
 
+add_action( 'customize_register', 'onepiece_load_customize_controls', 0 );
+
+function onepiece_load_customize_controls() {
+
+    require_once( trailingslashit( get_template_directory() ) . '/assets/customizer_extend.php' );
+}
 
 
 

@@ -213,8 +213,16 @@ if($mainmenuplace == 'below' && $mainbarclass != 'none' ){
 echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'  '.$mainminisize.'" role="navigation"><div class="outermargin"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
 echo wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
-}else{
-echo wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) );
+}elseif( 
+
+	!has_nav_menu( 'minimenu' ) && 
+	!has_nav_menu( 'topmenu' ) && 
+	!has_nav_menu( 'mainmenu' ) && 
+	!has_nav_menu( 'usermenu' ) &&
+	!has_nav_menu( 'sidemenu' ) &&
+	!has_nav_menu( 'bottommenu' )
+	){
+	echo wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu '.$mainminisize ) );
 } 
 echo '<div class="clr"></div></nav></div></div>';
 

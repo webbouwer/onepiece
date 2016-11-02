@@ -36,6 +36,7 @@ add_action( 'admin_init', 'onepiece_editor_styles' );
 
 /****** Register menu's ******/
 function basic_setup_register_menus() {
+	
 	register_nav_menus(
 		array(
 		'minimenu' => __( 'Mini menu' , 'onepiece' ),
@@ -46,6 +47,7 @@ function basic_setup_register_menus() {
 		'bottommenu' => __( 'Bottom menu' , 'onepiece' )
 		)
 	);
+	
 }
 add_action( 'init', 'basic_setup_register_menus' );
 
@@ -305,13 +307,20 @@ function onepiece_body_class( $classes ) {
 }
 add_filter( 'body_class', 'onepiece_body_class' );
 
+
+
+
 /** Exclude specific categories from the loop */
 add_action( 'pre_get_posts', 'exclude_specific_cats' );
 function exclude_specific_cats( $wp_query ) {   
     if( !is_admin() && is_main_query() && is_home() ) {
-          $wp_query->set( 'cat', '-3' ); // ! '-1' not allowed = buggy in WP Multisitesq
+		$exclude_cats = '-'.str_replace(",",",-", get_theme_mod('onepiece_content_exclude_categories') );
+        $wp_query->set( 'cat', $exclude_cats ); // ! '-1' not allowed = buggy in WP Multisitesq
     }
 }
+
+
+
 
 /********* CATEGORY LIST **********/
 function get_categories_select() {

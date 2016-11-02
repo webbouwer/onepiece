@@ -9,7 +9,8 @@ function sliderhtml($category, $mobile, $id = null){
     $sliderhtml = '';
     if( $cat->term_id ){
 	    query_posts('category_name='.$cat->cat_name);
-        $sliderhtml .= '<ul id="slider-'.$id.'" class="sliderarea">';
+        $sliderhtml .= '<div class="topelement"></div>';
+		$sliderhtml .= '<ul id="slider-'.$id.'" class="sliderarea">';
         if (have_posts()) : while (have_posts()) : the_post();
 
 	    $sliderhtml .= '<li class="panel"';
@@ -48,6 +49,7 @@ function sliderhtml($category, $mobile, $id = null){
 	wp_reset_query();
 	
 	$sliderhtml .= '</ul>';
+    $sliderhtml .= '<div class="bottomelement"></div>';
 	return $sliderhtml;
     }    
 }
