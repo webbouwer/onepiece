@@ -1,12 +1,30 @@
 <?php 
 $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
-// main menu markup
-$mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
+/**
+ *
+ * main menu markup
+ *
+ */
+ $mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'); 
 $mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none').'-minisize';
 
-// header image or slider
+
+/**
+ *
+ * top side bar
+ *
+ */ 
+$topsidebarplace = get_theme_mod('onepiece_elements_topsidebar_position', 'hide');
+$topsidebarwidth = get_theme_mod( 'onepiece_elements_topsidebar_width' , '30'); 
+
+
+/**
+ *
+ * header image or slider
+ *
+ */ 
 global $wp_query;
 $postid = $wp_query->post->ID;
 $useheaderimage = get_post_meta($postid, "meta-page-headerimage", true);
@@ -16,24 +34,43 @@ $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($postid));
 wp_reset_query();
 
 
-// default slider options
+/**
+ *
+ * default slider options
+ *
+ */  
 $sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'default' );
 $sliderdefaultcat = get_theme_mod('onepiece_content_sliderbar_category', 'uncategorized' );
 $sliderdefaultheight = get_theme_mod('onepiece_content_sliderbar_height', '60' );
 $sliderdefaultwidth = get_theme_mod('onepiece_content_sliderbar_width', 'full' );
 
-// page slider options
+
+/**
+ *
+ * page slider options
+ *
+ */  
 $sliderdisplay = get_post_meta(get_the_ID(), "pagetheme_slide_displaytype", true);
 $slidercat = get_post_meta(get_the_ID(), "pagetheme_slide_selectbox", true);
 $sliderheight = get_post_meta(get_the_ID(), "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true);
 
-// headercontent container
+
+/**
+ *
+ * headercontent container
+ *
+ */  
 echo '<div id="headercontainer">'; 
 
 echo '<div id="topbar">';
 
-// widgets top 
+
+/**
+ *
+ * widgets top
+ *
+ */   
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-top') ){
 $count = is_sidebar_active('widgets-top');
 echo '<div id="widgets-top" class="colset-'.$count.'">';
@@ -42,15 +79,47 @@ dynamic_sidebar('widgets-top');
 echo '<div class="clr"></div></div></div>';
 } 
 
-// topbar menu position
+
+
+/**
+ *
+ * topbar menu position
+ *
+ */  
 $topbarclass = 'right';
 if( get_theme_mod( 'onepiece_elements_topmenubar_position') ){
     $topbarclass = get_theme_mod( 'onepiece_elements_topmenubar_position', 'right');
 }
 
-echo '<div id="topmenubar" class="'.$topbarclass.'"><div class="outermargin">';
 
-// logobox menu
+
+
+
+echo '<div id="topmenubar"><div class="outermargin">';
+
+
+
+/**
+ *
+ * set topbar floatmargin
+ *
+ */   
+if( $topsidebarplace != 'hide' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ){
+$topbarmarginfloatpos = 'left';
+if( $topsidebarplace == 'left'){
+$topbarmarginfloatpos = 'right';
+}
+echo '<div id="topbarmargin" class="'.$topbarclass.' float-'.$topbarmarginfloatpos.'" style="float:'.$topbarmarginfloatpos.';width:'.( 100 - $topsidebarwidth).'%;">';
+}else{
+echo '<div class="topbarmargin '.$topbarclass.'">';
+}
+
+
+/**
+ *
+ * logobox menu
+ *
+ */   
 echo '<div class="logobox medium">';
 if ( get_theme_mod( 'onepiece_identity_logo_m' ) ){
 echo '<a href="'.esc_url( home_url( '/' ) ).'" class="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home"><img src="'.get_theme_mod( 'onepiece_identity_logo_m' ).'" alt="'.esc_attr( get_bloginfo( 'name', 'display' ) ).' - '.get_bloginfo( 'description' ).'"></a>';
@@ -60,14 +129,26 @@ echo '<h2 class="site-description">'.get_bloginfo( 'description' ).'</h2></hgrou
 }
 echo '</div>';
 
-// mini menu
+
+/**
+ *
+ * mini menu 
+ *
+ */  
 if ( has_nav_menu( 'minimenu' ) ) {
 echo '<div id="minibar-navigation" class="mini-navigation" role="navigation"><nav>';
 echo wp_nav_menu( array( 'theme_location' => 'minimenu' ) );
 echo '<div class="clr"></div></nav></div><div style="clear:'.$topbarclass.';"></div>';
 }
 
-// topmenu
+
+
+
+/**
+ *
+ * topmenu
+ *
+ */  
 if ( has_nav_menu( 'topmenu' ) && get_theme_mod( 'onepiece_elements_topmenubar_position', 'right') != 'none' ) {
 echo '<div id="topbar-navigation" class="main-navigation" role="navigation"><nav>';
 if ( has_nav_menu( 'topmenu' ) ) {
@@ -78,7 +159,14 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 echo '<div class="clr"></div></nav></div>';
 }
 
-// mainmenu in topbar
+
+
+/**
+ *
+ * mainmenu in topbar
+ *
+ */  
+
 if($mainmenuplace == 'topbar' && $mainbarclass != 'none'){
 echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
@@ -89,6 +177,25 @@ echo wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-men
 echo '<div class="clr"></div></nav></div>';
 }
 
+echo '</div>'; // close topbar float margin 
+
+
+/**
+ *
+ * widgets-top-sidebar
+ *
+ */  
+if( $topsidebarplace != 'hide' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ){
+
+$count = is_sidebar_active('widgets-top-sidebar');
+echo '<div id="topsidebar" class="colset-'.$count.'" style="float:'.$topsidebarplace.';width:'.$topsidebarwidth.'%;">';
+dynamic_sidebar('widgets-top-sidebar');
+echo '<div class="clr"></div></div>';
+} 
+
+
+
+
 echo '<div class="clr"></div></div></div>'; // end topmenubar
 
 
@@ -96,7 +203,11 @@ echo '</div>'; // end topbar
 
 
 
-
+/**
+ *
+ * mainmenu above header
+ *
+ */  
 if($mainmenuplace == 'above' && $mainbarclass != 'none'){
 echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><div class="outermargin"><nav>';
 if ( has_nav_menu( 'mainmenu' ) ) {
@@ -108,13 +219,17 @@ echo '<div class="clr"></div></nav></div></div>';
 }
 
 
-
-// Slider or (featured) headerimage
+/**
+ *
+ * Slider or (featured) headerimage
+ *
+ */  
 if( $sliderdisplay == 'replaceheader' && $slidercat != 'uncategorized' && ( $useheaderimage != 'replace' ||  $childpagedisplay != 'fade') ){
-// slider content here 
+
 if( $sliderwidth != 'full' ){
 echo '<div class="outermargin">';
 }
+
 // page slider
 echo '<div id="sliderbox-head">'. sliderhtml($slidercat, $mobile, 'header-page') .'</div>';
 if( $sliderwidth != 'full' ){
@@ -141,7 +256,14 @@ echo '</div>';
 
 }else if( $sliderdefaultdisplay == "replaceheader" && ( $useheaderimage != 'replace' && $childpagedisplay != 'fade' && $sliderdisplay != 'none')){
 
-// default slider content here
+
+
+/**
+ *
+ * default slider content here
+ *
+ */  
+
 if( $sliderdefaultwidth != 'full' ){
 echo '<div class="outermargin">';
 }
@@ -153,7 +275,12 @@ echo '</div>';
 
 }else{ 
 
-// headerimage
+
+/**
+ *
+ * headerimage
+ *
+ */  
 $header_image = get_header_image(); 
 
 if ( (is_page() && $thumbelarge != '' && ( $useheaderimage == 'replace' || $childpagedisplay == 'fade' ) ) || (is_single() && $usepostfeaturedimage == 'replace' && $thumbelarge != '' ) ){
@@ -178,7 +305,14 @@ endif;
 
 
 if( $sliderdisplay == 'belowheader' && $slidercat != 'uncategorized'){
-// slider content here
+
+
+
+/**
+ *
+ * default slider options
+ *
+ */  
 if( $sliderwidth != 'full' ){
 echo '<div class="outermargin">';
 }
@@ -188,7 +322,12 @@ echo '</div>';
 }
 }elseif( $sliderdefaultdisplay == "belowheader" && $sliderdefaultcat != 'uncategorized' && $sliderdisplay != 'none' && $sliderdisplay != 'replaceheader' ){
 
-// default slider content here
+
+/**
+ *
+ * default slider options
+ *
+ */  
 if( $sliderdefaultwidth != 'full' ){
 echo '<div class="outermargin">';
 }
@@ -200,6 +339,11 @@ echo '</div>';
 
 
 
+/**
+ *
+ * widgets header
+ *
+ */ 
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-onepiece-header') ){
 $count = is_sidebar_active('widgets-onepiece-header');
 echo '<div id="widgets-header" class="colset-'.$count.'">';
@@ -208,6 +352,11 @@ echo '<div class="clr"></div></div>';
 }
 
 
+/**
+ *
+ * mainmenu below header
+ *
+ */ 
 if($mainmenuplace == 'below' && $mainbarclass != 'none' ){
 
 echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.'  '.$mainminisize.'" role="navigation"><div class="outermargin"><nav>';

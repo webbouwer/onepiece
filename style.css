@@ -180,7 +180,7 @@ z-index:81;
 {
 }
 
-#topmenubar .logobox
+#topbarmargin .logobox
 {
 float:left;
 }
@@ -199,10 +199,10 @@ margin:0 auto;
 */
 .logobox img
 {
-max-width:100%;
+max-width:100%; 
 }
-#topmenubar #minibar-navigation,
-#topmenubar #topbar-navigation
+#topbarmargin #minibar-navigation,
+#topbarmargin #topbar-navigation
 {
     width:auto;
 }
@@ -210,7 +210,7 @@ max-width:100%;
  * Minibar menu item always inline
  *
  */
-#topmenubar #minibar-navigation .menu li
+#topbarmargin #minibar-navigation .menu li
 {
 display:inline-block;
 list-style-type:none;
@@ -219,7 +219,8 @@ list-style-type:none;
  * Menu's items are block bij default
  *
  */
-#topmenubar nav.sticky ul li,
+#topbarmargin nav.sticky ul li,
+#topsidebar ul li,
 #headercontainer #site-navigation ul li,
 #contentcontainer #site-navigation ul li,
 #footercontainer #footer-navigation .menu li
@@ -237,44 +238,44 @@ padding:2px 1px;
  * Menu Positioning
  *
  */
-#topmenubar.right .logobox,
+#topbarmargin.right .logobox,
 #footercontainer.menu-right .logobox
 {
     float:left;
 }
-#topmenubar.right #minibar-navigation,
-#topmenubar.right #topbar-navigation,
+#topbarmargin.right #minibar-navigation,
+#topbarmargin.right #topbar-navigation,
 #site-navigation.right ul,
-#topmenubar.right nav.sticky,
+#topbarmargin.right nav.sticky,
 #footercontainer.menu-right #footer-navigation
 {
     float:right;
 }
-#headercontainer #topmenubar.left .logobox,
+#headercontainer #topbarmargin.left .logobox,
 #footercontainer.menu-left .logobox
 {
     float:right;
 }
-#topmenubar.left #minibar-navigation,
-#topmenubar.left #topbar-navigation,
+#topbarmargin.left #minibar-navigation,
+#topbarmargin.left #topbar-navigation,
 #site-navigation.left ul,
-#topmenubar.left nav.sticky,
+#topbarmargin.left nav.sticky,
 #footercontainer.menu-left #footer-navigation
 {
     float:left;
 }
-#topmenubar.center,
+#topbarmargin.center,
 #site-navigation.center,
 #footercontainer.menu-center
 {
     text-align:center;
 }
 
-#topmenubar.center .logobox,
-#topmenubar.center #minibar-navigation,
-#topmenubar.center #topbar-navigation,
+#topbarmargin.center .logobox,
+#topbarmargin.center #minibar-navigation,
+#topbarmargin.center #topbar-navigation,
 #site-navigation.center,
-#topmenubar.center nav.sticky,
+#topbarmargin.center nav.sticky,
 #footercontainer.menu-center .logobox
 {
     float:none;
@@ -484,28 +485,29 @@ display:block;
   
 
 /******************** HEADER / MENUS / FOOTER (MEDIUM)  ********************/
-#topmenubar
+#topbarmargin
 {
 text-align:left;
 }
-#topmenubar .logobox,
+#topbarmargin .logobox,
 #footercontainer .logobox
 {
     width:30%;
 }
-#topmenubar #minibar-navigation,
-#topmenubar #topbar-navigation
+#topbarmargin #minibar-navigation,
+#topbarmargin #topbar-navigation
 {
     width:auto;
 }
-#topmenubar #minibar-navigation .menu li,
-#topmenubar #topbar-navigation .menu li,
-#topmenubar nav.sticky ul li,
+#topbarmargin #minibar-navigation .menu li,
+#topbarmargin #topbar-navigation .menu li,
+#topbarmargin nav.sticky ul li,
+/* not top sidebar ! */
 #headercontainer #site-navigation ul li,
 #contentcontainer #site-navigation ul li,
 #footercontainer #footer-navigation .menu li
 {
-    display:inline-block;
+display:inline-block;
 }
 
 .menu li a
@@ -518,51 +520,52 @@ padding:4px 2px;
 
 
 
-#topmenubar.right .logobox,
+#topbarmargin.right .logobox,
 #footercontainer.menu-right .logobox
 {
     float:left;
 }
-#topmenubar.right #minibar-navigation,
-#topmenubar.right #topbar-navigation,
+#topbarmargin.right #minibar-navigation,
+#topbarmargin.right #topbar-navigation,
 #site-navigation.right ul,
-#topmenubar.right nav.sticky,
+#topbarmargin.right nav.sticky,
 #footercontainer.menu-right #footer-navigation
 {
     float:right;
 }
-#headercontainer #topmenubar.left .logobox,
+#headercontainer #topbarmargin.left .logobox,
 #footercontainer.menu-left .logobox
 {
     float:right;
 }
-#topmenubar.left #minibar-navigation,
-#topmenubar.left #topbar-navigation,
+#topbarmargin.left #minibar-navigation,
+#topbarmargin.left #topbar-navigation,
 #site-navigation.left ul,
-#topmenubar.left nav.sticky,
+#topbarmargin.left nav.sticky,
 #footercontainer.menu-left #footer-navigation
 {
     float:left;
 }
-#topmenubar.center,
+#topbarmargin.center,
 #site-navigation.center,
 #footercontainer.menu-center
 {
     text-align:center;
 }
 
-#topmenubar.center .logobox,
-#topmenubar.center #minibar-navigation,
-#topmenubar.center #topbar-navigation,
+
+#topbarmargin.center .logobox,
+#topbarmargin.center #minibar-navigation,
+#topbarmargin.center #topbar-navigation,
 #site-navigation.center,
-#topmenubar.center nav.sticky,
+#topbarmargin.center nav.sticky,
 #footercontainer.menu-center .logobox
 {
     float:none;
     margin:0 auto;
 }    
 
-    
+
 
 
 /******************** CONTENT & SIDEBARS (MEDIUM)  ********************/

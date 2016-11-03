@@ -133,6 +133,9 @@ Elements:
 		link hover color
 		transparency bg (0-1)
    
+    ..Top Sidebar
+        ..Display hide/position
+        ..Width
       
     Header image
 		Image
@@ -149,6 +152,7 @@ Elements:
     Main Sidebar
         Display hide/alignment
         Placement top/bottom/topcontent
+        Width
             
     Second Sidebar
         Display none/position
@@ -313,20 +317,25 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		$wp_customize->add_section('onepiece_elements_topmenubar', array( 
         	'title'    => __('Topbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
-		'priority' => 20,
+			'priority' => 20,
     	));
 		
+    	$wp_customize->add_section('onepiece_elements_topsidebar', array( 
+        	'title'    => __('Top Sidebar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 30,
+    	));
 		
     	$wp_customize->add_section('onepiece_content_sliderbar', array( 
         	'title'    => __('Slider', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
-			'priority' => 30,
+			'priority' => 40,
     	));
 		
     	$wp_customize->add_section('onepiece_elements_loginbar', array( 
         	'title'    => __('Loginbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
-			'priority' => 40,
+			'priority' => 50,	
     	));
     	$wp_customize->add_section('onepiece_elements_mainmenubar', array( 
         	'title'    => __('Main menubar', 'onepiece'),
@@ -1071,6 +1080,39 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
     	
+		
+		// TOP SIDEBAR
+		$wp_customize->add_setting( 'onepiece_elements_topsidebar_position' , array(
+		'default' => 'hide', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_topsidebar_position', array(
+            	'label'          => __( 'Top sidebar position', 'onepiece' ),
+            	'section'        => 'onepiece_elements_topsidebar',
+            	'settings'       => 'onepiece_elements_topsidebar_position',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select the default top sidebar position.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'hide', 'onepiece' ),
+                	'left'   => __( 'left', 'onepiece' ),
+            		'right'   => __( 'right', 'onepiece' ),
+            	)
+    	)));
+		
+		$wp_customize->add_setting( 'onepiece_elements_topsidebar_width' , array(
+		'default' => '30', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_topsidebar_width', array(
+            	'label'          => __( 'Sidebar width', 'onepiece' ),
+            	'section'        => 'onepiece_elements_topsidebar',
+            	'settings'       => 'onepiece_elements_topsidebar_width',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Select sidebar width (percentage).', 'onepiece' ),
+    	)));
+		
+		
+		
     	
 		
     	
