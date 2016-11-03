@@ -77,7 +77,8 @@ $args = array(
 ); 
 $categories = get_categories( $args );
 $cat_tags = ''; // tags by category
-$tag_idx = ''; // tags collected
+$tag_idx = ''; // all tags csv string for javascript array
+$alltags = array(); // all tags csv string for javascript array
 $filtermenubox = ''; // output taglists ordered by category filter 
 
 
@@ -99,9 +100,13 @@ $filtermenubox .= '<li><a class="category" href="#" data-filter="' . $category->
 			$taglisted = array();
             foreach($listtags as $tag) {
 				if( !in_array( $tag->name, $taglisted) ){
-                $idxtags .= '"'.$tag->name.'",'; 
 				$taglisted[] = $tag->name;
-				$posttags .='<li><a href="http://webdesigndenhaag.net/project/dev/tag/'.$tag->name.'/" rel="tag">'.$tag->name.'</a></li>';
+				$posttags .='<li><a class="tag-'.$tag->name.'" href="'.get_site_url().'/tag/'.$tag->name.'/" rel="tag">'.$tag->name.'</a></li>';
+				}
+				
+				if( !in_array( $tag->name, $alltags) ){
+				$alltags[] = $tag->name; 
+				$idxtags .= '"'.$tag->name.'",'; 
 				}
             }
         }
@@ -114,7 +119,18 @@ $filtermenubox .= '<li><a class="category" href="#" data-filter="' . $category->
 }
 }
 $filtermenubox .= '</ul>';
-$filtermenubox .='<ul class="tagmenu *">'.$alltags.'</ul>';
+
+
+/**
+ * 
+ * prepare tags 
+ *
+ */
+$alltagmenuoptions = '';
+foreach( $alltags as $id => $tag){
+$alltagmenuoptions .= '<li><a class="tag-'.$tag.'" href="'.get_site_url().'/tag/'.$tag.'/" rel="tag">'.$tag.'</a></li>';
+}
+$filtermenubox .= '<ul class="tagmenu overview">'.$alltagmenuoptions.'</ul>'; // fille up with all tags from other menu's, js script at bottom.
 $filtermenubox .= $cat_tags;
 }
 
@@ -293,15 +309,12 @@ echo '<div class="clr"></div></div></div>';
  */
 get_template_part('footer');
 wp_footer();
-
-
 /**
  * 
  * get tag index from php for isotope filters
  *
  */
 if($tag_idx){ 
-
 ?>
 <script>
 jQuery(function ($) { 

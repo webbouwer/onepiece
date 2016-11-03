@@ -1282,27 +1282,36 @@ $(document).ready(function() {
     $('ul.categorymenu li a').removeClass('selected');
     $(this).addClass('selected');
 
-    if( $(this).attr('data-filter') == '*'){
+    	if( $(this).attr('data-filter') == '*'){
+		
         var keyword = '*';
 		$tagList = '';
         $catList = '<?php echo $topcat; ?>';//[];
-    }else{ 
+		
+		var submenu = 'ul.tagmenu.overview';
+	    
+    	}else{ 
+		
         var keyword = '.'+$(this).attr('data-filter');
         // multiple filters: $catList += ','+$(this).attr('data-filter');
+        $tagList = '';
         $catList = $(this).attr('data-filter');
         var submenu = 'ul.tagmenu.'+$(this).attr('data-filter');
-	    $(submenu).slideDown().addClass('active');
+		
         }
-        $tagList = '';
-        
+		
+		$(submenu).slideDown().addClass('active');
+		
         loaditems();
         $container.isotope({ filter: keyword }).isotope('layout');
+        
         window.location.hash = $catList;
         return false;
 
     });
   
-    $('ul.tagmenu li a,div.tagcloud a').click(function(m){
+  
+    $('ul.tagmenu li,div.tagcloud').on('click', 'a', function(m){
   	    var keyword = '.'+$(this).text();
         $catList = $(this).attr('data-filter');
         $tags = $(this).text();

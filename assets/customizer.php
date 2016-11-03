@@ -14,6 +14,7 @@
 // >> http://code.tutsplus.com/tutorials/a-guide-to-the-wordpress-theme-customizer-adding-a-new-setting--wp-33180
 // http://www.wpbeginner.com/wp-tutorials/how-to-create-a-custom-wordpress-widget/
 // http://josephfitzsimmons.com/adding-a-select-box-with-categories-into-wordpress-theme-customizer/
+// http://themefoundation.com/customizer-multiple-category-control/ - http://jayj.dk/multiple-select-lists-theme-customizer/
 // (and many other scriptlet outputs)
 
 
