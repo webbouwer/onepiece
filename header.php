@@ -16,7 +16,7 @@ $mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none'
  * top side bar
  *
  */ 
-$topsidebarplace = get_theme_mod('onepiece_elements_topsidebar_position', 'hide');
+$topsidebarplace = get_theme_mod('onepiece_elements_topsidebar_position', 'none');
 $topsidebarwidth = get_theme_mod( 'onepiece_elements_topsidebar_width' , '30'); 
 
 
@@ -104,14 +104,18 @@ echo '<div id="topmenubar"><div class="outermargin">';
  * set topbar floatmargin
  *
  */   
-if( $topsidebarplace != 'hide' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ){
+if( $topsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ){
 $topbarmarginfloatpos = 'left';
+
 if( $topsidebarplace == 'left'){
 $topbarmarginfloatpos = 'right';
 }
-echo '<div id="topbarmargin" class="'.$topbarclass.' float-'.$topbarmarginfloatpos.'" style="float:'.$topbarmarginfloatpos.';width:'.( 100 - $topsidebarwidth).'%;">';
+echo '<div id="topbarmargin" class="'.$topbarclass.' '.$topbarmarginfloatpos.'side" style="float:'.$topbarmarginfloatpos.';width:'.( 100 - $topsidebarwidth).'%;">';
+
 }else{
-echo '<div class="topbarmargin '.$topbarclass.'">';
+
+echo '<div id="topbarmargin" class="'.$topbarclass.'" style="width:100%">';
+
 }
 
 
@@ -185,10 +189,10 @@ echo '</div>'; // close topbar float margin
  * widgets-top-sidebar
  *
  */  
-if( $topsidebarplace != 'hide' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ){
+if( $topsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ){
 
 $count = is_sidebar_active('widgets-top-sidebar');
-echo '<div id="topsidebar" class="colset-'.$count.'" style="float:'.$topsidebarplace.';width:'.$topsidebarwidth.'%;">';
+echo '<div id="topsidebar" class="colset-'.$count.' '.$topsidebarplace.'side" style="float:'.$topsidebarplace.';width:'.$topsidebarwidth.'%;">';
 dynamic_sidebar('widgets-top-sidebar');
 echo '<div class="clr"></div></div>';
 } 

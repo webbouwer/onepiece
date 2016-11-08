@@ -41,10 +41,10 @@ Customizer Sections and Options list:
 ( .. = in not ready )
 
 Identity:
-    	Logo image 
-        image medium
+    	image large logo
+        minisize width
     	max-width
-        image small
+        image small logo
     	small max-width
     
     Title, Tagline & Icon image
@@ -133,9 +133,9 @@ Elements:
 		link hover color
 		transparency bg (0-1)
    
-    ..Top Sidebar
-        ..Display hide/position
-        ..Width
+    Top Sidebar
+        Display hide/position
+        Width
       
     Header image
 		Image
@@ -403,12 +403,24 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'default' => '320', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_sidebar_width', array(
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_panel_logo_maxwidth', array(
             	'label'          => __( 'Logo max width (px)', 'onepiece' ),
             	'section'        => 'onepiece_identity_panel_logo',
             	'settings'       => 'onepiece_identity_panel_logo_maxwidth',
             	'type'           => 'text',
  	    	'description'    => __( 'Max width (for best quality).', 'onepiece' ),
+    	)));
+		
+        $wp_customize->add_setting( 'onepiece_identity_panel_logo_minwidth' , array(
+		'default' => '80', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_panel_logo_minwidth', array(
+            	'label'          => __( 'Logo max width (px)', 'onepiece' ),
+            	'section'        => 'onepiece_identity_panel_logo',
+            	'settings'       => 'onepiece_identity_panel_logo_minwidth',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Minimal width (mini size).', 'onepiece' ),
     	)));
 	    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'onepiece_identity_logo_s', array(
         	'label'    => __( 'Site Logo Image Small', 'onepiece' ),
@@ -1083,7 +1095,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		// TOP SIDEBAR
 		$wp_customize->add_setting( 'onepiece_elements_topsidebar_position' , array(
-		'default' => 'hide', 
+		'default' => 'none', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_topsidebar_position', array(
@@ -1093,7 +1105,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'select',
  	    	'description'    => __( 'Select the default top sidebar position.', 'onepiece' ),
             	'choices'        => array(
-                	'none'   => __( 'hide', 'onepiece' ),
+                	'none'   => __( 'none', 'onepiece' ),
                 	'left'   => __( 'left', 'onepiece' ),
             		'right'   => __( 'right', 'onepiece' ),
             	)

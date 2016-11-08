@@ -12,11 +12,25 @@ $(document).ready(function() {
 	
 /**
  * RESPONSIVE ORDER
- * #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
+ * #topbarmargin, #topsidebar, #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
  */
+ 
+ 
+	if( $("#topsidebar").length > 0 ){ // check top sidebar first
+		var topstyleside = $("#topsidebar").attr('style');
+		var topstylemain = $("#topbarmargin").attr('style');
+	}
+ 
 	function ResponsiveReorder(){
 	    var small = 512;
+		
 	    if( $(window).width() > small ){
+			
+			if( $("#topsidebar").length > 0 ){ // check top sidebar first
+				$("#topsidebar").attr('style', topstyleside).prependTo("#topmenubar .outermargin");
+				$("#topbarmargin").attr('style', topstylemain);
+			}
+			
 	        // prepend 
 	        if( $("#sidebar2").hasClass('ins') ){ // inside first
 	        $("#sidebar2").prependTo("#contentcontainer .outermargin");
@@ -31,9 +45,15 @@ $(document).ready(function() {
 	        }
 	    }
 	    if( $(window).width() < small ){
+			
+			if( $("#topsidebar").length > 0 ){ // check top sidebar first
+				$("#topsidebar").attr('style', 'width:100%;').prependTo("#contentcontainer .outermargin");;
+				$("#topbarmargin").attr('style', 'width:100%;');
+			}
+			
 	        // append    
 	        if( $("#sidebar2").hasClass('ins') ){ // inside first
-	        $("#sidebar2").appendTo("#contentcontainer . ");
+	        $("#sidebar2").appendTo("#contentcontainer .outermargin");
 	        }
 	        if($("#pagesidebarcontainer").length){ 
 	        $("#pagesidebarcontainer").appendTo("#contentcontainer .outermargin");
@@ -65,10 +85,6 @@ $(document).ready(function() {
 	function doneGlobalResizing(){
 		
 		ResponsiveReorder(); // replace sidebar elements below content
-		
-		
-		
-		
 		$('#topbar').css('width', $(window).width() +'px'); // add topbar width resize
 		
 		/* adjust mobile header
@@ -88,15 +104,10 @@ $(document).ready(function() {
 		} // end mobile
 		*/
 		
-		
-		
 		// headerbar height (fade bglayer)
 		
 		$('#headerbar').css( 'height' , $(window).height()/3*2 + 'px' );
 		$('#headerbar .bglayer').css( 'height' , $(window).height()/3*2 + 'px' );
-		
-		
-		
 	}
 	
 	doneGlobalResizing();

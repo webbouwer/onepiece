@@ -178,6 +178,8 @@ z-index:81;
 /******************** HEADER MENUS FOOTER (SMALL)  ********************/
 #topbar
 {
+position:relative;
+width:100%;
 }
 
 #topbarmargin .logobox
@@ -352,6 +354,7 @@ max-height:140px;
 overflow:hidden;
 }
 
+#topsidebar .widgetpadding,
 #maincontent .type-post .contentpadding,
 #maincontent .type-page .contentpadding,
 #maincontent .category-titlebar,
@@ -366,7 +369,7 @@ padding:4px 0px 6px 0;
 #maincontent .follow-post.has-post-thumbnail .post-title,
 #maincontent .follow-post.has-post-thumbnail .post-content,
 #maincontent .follow-post.has-post-thumbnail .post-content,
-#maincontent .follow-post .post-coverimage
+#maincontent .follow-post .post-coverimage 
 {   
 width:100%;
 height:auto;
@@ -591,6 +594,7 @@ max-height:320px;
 overflow:hidden;
 }
 
+#topsidebar .widgetpadding,
 #maincontent .type-post .contentpadding,
 #maincontent .type-page .contentpadding,
 #maincontent .category-titlebar,

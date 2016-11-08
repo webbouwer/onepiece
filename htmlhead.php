@@ -106,12 +106,12 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 
 // mobile meta 
 /* echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>'; */
-if($mobile){
-	
+//if($mobile){
 	echo '<meta name="viewport" content="initial-scale=1.0, width=device-width" />';
-}else if ( ! isset( $content_width ) ) {
-	$content_width = 960;
-}
+//}else 
+//if ( ! isset( $content_width ) ) {
+//	$content_width = 960;
+//}
 
 
 
@@ -479,10 +479,6 @@ echo 'max-height:680px;';
 ?>
 }
 
-
-
-
-
 #headerbar
 {
 <?php 
@@ -780,7 +776,7 @@ $(window).on("mousewheel scroll", function() {
 <?php
 if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
 ?>
-if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
+if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 
 	/**
 	 * FIX TOPBAR & ADD BG
@@ -808,13 +804,16 @@ if( $(window).scrollTop() > 1 && !$("#topbar").hasClass('minified')){
        opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
    }, <?php echo $stylelayout_speed; ?>);
    $(".logobox a img").stop().animate({
-				width:'<?php echo get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px'; ?>',
+				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_minwidth',80).'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
   
   <?php } ?>
+  
+  
+  
    
 
-}else if( $(window).scrollTop() <= 1 && $("#topbar").hasClass('minified') ){
+}else if( $(window).scrollTop() <= 0 && $("#topbar").hasClass('minified') ){
    
    <?php if($topbarbgfixed != 'keep'){ ?>
 	/**
@@ -972,8 +971,6 @@ echo '<script src="'.get_template_directory_uri().'/assets/imagesloaded.js" type
 
 // generate css styles
 echo '<style type="text/css">';
-echo '#headercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px !important; }'; // not sure if needed
-echo '#footercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logosmall_maxwidth').'px !important; }'; // not sure if needed
 
 echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_small_width', 98).'%; max-width:'.get_theme_mod('onepiece_responsive_small_outermargin').'px; margin:0 auto; }'; 
 echo '#itemcontainer .item{ width:50%; }';

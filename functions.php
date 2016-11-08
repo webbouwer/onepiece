@@ -98,7 +98,7 @@ function basic_setup_widgets_init() {
 			'name' => 'Widgets Top Sidebar',
 			'id'   => 'widgets-top-sidebar',
 			'description'   => 'This the widgetized area in the top sidebar.',
-			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="sidebarpadding">',
 			'after_widget'  => '<div class="clr"></div></div></div>',
 			'before_title'  => '<h3>',
 			'after_title'   => '</h3>'
