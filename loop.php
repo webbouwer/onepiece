@@ -39,12 +39,12 @@ $custom_metabox_url = get_post_meta( get_the_ID() , 'meta-box-custom-url', true)
 $custom_metabox_useurl = get_post_meta( get_the_ID() , 'meta-box-custom-useurl', true);
 $custom_metabox_urltext = get_post_meta( get_the_ID() , 'meta-box-custom-urltext', true);
 
+
+$title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
 if( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceblank'){
 $title_link = '<a href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
 }elseif( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceself'){
 $title_link = '<a href="'.$custom_metabox_url.'" target="_self" title="'.get_the_title().'">';
-}else{
-$title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
 }
 
 // editor
@@ -120,23 +120,6 @@ echo '</div>';
 
 
 
-
-// Custom Link
-$customlinkbutton = '';
-if( $custom_metabox_url != '' && ( $custom_metabox_useurl == 'external' || $custom_metabox_useurl == 'internal' ) ){
-$linktext = $custom_metabox_urltext;
-if($custom_metabox_urltext == ''){
-$linktext = get_the_title();
-}
-$customlinkbutton = '<div class="post-custom-link">';
-if( $custom_metabox_useurl == 'internal' ){
-$customlinkbutton .= '<a href="'.$custom_metabox_url.'" target="_self" ';
-}else{ 
-$customlinkbutton .= '<a href="'.$custom_metabox_url.'" target="_blank" ';
-}
-$customlinkbutton .= 'title="'.$linktext.' - '.get_the_title().'">'.$linktext.'</a></div>';
-}
-
 // display options
 $tagdisplay = get_theme_mod('onepiece_content_panel_posts_tagdisplay', 'belowcontent');
 $catdisplay = get_theme_mod('onepiece_content_panel_posts_catdisplay', 'belowcontent');
@@ -145,35 +128,28 @@ $nextprevdisplay = get_theme_mod('onepiece_content_panel_posts_nextprevdisplay',
 // content
 if ( !is_single() && !is_page() ) { 
     // Post intro content
-    echo '<div class="post-excerpt">'.the_excerpt_length( $excerptlength ); //apply_filters('the_excerpt', get_the_excerpt());
-    echo $customlinkbutton.'</div>';
-    
+    echo '<div class="post-excerpt">'.the_excerpt_length( $excerptlength ).'</div>'; //apply_filters('the_excerpt', get_the_excerpt())
+
 }else{
 
 	if( $tagdisplay == 'belowtitle' ){
     	// post tags
-    	
     	the_tags('',', '); // the_tags(', ');  //
 	}
 	
 	
 	if( $catdisplay == 'belowtitle' ){
-    	
     	// post categories
     	the_category(', ');
 	}
 
-
     // Post full content
-    echo '<div class="post-content">'.apply_filters('the_content', get_the_content());
-    echo $customlinkbutton.'</div>';
+    echo '<div class="post-content">'.apply_filters('the_content', get_the_content()).'</div>';
 
-	
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags
     	the_tags('Tagged with: ',' '); // the_tags(', ');  //
 	}
-
 
 	if( is_single() && $nextprevdisplay == 'belowcontent' ){
     	// prev / next posts
@@ -181,16 +157,11 @@ if ( !is_single() && !is_page() ) {
     	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
 	}
 
-	
 	if( $catdisplay == 'belowcontent' ){
-    	
     	// post categories
     	the_category(', ');
 	}
 
-
-
-	
 	// post comments
     if ( comments_open() || get_comments_number() ) {
     	comments_template(); // WP THEME STANDARD: comments_template( $file, $separate_comments );

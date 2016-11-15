@@ -37,6 +37,19 @@ body
 
 
 /* Theme core */
+
+/**
+ * menu's 
+ */
+.menu li.current-menu-item a
+{
+}
+
+
+
+/**
+ * widgets 
+ */
 .widget
 {
 }
@@ -53,9 +66,11 @@ body
 {
 }
 
+
+
+
+
 /* Slider */
-
-
 
 /* 
  * top and bottom bg overlay to use 

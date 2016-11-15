@@ -167,7 +167,7 @@ $(document).ready(function() {
  * CONTENT POPUPBOX
  * body (index.php, page.php, gallery.php)
  */ 
-	$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent"></div></div>');
+	$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div></div>');
     $('#mainpopupbox').hide();
     $('.popupcloak').hide();
     $('div.childpages.pop .moretextbox').hide();
@@ -196,14 +196,18 @@ $(document).ready(function() {
 		return false;
 	});
     
+	
+	
+	
 });
+
+
+
+
+
 
 $(window).load(function() { 
     
-	
-	 
-	 
-	 
 	 
 /**
  * HTML THEME PAGE SCROLL

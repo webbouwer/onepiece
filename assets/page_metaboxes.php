@@ -69,6 +69,16 @@ $secondsidebardisplay = get_post_meta($object->ID, "meta-page-secondsidebardispl
 <?php
 }
 
+
+/* not on theme pages */
+//global $post;
+//if(!empty($post)){
+//$pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
+//if( $pageTemplate != 'gallery.php'){
+add_action("add_meta_boxes", "add_childpage_section_box");
+//}
+//}
+
 function add_childpage_section_box()
 {
     add_meta_box(
@@ -80,7 +90,6 @@ function add_childpage_section_box()
         "high", 
         null);
 }
-add_action("add_meta_boxes", "add_childpage_section_box");
 
 function childpage_section_fields($object)
 {
@@ -95,7 +104,7 @@ $link = get_post_meta($object->ID, "meta-box-link-childpages", true);
 <option value="pop" <?php selected( $dsp, 'pop' ); ?>><?php echo __('Intro text popuplink content', 'onepiece'); ?></option>
 <option value="menu" <?php selected( $dsp, 'menu' ); ?>><?php echo __('Subpage menu', 'onepiece'); ?></option>
 <option value="fade" <?php selected( $dsp, 'fade' ); ?>><?php echo __('Header, Tabs & text', 'onepiece'); ?></option>
-<option value="slddwn" <?php selected( $dsp, 'slddwn' ); ?>><?php echo __('Vertical slide blocks', 'onepiece'); ?></option>
+<?php /* <option value="slddwn" <?php selected( $dsp, 'slddwn' ); ?>><?php echo __('Vertical slide blocks', 'onepiece'); ?></option> */ ?>
 </select>
 </p>
 <?php

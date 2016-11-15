@@ -175,7 +175,7 @@ z-index:81;
 }
 
 
-/******************** HEADER MENUS FOOTER (SMALL)  ********************/
+/******************** HEADER / FOOTER MENUS (SMALL)  ********************/
 #topbar
 {
 position:relative;
@@ -187,18 +187,6 @@ width:100%;
 float:left;
 }
 
-/*
-#topmenubar
-{
-text-align:center;
-}
-#topmenubar .logobox
-{
-max-width:100%;
-width:100%;
-margin:0 auto;
-}
-*/
 .logobox img
 {
 max-width:100%; 
@@ -234,6 +222,9 @@ list-style-type:none;
 {
 padding:2px 1px;
 }
+
+
+
 
 
 /**

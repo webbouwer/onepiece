@@ -31,17 +31,20 @@ $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
  */ 
 if($pageTemplate == 'gallery.php'){ 
     
-// $values variables page template
-// .. use for slider functions 
+/** 
+ * $values variables page template
+ */ 
+ 
 $values = get_post_custom( $post->ID );
 
-// $values get variables gallery template settings
+// gallery template settings
 $selected = isset( $values['theme_gallery_category_selectbox'] ) ? $values['theme_gallery_category_selectbox'][0] : '';
 $gallerydefault = isset( $values['onepiece_content_gallery_category'] ) ? $values['onepiece_content_gallery_category'][0] : '';
 $pagetitle = isset( $values['theme_gallery_pagetitle_selectbox'] ) ? $values['theme_gallery_pagetitle_selectbox'][0] : '';
 $filters = isset( $values['theme_gallery_filters_selectbox'] ) ? $values['theme_gallery_filters_selectbox'][0] : '';
 $maxinrow = isset( $values['theme_gallery_items_maxinrow'] ) ? $values['theme_gallery_items_maxinrow'][0] : '5';
 $clickaction = isset( $values['theme_gallery_items_clickaction'] ) ? $values['theme_gallery_items_clickaction'][0] : 'poppost';
+$itemview = isset( $values['theme_gallery_items_itemview'] ) ? $values['theme_gallery_items_itemview'][0] : 'right';
 
 // $topcat default gallery category
 if($selected){
@@ -52,10 +55,7 @@ $topcat = $gallerydefault;
 $topcat = 'uncategorized';
 }
 
-
 }
-
-
 
 
 
@@ -84,10 +84,6 @@ echo '<meta name="description" content="'.$site_description.'">'
 	.'<link rel="stylesheet" type="text/css" href="'.esc_url( get_template_directory_uri() ).'/'.get_theme_mod('onepiece_identity_stylelayout_stylesheet', 'default.css').'" />';
 
 
-
-
-
-
 /**
  * share meta info 
  * ! should get featured image (header)
@@ -97,11 +93,6 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 	.'<meta property="og:image" content="'.get_theme_mod( 'onepiece_identity_panel_sharing_description' ).'"/>'
 	.'<meta property="og:description" content="'.get_bloginfo( 'description' ).'"/>'
 	.'<meta property="og:url" content="'.esc_url( home_url( '/' ) ).'" />';
-
-
-
-
-
 
 
 // mobile meta 
@@ -155,7 +146,6 @@ $childpagedisplay = get_post_meta($post->ID, "meta-box-display-childpages", true
 $popupdefaultdisplay = get_theme_mod('onepiece_content_mainpopup_display', 'medium' );
 $popupoverlaycolor = get_theme_mod('onepiece_content_mainpopup_overlaycolor', '#ffffff' );
 $popupoverlayopacity = get_theme_mod('onepiece_content_mainpopup_overlayopacity', 20 );
-
 
 
 
@@ -267,8 +257,9 @@ $('.sliderarea').anythingSlider({
     buildNavigation     : false, 
     navigationSize      : 5,
     buildStartStop      : false,
-    hashTags            : true,
+    hashTags            : false,
     autoPlay            : true,
+	autoPlayLocked      : false, 
     startPanel          : 1,
     startStopped        : false,
     forwardText         : ">", 
@@ -281,8 +272,8 @@ $('.sliderarea').anythingSlider({
     toggleArrows        : true,
     //delayBeforeAnimate : 500,	
     onSlideComplete : function(slider){ // update the hash AFTER the slide is in view (so we can animate)
-	window.location.hash = '#' + slider.$currentPage[0].id;
-	$('#current').html(window.location.hash); // get current
+	//window.location.hash = '#' + slider.$currentPage[0].id;
+	//$('#current').html(window.location.hash); // get current
     },
     onInitialized: function(e, slider) {
         setupSwipe(slider); // on overlay element
@@ -308,6 +299,7 @@ $('.sliderarea').anythingSlider({
 }); // end anythingSlider
 }); // end ready
 }); // end jQuery $	
+
 
 
 
@@ -564,7 +556,7 @@ position:absolute;
 top:48%;
 padding:10px;
 background-color:#ffffff;
-z-index:59;
+z-index:99;
 }
 div.anythingSlider span.back
 {
@@ -665,7 +657,7 @@ top:0px;
 left:0px;
 height:100%;
 width:100%;
-z-index:80;
+z-index:99;
 background-color:<?php echo $c; ?>;
 opacity:<?php echo $o; ?>;
 }
@@ -676,7 +668,7 @@ top:10%;
 left:<?php echo $l; ?>%;
 width:<?php echo $w; ?>%;
 height:80%;
-z-index:81;
+z-index:101;
 background-color:#ffffff;
 overflow:auto; 
 }
@@ -999,18 +991,29 @@ $qr = $maxinrow-3;
 }
 echo '#itemcontainer .item{width:'.(100 / $cr).'%;}'; 
 echo '#itemcontainer .item.active{ width:'.((100 / $cr)*$qr).'%; }';
-echo '}';
+
+/**
+ * Set Item view Columns
+ * ! make custom sizes?
+ */
+if( $itemview == 'right'){
+echo '#itemcontainer .item.active .coverbox{ width:60%; float:left; }';
+echo '#itemcontainer .item.active .titlebox, #itemcontainer .item.active .fullinfobox{ width:40%; float:right;}';
+}
+
+echo '}'; // end medium screen
 
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_max', 1280).'px) {';
 echo '.outermargin { max-width:'.get_theme_mod('onepiece_responsive_large_outermargin').'px; }'; 
-// set large width 
-$aw = 2;
+
+$aw = 2; // set large width item
 if( $maxinrow > 3){
 $aw = 3;
 }
 echo '#itemcontainer .item{width:'.(100 / $maxinrow).'%;}'; 
 echo '#itemcontainer .item.active{ width:'.((100 / $maxinrow)*$aw).'%; }';
-echo '}';
+
+echo '}'; // end large screen
 echo '</style>';
 
 // generate Anything slider js
@@ -1028,44 +1031,29 @@ $(document).ready(function() {
     var $itemamount = <?php echo isset( $maxinrow ) ? ( $maxinrow * 3 ) : 8; ?>;
     var $itemList = [];
     var $noloading = 0;
-    
-    <?php // get tag index from php
-	
-	/*
-    if($tag_idx){ 
-    echo 'var $tagindex = Array('.rtrim($tag_idx,',').');';
-    } */ ?>
-    
-    var phsh = window.location.hash.substr(1);    
-    if(phsh.length){    
-        $catList = phsh;
-        // check tags
-        if( $.inArray( phsh, $tagindex ) != -1 ){
-            $catList = '<?php echo $topcat; ?>';
-            $tagList = phsh;
-        }   
-    }
-    
-    <?php // php to javascript
-    if($tag_idx != ''){ 
-    echo 'var $tagindex = Array('.rtrim($tag_idx,',').');';
-    }else{
-    echo 'var $tagindex = [];';
-    }
-    ?>
 
-    var phsh = window.location.hash.substr(1);
-    if(phsh != '' && $tagindex){  
-        // check tags by hash
-        if( $.inArray( phsh, $tagindex ) != -1 ){
-            $catList = '<?php echo $topcat; ?>';
-            $tagList = phsh;
-        }else{
-        $catList = phsh;
-        $tagList = '';
-        }
-    }
-    
+
+
+	var keyhash = window.location.hash.substr(1);
+	if(keyhash){
+	
+		
+		if( $(document).find('a.cat-'+keyhash).length > 0  ){
+		
+		$catList = keyhash;
+		$tagList = '';
+			
+		}
+		if( $(document).find('a.tag-'+keyhash).length > 0 ){
+		
+		$catList = '';
+        $tagList = keyhash;
+			
+		}
+		
+	}
+
+	
     // init isotope :: http://isotope.metafizzy.co/layout-modes/masonry.html
     $container.isotope({ 
        	itemSelector: '.item',	  
@@ -1083,7 +1071,8 @@ $(document).ready(function() {
     
     /* load posts to container */
     loaditems();
-    
+        
+	
     
 	/* on resize */
 	var resizeId;
@@ -1174,15 +1163,18 @@ $(document).ready(function() {
 
     markup += '<div class="titlebox"><h3>';
 
-    var posturl = '<a href="'+obj.posturl+'" title="'+obj.title+'" target="_self">';
-
-    if( obj.meta['meta-box-custom-url'] && obj.meta['meta-box-custom-useurl'] == 'replaceblank'){
-    posturl = '<a href="'+obj.meta['meta-box-custom-url']+'" title="'+obj.title+'" target="_blank">';
-    }
-    if( obj.meta['meta-box-custom-url'] && obj.meta['meta-box-custom-useurl'] == 'replaceself'){
-    posturl = '<a href="'+obj.meta['meta-box-custom-url']+'" title="'+obj.title+'" target="_self">';
-    }
-
+	var readmoreurl = obj.posturl;
+	var customurl = obj.meta['meta-box-custom-url'];
+	var useurl = obj.meta['meta-box-custom-useurl'];
+	
+	var posturl = '<a href="'+readmoreurl+'" title="'+obj.title+'" target="_self">';
+	if( customurl != '' && customurl != 'undefined' && useurl == 'replaceself' ){
+		var posturl = '<a href="'+customurl+'" title="'+obj.title+'" target="_self">';
+	}
+	if( customurl != '' && customurl != 'undefined' && useurl == 'replaceblank' ){
+		var posturl = '<a href="'+customurl+'" title="'+obj.title+'" target="_blank">';
+	}
+	
     markup += posturl+''+obj.title+'</a></h3>';
 
     <?php // check for customizer posts display settings
@@ -1217,66 +1209,132 @@ $(document).ready(function() {
     markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
     }
 	
-	// markup += JSON.stringify(obj);
-  
     // META DATA .. JSON.stringify(obj.meta)
-    if( obj.meta['meta-box-custom-url'] && (obj.meta['meta-box-custom-useurl'] == 'external' || obj.meta['meta-box-custom-useurl'] == 'internal') ){
-    	var urltext = obj.meta['meta-box-custom-url'];
+	var itemreadmore = '';
+	var urltext = '<?php echo __('Read more', 'onepiece'); ?>';
+
+	if( customurl != '' && customurl != 'undefined' && ( useurl == 'internal' || useurl == 'external' ) ){
+
+	if( customurl != '' && customurl != 'undefined' && useurl == 'internal' ){
+		var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_self">';
+	}
+	if( customurl != '' && customurl != 'undefined' && useurl == 'external' ){
+		var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_blank">';
+	}
 	if( obj.meta['meta-box-custom-urltext'] ){
 		urltext = obj.meta['meta-box-custom-urltext']; 
 	}
-	if( obj.meta['meta-box-custom-useurl'] == 'external' ){
-		markup += '<a class="urlbutton" href="'+obj.meta['meta-box-custom-url']+'" target="_blank">';
-	}else{
-		markup += '<a class="urlbutton" href="'+obj.meta['meta-box-custom-url']+'" target="_self">';
+	
+	itemreadmore += urltext+'</a>';
+	
 	}
-    	markup += urltext+'</a>';
-    }
+	
     
-    markup += '<div class="textbox">'+obj.excerpt+'</div>';
-
-	if(obj.meta['meta-box-custom-url']){
-    		markup += '<div class="fullinfobox hidden">'+obj.meta['meta-box-custom-url']+'</div>';
+	markup += '<div class="fullinfobox hidden">';
+	markup += '<div class="textbox">'+obj.content+'</div>';
+	
+	if( obj.meta['meta-box-product-price'] != ''){
+	markup += '<div class="pricebox">';
+	
+	if( obj.meta['meta-box-product-discount'] != '' ){
+	
+		markup += '<span class="discount"><?php echo __('Discount', 'onepiece'); ?> '+obj.meta['meta-box-product-discount']+'%: </span>';
+	
+		var price = (obj.meta['meta-box-product-price'] / 100) * (100 - obj.meta['meta-box-product-discount']);
+		
+	}else{
+	
+		var price = obj.meta['meta-box-product-price'];
 	}
-
+	
+	markup += '<span class="price">€ '+price+'</span>';
+	
+	markup += '</div>';
+	}
+	
+	markup += itemreadmore;	
+	
+	//markup += JSON.stringify(obj.meta);
+	markup += '</div>';
+	
     markup += '</div></div>';
-    return markup;
-
+	return markup;
+	
     /* 'id,'type','date','title','category','excerpt','content','meta','tags', 'imageurl','posturl','slug','customfieldarray','post_data' */
     }
    
 
 
-    	// Grid items
-	$container.on('click', '.item', function(){
+    // Grid items
+	function loadpopup( popcontent ){
+		$('.popupcloak').fadeIn(300);
+		$('#mainpopupbox .popupcontent').html( popcontent )
+		$('#mainpopupbox').fadeIn(300);
+    }
+	
+	
+	
+	$container.on('click', '.item', function(e){
 
-<?php if( $clickaction == 'sizeup' ){ ?>
+		if($(e.target).is('a')){
+            e.preventDefault();
+			
+			window.open( $(e.target).attr('href'), $(e.target).attr('target') );
+			
+			//window.location = $(e.target).attr('href');
+            return false;
+        }
+
+
+		<?php if( $clickaction == 'sizeup' ){ ?>
 
 		$('.item').removeClass('active');
+		$('.item .fullinfobox').addClass('hidden');
+		
 		$(this).addClass('active');
+		$(this).find('.fullinfobox').removeClass('hidden');
+		
 		$currCat = $(this).attr('data-category');
 		var $this = $(this);
 
 		$container.prepend($this).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // or 'original-order'
 	
-		$('html, body').animate({ scrollTop: $('#contentcontainer').offset().top - $('#topbar').height() }, 400); // Scroll to top (bottom of header)
-
-<?php } ?>
+		$('html, body').animate({ scrollTop: $(this).offset().top - $('#topmenubar .outermargin').height() }, 400); // Scroll to top (bottom of header)
+	
+		<?php }
+		if( $clickaction == 'poppost' ){ 
+		?>
+		var title = $(this).find('.titlebox').wrap('<p/>').parent().html();
+		var image = $(this).find('.coverbox').wrap('<p/>').parent().html();
+		var text =  $(this).find('.fullinfobox').html(); 
+		var content =  title + image + text;
+		$(this).find('.titlebox').unwrap();
+		$(this).find('.coverbox').unwrap();
+		loadpopup( content );
+	
+		<?php } ?>
 
 		return false;
 	}); 
-
+	
+	
 
     // Filter menu's
     $('ul.tagmenu').hide();
+	
+    $('ul.tagmenu.active').slideDown();
 
     $('ul.categorymenu li a.category').click(function(m){
 
     m.preventDefault();
 
 	$('.item').removeClass('active');
+	$('.item .fullinfobox').addClass('hidden');
+	
     $('ul.tagmenu.active').slideUp().removeClass('active');
     $('ul.categorymenu li a').removeClass('selected');
+	
+	
     $(this).addClass('selected');
 
     	if( $(this).attr('data-filter') == '*'){
@@ -1309,6 +1367,10 @@ $(document).ready(function() {
   
   
     $('ul.tagmenu li,div.tagcloud').on('click', 'a', function(m){
+	
+		$('.item').removeClass('active');
+		$('.item .fullinfobox').addClass('hidden');
+	
   	    var keyword = '.'+$(this).text();
         $catList = $(this).attr('data-filter');
         $tags = $(this).text();
@@ -1319,6 +1381,7 @@ $(document).ready(function() {
 		window.location.hash = iid;
 	    return false;
     });
+	
 
  
 });
@@ -1326,6 +1389,8 @@ $(document).ready(function() {
 
 $(window).load(function() { 
 
+
+    
 });
 
 });

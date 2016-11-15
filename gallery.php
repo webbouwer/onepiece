@@ -8,15 +8,6 @@ $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 
 /**
  *
- * htmlhead
- *
- */	
-get_template_part('htmlhead');
-
-get_template_part('header');
-
-/**
- *
  * get header variables
  *
  */	
@@ -83,10 +74,10 @@ $filtermenubox = ''; // output taglists ordered by category filter
 
 
 $filtermenubox .= '<ul id="topgridmenu" class="categorymenu">';// start filtermenu html
-$filtermenubox .= '<li><a class="category" href="#" data-filter="*">All</a></li>';
+$filtermenubox .= '<li><a class="category selected" href="#" data-filter="*">All</a></li>';
 foreach ( $categories as $category ) {
 if( $category->slug != $topcat ){
-$filtermenubox .= '<li><a class="category" href="#" data-filter="' . $category->slug . '">' . $category->name . '</a>'; 
+$filtermenubox .= '<li><a class="category cat-' . $category->slug . '" href="#" data-filter="' . $category->slug . '">' . $category->name . '</a>'; 
 
     if( $filters == 'all'){
 	query_posts('category_name='.$category->slug); // or use  something with get_category_link( $category )
@@ -130,9 +121,24 @@ $alltagmenuoptions = '';
 foreach( $alltags as $id => $tag){
 $alltagmenuoptions .= '<li><a class="tag-'.$tag.'" href="'.get_site_url().'/tag/'.$tag.'/" rel="tag">'.$tag.'</a></li>';
 }
-$filtermenubox .= '<ul class="tagmenu overview">'.$alltagmenuoptions.'</ul>'; // fille up with all tags from other menu's, js script at bottom.
+$filtermenubox .= '<ul class="tagmenu overview active">'.$alltagmenuoptions.'</ul>'; // fille up with all tags from other menu's, js script at bottom.
 $filtermenubox .= $cat_tags;
 }
+
+
+
+
+/**
+ *
+ * htmlhead
+ *
+ */	
+get_template_part('htmlhead');
+
+get_template_part('header');
+
+
+
 
 
 
@@ -309,21 +315,7 @@ echo '<div class="clr"></div></div></div>';
  */
 get_template_part('footer');
 wp_footer();
-/**
- * 
- * get tag index from php for isotope filters
- *
- */
-if($tag_idx){ 
-?>
-<script>
-jQuery(function ($) { 
-$(document).ready(function() {
-<?php echo 'var $tagindex = Array('.rtrim($tag_idx,',').');'; ?>
-});
-});
-</script>
-<?php
-}
+
+
 echo '</div></body>';
 ?>
