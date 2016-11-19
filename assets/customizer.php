@@ -416,11 +416,11 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_panel_logo_minwidth', array(
-            	'label'          => __( 'Logo max width (px)', 'onepiece' ),
+            	'label'          => __( 'Logo min. width (px)', 'onepiece' ),
             	'section'        => 'onepiece_identity_panel_logo',
             	'settings'       => 'onepiece_identity_panel_logo_minwidth',
             	'type'           => 'text',
- 	    	'description'    => __( 'Minimal width (mini size).', 'onepiece' ),
+ 	    	'description'    => __( 'Minimal width (mini size logo).', 'onepiece' ),
     	)));
 	    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'onepiece_identity_logo_s', array(
         	'label'    => __( 'Site Logo Image Small', 'onepiece' ),
@@ -1187,11 +1187,11 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'section'        => 'onepiece_elements_mainmenubar',
             	'settings'       => 'onepiece_elements_mainmenubar_minisize',
             	'type'           => 'select',
- 	    		'description'    => __( 'Select to minisize the menubar on small screens.', 'onepiece' ),
+ 	    		'description'    => __( 'Select to collapse (minisize) the menubar on small screens.', 'onepiece' ),
             	'choices'        => array(
                 	'none'   => __( 'No minisize', 'onepiece' ),
-                	'slidedown'   => __( 'Slide-down menu (always)', 'onepiece' ),
-                	'topbar'   => __( 'Slide-down menu (topbar only)', 'onepiece' ),
+                	'always'   => __( 'Minisize menu (always)', 'onepiece' ),
+                	'topbar'   => __( 'Minisize menu (in topbar only)', 'onepiece' ),
             	)
     	)));
 		

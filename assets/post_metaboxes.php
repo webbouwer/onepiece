@@ -108,12 +108,12 @@ function post_productmaker_fields($object)
         
     <p><label for="meta-box-product-label"><?php echo __('Labeled as', 'onepiece'); ?></label>
     <select multiple="multiple" name="meta-box-product-label" id="meta-box-product-label" >
-        <option value="non" <?php if(in_array('non', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('No label', 'onepiece'); ?></option>
-        <option value="new" <?php if(in_array('new', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('New', 'onepiece'); ?></option>
-        <option value="spe" <?php if(in_array('spe', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('Special', 'onepiece'); ?></option>
-        <option value="fea" <?php if(in_array('fea', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('Featured', 'onepiece'); ?></option>
-        <option value="com" <?php if(in_array('com', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('Coming soon', 'onepiece'); ?></option>
-        <option value="atf" <?php if(in_array('atf', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('All time favourite', 'onepiece'); ?></option>
+        <option value="none" <?php if(in_array( 'none', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('No label', 'onepiece'); ?></option>
+        <option value="new" <?php if(in_array( 'new', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('New', 'onepiece'); ?></option>
+        <option value="special" <?php if( in_array( 'special', $labels) ){ echo 'selected="selected"'; } ?>><?php echo __('Special', 'onepiece'); ?></option>
+        <option value="featured" <?php if(in_array('featured', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('Featured', 'onepiece'); ?></option>
+        <option value="comingsoon" <?php if(in_array( 'comingsoon', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('Coming soon', 'onepiece'); ?></option>
+        <option value="alltimefavourite" <?php if(in_array( 'alltimefavourite', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('All time favourite', 'onepiece'); ?></option>
     </select></p>
     <?php
 }

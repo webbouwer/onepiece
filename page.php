@@ -242,14 +242,22 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
 			
 			$pieces = get_extended($page->post_content); //print_r($pieces);
 			
-            $menu .= '<li id="button-'.$page->post_name.'" data-imgurl="'.$contentimage.'"><a href="'.get_permalink($page->ID).'" target="_self">'.$page->post_title.'</a></li>';
-            $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent"><div class="subtitle"><h3>'.$page->post_title.'</h3></div><div class="subcontent">'.
-            apply_filters('the_content',$pieces['main'])
-            .'</div>';
-            if($childpagedisplay != 'fade' && !empty($pieces['extended'])){
+            $menu .= '<li id="button-'.$page->post_name.'" data-imgurl="'.$contentimage.'"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></li>';
+            $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent"><div class="subtitle"><h3><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></h3></div>';
+			$content .= '<div class="subcontent">'.apply_filters('the_content',$pieces['main']);
+			
+            if($childpagedisplay == 'slddwn' && !empty($pieces['extended']) ){ // inline readmore
+			$content .= '<a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.__('Read more', 'onepiece').'</a>'; 
+			}
+			$content .= '</div>';
+			
+			if($childpagedisplay != 'bloc'){
+            $content .= '<div class="childcontent moretextbox">'.apply_filters('the_content',$pieces['extended']).'</div>';
+			}
+            if($childpagedisplay != 'fade' && $childpagedisplay != 'slddwn' && !empty($pieces['extended'])){
             $content .= '<a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.__('Read more', 'onepiece').'</a>';
             }
-            $content .= '<div class="childcontent moretextbox">'.apply_filters('the_content',$pieces['extended']).'</div></li>';
+			$content .= '</li>';
         }
         
         echo '<div class="page-content childpages '.$childpagedisplay.'">';
@@ -405,12 +413,19 @@ jQuery(document).ready(function($) {
         //$('ul#childpagecontent li.childcontent .moretextbox').eq(0).addClass('active').slideDown();
         //$('ul#childpagemenu li').eq(0).addClass('active');
         
-		$('.childcontent a.readmore').on('click', function(){ 
-		$('ul#childpagecontent li.childcontent').removeClass('active');
-        $(this).parent().addClass('active');
-		$('ul#childpagecontent li.childcontent .moretextbox').slideUp();
-    	$('ul#childpagecontent li.active .moretextbox').slideDown();
-        
+		$('.childcontent').on('click', function(){ 
+		if($(this).hasClass('active') ){
+			$(this).find('.moretextbox').slideUp();
+			$('ul#childpagecontent li.childcontent').removeClass('active');
+			$(this).find('.readmore').fadeIn('slow');
+		}else{
+			$('ul#childpagecontent li.childcontent').removeClass('active');
+        	$(this).addClass('active');
+			$('ul#childpagecontent li.childcontent .moretextbox').slideUp();
+			$('ul#childpagecontent li.childcontent .readmore').fadeIn('slow');
+    		$(this).find('.moretextbox').slideDown();
+			$(this).find('.readmore').fadeOut('slow');
+        }
 		return false;
 		});
 		

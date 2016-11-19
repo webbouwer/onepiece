@@ -104,7 +104,7 @@ $link = get_post_meta($object->ID, "meta-box-link-childpages", true);
 <option value="pop" <?php selected( $dsp, 'pop' ); ?>><?php echo __('Intro text popuplink content', 'onepiece'); ?></option>
 <option value="menu" <?php selected( $dsp, 'menu' ); ?>><?php echo __('Subpage menu', 'onepiece'); ?></option>
 <option value="fade" <?php selected( $dsp, 'fade' ); ?>><?php echo __('Header, Tabs & text', 'onepiece'); ?></option>
-<?php /* <option value="slddwn" <?php selected( $dsp, 'slddwn' ); ?>><?php echo __('Vertical slide blocks', 'onepiece'); ?></option> */ ?>
+<option value="slddwn" <?php selected( $dsp, 'slddwn' ); ?>><?php echo __('Vertical slide blocks', 'onepiece'); ?></option>
 </select>
 </p>
 <?php

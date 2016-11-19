@@ -185,8 +185,8 @@ $(document).ready(function() {
 		});
 	}
     
-    $('div.childpages.pop .readmore').click(function(){
-		var content =  $(this).parent().find('.subtitle').html() + $(this).next('.moretextbox').html();
+    $('div.childpages.pop li').click(function(){
+		var content =  $(this).find('.subtitle').html() + $(this).find('.moretextbox').html();
 		loadpopup( content );
 		return false;
 	});
