@@ -29,11 +29,11 @@ public function widget( $args, $instance ) {
 	
 	display_userpanel();
 	
-	}
-	
+	}else{
 	
 	echo '('.$instance['function_type'].')';
 	
+	}
     echo $args['after_widget'];
 }
 		

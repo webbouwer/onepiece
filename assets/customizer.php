@@ -148,6 +148,7 @@ Elements:
         Display hide/position horizontal
 		Positioning vertical/placement
 		Behavior
+		..Minisize
 		
     Main Sidebar
         Display hide/alignment
@@ -1178,6 +1179,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'stic'   => __( 'Stick to top', 'onepiece' ),
             	)
     	)));
+		
+		/*
 		$wp_customize->add_setting( 'onepiece_elements_mainmenubar_minisize' , array(
 		'default' => 'none', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1194,6 +1197,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'topbar'   => __( 'Minisize menu (in topbar only)', 'onepiece' ),
             	)
     	)));
+		*/
 		
 		
 		// ELEMENTS - LOGINBAR

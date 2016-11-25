@@ -129,7 +129,7 @@ $topbaropacity = get_theme_mod('onepiece_elements_topmenubar_opacity', 20);
 // mainmenubar
 $mainmenubarplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainmenubarbehavior = get_theme_mod('onepiece_elements_mainmenubar_behavior', 'stat');
-$mainmenubarminisize = get_theme_mod('onepiece_elements_mainmenubar_minisize', 'stat');
+//$mainmenubarminisize = get_theme_mod('onepiece_elements_mainmenubar_minisize', 'stat');
 
 
  
@@ -196,16 +196,19 @@ $slidercat = get_post_meta($post->ID, "pagetheme_slide_selectbox", true);
 $sliderheight = get_post_meta($post->ID, "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta($post->ID, "pagetheme_slide_displaywidth", true);
 
+$displaytype = $sliderdefaultheight;
 
 // get html for default slider and page slider if available
 if( ( $sliderdefaultdisplay == 'replaceheader' || $sliderdefaultdisplay == 'belowheader' ) && $sliderdefaultcat != 'uncategorized'  && $sliderdisplay != 'none'){
     //$headerstyle = 'style="height:'.$sliderdefaultheight.'%;min-height:'.$sliderdefaultheight.'%;"';
 	$displaytype = $sliderdefaultheight;
 }
-if( ( $sliderdisplay == 'replaceheader' || $sliderdisplay == 'belowheader') && $slidercat != 'uncategorized' && $sliderheight != 'variable'  && $sliderdisplay != 'none'){
+if( $sliderheight && ( $sliderdisplay == 'replaceheader' || $sliderdisplay == 'belowheader') && $slidercat != 'uncategorized' && $sliderheight != 'variable'  && $sliderdisplay != 'none'){
     //$headerstyle = 'style="height:'.$sliderheight.'%;min-height:'.$sliderheight.'%;"';
 	$displaytype = $sliderheight;
 }
+
+
 if( $sliderdisplay == 'topfooter' ){
     $footerheight = $sliderheight;
 }elseif($sliderdefaultdisplay == 'topfooter'){
@@ -213,43 +216,45 @@ if( $sliderdisplay == 'topfooter' ){
 }
 
 
-
-
-
-
-
 // output html slider codes 
 ?>
-
 <script type="text/javascript" language="javascript">
-
 jQuery(function($) {
+/*
+Header Height Resize
+*/
+var rtime;
+var timeout = false;
+var delta = 200;
 $(window).resize(function() {
-<?php 
-// start php to js
 
-if($topbarbehavior != 'rela'){
-?>
-if( $("#sliderbox-head").height() < $("#topbarmargin .logobox").outerHeight(true) ){
-$("#sliderbox-head,#headerbar").css("min-height", $("#topbarmargin .logobox").outerHeight(true) );
-}
-<?php
-}else if( $displaytype != 'variable' && ( $sliderdefaultdisplay == 'replaceheader' || $useheaderimage == 'replace' || $sliderdisplay == 'replaceheader' ) ){ 
-echo  '$("#sliderbox-head,#headerbar").css("min-height", ( $(window).height() / 100) * '.$displaytype.' )';
-}
 
-if( $sliderdisplay == 'topfooter' || $sliderdefaultdisplay == 'topfooter' ){
-echo  '$("#sliderbox-footer").css("min-height", ( $(window).height() / 100) * '.$footerheight.' )';
-}
+	rtime = new Date();
+    if (timeout === false) {
+        timeout = true;
+        setTimeout( resizeend , delta);
+    }
 
-// end php to js 
-?>
 });
 
-
+function resizeend() {
+	if(new Date() - rtime < delta) {
+        setTimeout(resizeend, delta);
+    }else{
+        timeout = false;
+		
+		var rMinHeight = $('#topbar .outermargin').outerHeight(true);
+		var rSetHeight = ($(window).height() / 100) * <?php echo $displaytype; ?>;
+		//var rToHeight = (  rMinHeight > rSetHeight ? rMinHeight : rSetHeight );
+				
+		$("#sliderbox-head,#headerbar").css("min-height", rMinHeight );
+		$("#sliderbox-head,#headerbar").css("height", rSetHeight );		
+        //if (window.console) console.log('check!');
+    }   
+}
 
 jQuery(document).ready(function($) {
-    
+
 /* AnythingSlider */
 $(window).trigger('resize'); // adjust slider on resize
 // see https://github.com/CSS-Tricks/AnythingSlider/wiki/Setup
@@ -292,25 +297,19 @@ $('.sliderarea').anythingSlider({
 	return ['Webdesign', 'Interactief', 'Ontwerp', 'Ontwikkeling'][i - 1];
     },
     */
-
 }).anythingSliderFx({
 				// base FX definitions
 				// '.selector' : [ 'effect(s)', 'size', 'time', 'easing' ]
 				// 'size', 'time' and 'easing' are optional parameters, but must be kept in order if added
 				//'.contentbox h3'       : [ 'bottom fade', '200px', '600', 'easeOutExpo' ],
-				
-				
+	
 				// https://github.com/CSS-Tricks/AnythingSlider-Fx-Builder
-				
 				//'.contentbox h3'       : [ 'fade'  ],
 				'.contentbox h3,.contentbox div.excerpt'       : [ 'listLR', 'auto', '1000', 'easeOutExpo' ]
 				
 }); // end anythingSlider
 }); // end ready
 }); // end jQuery $	
-
-
-
 
 var setupSwipe = function(slider) {
 
@@ -402,46 +401,25 @@ var setupSwipe = function(slider) {
 
             }
   
-  
   });
   
-  
-
 }; // END TOUCH SCROLL SLIDER
+
 
 
 </script>			
 <style type="text/css">
-<?php // default font size, spacing and speed 
-$size = ( $stylelayout_fontsize * 0.11 );
-?>
-body
-{
-font-size:<?php echo $size; ?>em;
-}
-
-
-
 <?php /* TOPBAR BEHAVIOR */
-
-
 if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
 || $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade' && $topbarbehavior != 'rela'){ 
-
 $toppos = 'absolute'; 
-
 }else{
-
 if( $topbarbehavior != 'rela'){ 
 $toppos = 'absolute'; 
 }else{ 
 $toppos = 'relative';
 }
-
 }
-
-
-
 ?>
 div#topbar
 {
@@ -456,8 +434,6 @@ top:0px;
 left:0px;
 }
 
-
-
 /*
  * SLIDER STYLING 
  */
@@ -471,13 +447,13 @@ height: 100%;
 echo 'max-height:680px;'; 
 } ?>
 }
-
 #headerbar
 {
 <?php  if( $mobile ){ /* available mobile detect */ 
 echo 'max-height:680px;'; 
 } ?>
 }
+
 
 /* Slider decoration layers */
 #sliderbox-head .topelement,
@@ -1450,7 +1426,9 @@ $(window).load(function() {
  
 // fontsize 
 $globalfontsize = 0.6 + $stylelayout_fontsize / 10;
- 
+if($mobile){
+$globalfontsize = 0.6 + $stylelayout_fontsize / 6;
+}
 // buttons
 $vertical_padding_line = ($stylelayout_spacing / 5) * 4;
 $horizontal_padding_line = ($stylelayout_spacing / 6 ) * 3 ;
