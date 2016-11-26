@@ -41,10 +41,12 @@ Customizer Sections and Options list:
 ( .. = in not ready )
 
 Identity:
-    	image large logo
-        minisize width
+
+	Logo image
+    	Site logo Image Medium
     	max-width
-        image small logo
+        min(isize) width
+        Site logo Image Small
     	small max-width
     
     Title, Tagline & Icon image
@@ -53,9 +55,9 @@ Identity:
         Site Icon image
     
     Featured site-image
-        image
-	    width (replace/replacemargin)
-
+        Site featured image
+	    Site featured description
+		.. site sharing url (might be optimized page for social media etc.)
 	
 Style & Layout: 
 
@@ -97,22 +99,21 @@ Content:
 		transparency bg overlay (0-1)
 		.. display close button
 		
-    Pages
+    Page
         date/author display
 
-    Posts
-        Exclude categories
-        Use highlight first posts
-		Excerpt length (amount of words)
+    Post
+        Featured image header
+        Display date/author
 		
 		Tags display
 		Categories Display
 		Next / Previous links
-
-        Display date/author
-        Featured image header
         
-    Category
+    List (replacng category section)
+        Use highlight first posts
+		Excerpt length (amount of words)
+		Exclude categories
         Display category list Title & Description 
 
 	Gallery
@@ -732,6 +733,26 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  
  		
 
+    	// CONTENT - POSTS - FEATURED IMAGE DISPLAY
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_featuredimage' , array(
+		'default' => 'default', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_featuredimage', array(
+            	'label'          => __( 'Featured image display', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_featuredimage',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Featured image display in single post view', 'onepiece' ),
+            	'choices'        => array(
+                	'default'   => __( 'On top of the content', 'onepiece' ),
+                	'replace'   => __( 'Replace Header Window width', 'onepiece' ),
+                        'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
+            	)
+    	)));
+		
+
 		// CONTENT - POSTS - TIME & AUTHOR
 		$wp_customize->add_setting( 'onepiece_content_panel_postlist_authortime' , array(
 		'default' => 'none', 
@@ -752,26 +773,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'single'   => __( 'Both in single post view only', 'onepiece' ),
             	)
     	)));
-
-    	// CONTENT - POSTS - FEATURED IMAGE DISPLAY
-		$wp_customize->add_setting( 'onepiece_content_panel_posts_featuredimage' , array(
-		'default' => 'default', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		
-		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_featuredimage', array(
-            	'label'          => __( 'Featured image display', 'onepiece' ),
-            	'section'        => 'onepiece_content_panel_posts',
-            	'settings'       => 'onepiece_content_panel_posts_featuredimage',
-            	'type'           => 'select',
- 	    	    'description'    => __( 'Featured image display in single post view', 'onepiece' ),
-            	'choices'        => array(
-                	'default'   => __( 'On top of the content', 'onepiece' ),
-                	'replace'   => __( 'Replace Header Window width', 'onepiece' ),
-                        'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
-            	)
-    	)));
-		
 		
 		// CONTENT - POSTS - READMORE
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_readmore' , array(
@@ -901,7 +902,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 			)
 		);
 	
-    	// CONTENT - LIST
+    	// CONTENT - LIST - category title / text
     	$wp_customize->add_setting( 'onepiece_content_panel_list_titledisplay' , array(
 		'default' => 'title', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -910,7 +911,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'label'          => __( 'Category Title & Description', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_list',
             	'settings'       => 'onepiece_content_panel_list_titledisplay',
-            	'type'           => 'radio',
+            	'type'           => 'select',
  	    	'description'    => __( 'Select display type', 'onepiece' ),
             	'choices'        => array(
                 	'none'   => __( 'No title', 'onepiece' ),
