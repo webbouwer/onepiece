@@ -306,8 +306,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Post', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
     	));
-    	$wp_customize->add_section('onepiece_content_panel_category', array( 
-        	'title'    => __('Category', 'onepiece'),
+    	$wp_customize->add_section('onepiece_content_panel_list', array( 
+        	'title'    => __('List', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
     	));
     	$wp_customize->add_section('onepiece_content_panel_gallery', array( 
@@ -731,51 +731,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  
  
  		
-    	// CONTENT - POSTS - EXCLUDE CATEGORIES  Add multi select 
-		// source used: http://themefoundation.com/customizer-multiple-category-control/
-		// .. http://jayj.dk/multiple-select-lists-theme-customizer/
-		 $wp_customize->add_setting( 'onepiece_content_exclude_categories' );
-		 
-		$wp_customize->add_control(
-			new onepiece_multiselect_exclude_categories(
-				$wp_customize,
-				'onepiece_content_exclude_categories',
-				array(
-					'label' => __( 'Exclude Categories', 'onepiece' ),
- 	    			'description'    => __( 'Select post categories to be excluded from the main loop (post overview)', 'onepiece' ),
-					'section' => 'onepiece_content_panel_posts',
-					'settings' => 'onepiece_content_exclude_categories'
-				)
-			)
-		);
-		 
-
-    	// CONTENT - POSTS - HIGHLIGHT
-    	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
-		'default' => '3', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_firstcount', array(
-            	'label'          => __( 'Highlight first posts', 'onepiece' ),
-            	'section'        => 'onepiece_content_panel_posts',
-            	'settings'       => 'onepiece_content_panel_postlist_firstcount',
-            	'type'           => 'text',
- 	    	'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
-    	)));
-		
-		// CONTENT - POSTS - EXCERPT LENGTH
-    	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
-		'default' => '25', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_excerptlength', array(
-            	'label'          => __( 'Excerpt Length', 'onepiece' ),
-            	'section'        => 'onepiece_content_panel_posts',
-            	'settings'       => 'onepiece_content_panel_postlist_excerptlength',
-            	'type'           => 'text',
- 	    	'description'    => __( 'Amount of words for intro texts in a (basic) list.', 'onepiece' ),
-    	)));
-		
 
 		// CONTENT - POSTS - TIME & AUTHOR
 		$wp_customize->add_setting( 'onepiece_content_panel_postlist_authortime' , array(
@@ -900,20 +855,61 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
+
+
+    	// CONTENT - POSTS - HIGHLIGHT
+    	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
+		'default' => '3', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_firstcount', array(
+            	'label'          => __( 'Highlight first posts', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_postlist_firstcount',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
+    	)));
 		
+		// CONTENT - POSTS - EXCERPT LENGTH
+    	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
+		'default' => '25', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_excerptlength', array(
+            	'label'          => __( 'Excerpt Length', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_postlist_excerptlength',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Amount of words for intro texts in a (basic) list.', 'onepiece' ),
+    	)));
 		
-		
+    	// CONTENT - POSTS - EXCLUDE CATEGORIES  Add multi select 
+		// source used: http://themefoundation.com/customizer-multiple-category-control/
+		// .. http://jayj.dk/multiple-select-lists-theme-customizer/
+		 $wp_customize->add_setting( 'onepiece_content_exclude_categories' );
 		 
-    	
-    	// CONTENT - CATEGORIES
-    	$wp_customize->add_setting( 'onepiece_content_panel_category_titledisplay' , array(
+		$wp_customize->add_control(
+			new onepiece_multiselect_exclude_categories(
+				$wp_customize,
+				'onepiece_content_exclude_categories',
+				array(
+					'label' => __( 'Exclude Categories', 'onepiece' ),
+ 	    			'description'    => __( 'Select post categories to be excluded from the main loop (post overview)', 'onepiece' ),
+					'section' => 'onepiece_content_panel_list',
+					'settings' => 'onepiece_content_exclude_categories'
+				)
+			)
+		);
+	
+    	// CONTENT - LIST
+    	$wp_customize->add_setting( 'onepiece_content_panel_list_titledisplay' , array(
 		'default' => 'title', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_category_titledisplay', array(
-            	'label'          => __( 'Title & description', 'onepiece' ),
-            	'section'        => 'onepiece_content_panel_category',
-            	'settings'       => 'onepiece_content_panel_category_titledisplay',
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_list_titledisplay', array(
+            	'label'          => __( 'Category Title & Description', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_list_titledisplay',
             	'type'           => 'radio',
  	    	'description'    => __( 'Select display type', 'onepiece' ),
             	'choices'        => array(
@@ -924,11 +920,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
-	
+		 
+		 
+		 
+		 
     	
     	
-    	
-    	// GALLERY 
+    	// CONTENT - GALLERY 
     	$wp_customize->add_setting( 'onepiece_content_gallery_category' , array(
 		'default' => 'uncategorized', 
     	//'capability' => 'edit_theme_options',
