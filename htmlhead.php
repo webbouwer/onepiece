@@ -90,8 +90,8 @@ echo '<meta name="description" content="'.$site_description.'">'
  * linkedin - https://www.linkedin.com/help/linkedin/answer/46687
  */
 echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'"/>'
-	.'<meta property="og:image" content="'.get_theme_mod( 'onepiece_identity_panel_sharing_description' ).'"/>'
-	.'<meta property="og:description" content="'.get_bloginfo( 'description' ).'"/>'
+	.'<meta property="og:image" content="'.get_theme_mod( 'onepiece_identity_featured_image' ).'"/>'
+	.'<meta property="og:description" content="'.get_theme_mod( 'onepiece_identity_panel_sharing_description' ).' '.get_bloginfo( 'description' ).'"/>'
 	.'<meta property="og:url" content="'.esc_url( home_url( '/' ) ).'" />';
 
 
@@ -375,7 +375,7 @@ var setupSwipe = function(slider) {
                 if ( newy < y ) {
                     //alert('scroll down'); 
 			$('html, body').animate({
-				scrollTop: $("#contentcontainer").offset().top 
+				scrollTop: $("#contentcontainer").offset().top - $("#topbar").outerHeight(true)
 			},{
         			duration: <?php echo $stylelayout_speed*4; ?>,
         			complete: function () { 
@@ -527,7 +527,7 @@ position:absolute;
 top:48%;
 padding:10px;
 background-color:#ffffff;
-z-index:99;
+z-index:80;
 }
 div.anythingSlider span.back
 {
@@ -553,8 +553,8 @@ div.anythingSlider div.slidebox .contentbox
 position:absolute;
 bottom:8%;
 left:0%;
-width:40%;
-z-index: 99;
+width:90%;
+z-index: 65;
 }
 
 
@@ -1313,7 +1313,13 @@ $(document).ready(function() {
 
 		$container.prepend($this).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // or 'original-order'
 	
+	
+	 if( $('#topgridmenu').length > 0 ){
+		$('html, body').animate({ scrollTop: $('#topgridmenu').offset().top - $('#topbar .outermargin').outerHeight(true) }, 400); // Scroll to top (bottom of header)
+	}else{
 		$('html, body').animate({ scrollTop: $('#itemcontainer').offset().top - $('#topbar .outermargin').outerHeight(true) }, 400); // Scroll to top (bottom of header)
+	}
+		
 		
 		<?php }
 		if( $clickaction == 'poppost' ){ 
