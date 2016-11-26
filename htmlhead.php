@@ -1313,8 +1313,8 @@ $(document).ready(function() {
 
 		$container.prepend($this).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // or 'original-order'
 	
-		$('html, body').animate({ scrollTop: $(this).offset().top - $('#topmenubar .outermargin').height() }, 400); // Scroll to top (bottom of header)
-	
+		$('html, body').animate({ scrollTop: $('#itemcontainer').offset().top - $('#topbar .outermargin').outerHeight(true) }, 400); // Scroll to top (bottom of header)
+		
 		<?php }
 		if( $clickaction == 'poppost' ){ 
 		?>
