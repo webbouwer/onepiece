@@ -88,21 +88,25 @@ function post_productmaker_fields($object)
     </select></p>
     
     <fieldset>
-    <legend><?php echo __('Dimensions', 'onepiece'); ?></legend>
-    <label for="meta-box-product-dmx"><?php echo __('x', 'onepiece'); ?></label>
-    <input name="meta-box-product-dmx" size="5" type="text" value="<?php echo $dmx; ?>">
-    <label for="meta-box-product-dmy"><?php echo __('y', 'onepiece'); ?></label>
-    <input name="meta-box-product-dmy" size="5" type="text" value="<?php echo $dmy; ?>">
-    <label for="meta-box-product-dmz"><?php echo __('z', 'onepiece'); ?></label>
-    <input name="meta-box-product-dmz" size="5" type="text" value="<?php echo $dmz; ?>">
-    <label for="meta-box-product-dms"><?php echo __('Measurement in', 'onepiece'); ?></label>
+    <legend><?php echo __('Package Size', 'onepiece'); ?></legend>
+    
+    <label for="meta-box-product-dms"><?php echo __('Measurement', 'onepiece'); ?></label>
     <select name="meta-box-product-dms" id="meta-box-product-dms">
+        <option value="none" <?php selected( $dms, 'none' ); ?>><?php echo __('Do not use', 'onepiece'); ?></option>
         <option value="mm" <?php selected( $dms, 'mm' ); ?>><?php echo __('mm', 'onepiece'); ?></option>
         <option value="cm" <?php selected( $dms, 'cm' ); ?>><?php echo __('cm', 'onepiece'); ?></option>
         <option value="me" <?php selected( $dms, 'me' ); ?>><?php echo __('meters', 'onepiece'); ?></option>
         <option value="km" <?php selected( $dms, 'km' ); ?>><?php echo __('km', 'onepiece'); ?></option>
         <option value="mi" <?php selected( $dms, 'mi' ); ?>><?php echo __('miles', 'onepiece'); ?></option>
     </select>
+    
+    <label for="meta-box-product-dmx"><?php echo __('x', 'onepiece'); ?></label>
+    <input name="meta-box-product-dmx" size="5" type="text" value="<?php echo $dmx; ?>">
+    <label for="meta-box-product-dmy"><?php echo __('y', 'onepiece'); ?></label>
+    <input name="meta-box-product-dmy" size="5" type="text" value="<?php echo $dmy; ?>">
+    <label for="meta-box-product-dmz"><?php echo __('z', 'onepiece'); ?></label>
+    <input name="meta-box-product-dmz" size="5" type="text" value="<?php echo $dmz; ?>">
+    
     </fieldset>
     
         

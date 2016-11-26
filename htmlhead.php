@@ -812,10 +812,6 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 
 
 
-
-
-
-
 /** 
  * onscroll for fixed topbar:
  */
@@ -1223,7 +1219,7 @@ $(document).ready(function() {
 	if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' ){
 	markup += '<div class="pricebox">';
 	
-	if( obj.meta['meta-box-product-discount'] != '' && !isNaN(obj.meta['meta-box-product-discount']) && !isNaN(obj.meta['meta-box-product-price']) ){
+	if( obj.meta['meta-box-product-discount'] != '' && typeof obj.meta['meta-box-product-discount'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-discount']) && !isNaN(obj.meta['meta-box-product-price']) ){
 	
 		markup += '<span class="discount"><?php echo __('Discount', 'onepiece'); ?> '+ obj.meta['meta-box-product-discount']+'% </span>';
 	
@@ -1248,7 +1244,7 @@ $(document).ready(function() {
 	 * PACKAGE
 	 */
 	
-	if( obj.meta['meta-box-product-dms'] != '' && typeof obj.meta['meta-box-product-dms'] !== 'undefined' ){
+	if( obj.meta['meta-box-product-dms'] != 'none' && obj.meta['meta-box-product-dms'] != '' && typeof obj.meta['meta-box-product-dms'] !== 'undefined' ){
 	
 	var packsize = '';
 	if( obj.meta['meta-box-product-dmx'] != '' && typeof obj.meta['meta-box-product-dmx'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmx'])){
@@ -1262,7 +1258,7 @@ $(document).ready(function() {
 	}
 	
 	}
-	if(packsize != ''){
+	if(packsize != '' && typeof packsize !== 'undefined'){
 	
 	markup += '<div class="packagebox">';
 	markup += '<span class="packagesize">'+packsize+' '+obj.meta['meta-box-product-dms']+'</span>';
