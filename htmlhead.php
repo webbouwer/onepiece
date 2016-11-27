@@ -248,7 +248,8 @@ function resizeend() {
 		//var rToHeight = (  rMinHeight > rSetHeight ? rMinHeight : rSetHeight );
 				
 		$("#sliderbox-head,#headerbar").css("min-height", rMinHeight );
-		$("#sliderbox-head,#headerbar").css("height", rSetHeight );		
+		$("#sliderbox-head,#headerbar").css("height", rSetHeight );	
+		$('#headerbar .bglayer').css( 'height' , $('#headerbar').height() );	
         //if (window.console) console.log('check!');
     }   
 }
