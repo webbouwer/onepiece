@@ -290,7 +290,18 @@ img.header-image
 }
 
 /* CHILDPAGES HEADER */
-#headerbar,
+#headerbar
+{
+position:relative;
+background-position:center;
+background-color:#fff;
+background-size: 120%;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+overflow:hidden;
+}
 #headerbar .bglayer
 {
 position:relative;
@@ -300,16 +311,8 @@ background-size: 120%;
 -moz-background-size: cover;
 -o-background-size: cover;
 background-size: cover;
-}
-#headerbar
-{
-background-color:#fff;
-/* border-top:8px solid #D85326;
-border-bottom:8px solid #D85326; */
-}
-#headerbar .bglayer
-{
 min-height:100%; 
+z-index:40;
 }
 
 

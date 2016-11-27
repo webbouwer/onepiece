@@ -148,8 +148,8 @@ Elements:
     Main menu bar
         Display hide/position horizontal
 		Positioning vertical/placement
-		Behavior
-		..Minisize
+		Behavior sticky/static
+		Minisize always/smallscreen/never
 		
     Main Sidebar
         Display hide/alignment
@@ -190,15 +190,15 @@ Widgets: (sidebars positions)
 
 
 Responsive
-	Small
+	Small screen
 		screen max width (switch to medium) in px
 		outermargin default width (%)
 		content max width in px
-	Medium
+	Medium screen
 		screen max width (switch to large) in px
 		outermargin default width (%)
 		content max width in px
-	Large
+	Large screen
 		content max width in px
 	
 */
@@ -1179,7 +1179,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
-		/*
+		
 		$wp_customize->add_setting( 'onepiece_elements_mainmenubar_minisize' , array(
 		'default' => 'none', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1189,14 +1189,17 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'section'        => 'onepiece_elements_mainmenubar',
             	'settings'       => 'onepiece_elements_mainmenubar_minisize',
             	'type'           => 'select',
- 	    		'description'    => __( 'Select to collapse (minisize) the menubar on small screens.', 'onepiece' ),
+ 	    		'description'    => __( 'Select when to minisize (collapse) the menubar.', 'onepiece' ),
             	'choices'        => array(
-                	'none'   => __( 'No minisize', 'onepiece' ),
+                	'none'   => __( 'Never minisize', 'onepiece' ),
                 	'always'   => __( 'Minisize menu (always)', 'onepiece' ),
-                	'topbar'   => __( 'Minisize menu (in topbar only)', 'onepiece' ),
+                	'sticky'   => __( 'Minisize sticky menu (when sticky only)', 'onepiece' ),
+                	//'respon'   => __( 'Minisize responsive menu (in small/medium screen)', 'onepiece' ),
             	)
     	)));
-		*/
+		
+		
+		
 		
 		
 		// ELEMENTS - LOGINBAR

@@ -108,15 +108,11 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 
 // Frontend user login  
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/userlogin.js"></script>'; 
-
-
  
 // default style sizes
 $stylelayout_fontsize = get_theme_mod('onepiece_identity_stylelayout_fontsize', 5);
 $stylelayout_spacing = get_theme_mod('onepiece_identity_stylelayout_spacing', 5);
 $stylelayout_speed = 100 * get_theme_mod('onepiece_identity_stylelayout_speed', 5);
-
-
 
 // topbar
 $topbarbehavior = get_theme_mod('onepiece_elements_topmenubar_behavior', 'rela');
@@ -124,14 +120,10 @@ $topbarbgfixed = get_theme_mod('onepiece_elements_topmenubar_bgfixed', 'keep');
 $topbaropacity = get_theme_mod('onepiece_elements_topmenubar_opacity', 20);
 // + colors 
 
-
-
 // mainmenubar
 $mainmenubarplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
 $mainmenubarbehavior = get_theme_mod('onepiece_elements_mainmenubar_behavior', 'stat');
-//$mainmenubarminisize = get_theme_mod('onepiece_elements_mainmenubar_minisize', 'stat');
-
-
+$mainmenubarminisize = get_theme_mod('onepiece_elements_mainmenubar_minisize', 'always');
  
 // header replacement variables for page/post feautured images
 $useheaderimage = get_post_meta($post->ID, "meta-page-headerimage", true);
@@ -142,11 +134,16 @@ $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
 // get childpage options
 $childpagedisplay = get_post_meta($post->ID, "meta-box-display-childpages", true);
 
-
 // get main popup options
 $popupdefaultdisplay = get_theme_mod('onepiece_content_mainpopup_display', 'medium' );
 $popupoverlaycolor = get_theme_mod('onepiece_content_mainpopup_overlaycolor', '#ffffff' );
 $popupoverlayopacity = get_theme_mod('onepiece_content_mainpopup_overlayopacity', 20 );
+
+
+
+
+
+
 
 
 
@@ -599,6 +596,19 @@ width:40%;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
  *
  * POPUP STYLING 
@@ -650,13 +660,20 @@ position:relative;
 width:auto;
 padding:4% 5%;
 }
-
-
-
 </style>
 
 <?php 
 }
+
+
+
+
+
+
+
+
+
+
 
 /**
  * HTML HEAD THEME DEFAULT CSS/JS
@@ -735,15 +752,71 @@ $(document).ready(function() {
 	?>
    
    
+
+
+
+<?php
+
+/* 
+ * Mainmenu minisize
+ */	
+if( $mainmenubarminisize != 'none' ){
+echo 'var mainmenuminisize = "'.$mainmenubarminisize.'";';
+?>
+
+var menubox = $('#site-navigation nav').prepend('<div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div>');
+var menubutton = $('#site-navigation nav .menu-button').hide();
+var menupanel = $('#site-navigation nav div ul.menu');
+
+function setminisizemenu(){
+
+	if( !menubox.hasClass('minisize') ){
+	menubox.addClass('minisize')
+	menubutton.show();
+	menupanel.hide();
+    }
+}
+function resetminisizemenu(){
+
+	if( menubox.hasClass('minisize') ){
+	menubutton.hide();
+	menubox.removeClass('minisize');
+	menupanel.show();
+	}
+
+}
+
+menubox.on( 'click' ,'.menu-button', function(){
+	$(this).html('<?php echo __('Menu', 'onepiece'); ?>'); // default text / image
+	menupanel.slideToggle();
+	menubutton.toggleClass('open');
+	if(menubutton.hasClass('open')){
+	menubutton.html('<?php echo __('Close', 'onepiece'); ?>'); // when open show close text /image
+	}
 });
 
- 
+// always menu minisize
+if( mainmenuminisize == 'always' ){
+	setminisizemenu();
+}
+
+<?php
+}
+?>
+
+
+
+
+
 
 /**
- * TOPBAR FIXED / MINIFY ONSCROLL
+ * TOPBAR FIXED / STICKY / MINIFY ONSCROLL
  */ 
 $(window).on("mousewheel scroll", function() {
 
+
+
+// sticky
 <?php
 if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
 ?>
@@ -766,6 +839,8 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
         height:'100%'
       }) 
     );
+
+	
 	
  	<?php if($topbarbehavior == 'mini'){ ?>
 	/**
@@ -779,8 +854,6 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
    }, <?php echo $stylelayout_speed; ?>);
   
   <?php } ?>
-  
-  
   
    
 
@@ -803,6 +876,7 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
    
+   
    $("#topbar").removeClass('minified');
    
 
@@ -813,26 +887,30 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 
 
 
+
+
+
 /** 
- * onscroll for fixed topbar:
+ * onscroll for fixed / minisize topbar:
  */
 if( $mainmenubarbehavior == 'stic' && ( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini') ){ 
 // #site-navigation or #topbar-navigation 
-?>
+
 
 /**
  * MAIN MENU FIXED IN TOPBAR ONSCROLL
  */ 
-<?php 
 $stickymenu_triggerheight = '$("#topbar").height()';
 if($mainmenubarplace == 'topbar'){
 $stickymenu_triggerheight = '0';
 }
-?>
- 
-var offset = $('#site-navigation').offset();
-if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight; ?> && !$("#site-navigation nav").hasClass('sticky')){
 
+?> 
+var offset = $('#site-navigation').offset();
+
+
+if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight; ?> && !$("#site-navigation nav").hasClass('sticky')){
+	
 	/**
 	 * POSITION MAIN MENU IN TOPBAR 
 	 */
@@ -843,28 +921,36 @@ if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight;
 	$('#topbar-navigation').after($("#site-navigation nav"));
 	}else{
 	$('#topmenubar .outermargin .logobox').after($("#site-navigation nav"));
-	
 	//$('#site-navigation .outermargin nav').prependTo( $('#topmenubar .outermargin') );
 	}
 	
+  	if( mainmenuminisize == 'sticky' ){
+    setminisizemenu();
+	}
 	
 }else if( (offset.top - $(window).scrollTop()) >= <?php echo $stickymenu_triggerheight; ?> && $("#topmenubar nav").hasClass('sticky')){
 	
 	
+	if( mainmenuminisize == 'sticky' ){
+   	resetminisizemenu();
+	}
+	
 	$("#topmenubar nav.sticky")
 	.removeClass('sticky')
-	.appendTo("#site-navigation");
-	
+	.appendTo("#site-navigation .outermargin");
+
 } // end  onscroll for fixed topbar
 
 
 
 <?php
-} // end topbarbehavior sticky 
+} // end topbarbehavior sticky / minisize
 ?>
 
-});
+}); /// endon scroll
 
+
+});// end ready doc
 
 
 });
@@ -1409,7 +1495,6 @@ $(document).ready(function() {
 
 
 $(window).load(function() { 
-
 
     
 });
