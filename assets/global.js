@@ -107,7 +107,7 @@ $(document).ready(function() {
 		// headerbar height (fade bglayer)
 		
 		$('#headerbar').css( 'height' , $(window).height()/3*2 + 'px' );
-		$('#headerbar .bglayer').css( 'height' , $(window).height()/3*2 + 'px' );
+		//$('#headerbar .bglayer').css( 'height' , $(window).height()/3*2 + 'px' ); //called in htmlhead.php in resizeend function
 	}
 	
 	doneGlobalResizing();
