@@ -227,7 +227,6 @@ padding:2px 1px;
 
 
 
-
 /**
  * Menu Positioning
  *
@@ -240,6 +239,7 @@ padding:2px 1px;
 #topbarmargin.right #minibar-navigation,
 #topbarmargin.right #topbar-navigation,
 #site-navigation.right ul,
+.right nav .menu-button,
 #topbarmargin.right nav.sticky,
 #footercontainer.menu-right #footer-navigation
 {
@@ -253,6 +253,7 @@ padding:2px 1px;
 #topbarmargin.left #minibar-navigation,
 #topbarmargin.left #topbar-navigation,
 #site-navigation.left ul,
+.left nav .menu-button,
 #topbarmargin.left nav.sticky,
 #footercontainer.menu-left #footer-navigation
 {
@@ -260,6 +261,7 @@ padding:2px 1px;
 }
 #topbarmargin.center,
 #site-navigation.center,
+.center nav .menu-button,
 #footercontainer.menu-center
 {
     text-align:center;
@@ -275,6 +277,8 @@ padding:2px 1px;
     float:none;
     margin:0 auto;
 }    
+
+
 
 
 

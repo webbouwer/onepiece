@@ -752,8 +752,13 @@ $(document).ready(function() {
 	?>
    
    
+/* 
+ * Mainmenu sticky / minisize
+ */	
 
-
+var menubox = $('#site-navigation nav').prepend('<div class="navcontrol"><div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div></div>');
+var menubutton = $('#site-navigation nav .menu-button').hide();
+var menupanel = $('#site-navigation nav div ul.menu');
 
 <?php
 
@@ -764,9 +769,6 @@ if( $mainmenubarminisize != 'none' ){
 echo 'var mainmenuminisize = "'.$mainmenubarminisize.'";';
 ?>
 
-var menubox = $('#site-navigation nav').prepend('<div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div>');
-var menubutton = $('#site-navigation nav .menu-button').hide();
-var menupanel = $('#site-navigation nav div ul.menu');
 
 function setminisizemenu(){
 
@@ -779,9 +781,10 @@ function setminisizemenu(){
 function resetminisizemenu(){
 
 	if( menubox.hasClass('minisize') ){
-	menubutton.hide();
+	menubutton.html('<?php echo __('Menu', 'onepiece'); ?>').hide();
 	menubox.removeClass('minisize');
-	menupanel.show();
+	menupanel.show(); // default text / image
+	
 	}
 
 }
@@ -801,6 +804,36 @@ if( mainmenuminisize == 'always' ){
 }
 
 <?php
+if( $mainmenubarminisize == 'respon' || $mainmenubarminisize == 'respon2'){
+
+if( $mainmenubarminisize == 'respon'){
+echo  'var width_responsive_menu = '.get_theme_mod('onepiece_responsive_small_max', 512).';';
+}
+if( $mainmenubarminisize == 'respon2'){
+echo  'var width_responsive_menu = '.get_theme_mod('onepiece_responsive_medium_max', 960).';';
+}
+?>
+
+/* on resize */
+	var resizeM;
+	$(window).resize(function() {
+    		clearTimeout(resizeM);
+    		resizeM = setTimeout(doneResizing, 20);
+	});
+	
+	function doneResizing(){
+		if( $(window).width() < width_responsive_menu){
+			setminisizemenu();
+		}else{
+			resetminisizemenu();
+		}
+	}
+	
+<?php
+}
+?>
+
+<?php
 }
 ?>
 
@@ -813,6 +846,7 @@ if( mainmenuminisize == 'always' ){
  * TOPBAR FIXED / STICKY / MINIFY ONSCROLL
  */ 
 $(window).on("mousewheel scroll", function() {
+
 
 
 
@@ -902,25 +936,25 @@ if( $mainmenubarbehavior == 'stic' && ( $topbarbehavior == 'fixe' || $topbarbeha
  */ 
 $stickymenu_triggerheight = '$("#topbar").height()';
 if($mainmenubarplace == 'topbar'){
-$stickymenu_triggerheight = '0';
+$stickymenu_triggerheight = 0;
 }
 
 ?> 
 var offset = $('#site-navigation').offset();
 
 
-if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight; ?> && !$("#site-navigation nav").hasClass('sticky')){
+if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight; ?> && !menubox.hasClass('sticky')){
 	
 	/**
 	 * POSITION MAIN MENU IN TOPBAR 
 	 */
- 	$("#site-navigation nav").addClass('sticky');
+ 	menubox.addClass('sticky');
 	if( $('#minibar-navigation').length > 0 ){
-	$('#minibar-navigation').next().after($("#site-navigation nav"));
+	$('#minibar-navigation').next().after(menubox);
 	}else if( $('#topbar-navigation').length > 0 ){
-	$('#topbar-navigation').after($("#site-navigation nav"));
+	$('#topbar-navigation').after(menubox);
 	}else{
-	$('#topmenubar .outermargin .logobox').after($("#site-navigation nav"));
+	$('#topmenubar .outermargin .logobox').after(menubox);
 	//$('#site-navigation .outermargin nav').prependTo( $('#topmenubar .outermargin') );
 	}
 	
@@ -928,17 +962,20 @@ if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight;
     setminisizemenu();
 	}
 	
-}else if( (offset.top - $(window).scrollTop()) >= <?php echo $stickymenu_triggerheight; ?> && $("#topmenubar nav").hasClass('sticky')){
+}else if( (offset.top - $(window).scrollTop()) >= <?php echo $stickymenu_triggerheight; ?> && menubox.hasClass('sticky')){
 	
 	
 	if( mainmenuminisize == 'sticky' ){
    	resetminisizemenu();
 	}
-	
-	$("#topmenubar nav.sticky")
-	.removeClass('sticky')
-	.appendTo("#site-navigation .outermargin");
-
+	<?php
+	if($mainmenubarplace == 'content'){
+	?>
+	menubox.removeClass('sticky').appendTo("#site-navigation");
+	<?php
+	}else{ ?>
+	menubox.removeClass('sticky').appendTo("#site-navigation .outermargin");
+	<?php } ?>
 } // end  onscroll for fixed topbar
 
 
@@ -955,6 +992,18 @@ if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight;
 
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <?php
@@ -1526,7 +1575,7 @@ $vertical_padding_box = $stylelayout_spacing * 2;
 
 echo '<style>';
 echo 'body{ font-size:'.$globalfontsize.'em !important; }';
-echo 'ul li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
+echo '#site-navigation .menu-button, ul li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
 echo '.post-title, h1, .readmore, p, #copyright-textbox { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
 if( $mainmenubarplace == 'above' ){ 
 echo '#headercontainer #site-navigation{ position: relative; z-index:999;}';

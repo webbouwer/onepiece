@@ -1194,7 +1194,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'none'   => __( 'Never minisize', 'onepiece' ),
                 	'always'   => __( 'Minisize menu (always)', 'onepiece' ),
                 	'sticky'   => __( 'Minisize sticky menu (when sticky only)', 'onepiece' ),
-                	//'respon'   => __( 'Minisize responsive menu (in small/medium screen)', 'onepiece' ),
+                	'respon'   => __( 'Minisize in small screens (responsive)', 'onepiece' ),
+					'respon2'   => __( 'Minisize in small and medium screens (responsive)', 'onepiece' ),
             	)
     	)));
 		
