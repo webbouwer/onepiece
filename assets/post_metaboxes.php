@@ -61,6 +61,8 @@ add_action("add_meta_boxes", "add_productmaker_box");
 function post_productmaker_fields($object)
 {
     wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+    $labels = get_post_meta($object->ID, "meta-box-product-label", false);
+	
     $price = get_post_meta($object->ID, "meta-box-product-price", true);
     $discount = get_post_meta($object->ID, "meta-box-product-discount", true);
     $size = get_post_meta($object->ID, "meta-box-product-size", true);
@@ -69,49 +71,13 @@ function post_productmaker_fields($object)
     $dmz = get_post_meta($object->ID, "meta-box-product-dmz", true);
     $dms = get_post_meta($object->ID, "meta-box-product-dms", true);
     
-    $labels = get_post_meta($object->ID, "meta-box-product-label", false);
+    $wms = get_post_meta($object->ID, "meta-box-product-wms", true);
+    $wmn = get_post_meta($object->ID, "meta-box-product-wmn", true);
     
     ?>
-    <p><label for="meta-box-product-price"><?php echo __('Product Price', 'onepiece'); ?></label>
-    <input name="meta-box-product-price" size="8" type="text" value="<?php echo $price; ?>"></p>
-    <p><label for="meta-box-product-discount"><?php echo __('Price Discount(%)', 'onepiece'); ?></label>
-    <input name="meta-box-product-discount" size="3" type="text" value="<?php echo $discount; ?>"></p>
-    
-    <p><label for="meta-box-product-size"><?php echo __('Product Size', 'onepiece'); ?></label>
-    <select name="meta-box-product-size" id="meta-box-product-size">
-        <option value="none" ><?php echo __('None', 'onepiece'); ?></option>
-        <option value="xs" <?php selected( $size, 'xs' ); ?>><?php echo __('Extra Small', 'onepiece'); ?></option>
-        <option value="s" <?php selected( $size, 's' ); ?>><?php echo __('Small', 'onepiece'); ?></option>
-        <option value="m" <?php selected( $size, 'm' ); ?>><?php echo __('Medium', 'onepiece'); ?></option>
-        <option value="l" <?php selected( $size, 'l' ); ?>><?php echo __('Large', 'onepiece'); ?></option>
-        <option value="xl" <?php selected( $size, 'xl' ); ?>><?php echo __('Extra Large', 'onepiece'); ?></option>
-    </select></p>
-    
-    <fieldset>
-    <legend><?php echo __('Package Size', 'onepiece'); ?></legend>
-    
-    <label for="meta-box-product-dms"><?php echo __('Measurement', 'onepiece'); ?></label>
-    <select name="meta-box-product-dms" id="meta-box-product-dms">
-        <option value="none" <?php selected( $dms, 'none' ); ?>><?php echo __('Do not use', 'onepiece'); ?></option>
-        <option value="mm" <?php selected( $dms, 'mm' ); ?>><?php echo __('mm', 'onepiece'); ?></option>
-        <option value="cm" <?php selected( $dms, 'cm' ); ?>><?php echo __('cm', 'onepiece'); ?></option>
-        <option value="me" <?php selected( $dms, 'me' ); ?>><?php echo __('meters', 'onepiece'); ?></option>
-        <option value="km" <?php selected( $dms, 'km' ); ?>><?php echo __('km', 'onepiece'); ?></option>
-        <option value="mi" <?php selected( $dms, 'mi' ); ?>><?php echo __('miles', 'onepiece'); ?></option>
-    </select>
-    
-    <label for="meta-box-product-dmx"><?php echo __('x', 'onepiece'); ?></label>
-    <input name="meta-box-product-dmx" size="5" type="text" value="<?php echo $dmx; ?>">
-    <label for="meta-box-product-dmy"><?php echo __('y', 'onepiece'); ?></label>
-    <input name="meta-box-product-dmy" size="5" type="text" value="<?php echo $dmy; ?>">
-    <label for="meta-box-product-dmz"><?php echo __('z', 'onepiece'); ?></label>
-    <input name="meta-box-product-dmz" size="5" type="text" value="<?php echo $dmz; ?>">
-    
-    </fieldset>
-    
         
-    <p><label for="meta-box-product-label"><?php echo __('Labeled as', 'onepiece'); ?></label>
-    <select multiple="multiple" name="meta-box-product-label" id="meta-box-product-label" >
+    <label for="meta-box-product-label"><b><?php echo __('Labeled as', 'onepiece'); ?></b></label>
+    <p><select multiple="multiple" name="meta-box-product-label" id="meta-box-product-label" >
         <option value="none" <?php if(in_array( 'none', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('No label', 'onepiece'); ?></option>
         <option value="new" <?php if(in_array( 'new', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('New', 'onepiece'); ?></option>
         <option value="special" <?php if( in_array( 'special', $labels) ){ echo 'selected="selected"'; } ?>><?php echo __('Special', 'onepiece'); ?></option>
@@ -119,6 +85,62 @@ function post_productmaker_fields($object)
         <option value="comingsoon" <?php if(in_array( 'comingsoon', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('Coming soon', 'onepiece'); ?></option>
         <option value="alltimefavourite" <?php if(in_array( 'alltimefavourite', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('All time favourite', 'onepiece'); ?></option>
     </select></p>
+    
+    
+    
+    <p><label for="meta-box-product-price"><b><?php echo __('Price: ', 'onepiece'); ?></b></label>
+    <input name="meta-box-product-price" size="8" type="text" value="<?php echo $price; ?>"></p>
+    <p><label for="meta-box-product-discount"><b><?php echo __('Discount(%)', 'onepiece'); ?></b></label>
+    <input name="meta-box-product-discount" size="3" type="text" value="<?php echo $discount; ?>"></p>
+    
+    <p><label for="meta-box-product-size"><b><?php echo __('Size: ', 'onepiece'); ?></b></label>
+    <select name="meta-box-product-size" id="meta-box-product-size">
+        <option value="none" ><?php echo __('..', 'onepiece'); ?></option>
+        <option value="xs" <?php selected( $size, 'xs' ); ?>><?php echo __('Extra Small', 'onepiece'); ?></option>
+        <option value="s" <?php selected( $size, 's' ); ?>><?php echo __('Small', 'onepiece'); ?></option>
+        <option value="m" <?php selected( $size, 'm' ); ?>><?php echo __('Medium', 'onepiece'); ?></option>
+        <option value="l" <?php selected( $size, 'l' ); ?>><?php echo __('Large', 'onepiece'); ?></option>
+        <option value="xl" <?php selected( $size, 'xl' ); ?>><?php echo __('Extra Large', 'onepiece'); ?></option>
+    </select>
+    </p>
+    
+    <p><b><?php echo __('Package Size', 'onepiece'); ?></b>
+    <p>
+    
+    
+    <input name="meta-box-product-dmx" size="5" type="text" placeholder="<?php echo __('size x', 'onepiece'); ?>" value="<?php echo $dmx; ?>">
+    <input name="meta-box-product-dmy" size="5" type="text" placeholder="<?php echo __('size y', 'onepiece'); ?>" value="<?php echo $dmy; ?>">
+    <input name="meta-box-product-dmz" size="5" type="text" placeholder="<?php echo __('size z', 'onepiece'); ?>" value="<?php echo $dmz; ?>">
+    
+    <!-- <label for="meta-box-product-dms"><?php echo __('Measurement units', 'onepiece'); ?></label> -->
+    <select name="meta-box-product-dms" id="meta-box-product-dms">
+        <option value="none" <?php selected( $dms, 'none' ); ?>><?php echo __('..', 'onepiece'); ?></option>
+        <option value="mm" <?php selected( $dms, 'mm' ); ?>><?php echo __('mm', 'onepiece'); ?></option>
+        <option value="in" <?php selected( $dms, 'in' ); ?>><?php echo __('inch', 'onepiece'); ?></option>
+        <option value="cm" <?php selected( $dms, 'cm' ); ?>><?php echo __('cm', 'onepiece'); ?></option>
+        <option value="me" <?php selected( $dms, 'me' ); ?>><?php echo __('m', 'onepiece'); ?></option>
+        <option value="km" <?php selected( $dms, 'km' ); ?>><?php echo __('km', 'onepiece'); ?></option>
+        <option value="mi" <?php selected( $dms, 'mi' ); ?>><?php echo __('mile', 'onepiece'); ?></option>
+    </select>
+    </p>
+    
+    <b><?php echo __('Package Weight', 'onepiece'); ?></b>
+    <p>
+    
+    <label for="meta-box-product-wmn"><?php echo __('weight', 'onepiece'); ?></label>
+    <input name="meta-box-product-wmn" size="5" type="text" value="<?php echo $wmn; ?>">
+    
+    <!-- <label for="meta-box-product-wms"><?php echo __('Measurement units', 'onepiece'); ?></label> -->
+    <select name="meta-box-product-wms" id="meta-box-product-wms">
+        <option value="none" <?php selected( $wms, 'none' ); ?>><?php echo __('..', 'onepiece'); ?></option>
+        <option value="mcg" <?php selected( $wms, 'mcg' ); ?>><?php echo __('mcg', 'onepiece'); ?></option>
+        <option value="mg" <?php selected( $wms, 'mg' ); ?>><?php echo __('mg', 'onepiece'); ?></option>
+        <option value="g" <?php selected( $wms, 'g' ); ?>><?php echo __('g', 'onepiece'); ?></option>
+        <option value="kg" <?php selected( $wms, 'kg' ); ?>><?php echo __('kg', 'onepiece'); ?></option>
+        <option value="ton" <?php selected( $wms, 'ton' ); ?>><?php echo __('ton', 'onepiece'); ?></option>
+    </select>
+    </p>
+    
     <?php
 }
 
@@ -175,6 +197,11 @@ function save_custom_meta_box($post_id, $post, $update)
     if( isset( $_POST['meta-box-product-dms'] ) )
     update_post_meta( $post_id, 'meta-box-product-dms', $_POST['meta-box-product-dms'] );
     
+    if( isset( $_POST['meta-box-product-wms'] ) )
+    update_post_meta( $post_id, 'meta-box-product-wms', $_POST['meta-box-product-wms'] );
+    if( isset( $_POST['meta-box-product-wmn'] ) )
+    update_post_meta( $post_id, 'meta-box-product-wmn', $_POST['meta-box-product-wmn'] );
+	
     if( isset( $_POST['meta-box-product-label'] ) )
     update_post_meta( $post_id, 'meta-box-product-label', $_POST['meta-box-product-label'] );
 

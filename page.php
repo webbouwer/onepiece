@@ -243,7 +243,20 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
 			$pieces = get_extended($page->post_content); //print_r($pieces);
 			
             $menu .= '<li id="button-'.$page->post_name.'" data-imgurl="'.$contentimage.'"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></li>';
-            $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent"><div class="subtitle"><h3><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></h3></div>';
+            $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent">';
+			
+			if ( $contentimagedata != false && $childpagedisplay != 'fade') {
+			$content .= '<div class="post-coverimage"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">';
+			if($mobile){
+				$content .= get_the_post_thumbnail( $page->ID, 'big-thumb' );
+			}else{
+				$content .= get_the_post_thumbnail( $page->ID, 'medium' );
+			}
+			$content .= '</a></div>';
+			}
+
+			
+			$content .= '<div class="subtitle"><h3><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></h3></div>';
 			$content .= '<div class="subcontent">'.apply_filters('the_content',$pieces['main']);
 			
             if($childpagedisplay == 'slddwn' && !empty($pieces['extended']) ){ // inline readmore
@@ -417,14 +430,14 @@ jQuery(document).ready(function($) {
 		if($(this).hasClass('active') ){
 			$(this).find('.moretextbox').slideUp();
 			$('ul#childpagecontent li.childcontent').removeClass('active');
-			$(this).find('.readmore').fadeIn('slow');
+			$(this).find('.readmore').slideDown('fast');
 		}else{
 			$('ul#childpagecontent li.childcontent').removeClass('active');
         	$(this).addClass('active');
 			$('ul#childpagecontent li.childcontent .moretextbox').slideUp();
 			$('ul#childpagecontent li.childcontent .readmore').fadeIn('slow');
     		$(this).find('.moretextbox').slideDown();
-			$(this).find('.readmore').fadeOut('slow');
+			$(this).find('.readmore').slideUp('fast');
         }
 		return false;
 		});

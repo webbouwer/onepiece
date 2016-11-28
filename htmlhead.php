@@ -1420,6 +1420,14 @@ $(document).ready(function() {
 	markup += '</div>';
 	}
 	
+	if( obj.meta['meta-box-product-wms'] != 'none' && obj.meta['meta-box-product-wmn'] != '' && typeof obj.meta['meta-box-product-wmn'] !== 'undefined'
+	&& !isNaN(obj.meta['meta-box-product-wmn']) && typeof obj.meta['meta-box-product-wms'] !== 'undefined' ){
+	markup += '<div class="packagebox">';
+	markup += '<span class="packageweight">'+obj.meta['meta-box-product-wmn']+' '+obj.meta['meta-box-product-wms']+'</span>';
+	markup += '</div>';
+	}
+	
+	
 	markup += itemreadmore;	
 	
 	//markup += JSON.stringify(obj.meta);
@@ -1583,7 +1591,7 @@ $(window).load(function() {
 // fontsize 
 $globalfontsize = 0.6 + $stylelayout_fontsize / 10;
 if($mobile){
-$globalfontsize = 0.6 + $stylelayout_fontsize / 6;
+$globalfontsize = 0.6 + $stylelayout_fontsize / 8;
 }
 // buttons
 $vertical_padding_line = ($stylelayout_spacing / 5) * 4;
