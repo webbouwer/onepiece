@@ -829,6 +829,7 @@ echo  'var width_responsive_menu = '.get_theme_mod('onepiece_responsive_medium_m
 		}
 	}
 	
+	doneResizing(); // ondoc ready trigger
 <?php
 }
 ?>
@@ -962,6 +963,15 @@ if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight;
     setminisizemenu();
 	}
 	
+	if( mainmenuminisize == 'respon' || mainmenuminisize == 'respon2' ){
+		if( menubutton.hasClass('open') ){
+			menupanel.slideToggle();
+			menubutton.toggleClass('open');
+			menubutton.html('<?php echo __('Menu', 'onepiece'); ?>'); // when open show close text /image
+		}
+	}
+		
+	
 }else if( (offset.top - $(window).scrollTop()) >= <?php echo $stickymenu_triggerheight; ?> && menubox.hasClass('sticky')){
 	
 	
@@ -976,6 +986,15 @@ if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight;
 	}else{ ?>
 	menubox.removeClass('sticky').appendTo("#site-navigation .outermargin");
 	<?php } ?>
+	
+	if( mainmenuminisize == 'respon' || mainmenuminisize == 'respon2' ){
+		if( menubutton.hasClass('open') ){
+			menupanel.slideToggle();
+			menubutton.toggleClass('open');
+			menubutton.html('<?php echo __('Menu', 'onepiece'); ?>'); // when open show close text /image
+		}
+	}
+	
 } // end  onscroll for fixed topbar
 
 

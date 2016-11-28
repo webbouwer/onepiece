@@ -34,6 +34,21 @@ post_class('follow-post');
 
 echo '><div class="contentpadding">';
 
+// define post label
+$post_meta_label = get_post_meta( get_the_ID() , 'meta-box-product-label', '');
+/*
+// define post product properties
+$post_meta_product_price = get_post_meta( get_the_ID() , 'meta-box-product-price', '');
+$post_meta_product_discount = get_post_meta( get_the_ID() , 'meta-box-product-discount', '');
+$post_meta_product_size = get_post_meta( get_the_ID() , 'meta-box-product-size', '');
+$post_meta_product_dmx = get_post_meta( get_the_ID() , 'meta-box-product-dmx', '');
+$post_meta_product_dmy = get_post_meta( get_the_ID() , 'meta-box-product-dmy', '');
+$post_meta_product_dmz = get_post_meta( get_the_ID() , 'meta-box-product-dmz', '');
+$post_meta_product_dms = get_post_meta( get_the_ID() , 'meta-box-product-dms', '');
+*/
+	
+	
+
 // define title link
 $custom_metabox_url = get_post_meta( get_the_ID() , 'meta-box-custom-url', true);
 $custom_metabox_useurl = get_post_meta( get_the_ID() , 'meta-box-custom-useurl', true);
