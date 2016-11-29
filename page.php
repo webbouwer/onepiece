@@ -21,6 +21,7 @@ $beforewidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-beforewidgetsdisp
 $afterwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-afterwidgetsdisplay", true);
 $secondsidebardisplay = get_post_meta(get_the_ID(), "meta-page-secondsidebardisplay", true);
 $childpagedisplay = get_post_meta(get_the_ID(), "meta-box-display-childpages", true);
+$childparentcontent = get_post_meta(get_the_ID(), "meta-box-display-parentcontent", true);
 
 /**
  *
@@ -147,8 +148,10 @@ $post_obj = $wp_query->get_queried_object();
  *
  */	
 if ( has_post_thumbnail() && $useheaderimage != 'replace' && $childpagedisplay != 'fade' ) {
-    
+
+if( $childparentcontent != 'none'){   
 $title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
+
 echo '<div class="post-coverimage">'.$title_link;
 $pagefeaturedimage =  '';
 if($mobile){
@@ -160,7 +163,7 @@ $pagefeaturedimage = wp_get_attachment_image_src( get_post_thumbnail_id( get_the
 }
 echo '</a></div>'; // default, 'thumb' or 'medium'
 }
-
+}
 if ( is_super_admin() ) { // admin/editor options
 edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>' );
 }
@@ -179,6 +182,8 @@ $mainpagecontent = '';
  *
  */
 if( $childpagedisplay != 'fade' && $childpagedisplay != 'slddwn' ){ 
+
+if( $childparentcontent != 'none' ){
 
 echo '<div class="page-title"><h1>'.get_the_title().'</h1></div>';
 if(get_theme_mod('onepiece_content_panel_page_authortime') != 'none'){
@@ -200,7 +205,10 @@ echo '</div>';
  *
  */ 
 echo '<div class="page-content mainpage">';
-echo apply_filters('the_content', get_the_content()).'</div>';
+echo apply_filters('the_content', get_the_content());
+echo '</div>';
+}
+
 }else{
 
 /** 
@@ -213,9 +221,11 @@ echo apply_filters('the_content', get_the_content()).'</div>';
 
 $thumb_url = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ),'full', false );
 
-
+if( $childparentcontent != 'none' ){
 $mainpageoption .= '<li id="button-'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'"><a href="'.get_permalink($post_obj->ID).'" target="_self">'.$post_obj->post_title.'</a></li>';
 $mainpagecontent .= '<li id="'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'" class="childcontent"><div class="subtitle"><h3>'.$post_obj->post_title.'</h3></div><div class="subcontent">'. apply_filters('the_content', get_the_content()) .'</div></li>';
+}
+
 }
 
 /** 

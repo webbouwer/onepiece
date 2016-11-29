@@ -742,7 +742,7 @@ $(document).ready(function() {
         top:0,
         left:0,
         opacity:<?php echo ( 100 - $topbaropacity) / 100; ?>,
-        z-index:-1,
+        zIndex:-1,
         width:'100%', 
         height:'100%'
       }) 
@@ -832,9 +832,7 @@ echo  'var width_responsive_menu = '.get_theme_mod('onepiece_responsive_medium_m
 	doneResizing(); // ondoc ready trigger
 <?php
 }
-?>
 
-<?php
 }
 ?>
 

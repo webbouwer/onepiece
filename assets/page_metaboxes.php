@@ -95,7 +95,7 @@ function childpage_section_fields($object)
 {
 wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 $dsp = get_post_meta($object->ID, "meta-box-display-childpages", true);
-$link = get_post_meta($object->ID, "meta-box-link-childpages", true);
+$parent = get_post_meta($object->ID, "meta-box-display-parentcontent", true);
 ?>
 <p><label for="meta-box-display-childpages"><?php echo __('Display Childpages', 'onepiece'); ?></label>
 <select name="meta-box-display-childpages" id="meta-box-display-childpages">
@@ -107,6 +107,14 @@ $link = get_post_meta($object->ID, "meta-box-link-childpages", true);
 <option value="slddwn" <?php selected( $dsp, 'slddwn' ); ?>><?php echo __('Vertical slide blocks', 'onepiece'); ?></option>
 </select>
 </p>
+
+<p><label for="meta-box-display-parentcontent"><?php echo __('Parent content display', 'onepiece'); ?></label>
+<select name="meta-box-display-parentcontent" id="meta-box-display-parentcontent">
+<option value="none" <?php selected( $parent, 'none' ); ?>><?php echo __('Do not display', 'onepiece'); ?></option>
+<option value="like" <?php selected( $parent, 'intr' ); ?>><?php echo __('Display like childpages', 'onepiece'); ?></option>
+</select>
+</p>
+
 <?php
 }
 
@@ -228,6 +236,8 @@ function save_page_meta_box($post_id, $post, $update)
     // childpage sections
     if( isset( $_POST['meta-box-display-childpages'] ) )
         update_post_meta( $post_id, 'meta-box-display-childpages', $_POST['meta-box-display-childpages'] );
+    if( isset( $_POST['meta-box-display-parentcontent'] ) )
+        update_post_meta( $post_id, 'meta-box-display-parentcontent', $_POST['meta-box-display-parentcontent'] );
 }
 add_action("save_post", "save_page_meta_box", 10, 3);
 ?>
