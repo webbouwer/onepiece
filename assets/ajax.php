@@ -1,5 +1,4 @@
 <?php // AJAX for wordpress
-
 function ajax_filter_posts_scripts() {
   // Enqueue script
   wp_register_script('afp_script', get_template_directory_uri() . '/assets/ajax-filter-posts.js', false, null, false);
@@ -84,9 +83,10 @@ function ajax_filter_get_posts() {
 
     $metadata = get_post_meta( get_the_ID() );
 
+
     $taglist = wp_get_post_terms( get_the_ID(), 'post_tag', array("fields" => "slugs"));
 
-    $custom_field_keys = get_post_custom_keys(); // get_post_custom_values
+    /*$custom_field_keys = get_post_custom_keys(); // get_post_custom_values
     $customfields = '';
     foreach ( $custom_field_keys as $key => $value ) {
         // custom fields
@@ -96,7 +96,7 @@ function ajax_filter_get_posts() {
 	foreach ( $values as $fieldkey => $fieldvalue ) {
 	  $customfields[ $value ] = $fieldvalue; 
         }
-    }
+    }*/
         //$array[] = $post_data;
         $array[] = array(
          'id' => get_the_ID(),

@@ -111,9 +111,7 @@ $(document).ready(function() {
 	}
 	
 	doneGlobalResizing();
-	
-	
-	
+
 	
 	
 /**

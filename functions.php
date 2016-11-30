@@ -373,6 +373,25 @@ if (is_dir($dir)){
 return $arr;
 }
 
+
+/******** object_to_array ********/
+function object_to_array($data)
+{
+    if(is_array($data) || is_object($data))
+    {
+        $result = array();
+ 
+        foreach($data as $key => $value) {
+            $result[$key] = $this->object_to_array($value);
+        }
+ 
+        return $result;
+    }
+ 
+    return $data;
+}
+
+
 // Remove Emoji junk by Christine Cooper
 // Found on http://wordpress.stackexchange.com/questions/185577/disable-emojicons-introduced-with-wp-4-2
 function disable_wp_emojicons() {

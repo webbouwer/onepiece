@@ -42,7 +42,14 @@ $selected = isset( $values['theme_gallery_category_selectbox'] ) ? $values['them
 $gallerydefault = isset( $values['onepiece_content_gallery_category'] ) ? $values['onepiece_content_gallery_category'][0] : '';
 $pagetitle = isset( $values['theme_gallery_pagetitle_selectbox'] ) ? $values['theme_gallery_pagetitle_selectbox'][0] : '';
 $filters = isset( $values['theme_gallery_filters_selectbox'] ) ? $values['theme_gallery_filters_selectbox'][0] : '';
-$maxinrow = isset( $values['theme_gallery_items_maxinrow'] ) ? $values['theme_gallery_items_maxinrow'][0] : '5';
+$itemminh = isset( $values['theme_gallery_items_minheight'] ) ? esc_attr( $values['theme_gallery_items_minheight'][0] ) : 160;
+$itembigh = $itemminh  * 1.8;
+if($mobile){
+$itemminh = $itemminh / 1.5;
+$itembigh = $itemminh * 1.8;
+}
+
+$maxinrow = isset( $values['theme_gallery_items_maxinrow'] ) ? $values['theme_gallery_items_maxinrow'][0] : 5;
 $clickaction = isset( $values['theme_gallery_items_clickaction'] ) ? $values['theme_gallery_items_clickaction'][0] : 'poppost';
 $itemview = isset( $values['theme_gallery_items_itemview'] ) ? $values['theme_gallery_items_itemview'][0] : 'right';
 
@@ -691,7 +698,7 @@ padding:4% 5%;
 echo '<style type="text/css">';
 echo '#headercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logo_maxwidth',240 ).'px !important; }';
 
-echo '#headerbar { min-height:'.get_theme_mod('onepiece_elements_headerimage_height','280').'px; }'; 
+echo '#headerbar { min-height:'.get_theme_mod('onepiece_elements_headerimage_height',280).'px; }'; 
 
 echo '#footercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px !important; }';
 
@@ -1079,6 +1086,9 @@ $qr = $maxinrow-3;
 echo '#itemcontainer .item{width:'.(100 / $cr).'%;}'; 
 echo '#itemcontainer .item.active{ width:'.((100 / $cr)*$qr).'%; }';
 
+echo '.item .coverbox{ min-height:'.$itemminh.'px !important;}';
+echo '.item.active .coverbox{ min-height:'.$itembigh.'px !important;}';
+
 /**
  * Set Item view Columns
  * ! make custom sizes?
@@ -1242,6 +1252,7 @@ $(document).ready(function() {
                 //$('#contentloadbox').remove();
             });
 
+
         }); 
 
     }
@@ -1264,6 +1275,49 @@ $(document).ready(function() {
     }
     var markup = '<div id="post-'+obj.id+'" data-category="'+cat+'" class="item '+cat+' '+tags+'"><div class="innerpadding">';
 
+
+
+	var smallscreen = false;
+ 	<?php // check for customizer posts display settings
+    if( $mobile ){
+    echo "smallscreen = true;";
+	}
+    ?>
+
+
+ 	if( smallscreen === false && obj.largeimg ){ 
+	
+	//markup += '<div class="coverbox"><img class="coverimage" src="'+obj.largeimg[0]+'" alt="'+obj.title+'" /></div>';
+	markup += '<div class="coverbox" style="background-image:url('+obj.largeimg[0]+');min-height:<?php echo $itemminh; ?>px;"></div>'; 
+	
+	}else if( obj.mediumimg ){ 
+	
+    //markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
+	markup += '<div class="coverbox" style="background-image:url('+obj.mediumimg[0]+');min-height:<?php echo $itemminh; ?>px;"></div>';
+	
+    }
+	
+    // META DATA .. JSON.stringify(obj.meta)
+	
+	/*
+	 * LABEL
+	 */
+	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
+	
+	markup += '<div class="labelbox">';
+	
+	markup += '<span class="productlabel">'+obj.meta['meta-box-product-label']+'</span>';
+	
+	markup += '</div>';
+	
+	}
+	
+	
+	
+	/*
+	 * Titlebox
+	 */ 
+	
     markup += '<div class="titlebox"><h3>';
 
 	var readmoreurl = obj.posturl;
@@ -1293,39 +1347,8 @@ $(document).ready(function() {
     }
     <?php } ?>
 
-
-    
     markup += '</div>';
-
-
-	var smallscreen = false;
- 	<?php // check for customizer posts display settings
-    if( $mobile ){
-    echo "smallscreen = true;";
-	}
-    ?>
-
-
- 	if( smallscreen === false && obj.largeimg ){ 
-	markup += '<div class="coverbox"><img class="coverimage" src="'+obj.largeimg[0]+'" alt="'+obj.title+'" /></div>';
-	}else if( obj.mediumimg ){ 
-    markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
-    }
 	
-    // META DATA .. JSON.stringify(obj.meta)
-	
-	/*
-	 * LABEL
-	 */
-	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
-	
-	markup += '<div class="labelbox">';
-	
-	markup += '<span class="productlabel">'+obj.meta['meta-box-product-label']+'</span>';
-	
-	markup += '</div>';
-	
-	}
 	
 	
 	var itemreadmore = '';
@@ -1340,35 +1363,62 @@ $(document).ready(function() {
 		var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_blank">';
 	}
 	if( obj.meta['meta-box-custom-urltext'] ){
-		urltext = obj.meta['meta-box-custom-urltext']; 
+		urltext = obj.meta['meta-box-custom-urltext'];  
 	}
 	
-	itemreadmore += urltext+'</a>';
+	itemreadmore += urltext+'</a>'; 
 	
 	}
 	
     
 	markup += '<div class="fullinfobox hidden">';
-	markup += '<div class="textbox">'+obj.content+'</div>';
 	
 	
-	/*
-	 * SIZE
-	 */
+		
+	/**
+ 	 * CURRENCY MAP
+  	 */
+	var currency_map = {
+    "EUR" : "&#8364;",
+    "USD" : "&#36;",
+    "JPY" : "&#165;",
+    "CNY" : "&#165;",
+    "GBP" : "&#163;",
+    "AUD" : "&#36;",
+    "CAD" : "&#36;",
+    "CHF" : "&#67;&#72;&#70;"
+	};
 	
-	if( obj.meta['meta-box-product-size'] != '' && obj.meta['meta-box-product-size'] != 'none' && typeof obj.meta['meta-box-product-size'] !== 'undefined'){
+		
+	/**
+ 	 * SIZE MAP
+  	 */
+	var size_map = {
+    "xs" : "extra small",
+    "s" : "small",
+    "m" : "medium",
+    "l" : "large",
+    "xl" : "extra large" 
+	};
 	
-	markup += '<div class="sizebox">';
 	
-	markup += '<span class="size">'+obj.meta['meta-box-product-size']+'</span>';
 	
-	markup += '</div>';
 	
-	}
+
 	
 	/*
 	 * PRICE
 	 */
+	 
+	var used_currency =  obj.meta['meta-box-product-currency'];
+	
+
+	
+	if( obj.meta['meta-box-product-currency'] != '' &&  typeof obj.meta['meta-box-product-currency'] !== 'undefined' && typeof currency_map !== 'undefined'){
+	used_currency = currency_map[ obj.meta['meta-box-product-currency'] ];
+	}
+	
+	 
 	if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' ){
 	markup += '<div class="pricebox">';
 	
@@ -1376,22 +1426,52 @@ $(document).ready(function() {
 	
 		markup += '<span class="discount"><?php echo __('Discount', 'onepiece'); ?> '+ obj.meta['meta-box-product-discount']+'% </span>';
 	
-		var price = '<span class="price"> &#8364; '+ (obj.meta['meta-box-product-price'] / 100) * (100 - obj.meta['meta-box-product-discount']) +'</span>';
+		var price = '<span class="price"> '+ used_currency +' '+ (obj.meta['meta-box-product-price'] / 100) * (100 - obj.meta['meta-box-product-discount']) +'</span>';
 		
 	}else if( !isNaN(obj.meta['meta-box-product-price']) ){
 	
-		var price = '<span class="price"> &#8364; '+ obj.meta['meta-box-product-price'] +'</span>';
+		var price = '<span class="price"> '+ obj.meta['meta-box-product-currency'] +' '+ obj.meta['meta-box-product-price'] +'</span>';
 		
 	}else{
 	
 		var price = '<span class="price"> '+ obj.meta['meta-box-product-price'] +'</span>'; // text
 	}
 	
-	
 	markup += price;
 	
 	markup += '</div>';
 	}
+	
+	
+	
+	
+		
+	/*
+	 * SIZE
+	 */
+	
+	if( obj.meta['meta-box-product-size'] != '' && obj.meta['meta-box-product-size'] != 'none' && typeof obj.meta['meta-box-product-size'] !== 'undefined'){
+	 
+	markup += '<div class="sizebox">';
+	
+	markup += '<span class="size">'+size_map[ obj.meta['meta-box-product-size'] ]+'</span>';
+	
+	markup += '</div>';
+	
+	}
+	
+	
+	
+	
+	
+	
+	/*
+	 * Description / text
+	 */
+	markup += '<div class="textbox">'+obj.excerpt+'</div>'; 
+	
+	
+	
 	
 	/*
 	 * PACKAGE
@@ -1425,13 +1505,15 @@ $(document).ready(function() {
 	markup += '</div>';
 	}
 	
-	
-	markup += itemreadmore;	
+	 
+	 
+	 
+	//markup += itemreadmore;	
 	
 	//markup += JSON.stringify(obj.meta);
 	markup += '</div>';
 	
-    markup += '</div></div>';
+    markup += '<div class="clr"></div></div></div>';
 	return markup;
 	
     /* 'id,'type','date','title','category','excerpt','content','meta','tags', 'imageurl','posturl','slug','customfieldarray','post_data' */
@@ -1464,22 +1546,33 @@ $(document).ready(function() {
 		<?php if( $clickaction == 'sizeup' ){ ?>
 
 		$('.item').removeClass('active');
+		
+		<?php if( $mobile ){ ?>
+		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' ); // set min-height item
+		<? } ?>
+		
 		$('.item .fullinfobox').addClass('hidden');
+		
+		<?php if( $mobile ){ ?>
+		$(this).find('.coverbox').css('min-height', '<?php echo $itembigh; ?>px' );
+		<? } ?>
 		
 		$(this).addClass('active');
 		$(this).find('.fullinfobox').removeClass('hidden');
+		
 		
 		$currCat = $(this).attr('data-category');
 		var $this = $(this);
 
 		$container.prepend($this).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // or 'original-order'
-	
-	
+		
+		
 	 if( $('#topgridmenu').length > 0 ){
 		$('html, body').animate({ scrollTop: $('#topgridmenu').offset().top - $('#topbar .outermargin').outerHeight(true) }, 400); // Scroll to top (bottom of header)
 	}else{
 		$('html, body').animate({ scrollTop: $('#itemcontainer').offset().top - $('#topbar .outermargin').outerHeight(true) }, 400); // Scroll to top (bottom of header)
 	}
+		
 		
 		
 		<?php }
@@ -1510,7 +1603,13 @@ $(document).ready(function() {
     m.preventDefault();
 
 	$('.item').removeClass('active');
+	
 	$('.item .fullinfobox').addClass('hidden');
+	
+		
+		<?php if( $mobile ){ ?>
+		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' );
+		<? } ?>
 	
     $('ul.tagmenu.active').slideUp().removeClass('active');
     $('ul.categorymenu li a').removeClass('selected');
@@ -1551,6 +1650,11 @@ $(document).ready(function() {
 	
 		$('.item').removeClass('active');
 		$('.item .fullinfobox').addClass('hidden');
+		
+		
+		<?php if( $mobile ){ ?>
+		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' );
+		<? } ?>
 	
   	    var keyword = '.'+$(this).text();
         $catList = $(this).attr('data-filter');

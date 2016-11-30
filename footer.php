@@ -75,9 +75,9 @@ echo '<div class="clr"></div></div>';
 $copyrighttext = get_theme_mod('onepiece_elements_bottom_copyrighttext' , '');
 $copyrightpos = get_theme_mod('onepiece_elements_bottom_copyrightposition', 'hide');
 if(  $copyrighttext != '' && $copyrightpos != 'hide'){
-echo '<div id="copyright-textbox" align="'.$copyrightpos.'">';
+echo '<div class="clr"></div><div id="copyright-textbox" class="'.$copyrightpos.'">';
 echo $copyrighttext;
-echo '<div class="clr"></div></div>';
+echo '</div>';
 }
 
 echo '<div class="clr"></div></div>';

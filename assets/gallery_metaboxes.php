@@ -27,8 +27,9 @@ $catarr = get_categories_select(); // customizer function
 $pagetitle = isset( $values['theme_gallery_pagetitle_selectbox'] ) ? esc_attr( $values['theme_gallery_pagetitle_selectbox'][0] ) : '';
 $filters = isset( $values['theme_gallery_filters_selectbox'] ) ? esc_attr( $values['theme_gallery_filters_selectbox'][0] ) : '';
 $sidebars = isset( $values['theme_gallery_sidebars_selectbox'] ) ? esc_attr( $values['theme_gallery_sidebars_selectbox'][0] ) : '';
-$maxitems = isset( $values['theme_gallery_items_maxinrow'] ) ? esc_attr( $values['theme_gallery_items_maxinrow'][0] ) : '';
-$clickaction = isset( $values['theme_gallery_items_clickaction'] ) ? esc_attr( $values['theme_gallery_items_clickaction'][0] ) : '';
+$maxitems = isset( $values['theme_gallery_items_maxinrow'] ) ? esc_attr( $values['theme_gallery_items_maxinrow'][0] ) : 4;
+$itemminh = isset( $values['theme_gallery_items_minheight'] ) ? esc_attr( $values['theme_gallery_items_minheight'][0] ) : 160;
+$clickaction = isset( $values['theme_gallery_items_clickaction'] ) ? esc_attr( $values['theme_gallery_items_clickaction'][0] ) : 'none';
 $itemview = isset( $values['theme_gallery_items_itemview'] ) ? esc_attr( $values['theme_gallery_items_itemview'][0] ) : 'right';
 ?>
 <p><label for="theme_gallery_category_selectbox">Select a category</label>
@@ -56,6 +57,10 @@ echo '<option value="'.$slg.'" '.selected( $selected, $slg ).'>'.$nm.'</option>'
 <option value="cats" <?php selected( $filters, 'cats' ); ?>><?php echo __('Sub Category Menu', 'onepiece'); ?></option>
 <option value="all" <?php selected( $filters, 'all' ); ?>><?php echo __('Sub Categories & Tags', 'onepiece'); ?></option>
 </select>
+</p>
+
+<p><label for="theme_gallery_items_minheight"><?php echo __('Item minimal height in overview (px)', 'onepiece'); ?></label>
+<input name="theme_gallery_items_minheight" id="theme_gallery_items_minheight" type="text" placeholder="160" value="<?php echo $itemminh; ?>" />
 </p>
 
 <p><label for="theme_gallery_items_clickaction"><?php echo __('Action on item click/touch', 'onepiece'); ?></label>
@@ -89,6 +94,8 @@ function save_theme_gallery_settings( $post_id )
         update_post_meta( $post_id, 'theme_gallery_filters_selectbox', esc_attr( $_POST['theme_gallery_filters_selectbox'] ) );
     if( isset( $_POST['theme_gallery_items_maxinrow'] ) )
         update_post_meta( $post_id, 'theme_gallery_items_maxinrow', esc_attr( $_POST['theme_gallery_items_maxinrow'] ) );
+    if( isset( $_POST['theme_gallery_items_minheight'] ) )
+        update_post_meta( $post_id, 'theme_gallery_items_minheight', esc_attr( $_POST['theme_gallery_items_minheight'] ) );
 
 	if( isset( $_POST['theme_gallery_items_clickaction'] ) )
         update_post_meta( $post_id, 'theme_gallery_items_clickaction', esc_attr( $_POST['theme_gallery_items_clickaction'] ) );

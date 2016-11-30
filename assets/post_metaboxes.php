@@ -1,4 +1,4 @@
-<?php /* POST META BOXES*/
+ <?php /* POST META BOXES*/
 
 /* POST CUSTOM LINK META FIELDS */
 function add_custom_link_box()
@@ -64,6 +64,9 @@ function post_productmaker_fields($object)
     $labels = get_post_meta($object->ID, "meta-box-product-label", false);
 	
     $price = get_post_meta($object->ID, "meta-box-product-price", true);
+	
+    $currency = get_post_meta($object->ID, "meta-box-product-currency", true);
+	
     $discount = get_post_meta($object->ID, "meta-box-product-discount", true);
     $size = get_post_meta($object->ID, "meta-box-product-size", true);
     $dmx = get_post_meta($object->ID, "meta-box-product-dmx", true);
@@ -90,12 +93,28 @@ function post_productmaker_fields($object)
     
     <p><label for="meta-box-product-price"><b><?php echo __('Price: ', 'onepiece'); ?></b></label>
     <input name="meta-box-product-price" size="8" type="text" value="<?php echo $price; ?>"></p>
+    <p>
+     <!-- <label for="meta-box-product-dms"><?php echo __('Currency', 'onepiece'); ?></label> 
+     see https://gist.github.com/Gibbs/3920259
+     -->
+    <select name="meta-box-product-currency" id="meta-box-product-currency">
+        <option value="EUR" <?php selected( $currency, 'EUR' ); ?>><?php echo __('EUR &#8364;', 'onepiece'); ?></option>
+        <option value="CNY" <?php selected( $currency, 'CNY' ); ?>><?php echo __('CNY &#165;', 'onepiece'); ?></option>
+        <option value="USD" <?php selected( $currency, 'USD' ); ?>><?php echo __('USD &#36;', 'onepiece'); ?></option>
+        <option value="GBP" <?php selected( $currency, 'GBP' ); ?>><?php echo __('GBP &#163;', 'onepiece'); ?></option>
+        <option value="JPY" <?php selected( $currency, 'JPY' ); ?>><?php echo __('JPY &#165;', 'onepiece'); ?></option>
+        <option value="AUD" <?php selected( $currency, 'AUD' ); ?>><?php echo __('AUD &#36;', 'onepiece'); ?></option>
+        <option value="CAD" <?php selected( $currency, 'CAD' ); ?>><?php echo __('CAD &#36;', 'onepiece'); ?></option>
+        <option value="CHF" <?php selected( $currency, 'CHF' ); ?>><?php echo __('CHF &#67;&#72;&#70;', 'onepiece'); ?></option>
+    </select>
+    </p>
+    
     <p><label for="meta-box-product-discount"><b><?php echo __('Discount(%)', 'onepiece'); ?></b></label>
     <input name="meta-box-product-discount" size="3" type="text" value="<?php echo $discount; ?>"></p>
     
     <p><label for="meta-box-product-size"><b><?php echo __('Size: ', 'onepiece'); ?></b></label>
     <select name="meta-box-product-size" id="meta-box-product-size">
-        <option value="none" ><?php echo __('..', 'onepiece'); ?></option>
+        <option value="none" ><?php echo __('none', 'onepiece'); ?></option>
         <option value="xs" <?php selected( $size, 'xs' ); ?>><?php echo __('Extra Small', 'onepiece'); ?></option>
         <option value="s" <?php selected( $size, 's' ); ?>><?php echo __('Small', 'onepiece'); ?></option>
         <option value="m" <?php selected( $size, 'm' ); ?>><?php echo __('Medium', 'onepiece'); ?></option>
@@ -112,9 +131,9 @@ function post_productmaker_fields($object)
     <input name="meta-box-product-dmy" size="5" type="text" placeholder="<?php echo __('size y', 'onepiece'); ?>" value="<?php echo $dmy; ?>">
     <input name="meta-box-product-dmz" size="5" type="text" placeholder="<?php echo __('size z', 'onepiece'); ?>" value="<?php echo $dmz; ?>">
     
-    <!-- <label for="meta-box-product-dms"><?php echo __('Measurement units', 'onepiece'); ?></label> -->
+    <!-- <label for="meta-box-product-dms"><?php echo __('Units', 'onepiece'); ?></label> -->
     <select name="meta-box-product-dms" id="meta-box-product-dms">
-        <option value="none" <?php selected( $dms, 'none' ); ?>><?php echo __('..', 'onepiece'); ?></option>
+        <option value="none" <?php selected( $dms, 'none' ); ?>><?php echo __('none', 'onepiece'); ?></option>
         <option value="mm" <?php selected( $dms, 'mm' ); ?>><?php echo __('mm', 'onepiece'); ?></option>
         <option value="in" <?php selected( $dms, 'in' ); ?>><?php echo __('inch', 'onepiece'); ?></option>
         <option value="cm" <?php selected( $dms, 'cm' ); ?>><?php echo __('cm', 'onepiece'); ?></option>
@@ -127,12 +146,12 @@ function post_productmaker_fields($object)
     <b><?php echo __('Package Weight', 'onepiece'); ?></b>
     <p>
     
-    <label for="meta-box-product-wmn"><?php echo __('weight', 'onepiece'); ?></label>
+    <label for="meta-box-product-wmn"><?php echo __('Weight: ', 'onepiece'); ?></label>
     <input name="meta-box-product-wmn" size="5" type="text" value="<?php echo $wmn; ?>">
     
-    <!-- <label for="meta-box-product-wms"><?php echo __('Measurement units', 'onepiece'); ?></label> -->
+    <!-- <label for="meta-box-product-wms"><?php echo __('Units', 'onepiece'); ?></label> -->
     <select name="meta-box-product-wms" id="meta-box-product-wms">
-        <option value="none" <?php selected( $wms, 'none' ); ?>><?php echo __('..', 'onepiece'); ?></option>
+        <option value="none" <?php selected( $wms, 'none' ); ?>><?php echo __('none', 'onepiece'); ?></option>
         <option value="mcg" <?php selected( $wms, 'mcg' ); ?>><?php echo __('mcg', 'onepiece'); ?></option>
         <option value="mg" <?php selected( $wms, 'mg' ); ?>><?php echo __('mg', 'onepiece'); ?></option>
         <option value="g" <?php selected( $wms, 'g' ); ?>><?php echo __('g', 'onepiece'); ?></option>
@@ -184,8 +203,15 @@ function save_custom_meta_box($post_id, $post, $update)
     /* PRODUCT MAKER */
     $price = $_POST["meta-box-product-price"];
     $discount = $_POST["meta-box-product-discount"];
+	
     update_post_meta( $post_id, 'meta-box-product-price', $price );
+    
+	
     update_post_meta( $post_id, 'meta-box-product-discount', $discount );
+	
+	if( isset( $_POST['meta-box-product-currency'] ) )
+    update_post_meta( $post_id, 'meta-box-product-currency', $_POST['meta-box-product-currency'] );
+	
     if( isset( $_POST['meta-box-product-size'] ) )
     update_post_meta( $post_id, 'meta-box-product-size', $_POST['meta-box-product-size'] );
     if( isset( $_POST['meta-box-product-dmx'] ) )
