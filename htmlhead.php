@@ -43,7 +43,7 @@ $gallerydefault = isset( $values['onepiece_content_gallery_category'] ) ? $value
 $pagetitle = isset( $values['theme_gallery_pagetitle_selectbox'] ) ? $values['theme_gallery_pagetitle_selectbox'][0] : '';
 $filters = isset( $values['theme_gallery_filters_selectbox'] ) ? $values['theme_gallery_filters_selectbox'][0] : '';
 $itemminh = isset( $values['theme_gallery_items_minheight'] ) ? esc_attr( $values['theme_gallery_items_minheight'][0] ) : 160;
-$itembigh = $itemminh  * 1.8;
+$itembigh = $itemminh  * 2;
 if($mobile){
 $itemminh = $itemminh / 1.5;
 $itembigh = $itemminh * 1.8;

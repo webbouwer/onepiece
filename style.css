@@ -517,7 +517,14 @@ display:none;
 display:block;
 }
 
-
+.item .titlebox
+{
+position:absolute;
+bottom:0px;
+left:0px;
+width:100%;
+z-index:70;
+}
 .item .labelbox
 {
 position:absolute;
@@ -531,6 +538,10 @@ z-index:70;
 top:0px;
 left:0px;
 z-index:70; 
+}
+.item.active .titlebox
+{
+position:relative;
 }
 
 

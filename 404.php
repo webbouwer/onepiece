@@ -1,143 +1,94 @@
-<?php // to use this 404 ERROR page add : ErrorDocument 404 /index.php?error=404 : to the .htaccess file
-$mobile = mobile_device_detect(true,false,true,true,true,true,true,false,false);
-echo '<!DOCTYPE HTML>'; 
-echo '<html '; 
-language_attributes(); 
-echo '><head>';
-echo '<meta http-equiv="Content-Type" content="text/html; charset='.get_bloginfo( 'charset' ).'" />';
+<?php 
 
-wp_head(); // http://codex.wordpress.org/Function_Reference/wp_head 
+// htmlhead
+get_template_part('htmlhead');
 
-$site_description = get_bloginfo( 'description' );
-echo 	'<meta name="description" content="'.$site_description.'">'
-	.'<meta name="keywords" content="wordpress theme,theme setup,basic theme,custom theme">'
-	.'<link rel="canonical" href="'.home_url(add_query_arg(array(),$wp->request)).'">'
-	.'<link rel="pingback" href="'.get_bloginfo( 'pingback_url' ).'" />'
-	.'<link rel="shortcut icon" href="images/favicon.ico" />'
-	.'<link rel="stylesheet" type="text/css" href="'.get_bloginfo('stylesheet_url').'" />';
+// header
+get_template_part('header');
 
-if($mobile){
-echo 	'<meta name="viewport" content="initial-scale=1.0, width=device-width" />';
-}else{
-echo 	'<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">'
-	.'<!--[if lt IE 9]><script src="'.esc_url( get_template_directory_uri() ).'/assets/html5.js"></script>'
-	.'<script src="'.esc_url( get_template_directory_uri() ).'/assets/cssmediaqueries.js"></script>'
-	.'<![endif]-->';
-}
+// content
+echo '<div id="contentcontainer"><div class="outermargin">';
 
-if ( ! isset( $content_width ) ) $content_width = 900;
+$contentpercentage = 100;
 
-wp_enqueue_script("jquery");
+if( get_theme_mod('onepiece_elements_sidebar2_position2', 'out') == 'out'
+&& function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position', 'none') != 'none' ){
 
-echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>';
-echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-tools/1.2.7/jquery.tools.min.js"></script>';
+$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width'); 
+echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2', 'out').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').';width:'.get_theme_mod('onepiece_elements_sidebar2_width', 20).'%;">';
+get_template_part('sidebar2');
 
-// Frontend user login 
-if( get_option( 'users_can_register' ) ){ 
-?>
-<script type="text/javascript"> 
-jQuery(function($) {
-		$(document).ready(function(){
-
-		$('ul.tabcontainer li').hide();
-                //$("ul.tabcontainer li").eq(0).slideDown();
-
-		$('ul.tabmenu li,div.resetlogin').on('click', function(){
-			$('ul.tabmenu li,div.resetlogin ').removeClass('active');
-                	$(this).addClass('active');
-			$('li.tab').slideUp();
-			if($(this).hasClass('resetlogin')){
-    			$("ul.tabcontainer li").eq($(3).index()).slideDown();
-			}else{
-    			$("ul.tabcontainer li").eq($(this).index()).slideDown();
-			}
-			return false;
-		});
-		});
-	});
-</script>
-<?php } 
-
-echo '</head><body';
-body_class(); 
-echo '>';
-
-if ( has_nav_menu( 'topmenu' ) ) { 
-echo '<div class="topmenubar">';
-wp_nav_menu( array( 'theme_location' => 'topmenu' ) ); 
 echo '<div class="clr"></div></div>';
 }
 
-if ( get_option( 'users_can_register' ) ){
-display_userpanel();
+
+if( function_exists('is_sidebar_active') && is_sidebar_active('sidebar') && get_theme_mod('onepiece_elements_sidebar_position', 'left') != 'none' ){
+$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_mainsidebar_width', 28); 
+echo '<div id="mainsidebar" class="'.get_theme_mod('onepiece_elements_sidebar_position', 'left').'side" style="float:'.get_theme_mod('onepiece_elements_sidebar_position', 'left').';width:'.get_theme_mod('onepiece_elements_mainsidebar_width', 28).'%;">';
+get_template_part('sidebar');
+echo '<div class="clr"></div></div>';
 }
 
-echo '<div class="logobox medium">';
-if ( get_theme_mod( 'fndtn_identity_logo_m' ) ){
-echo '<a href="'.esc_url( home_url( '/' ) ).'" id="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home"><img src="'.get_theme_mod( 'fndtn_identity_logo_m' ).'" alt="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'"></a>';
-}else{ 
-echo '<hgroup><h1 class="site-title"><a href="'.esc_url( home_url( '/' ) ).'" id="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home">'.esc_attr( get_bloginfo( 'name', 'display' ) ).'</a></h1>';
-echo '<h2 class="site-description">'.get_bloginfo( 'description' ).'</h2></hgroup>';
+if( get_theme_mod('onepiece_elements_sidebar2_position2','out') == 'ins'
+&& function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position', 'right') != 'none' ){
+$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width', 28); 
+echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2', 'ins').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').';width:'.get_theme_mod('onepiece_elements_sidebar2_width', 20).'%;">';
+get_template_part('sidebar2');
+echo '<div class="clr"></div></div>';
 }
-echo '</div>';
 
+$contentfloat = 'left';
 
-echo '<div class="mainmenubox">';
-if ( has_nav_menu( 'mainmenu' ) ) { 
-wp_nav_menu( array( 'theme_location' => 'mainmenu' ) ); 
-}else{
-wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); 
+// main content area
+echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
+
+if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-before') ){
+echo '<div id="widgets-before">';
+dynamic_sidebar('widgets-before');
+echo '<div class="clr"></div></div>';
 } 
-echo '<div class="clr"></div></div>'; // end mainmenubox
 
 
-$header_image = get_header_image();
-if( (function_exists('is_sidebar_active') && is_sidebar_active('widgets-header')) || ! empty( $header_image ) ){
-echo '<div id="headercontainer" class="site-header" role="head"><header>';
-if ( ! empty( $header_image ) ) :
-echo '<img src="'.esc_url( $header_image ).'" class="header-image" alt="'.bloginfo( 'description' ).'" />';
-endif; 
-if (function_exists('dynamic_sidebar') && dynamic_sidebar('widgets-header')) :
-endif; 
-echo '</header></div>';
-}
+// mainmenu placement
+$mainmenuplace = get_theme_mod('onepiece_elements_mainmenubar_placement', 'below');
+$mainbarclass = get_theme_mod( 'onepiece_elements_mainmenubar_position' , 'none'); 
+$mainminisize = get_theme_mod( 'onepiece_elements_mainmenubar_minisize' , 'none').'-minisize';
 
-
-echo'<div id="contentbox">';
-echo 'Whhoooppss, the requested page is not available.';
-echo'</div>';
-
-if ( has_nav_menu( 'sidemenu' ) || ( function_exists('dynamic_sidebar') && is_sidebar_active('sidebar') ) ){ 
-echo '<div id="sidebarbox">';
-if ( has_nav_menu( 'sidemenu' ) ) { 
-echo '<div class="sidemenubar">';
-wp_nav_menu( array( 'theme_location' => 'sidemenu' ) ); 
-echo '<div class="clr"></div></div>';
-}
-if( function_exists('is_sidebar_active') && is_sidebar_active('sidebar') ){
-dynamic_sidebar('sidebar');
+if($mainmenuplace == 'content' && $mainbarclass != 'none'){
+echo '<div id="site-navigation" class="main-navigation '.$mainbarclass.' '.$mainminisize.'" role="navigation"><nav>';
+if ( has_nav_menu( 'mainmenu' ) ) {
+wp_nav_menu( array( 'theme_location' => 'mainmenu' ) );
+}else{
+wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) );
 } 
-echo '</div>';
+echo '<div class="clr"></div></nav></div>';
 }
 
-echo '<div class="clr"></div>';
+if ( have_posts() ) {
 
+get_template_part('loop');
 
-echo '<div class="logobox small">';
-if ( get_theme_mod( 'fndtn_identity_logo_s' ) ){
-echo '<a href="'.esc_url( home_url( '/' ) ).'" id="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home"><img src="'.get_theme_mod( 'fndtn_identity_logo_s' ).'" alt="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'"></a>';
-}else{ 
-echo '<h1 class="site-title"><a href="'.esc_url( home_url( '/' ) ).'" id="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home">'.esc_attr( get_bloginfo( 'name', 'display' ) ).'</a></h1>';
-}
-echo '</div>';
+}else{
 
+echo '<div id="post-undefined"><div class="contentpadding">';
+echo '<div class="post-title"><h4>Oooops, at this page is no content available</h4></div>';
+echo '</div></div>';
 
-if ( has_nav_menu( 'bottommenu' ) ) { 
-echo '<div class="bottommenubar">';
-wp_nav_menu( array( 'theme_location' => 'bottommenu' ) ); 
+} 
+
+if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-after') ){
+echo '<div id="widgets-after">';
+dynamic_sidebar('widgets-after');
 echo '<div class="clr"></div></div>';
-}
+} 
+
+echo '</div>';
+
+echo '<div class="clr"></div></div></div>';
+
+// footer
+get_template_part('footer');
 
 wp_footer();
 
-echo '</body></html>';
+echo '</div></body>';
