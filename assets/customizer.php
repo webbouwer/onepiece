@@ -926,7 +926,9 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	// CONTENT - LIST - EXCLUDE CATEGORIES  Add multi select 
 		// source used: http://themefoundation.com/customizer-multiple-category-control/
 		// .. http://jayj.dk/multiple-select-lists-theme-customizer/
-		$wp_customize->add_setting( 'onepiece_content_exclude_categories' );
+		$wp_customize->add_setting( 'onepiece_content_exclude_categories'  , array( 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
 		 
 		$wp_customize->add_control(
 			new onepiece_multiselect_exclude_categories(

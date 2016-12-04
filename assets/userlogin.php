@@ -9,7 +9,7 @@ function display_userpanel(){
 
 echo '<div id="userpanel">';
 
-global $user_ID, $user_identity; get_currentuserinfo(); 
+global $user_ID, $user_identity; wp_get_current_user(); //get_currentuserinfo(); 
 $regallowed = get_option( 'users_can_register' );
 
 
@@ -112,7 +112,7 @@ if (!$user_ID) { // is not logged in
 
 
 			global $userdata; 
-			get_currentuserinfo(); 
+			wp_get_current_user(); 
 			
 			echo '<div class="infocontainer">';
 			echo '<div class="usericon">';

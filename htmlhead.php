@@ -104,12 +104,14 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 
 // mobile meta 
 /* echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>'; */
-//if($mobile){
+if($mobile){
 	echo '<meta name="viewport" content="initial-scale=1.0, width=device-width" />';
-//}else 
-//if ( ! isset( $content_width ) ) {
-//	$content_width = 960;
-//}
+	if ( ! isset( $content_width ) ) {
+	$content_width = get_theme_mod('onepiece_responsive_small_outermargin', 512 );
+	}
+}else if ( ! isset( $content_width ) ) {
+	$content_width = get_theme_mod('onepiece_responsive_medium_outermargin', 1024 );
+}
 
 
 // Frontend user login  
@@ -1574,13 +1576,13 @@ $(document).ready(function() {
 		
 		<?php if( $mobile ){ ?>
 		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' ); // set min-height item
-		<? } ?>
+		<?php } ?>
 		
 		$('.item .fullinfobox').addClass('hidden');
 		
 		<?php if( $mobile ){ ?>
 		$(this).find('.coverbox').css('min-height', '<?php echo $itembigh; ?>px' );
-		<? } ?>
+		<?php } ?>
 		
 		$(this).addClass('active');
 		$(this).find('.fullinfobox').removeClass('hidden');
@@ -1634,7 +1636,7 @@ $(document).ready(function() {
 		
 		<?php if( $mobile ){ ?>
 		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' );
-		<? } ?>
+		<?php } ?>
 	
     $('ul.tagmenu.active').slideUp().removeClass('active');
     $('ul.categorymenu li a').removeClass('selected');
@@ -1679,7 +1681,7 @@ $(document).ready(function() {
 		
 		<?php if( $mobile ){ ?>
 		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' );
-		<? } ?>
+		<?php } ?>
 	
   	    var keyword = '.'+$(this).text();
         $catList = $(this).attr('data-filter');
