@@ -58,6 +58,10 @@ Identity:
         Site featured image
 	    Site featured description
 		.. site sharing url (might be optimized page for social media etc.)
+		
+	SEO
+		default website (meta) keywords
+		default (meta) description
 	
 	
 Style & Layout: 
@@ -263,7 +267,12 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	$wp_customize->add_section('onepiece_identity_panel_featured_image', array( 
         	'title'    => __('Sharing', 'onepiece'),
         	'panel'  => 'onepiece_elements_identity',
-		'priority' => 30,
+			'priority' => 30,
+    	));
+    	$wp_customize->add_section('onepiece_identity_panel_seo', array( 
+        	'title'    => __('SEO', 'onepiece'),
+        	'panel'  => 'onepiece_elements_identity',
+			'priority' => 40,
     	));
 
         $wp_customize->add_section('onepiece_identity_stylelayout', array( 
@@ -406,9 +415,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default', 
 	    )); 
 	
-	    $wp_customize->add_setting( 'onepiece_identity_featured_image', array( 
-		'sanitize_callback' => 'onepiece_sanitize_default', 
-	    )); 
 	    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'onepiece_identity_logo_m', array(
         	'label'    => __( 'Site Logo Image Medium', 'onepiece' ),
         	'section'  => 'onepiece_identity_panel_logo',
@@ -458,6 +464,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Max width (for best quality small logo).', 'onepiece' ),
     	)));
+		
+		
+		// IDENTITY - SHARING
+		
+	    $wp_customize->add_setting( 'onepiece_identity_featured_image', array( 
+		'sanitize_callback' => 'onepiece_sanitize_default', 
+	    )); 
 	    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'onepiece_identity_featured_image', array(
         	'label'    => __( 'Site featured image', 'onepiece' ),
         	'section'  => 'onepiece_identity_panel_featured_image',
@@ -476,6 +489,32 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'settings'       => 'onepiece_identity_panel_sharing_description',
             	'type'           => 'textarea',
  	    	'description'    => __( 'A short introduction text to share.', 'onepiece' ),
+    	)));
+		
+		// IDENTITY - SEO 
+		
+		$wp_customize->add_setting( 'onepiece_identity_panel_seo_keywords' , array(
+		'default' => 'cool, website, amazing, webdesign', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_panel_seo_keywords', array(
+            	'label'          => __( 'Site keywords (meta)', 'onepiece' ),
+            	'section'        => 'onepiece_identity_panel_seo',
+            	'settings'       => 'onepiece_identity_panel_seo_keywords',
+            	'type'           => 'textarea',
+ 	    		'description'    => __( 'Default keywords csv text, Tune them to your frontpage content and returning text parts', 'onepiece' ),
+    	)));
+		
+		$wp_customize->add_setting( 'onepiece_identity_panel_seo_description' , array(
+		'default' => 'Check out this cool website!', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_panel_seo_description', array(
+            	'label'          => __( 'Site description (meta)', 'onepiece' ),
+            	'section'        => 'onepiece_identity_panel_seo',
+            	'settings'       => 'onepiece_identity_panel_seo_description',
+            	'type'           => 'textarea',
+ 	    		'description'    => __( 'Description text for SEO. Tune it to your keywords.', 'onepiece' ),
     	)));
     	
 

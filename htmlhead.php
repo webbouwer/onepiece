@@ -25,6 +25,12 @@ $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
 
 
 
+// default SEO
+$seodesc = get_theme_mod('onepiece_identity_panel_seo_keywords', 'cool, website, webdesign');
+$seokeywords = get_theme_mod('onepiece_identity_panel_seo_description', 'Check out this cool website!');
+
+
+
 /**
  * PAGE TEMPLATE GALLERY
  * gallery.php
@@ -67,6 +73,9 @@ $topcat = 'uncategorized';
 
 
 
+
+
+
 /**
  * HTML HEAD THEME CORE
  * index.php, page.php, gallery.php
@@ -82,8 +91,16 @@ wp_head();                      // http://codex.wordpress.org/Function_Reference
 
 // generate header meta info
 $site_description = get_bloginfo( 'description' );
+if( !empty($seodesc)){ 
+$site_description = $seodesc;
+}
+$site_keywords = 'cool, website, amazing, webdesign';
+if( !empty($seokeywords)){
+$site_keywords = $seokeywords;
+}
+
 echo '<meta name="description" content="'.$site_description.'">'
-	.'<meta name="keywords" content="wordpress theme,theme setup,basic theme,custom theme">'
+	.'<meta name="keywords" content="'.$site_keywords.'">'
 	.'<link rel="canonical" href="'.home_url(add_query_arg(array(),$wp->request)).'">'
 	.'<link rel="pingback" href="'.get_bloginfo( 'pingback_url' ).'" />'
 	.'<link rel="shortcut icon" href="images/favicon.ico" />'
@@ -1517,7 +1534,7 @@ $(document).ready(function() {
 	orderbymailmarkup += '%0A'+obj.content.replace(/<\/?[^>]+(>|$)/g, "");
 	
 	markup += '<div class="orderbox"><ul>';
-	markup += '<li><span class="orderbyemailbutton"><a href="mailto:'+orderbymailmarkup+'" target="_self"><?php echo __('Order by Email', 'onepiece'); ?></a></span></li>';
+	markup += '<li><span><a class="orderbyemailbutton" href="mailto:'+orderbymailmarkup+'" target="_self"><?php echo __('Order by Email', 'onepiece'); ?></a></span></li>';
 	markup += '</ul></div>';
 	
 	}
@@ -1618,6 +1635,13 @@ $(document).ready(function() {
 		return false;
 	}); 
 	
+	/*
+	$container.on('click', '.orderbyemailbutton', function(e){
+
+		// order form popup
+        return false;
+ 	});
+	*/
 	
 
     // Filter menu's
@@ -1700,7 +1724,8 @@ $(document).ready(function() {
 
 
 $(window).load(function() { 
-
+	
+	
     
 });
 
