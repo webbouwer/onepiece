@@ -466,6 +466,11 @@ padding:0px;
 
 
 /******************** GALLERY THEME (DEFAULT/SMALL)  ********************/
+#itemcontainer
+{
+overflow:hidden;
+}
+
 .categorymenu li,
 .tagmenu li
 {
