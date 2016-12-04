@@ -137,4 +137,35 @@ add_action('wp_ajax_filter_posts', 'ajax_filter_get_posts');
 add_action('wp_ajax_nopriv_filter_posts', 'ajax_filter_get_posts');
 
 
+
+
+
+
+/**
+ *
+ * http://wordpress.stackexchange.com/questions/27856/is-there-a-way-to-send-html-formatted-emails-with-wordpress-wp-mail-function
+ * http://wordpress.stackexchange.com/questions/18845/wp-mail-script-with-jquery-post
+ 
+// if you want only logged in users to access this function use this hook
+add_action('wp_ajax_mail_before_submit', 'mycustomtheme_send_mail_before_submit');
+
+// if you want none logged in users to access this function use this hook
+add_action('wp_ajax_nopriv_mail_before_submit', 'mycustomtheme_send_mail_before_submit');
+
+// if you want both logged in and anonymous users to get the emails, use both hooks above
+
+function mycustomtheme_send_mail_before_submit(){
+    check_ajax_referer('my_email_ajax_nonce');
+    if ( isset($_POST['action']) && $_POST['action'] == "mail_before_submit" ){
+
+    //send email  wp_mail( $to, $subject, $message, $headers, $attachments ); ex:
+        wp_mail($_POST['toemail'],'this is the email subject line','email message body');
+        echo 'email sent';
+        die();
+    }
+    echo 'error';
+    die();
+}
+ */
+
 ?>

@@ -66,8 +66,8 @@ height:auto;
 .scrollToTop{
 position:fixed;
 display:block;
-bottom:30px;
-right:4%;
+bottom:5%;
+right:0px;
 background-color:white;
 color:black;
 padding:5px 6px;

@@ -5,8 +5,10 @@ jQuery(function($) {
                 //$("ul.tabcontainer li").eq(0).slideDown();
 
 		$('ul.tabmenu li,div.resetlogin').on('click', function(){
+															   
+															   
 			$('ul.tabmenu li,div.resetlogin ').removeClass('active');
-                	$(this).addClass('active');
+            $(this).addClass('active');
 			$('li.tab').slideUp();
 			if($(this).hasClass('resetlogin')){
     			$("ul.tabcontainer li").eq($(3).index()).slideDown();

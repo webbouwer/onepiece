@@ -52,8 +52,8 @@ function add_productmaker_box()
         "Product properties", 
         "post_productmaker_fields", 
         "post", 
-        "side", 
-        "high", 
+        "normal", 
+        "high",  
         null);
 }
 add_action("add_meta_boxes", "add_productmaker_box");
@@ -76,8 +76,12 @@ function post_productmaker_fields($object)
     
     $wms = get_post_meta($object->ID, "meta-box-product-wms", true);
     $wmn = get_post_meta($object->ID, "meta-box-product-wmn", true);
-    
-    ?>
+	
+	$orderbymail = 'post'; // default custom
+    if( !empty( get_post_meta($object->ID, "meta-box-product-orderbymail", true) ) && get_post_meta($object->ID, "meta-box-product-orderbymail", true) != 'null'){
+		$orderbymail = get_post_meta($object->ID, "meta-box-product-orderbymail", true);
+    }
+	?>
         
     <label for="meta-box-product-label"><b><?php echo __('Labeled as', 'onepiece'); ?></b></label>
     <p><select multiple="multiple" name="meta-box-product-label" id="meta-box-product-label" >
@@ -122,6 +126,18 @@ function post_productmaker_fields($object)
         <option value="xl" <?php selected( $size, 'xl' ); ?>><?php echo __('Extra Large', 'onepiece'); ?></option>
     </select>
     </p>
+    
+    <p><b><?php echo __('Order buttons display: ', 'onepiece'); ?></b></p>
+    <p><label for="meta-box-product-orderbymail"><?php echo __('by mail: ', 'onepiece'); ?></label>
+   <select name="meta-box-product-orderbymail" id="meta-box-product-orderbymail">
+        <option value="none" <?php selected( $orderbymail, 'none' ); ?>><?php echo __('No display', 'onepiece'); ?></option>
+        <option value="post" <?php selected( $orderbymail, 'post' ); ?>><?php echo __('Post view only', 'onepiece'); ?></option>
+        <option value="ever" <?php selected( $orderbymail, 'ever' ); ?>><?php echo __('Everywhere', 'onepiece'); ?></option>
+    </select>
+   
+   </p>
+
+
     
     <p><b><?php echo __('Package Size', 'onepiece'); ?></b>
     <p>
@@ -232,7 +248,8 @@ function save_custom_meta_box($post_id, $post, $update)
     update_post_meta( $post_id, 'meta-box-product-label', $_POST['meta-box-product-label'] );
 
 
-
+	if( isset( $_POST['meta-box-product-orderbymail'] ) )
+    update_post_meta( $post_id, 'meta-box-product-orderbymail', $_POST['meta-box-product-orderbymail'] );
 }
 add_action("save_post", "save_custom_meta_box", 10, 3);
 

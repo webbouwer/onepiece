@@ -54,10 +54,11 @@ Identity:
         Site Description/Tagline
         Site Icon image
     
-    Featured site-image
+    Sharing
         Site featured image
 	    Site featured description
 		.. site sharing url (might be optimized page for social media etc.)
+	
 	
 Style & Layout: 
 
@@ -105,10 +106,15 @@ Content:
     Post
         Featured image header
         Display date/author
+		.. turn off product options
+	
 		
 		Tags display
 		Categories Display
 		Next / Previous links
+	
+	Product
+		product order email address
         
     List (replacng category section)
         Use highlight first posts
@@ -118,6 +124,12 @@ Content:
 
 	Gallery
 		Default category
+		
+		.. default gallery filters
+		.. default max items in row
+		.. default item minimal height
+		.. default item clickaction
+		.. default itemview
    
 Elements:
 
@@ -305,6 +317,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
     	$wp_customize->add_section('onepiece_content_panel_posts', array( 
         	'title'    => __('Post', 'onepiece'),
+        	'panel'  => 'onepiece_content_panel',
+    	));
+    	$wp_customize->add_section('onepiece_content_panel_product', array( 
+        	'title'    => __('Product', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
     	));
     	$wp_customize->add_section('onepiece_content_panel_list', array( 
@@ -856,9 +872,32 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
+		/*
+		Product
+		.. turn off product options
+		.. product order email address
+		.. product order phonenumber
+		*/
+		
+		// CONTENT - PRODUCT - ORDER BY EMAIL
+    	$wp_customize->add_setting( 'onepiece_content_panel_product_orderemailaddress' , array(
+		'default' => get_option('admin_email'), 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_orderemailaddress', array(
+            	'label'          => __( 'Order-by-Email address', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_orderemailaddress',
+            	'type'           => 'email',
+ 	    	'description'    => __( 'Email address for sales (order by mail)', 'onepiece' ),
+    	)));
+		
+		// http://wordpress.stackexchange.com/questions/27856/is-there-a-way-to-send-html-formatted-emails-with-wordpress-wp-mail-function
+		// onepiece_content_panel_product
+		
+		
 
-
-    	// CONTENT - POSTS - HIGHLIGHT
+    	// CONTENT - LIST - HIGHLIGHT
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
 		'default' => '3', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -868,10 +907,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'section'        => 'onepiece_content_panel_list',
             	'settings'       => 'onepiece_content_panel_postlist_firstcount',
             	'type'           => 'text',
- 	    	'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
+ 	    		'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
     	)));
 		
-		// CONTENT - POSTS - EXCERPT LENGTH
+		// CONTENT - LIST - EXCERPT LENGTH
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
 		'default' => '25', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -884,10 +923,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Amount of words for intro texts in a (basic) list.', 'onepiece' ),
     	)));
 		
-    	// CONTENT - POSTS - EXCLUDE CATEGORIES  Add multi select 
+    	// CONTENT - LIST - EXCLUDE CATEGORIES  Add multi select 
 		// source used: http://themefoundation.com/customizer-multiple-category-control/
 		// .. http://jayj.dk/multiple-select-lists-theme-customizer/
-		 $wp_customize->add_setting( 'onepiece_content_exclude_categories' );
+		$wp_customize->add_setting( 'onepiece_content_exclude_categories' );
 		 
 		$wp_customize->add_control(
 			new onepiece_multiselect_exclude_categories(

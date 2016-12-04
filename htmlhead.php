@@ -112,10 +112,11 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 //}
 
 
-
 // Frontend user login  
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') != 'none'){
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/userlogin.js"></script>'; 
- 
+}
+
 // default style sizes
 $stylelayout_fontsize = get_theme_mod('onepiece_identity_stylelayout_fontsize', 5);
 $stylelayout_spacing = get_theme_mod('onepiece_identity_stylelayout_spacing', 5);
@@ -1402,10 +1403,6 @@ $(document).ready(function() {
 	};
 	
 	
-	
-	
-
-	
 	/*
 	 * PRICE
 	 */
@@ -1462,15 +1459,10 @@ $(document).ready(function() {
 	
 	
 	
-	
-	
-	
 	/*
 	 * Description / text
 	 */
 	markup += '<div class="textbox">'+obj.excerpt+'</div>'; 
-	
-	
 	
 	
 	/*
@@ -1505,12 +1497,45 @@ $(document).ready(function() {
 	markup += '</div>';
 	}
 	
-	 
-	 
-	 
-	//markup += itemreadmore;	
 	
+	
+	if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' 
+	&& obj.meta['meta-box-product-orderbymail'] != 'none' &&  typeof obj.meta['meta-box-product-orderbymail'] !== 'undefined' ){
+	
+	var orderbymailmarkup = '<?php echo antispambot( get_theme_mod('onepiece_content_panel_product_orderemailaddress', get_option('admin_email') ) ); ?>';
+	orderbymailmarkup += '?subject=Order request <?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>-'+obj.title;
+	orderbymailmarkup += '&body=<?php echo __('Hi,%0AIs this product still available? I would like to buy it. ', 'onepiece'); ?>';
+	orderbymailmarkup += '%0A%0A'+obj.title;
+	
+	if( obj.posturl ){ 
+    //markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
+	orderbymailmarkup += '%0A'+obj.posturl;
+	// https://gist.github.com/CatTail/4174511 
+    }
+	orderbymailmarkup += '%0A'+obj.content.replace(/<\/?[^>]+(>|$)/g, "");
+	
+	markup += '<div class="orderbox"><ul>';
+	markup += '<li><span class="orderbyemailbutton"><a href="mailto:'+orderbymailmarkup+'" target="_self"><?php echo __('Order by Email', 'onepiece'); ?></a></span></li>';
+	markup += '</ul></div>';
+	
+	}
+	
+	/*
+	 // https://pippinsplugins.com/storing-session-data-in-wordpress-without-_session/
+	markup += '<div class="clientbox">';
+	markup += '<span class="addtowishlistbutton"><a href="#wishlist"><?php echo __('Add to wishlist', 'onepiece'); ?></a></span>';
+	markup += '<ul class="wishlist"><li></li></ul></div>';
+	*/
+	
+	
+	//markup += itemreadmore;	
 	//markup += JSON.stringify(obj.meta);
+	
+	/*
+	markup += '<div class="sharebox">';
+	markup += '<span class="menubutton">Share</span>';
+	markup += '</div>';
+	*/
 	markup += '</div>';
 	
     markup += '<div class="clr"></div></div></div>';
