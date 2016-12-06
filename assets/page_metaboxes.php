@@ -130,6 +130,7 @@ $coverimage = get_post_meta($object->ID, "meta-box-display-coverimage", true);
 <option value="none" <?php selected( $coverimage, 'none' ); ?>><?php echo __('None', 'onepiece'); ?></option>
 <option value="above" <?php selected( $coverimage, 'above' ); ?>><?php echo __('Above title', 'onepiece'); ?></option>
 <option value="below" <?php selected( $coverimage, 'below' ); ?>><?php echo __('Below title', 'onepiece'); ?></option>
+<option value="thumb" <?php selected( $coverimage, 'thumb' ); ?>><?php echo __('Thumb/icon above title ', 'onepiece'); ?></option>
 <option value="inlineL" <?php selected( $coverimage, 'inlineL' ); ?>><?php echo __('Inline left (text aligned)', 'onepiece'); ?></option>
 <option value="inlineR" <?php selected( $coverimage, 'inlineR' ); ?>><?php echo __('Inline right (text aligned)', 'onepiece'); ?></option>
 </select>

@@ -264,21 +264,30 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
             $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent align-'.$childalignment.'">';
 			
 			
-			if( !$childcoverimage || $childcoverimage == 'below' || $childcoverimage == 'inlineL' || $childcoverimage == 'inlineR'){
+			if( !$childcoverimage || $childcoverimage == 'below' || $childcoverimage == 'none' || $childcoverimage == 'inlineL' || $childcoverimage == 'inlineR'){
 			$content .= '<div class="subtitle"><h3><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></h3></div>';
 			}
 			
 			if ( $childcoverimage != 'none' && $childcoverimage != 'inlineL' && $childcoverimage != 'inlineR' && $contentimagedata != false && $childpagedisplay != 'fade') {
-			$content .= '<div class="post-coverimage center"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">';
+			$content .= '<div class="post-coverimage '.$childcoverimage.'"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">';
+			
 			if($mobile){
-				$content .= get_the_post_thumbnail( $page->ID, 'medium' );
+				if($childcoverimage == 'thumb'){
+					$content .= get_the_post_thumbnail( $page->ID, 'big-thumb' );
+				}else{
+					$content .= get_the_post_thumbnail( $page->ID, 'medium' );
+				}
 			}else{
-				$content .= get_the_post_thumbnail( $page->ID, 'large' );
+				if($childcoverimage == 'thumb'){
+					$content .= get_the_post_thumbnail( $page->ID, 'medium' );
+				}else{
+					$content .= get_the_post_thumbnail( $page->ID, 'large' );
+				}
 			}
 			$content .= '</a></div>';
 			}
 
-			if($childcoverimage == 'above'){
+			if($childcoverimage == 'above' || $childcoverimage == 'thumb' ){
 			$content .= '<div class="subtitle"><h3><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></h3></div>';
 			}
 			

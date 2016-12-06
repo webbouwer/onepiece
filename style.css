@@ -481,14 +481,18 @@ display:block;
 vertical-align: bottom;
 margin:0px auto;
 }
-#childpagecontent li.childcontent .post-coverimage.center,
-#childpagecontent li.childcontent .post-coverimage.center a
+/*
+#childpagecontent li.childcontent .post-coverimage.above,
+#childpagecontent li.childcontent .post-coverimage.above a,
+#childpagecontent li.childcontent .post-coverimage.below,
+#childpagecontent li.childcontent .post-coverimage.below a
 {
 display:block;
 width:100%;
 height:auto;
-}
+} 
 
+*/
 
 
 
