@@ -96,6 +96,8 @@ function childpage_section_fields($object)
 wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 $dsp = get_post_meta($object->ID, "meta-box-display-childpages", true);
 $parent = get_post_meta($object->ID, "meta-box-display-parentcontent", true);
+$childalign = get_post_meta($object->ID, "meta-box-display-alignment", true);
+$coverimage = get_post_meta($object->ID, "meta-box-display-coverimage", true);
 ?>
 <p><label for="meta-box-display-childpages"><?php echo __('Display Childpages', 'onepiece'); ?></label>
 <select name="meta-box-display-childpages" id="meta-box-display-childpages">
@@ -111,7 +113,25 @@ $parent = get_post_meta($object->ID, "meta-box-display-parentcontent", true);
 <p><label for="meta-box-display-parentcontent"><?php echo __('Parent content display', 'onepiece'); ?></label>
 <select name="meta-box-display-parentcontent" id="meta-box-display-parentcontent">
 <option value="none" <?php selected( $parent, 'none' ); ?>><?php echo __('Do not display', 'onepiece'); ?></option>
-<option value="like" <?php selected( $parent, 'intr' ); ?>><?php echo __('Display like childpages', 'onepiece'); ?></option>
+<option value="like" <?php selected( $parent, 'intr' ); ?>><?php echo __('Display on top of childpages', 'onepiece'); ?></option>
+</select>
+</p>
+
+
+<p><label for="meta-box-display-alignment"><?php echo __('Alignment', 'onepiece'); ?></label>
+<select name="meta-box-display-alignment" id="meta-box-display-alignment">
+<option value="left" <?php selected( $childalign, 'left' ); ?>><?php echo __('Left', 'onepiece'); ?></option>
+<option value="center" <?php selected( $childalign, 'center' ); ?>><?php echo __('Center', 'onepiece'); ?></option>
+<option value="right" <?php selected( $childalign, 'right' ); ?>><?php echo __('Right', 'onepiece'); ?></option>
+</select>
+</p>
+<p><label for="meta-box-display-coverimage"><?php echo __('Image display', 'onepiece'); ?></label>
+<select name="meta-box-display-coverimage" id="meta-box-display-coverimage">
+<option value="none" <?php selected( $coverimage, 'none' ); ?>><?php echo __('None', 'onepiece'); ?></option>
+<option value="above" <?php selected( $coverimage, 'above' ); ?>><?php echo __('Above title', 'onepiece'); ?></option>
+<option value="below" <?php selected( $coverimage, 'below' ); ?>><?php echo __('Below title', 'onepiece'); ?></option>
+<option value="inlineL" <?php selected( $coverimage, 'inlineL' ); ?>><?php echo __('Inline left (text aligned)', 'onepiece'); ?></option>
+<option value="inlineR" <?php selected( $coverimage, 'inlineR' ); ?>><?php echo __('Inline right (text aligned)', 'onepiece'); ?></option>
 </select>
 </p>
 
@@ -238,6 +258,10 @@ function save_page_meta_box($post_id, $post, $update)
         update_post_meta( $post_id, 'meta-box-display-childpages', $_POST['meta-box-display-childpages'] );
     if( isset( $_POST['meta-box-display-parentcontent'] ) )
         update_post_meta( $post_id, 'meta-box-display-parentcontent', $_POST['meta-box-display-parentcontent'] );
+    if( isset( $_POST['meta-box-display-alignment'] ) )
+        update_post_meta( $post_id, 'meta-box-display-alignment', $_POST['meta-box-display-alignment'] );
+    if( isset( $_POST['meta-box-display-coverimage'] ) )
+        update_post_meta( $post_id, 'meta-box-display-coverimage', $_POST['meta-box-display-coverimage'] );
 }
 add_action("save_post", "save_page_meta_box", 10, 3);
 ?>

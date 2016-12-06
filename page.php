@@ -22,6 +22,8 @@ $afterwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-afterwidgetsdispla
 $secondsidebardisplay = get_post_meta(get_the_ID(), "meta-page-secondsidebardisplay", true);
 $childpagedisplay = get_post_meta(get_the_ID(), "meta-box-display-childpages", true);
 $childparentcontent = get_post_meta(get_the_ID(), "meta-box-display-parentcontent", true);
+$childalignment = get_post_meta(get_the_ID(), "meta-box-display-alignment", true);
+$childcoverimage = get_post_meta(get_the_ID(), "meta-box-display-coverimage", true);
 
 /**
  *
@@ -222,8 +224,14 @@ echo '</div>';
 $thumb_url = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ),'full', false );
 
 if( $childparentcontent != 'none' ){
+$contentalign = 'left';
+if( isset($childpagedisplay) && $childpagedisplay != 'none' ){
+$contentalign = $childalignment;
+}
+
+
 $mainpageoption .= '<li id="button-'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'"><a href="'.get_permalink($post_obj->ID).'" target="_self">'.$post_obj->post_title.'</a></li>';
-$mainpagecontent .= '<li id="'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'" class="childcontent"><div class="subtitle"><h3>'.$post_obj->post_title.'</h3></div><div class="subcontent">'. apply_filters('the_content', get_the_content()) .'</div></li>';
+$mainpagecontent .= '<li id="'.$post_obj->post_name.'" data-imgurl="'.$thumb_url[0].'" class="childcontent align-'.$contentalign.'"><div class="subtitle"><h3>'.$post_obj->post_title.'</h3></div><div class="subcontent">'. apply_filters('the_content', get_the_content()) .'</div></li>';
 }
 
 }
@@ -253,21 +261,53 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
 			$pieces = get_extended($page->post_content); //print_r($pieces);
 			
             $menu .= '<li id="button-'.$page->post_name.'" data-imgurl="'.$contentimage.'"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></li>';
-            $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent">';
+            $content .= '<li id="'.$page->post_name.'" data-imgurl="'.$contentimage.'" class="childcontent align-'.$childalignment.'">';
 			
-			if ( $contentimagedata != false && $childpagedisplay != 'fade') {
-			$content .= '<div class="post-coverimage"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">';
+			
+			if( !$childcoverimage || $childcoverimage == 'below' || $childcoverimage == 'inlineL' || $childcoverimage == 'inlineR'){
+			$content .= '<div class="subtitle"><h3><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></h3></div>';
+			}
+			
+			if ( $childcoverimage != 'none' && $childcoverimage != 'inlineL' && $childcoverimage != 'inlineR' && $contentimagedata != false && $childpagedisplay != 'fade') {
+			$content .= '<div class="post-coverimage center"><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">';
 			if($mobile){
-				$content .= get_the_post_thumbnail( $page->ID, 'big-thumb' );
-			}else{
 				$content .= get_the_post_thumbnail( $page->ID, 'medium' );
+			}else{
+				$content .= get_the_post_thumbnail( $page->ID, 'large' );
 			}
 			$content .= '</a></div>';
 			}
 
-			
+			if($childcoverimage == 'above'){
 			$content .= '<div class="subtitle"><h3><a href="'.get_permalink($page->ID).'" title="'.$page->post_title.'" target="_self">'.$page->post_title.'</a></h3></div>';
-			$content .= '<div class="subcontent">'.apply_filters('the_content',$pieces['main']);
+			}
+			
+			
+			$content .= '<div class="subcontent">';
+			
+			$maintext = $pieces['main']; //default without filter
+			
+			if ( ($childcoverimage == 'inlineL' || $childcoverimage == 'inlineR' ) && $contentimagedata != false && $childpagedisplay != 'fade') {
+				
+				$imagealign = 'left';
+				if( $childcoverimage == 'inlineR'){
+				$imagealign = 'right';
+				}
+				if($childalignment == 'center' ){
+				$imagealign = 'center';
+				}
+			
+				// start maintext with image
+				if($mobile){
+					$maintext = get_the_post_thumbnail( $page->ID, 'big-thumb' , array( 'align' => $imagealign, 'class' => 'align-'.$imagealign ) ) . $maintext;
+				}else{
+					$maintext = get_the_post_thumbnail( $page->ID, 'medium' , array( 'align' => $imagealign, 'class' => 'align-'.$imagealign ) ) . $maintext;
+				}
+				
+			}
+			
+			
+			$content .= apply_filters('the_content',  $maintext ); // add filter on full content
 			
             if($childpagedisplay == 'slddwn' && !empty($pieces['extended']) ){ // inline readmore
 			$content .= '<a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.__('Read more', 'onepiece').'</a>'; 
