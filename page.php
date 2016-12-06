@@ -151,7 +151,8 @@ $post_obj = $wp_query->get_queried_object();
  */	
 if ( has_post_thumbnail() && $useheaderimage != 'replace' && $childpagedisplay != 'fade' ) {
 
-if( $childparentcontent != 'none'){   
+if( $childparentcontent != 'none' ){ 
+  
 $title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
 
 echo '<div class="post-coverimage">'.$title_link;
@@ -164,8 +165,11 @@ the_post_thumbnail('medium');
 $pagefeaturedimage = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'medium' ); 
 }
 echo '</a></div>'; // default, 'thumb' or 'medium'
+
 }
+
 }
+
 if ( is_super_admin() ) { // admin/editor options
 edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>' );
 }
@@ -185,7 +189,7 @@ $mainpagecontent = '';
  */
 if( $childpagedisplay != 'fade' && $childpagedisplay != 'slddwn' ){ 
 
-if( $childparentcontent != 'none' ){
+if( $childpagedisplay == 'none' || ($childparentcontent != 'none' && $childpagedisplay !='none') ){
 
 echo '<div class="page-title"><h1>'.get_the_title().'</h1></div>';
 if(get_theme_mod('onepiece_content_panel_page_authortime') != 'none'){
