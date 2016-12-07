@@ -86,11 +86,13 @@ echo '</div>';
 
 // featured (cover) image
 $postimagesingle = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default'); 
-if( is_single() && ( $postimagesingle == 'replace' || $postimagesingle == 'replacemargin' ) ){
-    // no image..
+if( is_single() && ($postimagesingle == 'replace' || $postimagesingle == 'replacemargin'  
+|| $postimagesingle == 'left' || $postimagesingle == 'right') ){
+    // no image here..
 }else{
 
-if ( has_post_thumbnail() ) {
+if ( has_post_thumbnail()  ) {
+
 echo '<div class="post-coverimage">'.$title_link;
 if($mobile){
     if( $counter < $firstcount && !$paged ){ // (first page)
@@ -105,6 +107,10 @@ if($mobile){
         the_post_thumbnail('medium');
     }
 }
+
+
+
+
 echo '</a></div>'; // default, 'thumb' or 'medium'
 }else{
 echo '<div class="clr"></div>';
@@ -158,8 +164,33 @@ if ( !is_single() && !is_page() ) {
     	the_category(', ');
 	}
 
+
+
+	$maintext = get_the_content();
+
+	if( $postimagesingle == 'left' || $postimagesingle == 'right' ){
+			// start maintext with image
+				if($mobile){
+					$maintext = get_the_post_thumbnail( get_the_ID(), 'big-thumb' , array( 'align' => $postimagesingle, 'class' => 'align-'.$postimagesingle ) ) . $maintext;
+				}else{
+					$maintext = get_the_post_thumbnail( get_the_ID(), 'medium' , array( 'align' => $postimagesingle, 'class' => 'align-'.$postimagesingle ) ) . $maintext;
+				}
+
+	
+	}
+
+
     // Post full content
-    echo '<div class="post-content">'.apply_filters('the_content', get_the_content()).'</div>';
+    echo '<div class="post-content">'.apply_filters('the_content', $maintext ).'</div>';
+
+
+
+
+
+
+
+
+
 
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags

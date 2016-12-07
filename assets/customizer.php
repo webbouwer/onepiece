@@ -108,9 +108,10 @@ Content:
         date/author display
 
     Post
-        Featured image header
+        Featured image header / inline
+		.. text alignment 
         Display date/author
-		.. turn off product options
+		
 	
 		
 		Tags display
@@ -118,9 +119,11 @@ Content:
 		Next / Previous links
 	
 	Product
+		.. turn off product options
 		product order email address
         
     List (replacng category section)
+		.. text alignment 
         Use highlight first posts
 		Excerpt length (amount of words)
 		Exclude categories
@@ -802,8 +805,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	    'description'    => __( 'Featured image display in single post view', 'onepiece' ),
             	'choices'        => array(
                 	'default'   => __( 'On top of the content', 'onepiece' ),
+                	'left'   => __( 'Inline left with content (medium sized)', 'onepiece' ),
+                	'right'   => __( 'Inline right with content (medium sized)', 'onepiece' ),
                 	'replace'   => __( 'Replace Header Window width', 'onepiece' ),
-                        'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
+                    'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
             	)
     	)));
 		
