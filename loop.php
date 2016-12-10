@@ -32,7 +32,13 @@ post_class('first-group-post');
 post_class('follow-post');
 }
 
-echo '><div class="contentpadding">';
+$textalign = get_theme_mod('onepiece_content_panel_posts_textalign', 'left');   
+if ( !is_single() && !is_page() ) { 
+	$textalign = get_theme_mod('onepiece_content_panel_postlist_textalign', 'left'); 
+	$postimagelist = get_theme_mod('onepiece_content_panel_postlist_inlineimage', 'left'); 
+}
+
+echo '><div class="contentpadding align-'.$textalign.' imgalign-'.$postimagelist.'">';
 
 // define post label
 $post_meta_label = get_post_meta( get_the_ID() , 'meta-box-product-label', '');
@@ -85,7 +91,8 @@ echo '</div>';
 }
 
 // featured (cover) image
-$postimagesingle = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default'); 
+$postimagesingle = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');  
+
 if( is_single() && ($postimagesingle == 'replace' || $postimagesingle == 'replacemargin'  
 || $postimagesingle == 'left' || $postimagesingle == 'right') ){
     // no image here..
@@ -118,6 +125,12 @@ echo '<div class="clr"></div>';
 
 } // end featured image 
 
+
+/*
+ * Post Content
+*/
+
+
 // Title below image for single/page items
 if ( is_single() || is_page() ) { 
 echo '<div class="post-title"><h1>'. $title_link . get_the_title().'</a></h1></div>';
@@ -149,7 +162,9 @@ $nextprevdisplay = get_theme_mod('onepiece_content_panel_posts_nextprevdisplay',
 // content
 if ( !is_single() && !is_page() ) { 
     // Post intro content
-    echo '<div class="post-excerpt">'.the_excerpt_length( $excerptlength ).'</div>'; //apply_filters('the_excerpt', get_the_excerpt())
+    echo '<div class="post-excerpt">';
+	the_excerpt_length( $excerptlength );
+	echo '</div>'; //apply_filters('the_excerpt', get_the_excerpt())
 
 }else{
 
@@ -166,7 +181,7 @@ if ( !is_single() && !is_page() ) {
 
 
 
-	$maintext = get_the_content();
+	$maintext = apply_filters('the_content', get_the_content());
 
 	if( $postimagesingle == 'left' || $postimagesingle == 'right' ){
 			// start maintext with image
@@ -181,7 +196,7 @@ if ( !is_single() && !is_page() ) {
 
 
     // Post full content
-    echo '<div class="post-content">'.apply_filters('the_content', $maintext ).'</div>';
+    echo '<div class="post-content">'.$maintext .'<div class="clr"></div></div>';
 
 
 

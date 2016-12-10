@@ -812,6 +812,25 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 		
+		// CONTENT - POSTS - SINGLE POST ALIGNMENT
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_textalign' , array(
+		'default' => 'left', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_textalign', array(
+            	'label'          => __( 'Text alignment', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_textalign',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Text alignment in single post view', 'onepiece' ),
+            	'choices'        => array(
+                	'left'   => __( 'Left', 'onepiece' ),
+                	'right'   => __( 'Right', 'onepiece' ),
+                	'center'   => __( 'Center', 'onepiece' ),
+            	)
+    	)));
+		
 
 		// CONTENT - POSTS - TIME & AUTHOR
 		$wp_customize->add_setting( 'onepiece_content_panel_postlist_authortime' , array(
@@ -833,26 +852,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'single'   => __( 'Both in single post view only', 'onepiece' ),
             	)
     	)));
-		
-		// CONTENT - POSTS - READMORE
-		$wp_customize->add_setting( 'onepiece_content_panel_posts_readmore' , array(
-		'default' => 'none', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_readmore', array(
-            	'label'          => __( 'Post Read more', 'onepiece' ),
-            	'section'        => 'onepiece_content_panel_posts',
-            	'settings'       => 'onepiece_content_panel_posts_readmore',
-            	'type'           => 'select',
- 	    	'description'    => __( 'Select display type', 'onepiece' ),
-            	'choices'        => array(
-                	'none'   => __( 'No readmore button', 'onepiece' ),
-                	'inline'   => __( 'Inline after the intro text', 'onepiece' ),
-            		'right'   => __( 'Right side below intro tekst', 'onepiece' ),
-            		'left'   => __( 'Left side below intro tekst', 'onepiece' ),
-            	)
-    	)));
-		 
 		
 
 		
@@ -966,6 +965,69 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Amount of words for intro texts in a (basic) list.', 'onepiece' ),
     	)));
+		
+		// CONTENT - LIST - IMAGE ALIGNMENT
+		$wp_customize->add_setting( 'onepiece_content_panel_postlist_inlineimage' , array(
+		'default' => 'left', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_inlineimage', array(
+            	'label'          => __( 'Inline image alignment', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_postlist_inlineimage',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Image default alignment in post excerpts', 'onepiece' ),
+            	'choices'        => array(
+                	'left'   => __( 'Left', 'onepiece' ),
+                	'right'   => __( 'Right', 'onepiece' ),
+                	'center'   => __( 'Center', 'onepiece' ),
+            	)
+    	)));
+		
+		
+		// CONTENT - LIST - EXCERPT ALIGNMENT
+		$wp_customize->add_setting( 'onepiece_content_panel_postlist_textalign' , array(
+		'default' => 'left', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_textalign', array(
+            	'label'          => __( 'Excerpt Text alignment', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_postlist_textalign',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Text alignment in post content in list view', 'onepiece' ),
+            	'choices'        => array(
+                	'left'   => __( 'Left', 'onepiece' ),
+                	'right'   => __( 'Right', 'onepiece' ),
+                	'center'   => __( 'Center', 'onepiece' ),
+            	)
+    	)));
+		
+		
+		// CONTENT - LIST - READMORE
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_readmore' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_readmore', array(
+            	'label'          => __( 'Post Read more', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_posts_readmore',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select display type', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No readmore button', 'onepiece' ),
+                	'inline'   => __( 'Inline after the intro text', 'onepiece' ),
+            		'right'   => __( 'Right side below intro tekst', 'onepiece' ),
+            		'left'   => __( 'Left side below intro tekst', 'onepiece' ),
+            	)
+    	)));
+		 
+		
+		
+		
 		
     	// CONTENT - LIST - EXCLUDE CATEGORIES  Add multi select 
 		// source used: http://themefoundation.com/customizer-multiple-category-control/

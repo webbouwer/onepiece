@@ -316,7 +316,7 @@ background-size: 120%;
 -o-background-size: cover;
 background-size: cover;
 min-height:100%; 
-z-index:40;
+z-index:70;
 }
 
 
@@ -353,6 +353,9 @@ max-height:140px;
 overflow:hidden;
 }
 
+
+
+
 #topsidebar .widgetpadding,
 #maincontent .type-post .contentpadding,
 #maincontent .type-page .contentpadding,
@@ -379,6 +382,21 @@ height:auto;
 {
 position:relative
 }
+
+.contentpadding.align-left
+{
+text-align:left;
+}
+.contentpadding.align-right
+{
+text-align:right;
+}
+.contentpadding.align-center
+{
+text-align:center;
+}
+
+
 span.edit-link
 {
 position:absolute;
@@ -560,21 +578,21 @@ position:absolute;
 bottom:0px;
 left:0px;
 width:100%;
-z-index:70;
+z-index:30;
 }
 .item .labelbox
 {
 position:absolute;
 top:0px;
 left:0px;
-z-index:70;
+z-index:30;
 }
 
 .item.active .labelbox
 {
 top:0px;
 left:0px;
-z-index:70; 
+z-index:30; 
 }
 .item.active .titlebox
 {
@@ -711,18 +729,47 @@ overflow:hidden;
 padding:8px 0px 8px 0;
 }
 
-#maincontent .follow-post.has-post-thumbnail .post-title,
-#maincontent .follow-post.has-post-thumbnail .post-content
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-title,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content
 {
     width:68%;
     float:right;
 }
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-title,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content
+{
+    width:68%;
+    float:left;
+}
+
+
+
 #maincontent .follow-post .post-coverimage
 {
     width:28%;
+}
+#maincontent .follow-post .imgalign-left .post-coverimage
+{
     float:left;
     margin-right:4%;
 }
+#maincontent .follow-post .imgalign-right .post-coverimage
+{
+    float:right;
+    margin-left:4%;
+}
+
+#maincontent .follow-post .imgalign-center .post-coverimage
+{
+    margin:0px auto;
+	text-align:center;
+}
+
+
+
+
+
+
 
 
 /******************** GALLERY THEME (MEDIUM)  ********************/

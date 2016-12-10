@@ -1,97 +1,6 @@
 <?php
 /* Onepiece widgets */
 
-	
-
-
-/* Add Custom Onepiece Widget */
-class onepiece_widget extends WP_Widget {
-
-function __construct() {
-parent::__construct(
-'onepiece_widget', // Base ID of your widget
-__('Onepiece Widget', 'onepiece'), // Widget name will appear in UI
-array( 'description' => __( 'Onepiece Theme Widget', 'onepiece' ), ) 
-); // Widget description
-}
-
-// Creating widget front-end
-public function widget( $args, $instance ) {
-    
-    $title = apply_filters( 'widget_title', $instance['title'] );
-    // before and after widget arguments are defined by themes
-    echo $args['before_widget'];
-    if ( ! empty( $title ) )
-    echo $args['before_title'] . $title . $args['after_title'];
-    
-	// This is where you run the code and display the output
-	if($instance['function_type'] == 'login'){
-	
-	display_userpanel();
-	
-	}else{
-	
-	echo '('.$instance['function_type'].')';
-	
-	}
-    echo $args['after_widget'];
-}
-		
-// Widget Backend 
-public function form( $instance ) {
-    if ( isset( $instance[ 'title' ] ) ) {
-    $title = $instance[ 'title' ];
-    }else{
-    $title = __( 'New title', 'onepiece' );
-    }
-    // Widget admin form
-    ?>
-    <p>
-    <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php __( 'Title:', 'onepiece' ); ?></label> 
-    <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-    </p>
-    <?php
-    if ( isset( $instance[ 'function_type' ] ) ) {
-    $function_type = $instance[ 'function_type' ];
-    }else{
-    $function_type = 'code';
-    }
-    ?>
-    <p><label for="<?php echo $this->get_field_id( 'function_type' ); ?>">Function:</label>
-    <select name="<?php echo $this->get_field_name( 'function_type' ); ?>" id="<?php echo $this->get_field_id( 'function_type' ); ?>">
-    <option value="code" <?php selected( $function_type, 'code' ); ?>>Code</option>
-    <option value="login" <?php selected( $function_type, 'login' ); ?>>Login</option>
-    <option value="content" <?php selected( $function_type, 'content' ); ?>>Content</option>
-    <option value="media" <?php selected( $function_type, 'media' ); ?>>Media</option>
-    </select>
-    </p>
-    <?php 
-}
-
-// Updating widget replacing old instances with new
-public function update( $new_instance, $old_instance ) {
-    $instance = array();
-    $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-    $instance['function_type'] = ( ! empty( $new_instance['function_type'] ) ) ? strip_tags( $new_instance['function_type'] ) : '';
-    return $instance;
-    }
-} // Class wpb_widget ends here
-
-// Register and load the widget
-function onepiece_load_widget() {
-	register_widget( 'onepiece_widget' );
-}
-add_action( 'widgets_init', 'onepiece_load_widget' );
-
-
-
-
-
-
-
-
-
-
 
 /* Custom Dashboard Widget */
 
@@ -105,6 +14,20 @@ function onepiece_dashboard_widget_content() {
 }
 
 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -115,7 +38,7 @@ function onepiece_dashboard_widget_content() {
 
 /* Category Posts Slider 
 this function can output different types of content lists for multiple usages like sliders and carrousels */
-
+/*
 function display_posts_by_category( $cat=0, $columnset=0, $content='full', $target='self', $url=''){
 
 	// $cat array or $id
@@ -199,4 +122,90 @@ function display_posts_by_category( $cat=0, $columnset=0, $content='full', $targ
 	wp_reset_query();
 
 }
+
+*/
+
+
+/* Add Custom Onepiece Widget */
+
+/*
+class onepiece_widget extends WP_Widget {
+
+function __construct() {
+parent::__construct(
+'onepiece_widget', // Base ID of your widget
+__('Onepiece Widget', 'onepiece'), // Widget name will appear in UI
+array( 'description' => __( 'Onepiece Theme Widget', 'onepiece' ), ) 
+); // Widget description
+}
+
+// Creating widget front-end
+public function widget( $args, $instance ) {
+    
+    $title = apply_filters( 'widget_title', $instance['title'] );
+    // before and after widget arguments are defined by themes
+    echo $args['before_widget'];
+    if ( ! empty( $title ) )
+    echo $args['before_title'] . $title . $args['after_title'];
+    
+	// This is where you run the code and display the output
+	if($instance['function_type'] == 'login'){
+	
+	display_userpanel();
+	
+	}else{
+	
+	echo '('.$instance['function_type'].')';
+	
+	}
+    echo $args['after_widget'];
+}
+		
+// Widget Backend 
+public function form( $instance ) {
+    if ( isset( $instance[ 'title' ] ) ) {
+    $title = $instance[ 'title' ];
+    }else{
+    $title = __( 'New title', 'onepiece' );
+    }
+    // Widget admin form
+    ?>
+    <p>
+    <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php __( 'Title:', 'onepiece' ); ?></label> 
+    <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+    </p>
+    <?php
+    if ( isset( $instance[ 'function_type' ] ) ) {
+    $function_type = $instance[ 'function_type' ];
+    }else{
+    $function_type = 'code';
+    }
+    ?>
+    <p><label for="<?php echo $this->get_field_id( 'function_type' ); ?>">Function:</label>
+    <select name="<?php echo $this->get_field_name( 'function_type' ); ?>" id="<?php echo $this->get_field_id( 'function_type' ); ?>">
+    <option value="code" <?php selected( $function_type, 'code' ); ?>>Code</option>
+    <option value="login" <?php selected( $function_type, 'login' ); ?>>Login</option>
+    <option value="content" <?php selected( $function_type, 'content' ); ?>>Content</option>
+    <option value="media" <?php selected( $function_type, 'media' ); ?>>Media</option>
+    </select>
+    </p>
+    <?php 
+}
+
+// Updating widget replacing old instances with new
+public function update( $new_instance, $old_instance ) {
+    $instance = array();
+    $instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+    $instance['function_type'] = ( ! empty( $new_instance['function_type'] ) ) ? strip_tags( $new_instance['function_type'] ) : '';
+    return $instance;
+    }
+} // Class wpb_widget ends here
+
+// Register and load the widget
+function onepiece_load_widget() {
+	register_widget( 'onepiece_widget' );
+}
+add_action( 'widgets_init', 'onepiece_load_widget' );
+*/
+
 ?>
