@@ -1,8 +1,7 @@
- <?php /* POST META BOXES*/
-
-/* POST CUSTOM LINK META FIELDS */
+<?php /* POST META BOXES*/
 function add_custom_link_box()
 {
+	/* POST CUSTOM LINK META FIELDS */
     add_meta_box(
         "post-custom-link-box", 
         "Custom Link", 
@@ -14,20 +13,15 @@ function add_custom_link_box()
 }
 add_action("add_meta_boxes", "add_custom_link_box");
 
-
-function post_meta_link_fields($object)
-{
-    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
-
+function post_meta_link_fields($object){
+wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 $useurl = get_post_meta($object->ID, "meta-box-custom-useurl", true);
-
 ?>
-
 <p><label for="meta-box-custom-url"><?php echo __('Custom Link', 'onepiece'); ?></label>
-    <input name="meta-box-custom-url" type="text" value="<?php echo get_post_meta($object->ID, "meta-box-custom-url", true); ?>"></p>
+<input name="meta-box-custom-url" type="text" value="<?php echo get_post_meta($object->ID, "meta-box-custom-url", true); ?>"></p>
 
 <p><label for="meta-box-custom-urltext"><?php echo __('Link text', 'onepiece'); ?></label>
-    <input name="meta-box-custom-urltext" type="text" value="<?php echo get_post_meta($object->ID, "meta-box-custom-urltext", true); ?>"></p>
+<input name="meta-box-custom-urltext" type="text" value="<?php echo get_post_meta($object->ID, "meta-box-custom-urltext", true); ?>"></p>
 
 <p><label for="meta-box-custom-useurl"><?php echo __('Link function', 'onepiece'); ?></label>
 <select name="meta-box-custom-useurl" id="meta-box-custom-useurl">
@@ -39,10 +33,6 @@ $useurl = get_post_meta($object->ID, "meta-box-custom-useurl", true);
 </p>
 <?php
 }
-
-
-
-
 
 /* POST PRODUCTMAKER META FIELDS */
 function add_productmaker_box()
@@ -81,7 +71,7 @@ function post_productmaker_fields($object)
     if( !empty( get_post_meta($object->ID, "meta-box-product-orderbymail", true) ) && get_post_meta($object->ID, "meta-box-product-orderbymail", true) != 'null'){
 		$orderbymail = get_post_meta($object->ID, "meta-box-product-orderbymail", true);
     }
-	?>
+?>
         
     <label for="meta-box-product-label"><b><?php echo __('Labeled as', 'onepiece'); ?></b></label>
     <p><select multiple="multiple" name="meta-box-product-label" id="meta-box-product-label" >
@@ -93,14 +83,14 @@ function post_productmaker_fields($object)
         <option value="alltimefavourite" <?php if(in_array( 'alltimefavourite', $labels)){ echo 'selected="selected"'; } ?>><?php echo __('All time favourite', 'onepiece'); ?></option>
     </select></p>
     
-    
-    
     <p><label for="meta-box-product-price"><b><?php echo __('Price: ', 'onepiece'); ?></b></label>
     <input name="meta-box-product-price" size="8" type="text" value="<?php echo $price; ?>"></p>
-    <p>
+    
      <!-- <label for="meta-box-product-dms"><?php echo __('Currency', 'onepiece'); ?></label> 
      see https://gist.github.com/Gibbs/3920259
      -->
+     
+    <p>
     <select name="meta-box-product-currency" id="meta-box-product-currency">
         <option value="EUR" <?php selected( $currency, 'EUR' ); ?>><?php echo __('EUR &#8364;', 'onepiece'); ?></option>
         <option value="CNY" <?php selected( $currency, 'CNY' ); ?>><?php echo __('CNY &#165;', 'onepiece'); ?></option>
@@ -134,15 +124,10 @@ function post_productmaker_fields($object)
         <option value="post" <?php selected( $orderbymail, 'post' ); ?>><?php echo __('Post view only', 'onepiece'); ?></option>
         <option value="ever" <?php selected( $orderbymail, 'ever' ); ?>><?php echo __('Everywhere', 'onepiece'); ?></option>
     </select>
-   
    </p>
 
-
-    
     <p><b><?php echo __('Package Size', 'onepiece'); ?></b>
     <p>
-    
-    
     <input name="meta-box-product-dmx" size="5" type="text" placeholder="<?php echo __('size x', 'onepiece'); ?>" value="<?php echo $dmx; ?>">
     <input name="meta-box-product-dmy" size="5" type="text" placeholder="<?php echo __('size y', 'onepiece'); ?>" value="<?php echo $dmy; ?>">
     <input name="meta-box-product-dmz" size="5" type="text" placeholder="<?php echo __('size z', 'onepiece'); ?>" value="<?php echo $dmz; ?>">
@@ -175,13 +160,8 @@ function post_productmaker_fields($object)
         <option value="ton" <?php selected( $wms, 'ton' ); ?>><?php echo __('ton', 'onepiece'); ?></option>
     </select>
     </p>
-    
     <?php
 }
-
-
-
-
 
 
 /* SAVE POST METADATA */
@@ -217,7 +197,7 @@ function save_custom_meta_box($post_id, $post, $update)
         update_post_meta( $post_id, 'meta-box-custom-useurl', esc_attr( $_POST['meta-box-custom-useurl'] ) );
 
     /* PRODUCT MAKER */
-    $price = $_POST["meta-box-product-price"];
+    $price = $_POST["meta-box-product-price"]; 
     $discount = $_POST["meta-box-product-discount"];
 	
     update_post_meta( $post_id, 'meta-box-product-price', $price );
@@ -252,5 +232,4 @@ function save_custom_meta_box($post_id, $post, $update)
     update_post_meta( $post_id, 'meta-box-product-orderbymail', $_POST['meta-box-product-orderbymail'] );
 }
 add_action("save_post", "save_custom_meta_box", 10, 3);
-
 ?>

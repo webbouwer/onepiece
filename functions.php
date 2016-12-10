@@ -1,6 +1,5 @@
-<?php /* Functions WP */
-
-// Include Code Assets
+<?php
+/* Functions WP */
 require get_template_directory() . '/assets/mobile_detect.php';
 require get_template_directory() . '/assets/customizer.php'; // customizer functions
 require get_template_directory() . '/assets/metaboxes.php'; // metabox functions
@@ -11,7 +10,6 @@ require get_template_directory() . '/assets/widgets-global.php'; // widget funct
 require get_template_directory() . '/assets/widgets-onepiece.php'; // onepiece widget functions
 require get_template_directory() . '/assets/colors.php'; // customizer colors
 require get_template_directory() . '/assets/ajax.php'; // ajax functions
-
 
 /****** Register Theme Support ******/
 function basic_setup_theme_global() {
@@ -306,7 +304,7 @@ function is_sidebar_active( $sidebar_id ){
 /**
  * Set max srcset image width to 1800px
  */
-function remove_max_srcset_image_width( $max_width ) {
+function remove_max_srcset_image_width( $max_width ){
     $max_width = 2100;
     return $max_width;
 }
@@ -326,7 +324,7 @@ add_filter( 'body_class', 'onepiece_body_class' );
 /** Exclude specific categories from the loop */
 add_action( 'pre_get_posts', 'exclude_specific_cats' );
 function exclude_specific_cats( $wp_query ) {   
-    if( !is_admin() && is_main_query() && is_home() ) {
+    if( !is_admin() && is_main_query() && is_home() ){
 		$exclude_cats = '-'.str_replace(",",",-", get_theme_mod('onepiece_content_exclude_categories') );
         $wp_query->set( 'cat', $exclude_cats ); // ! '-1' not allowed = buggy in WP Multisitesq
     }
@@ -336,7 +334,7 @@ function exclude_specific_cats( $wp_query ) {
 
 
 /********* CATEGORY LIST **********/
-function get_categories_select() {
+function get_categories_select(){
  	$get_cats = get_categories();
     	$results;
     	$count = count($get_cats);
@@ -375,13 +373,12 @@ return $arr;
 
 
 /******** object_to_array ********/
-function object_to_array($data)
-{
+function object_to_array($data){
     if(is_array($data) || is_object($data))
     {
         $result = array();
  
-        foreach($data as $key => $value) {
+        foreach($data as $key => $value){
             $result[$key] = $this->object_to_array($value);
         }
  
@@ -391,6 +388,20 @@ function object_to_array($data)
     return $data;
 }
 
+
+
+/**
+ * Keep category select list in hiëarchy
+ * source http://wordpress.stackexchange.com/questions/61922/add-post-screen-keep-category-structure
+ */
+function my_website_wp_terms_checklist_args( $args, $post_id ) {
+
+   $args[ 'checked_ontop' ] = false;
+
+   return $args;
+
+}
+add_filter( 'wp_terms_checklist_args', 'my_website_wp_terms_checklist_args', 1, 2 );
 
 // Remove Emoji junk by Christine Cooper
 // Found on http://wordpress.stackexchange.com/questions/185577/disable-emojicons-introduced-with-wp-4-2
@@ -405,8 +416,7 @@ function disable_wp_emojicons() {
   remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
   remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 
-  // filter to remove TinyMCE emojis
-  add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' );
+  add_filter( 'tiny_mce_plugins', 'disable_emojicons_tinymce' ); // filter to remove TinyMCE emojis
 }
 add_action( 'init', 'disable_wp_emojicons' );
 
@@ -443,6 +453,4 @@ function bp_remove_signup_gravatar ($image) {
 	}
 }
 add_filter('bp_get_signup_avatar', 'bp_remove_signup_gravatar', 1, 1 );
-/* end control gravatar */
-
 ?>
