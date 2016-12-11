@@ -5,12 +5,21 @@
 /* Custom Dashboard Widget */
 
 add_action( 'wp_dashboard_setup', 'onepiece_dashboard_widget' );
+
 function onepiece_dashboard_widget() {
     add_meta_box( 'onepiece_dashboard_widgetbox', 'Onepiece Dashboard', 'onepiece_dashboard_widget_content', 'dashboard', 'side', 'high' );
 }
 function onepiece_dashboard_widget_content() {
     // widget content goes here
-    echo 'Dashboard Widget in Development';
+    echo '<h4>Dashboard Widget in Development</h4>';
+	//get github info; exaple  https://api.github.com/users/google/repos
+	//echo json_decode( file_get_contents( 'https://api.github.com/users/oddsized' ) );
+$request = wp_remote_get('https://api.github.com/users/oddsized');
+$response = wp_remote_retrieve_body( $request );
+//echo $response 
+$output = json_decode( $response );
+echo '<a href="'.$output->html_url.'" target="_blank"><img src="'.$output->avatar_url.'" style="display:inline-block;vertical-align:text-top;" border="0" width="24" height="auto" />'.$output->login.' @ github</a>';
+//https://api.github.com/users/Oddsized/events
 }
 
 
