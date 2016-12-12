@@ -282,6 +282,7 @@ jQuery(document).ready(function($) {
 
 /* AnythingSlider */
 $(window).trigger('resize'); // adjust slider on resize
+
 // see https://github.com/CSS-Tricks/AnythingSlider/wiki/Setup
 $('.sliderarea').anythingSlider({
     theme		        : 'fullscreen', 
@@ -1609,14 +1610,20 @@ $(document).ready(function() {
 		var $this = $(this);
 
 		$container.prepend($this).isotope('reloadItems').isotope({ sortBy: 'byCategory' }); // or 'original-order'
+		//$container.isotope('reloadItems').isotope('layout');
+		/*
+		var ceiling = $('#topbar .outermargin').outerHeight(true);
+	 	if( $('#topgridmenu').length > 0 ){
+		ceiling = ceiling + $('#topgridmenu').outerHeight(true); // filter menu height
+		}
+		$('html, body').animate({ scrollTop: $('#contentcontainer').offset().top - ceiling }, 400); // Scroll to top (bottom of header)
+		*/
 		
-		
-	 if( $('#topgridmenu').length > 0 ){
-		$('html, body').animate({ scrollTop: $('#topgridmenu').offset().top - $('#topbar .outermargin').outerHeight(true) }, 400); // Scroll to top (bottom of header)
-	}else{
-		$('html, body').animate({ scrollTop: $('#itemcontainer').offset().top - $('#topbar .outermargin').outerHeight(true) }, 400); // Scroll to top (bottom of header)
-	}
-		
+		$container.isotope('once', 'layoutComplete',
+        function (isoInstance, laidOutItems) {
+  			console.log( laidOutItems.length );
+			$('html, body').animate({ scrollTop: $('#itemcontainer').offset().top -  ( $(window).height() / 4 )  }, 400);
+		});
 		
 		
 		<?php }

@@ -205,6 +205,13 @@ echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentperce
 
 
 /**
+ * login 
+ */
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'cbtop'){
+display_userpanel();
+}
+
+/**
  * 
  * before widgets
  *
@@ -294,6 +301,19 @@ if($filters != 'none'){
  *
  */
 echo '<div id="itemcontainer" class="category-contentbar"></div>'; // Gallery content container
+
+
+/**
+ * 
+ * Login
+ *
+ */
+
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'cbbot'){
+display_userpanel();
+}
+
+
 
 /**
  * 

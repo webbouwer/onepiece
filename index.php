@@ -42,6 +42,22 @@ $contentfloat = 'left';
 // main content area
 echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
 
+
+/**
+ * 
+ * Login
+ *
+ */
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'cbtop'){
+display_userpanel();
+}
+
+
+/**
+ * 
+ * Before
+ *
+ */
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-before') ){
 echo '<div id="widgets-before">';
 dynamic_sidebar('widgets-before');
@@ -64,6 +80,11 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 echo '<div class="clr"></div></nav></div>';
 }
 
+
+
+
+
+
 if ( have_posts() ) {
 
 get_template_part('loop');
@@ -76,11 +97,29 @@ echo '</div></div>';
 
 } 
 
+
+
+
+/**
+ * 
+ * After content
+ *
+ */
+
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-after') ){
 echo '<div id="widgets-after">';
 dynamic_sidebar('widgets-after');
 echo '<div class="clr"></div></div>';
 } 
+
+/**
+ * 
+ * Login
+ *
+ */
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'cbbot'){
+display_userpanel();
+}
 
 echo '</div>';
 

@@ -80,6 +80,15 @@ echo '<div class="clr"></div></div></div>';
 } 
 
 
+/**
+ * login 
+ */
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'pgtop'){
+display_userpanel();
+}
+
+
+
 
 /**
  *
@@ -145,7 +154,12 @@ echo wp_nav_menu( array( 'theme_location' => 'minimenu' ) );
 echo '<div class="clr"></div></nav></div><div style="clear:'.$topbarclass.';"></div>';
 }
 
-
+/**
+ * login 
+ */
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'tbtop'){
+display_userpanel();
+}
 
 
 /**
@@ -189,11 +203,28 @@ echo '</div>'; // close topbar float margin
  * widgets-top-sidebar
  *
  */  
-if( $topsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ){
+ 
+$logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
+ 
+if( ($topsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-top-sidebar') ) || 
+$logindisplay == 'tstop' || $logindisplay == 'tsbot' ){
 
 $count = is_sidebar_active('widgets-top-sidebar');
 echo '<div id="topsidebar" class="colset-'.$count.' '.$topsidebarplace.'side" style="float:'.$topsidebarplace.';width:'.$topsidebarwidth.'%;">';
+
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'tstop'){
+display_userpanel();
+}
+
+if( is_sidebar_active('widgets-top-sidebar') ){
 dynamic_sidebar('widgets-top-sidebar');
+}
+
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'tsbot'){
+display_userpanel();
+}
+
+
 echo '<div class="clr"></div></div>';
 } 
 

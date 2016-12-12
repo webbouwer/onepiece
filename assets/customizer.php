@@ -1363,6 +1363,12 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    		'description'    => __( 'Select loginbar display.', 'onepiece' ),
             	'choices'        => array(
                 	'none'   => __( 'No Display (or use widget)', 'onepiece' ),
+            		'pgtop'   => __( 'Topbar widget top area', 'onepiece' ),
+            		'tbtop'   => __( 'Topbar (after minimenu)', 'onepiece' ),
+            		'tstop'   => __( 'Topbar sidebar top', 'onepiece' ),
+            		'tsbot'   => __( 'Topbar sidebar bottom', 'onepiece' ),
+            		'cbtop'   => __( 'Before main content', 'onepiece' ),
+            		'cbbot'   => __( 'After main content', 'onepiece' ),
             		'sbtop'   => __( 'Top main sidebar', 'onepiece' ),
             		'sbbottom'   => __( 'Bottom main sidebar', 'onepiece' ),
             		'sb2top'   => __( 'Top sidebar 2', 'onepiece' ),

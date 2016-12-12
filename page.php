@@ -99,6 +99,16 @@ echo '<div id="specialpagewidgets">';
 dynamic_sidebar('special-page-widgets');
 echo '<div class="clr"></div></div>';
 }
+
+/**
+ * login 
+ */
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'cbtop'){
+display_userpanel();
+}
+
+
+
 if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-before') && $specialwidgetsdisplay != 'replace' && $beforewidgetsdisplay != 'hide'){
 echo '<div id="widgets-before">';
 dynamic_sidebar('widgets-before');
@@ -399,6 +409,18 @@ echo '<div id="widgets-after">';
 dynamic_sidebar('widgets-after');
 echo '<div class="clr"></div></div>';
 } 
+
+
+/**
+ * 
+ * Login
+ *
+ */
+
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'cbbot'){
+display_userpanel();
+}
+
 
 echo '</div>';
 

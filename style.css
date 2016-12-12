@@ -365,11 +365,10 @@ overflow:hidden;
 #specialpagewidgets .widgetpadding,
 #pagesidebar .widgetpadding
 {
-padding:4px 0px 6px 0;
+padding:0px;
 }
 .post-coverimage img,
 #maincontent .follow-post.has-post-thumbnail .post-title,
-#maincontent .follow-post.has-post-thumbnail .post-content,
 #maincontent .follow-post.has-post-thumbnail .post-content,
 #maincontent .follow-post .post-coverimage  
 {   
@@ -567,10 +566,6 @@ display:none;
 .item.active
 {
 }
-.item.active .hidden
-{
-display:block;
-}
 
 .item .titlebox
 {
@@ -726,7 +721,7 @@ overflow:hidden;
 #specialpagewidgets .widgetpadding,
 #pagesidebar .widgetpadding
 {
-padding:8px 0px 8px 0;
+padding:0px;
 }
 
 #maincontent .follow-post.has-post-thumbnail .imgalign-left .post-title,
@@ -764,9 +759,6 @@ padding:8px 0px 8px 0;
     margin:0px auto;
 	text-align:center;
 }
-
-
-
 
 
 

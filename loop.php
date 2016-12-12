@@ -33,9 +33,10 @@ post_class('follow-post');
 }
 
 $textalign = get_theme_mod('onepiece_content_panel_posts_textalign', 'left');   
+$postimagelist = get_theme_mod('onepiece_content_panel_postlist_inlineimage', 'left'); 
+
 if ( !is_single() && !is_page() ) { 
 	$textalign = get_theme_mod('onepiece_content_panel_postlist_textalign', 'left'); 
-	$postimagelist = get_theme_mod('onepiece_content_panel_postlist_inlineimage', 'left'); 
 }
 
 echo '><div class="contentpadding align-'.$textalign.' imgalign-'.$postimagelist.'">';
@@ -75,9 +76,13 @@ edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>'
 
 // Titles on top in lists/loops
 if ( !is_single() && !is_page() ) { 
-echo '<div class="post-title"><h2>'. $title_link . get_the_title().'</a></h2>';
+echo '<div class="post-title"><h2>'. $title_link . get_the_title().'</a></h2></div>';
 
+}
+if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
+get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 
+echo '<div class="post-subtitle">';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 echo '<span class="post-date">'.get_the_date().'</span>';
@@ -85,10 +90,10 @@ echo '<span class="post-date">'.get_the_date().'</span>';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
 echo ' <span class="post-author">'.get_the_author().'</span> ';
 }
-
-
 echo '</div>';
+
 }
+
 
 // featured (cover) image
 $postimagesingle = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');  
@@ -170,18 +175,22 @@ if ( !is_single() && !is_page() ) {
 
 	if( $tagdisplay == 'belowtitle' ){
     	// post tags
+		echo '<div class="post-tags">';
     	the_tags('',', '); // the_tags(', ');  //
+		echo '</div>'; 
 	}
 	
 	
 	if( $catdisplay == 'belowtitle' ){
     	// post categories
+		echo '<div class="post-cats">';
     	the_category(', ');
+		echo '</div>'; 
 	}
 
 
 
-	$maintext = apply_filters('the_content', get_the_content());
+	$maintext = get_the_content();
 
 	if( $postimagesingle == 'left' || $postimagesingle == 'right' ){
 			// start maintext with image
@@ -196,7 +205,7 @@ if ( !is_single() && !is_page() ) {
 
 
     // Post full content
-    echo '<div class="post-content">'.$maintext .'<div class="clr"></div></div>';
+    echo '<div class="post-content">'.apply_filters('the_content', $maintext ).'<div class="clr"></div></div>';
 
 
 
@@ -209,7 +218,10 @@ if ( !is_single() && !is_page() ) {
 
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags
+    	// post tags
+		echo '<div class="post-tags">';
     	the_tags('Tagged with: ',' '); // the_tags(', ');  //
+		echo '</div>'; 
 	}
 
 	if( is_single() && $nextprevdisplay == 'belowcontent' ){
@@ -220,7 +232,9 @@ if ( !is_single() && !is_page() ) {
 
 	if( $catdisplay == 'belowcontent' ){
     	// post categories
+		echo '<div class="post-cats">';
     	the_category(', ');
+		echo '</div>'; 
 	}
 
 	// post comments
