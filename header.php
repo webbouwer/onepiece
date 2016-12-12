@@ -101,12 +101,7 @@ if( get_theme_mod( 'onepiece_elements_topmenubar_position') ){
 }
 
 
-
-
-
 echo '<div id="topmenubar"><div class="outermargin">';
-
-
 
 /**
  *
@@ -126,7 +121,6 @@ echo '<div id="topbarmargin" class="'.$topbarclass.' '.$topbarmarginfloatpos.'si
 echo '<div id="topbarmargin" class="'.$topbarclass.'" style="width:100%">';
 
 }
-
 
 /**
  *
