@@ -26,8 +26,8 @@ $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
 
 
 // default SEO
-$seodesc = get_theme_mod('onepiece_identity_panel_seo_keywords', 'cool, website, webdesign');
-$seokeywords = get_theme_mod('onepiece_identity_panel_seo_description', 'Check out this cool website!');
+$seodesc = get_theme_mod('onepiece_identity_panel_seo_description', 'Check out this cool website!');
+$seokeywords = get_theme_mod('onepiece_identity_panel_seo_keywords', 'cool, website, webdesign');
 
 
 
