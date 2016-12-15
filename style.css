@@ -799,6 +799,12 @@ text-align:center; /* available on small screens */
 	text-align:center;
 }
 
+.post-content p
+{
+display:block;
+width:auto;
+}
+
 .post-content .pricebox,
 .post-content .sizebox,
 .post-content .packagebox,

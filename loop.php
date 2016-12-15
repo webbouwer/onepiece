@@ -356,7 +356,7 @@ if ( !is_single() && !is_page() ) {
 	}
 	
     // Post full content
-    echo '<div class="post-content">'.$productbox.$packagebox.$orderbox.apply_filters('the_content', $maintext ).'<div class="clr"></div></div>';
+    echo '<div class="post-content">'.apply_filters('the_content', $maintext.$productbox.$packagebox.$orderbox ).'<div class="clr"></div></div>';
 
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags
