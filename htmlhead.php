@@ -623,20 +623,6 @@ width:40%;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  *
  * POPUP STYLING 
@@ -1297,7 +1283,6 @@ $(document).ready(function() {
     var markup = '<div id="post-'+obj.id+'" data-category="'+cat+'" class="item '+cat+' '+tags+'"><div class="innerpadding">';
 
 
-
 	var smallscreen = false;
  	<?php // check for customizer posts display settings
     if( $mobile ){
@@ -1394,33 +1379,19 @@ $(document).ready(function() {
     
 	markup += '<div class="fullinfobox hidden">';
 	
-	
 		
 	/**
  	 * CURRENCY MAP
   	 */
-	var currency_map = {
-    "EUR" : "&#8364;",
-    "USD" : "&#36;",
-    "JPY" : "&#165;",
-    "CNY" : "&#165;",
-    "GBP" : "&#163;",
-    "AUD" : "&#36;",
-    "CAD" : "&#36;",
-    "CHF" : "&#67;&#72;&#70;"
-	};
+	var currency_map = <?php echo json_encode($GLOBALS['currency_symbols']); ?>;
+
 	
 		
 	/**
  	 * SIZE MAP
   	 */
-	var size_map = {
-    "xs" : "extra small",
-    "s" : "small",
-    "m" : "medium",
-    "l" : "large",
-    "xl" : "extra large" 
-	};
+	var size_map = <?php echo json_encode($GLOBALS['size_select']); ?>;
+
 	
 	
 	/*

@@ -14,7 +14,14 @@ require get_template_directory() . '/assets/ajax.php'; // ajax functions
 /****** Register Theme Support ******/
 function basic_setup_theme_global() {
 	add_theme_support( 'post-thumbnails' );
+	/*
+	the_post_thumbnail('thumbnail');       // Thumbnail (default 150px x 150px max)
+	the_post_thumbnail('medium');          // Medium resolution (default 300px x 300px max)
+	the_post_thumbnail('large');           // Large resolution (default 640px x 640px max)
+	the_post_thumbnail('full');            // Original image resolution (unmodified)
+	*/
 	add_image_size( 'big-thumb', 320, 9999 );
+	add_image_size( 'medium', 480, 9999 );
     add_theme_support( 'title-tag' );
 	add_theme_support( 'automatic-feed-links' ); 
 
@@ -333,6 +340,7 @@ function exclude_specific_cats( $wp_query ) {
 
 
 
+
 /********* CATEGORY LIST **********/
 function get_categories_select(){
  	$get_cats = get_categories();
@@ -394,14 +402,14 @@ function object_to_array($data){
  * Keep category select list in hiëarchy
  * source http://wordpress.stackexchange.com/questions/61922/add-post-screen-keep-category-structure
  */
-function my_website_wp_terms_checklist_args( $args, $post_id ) {
+function onepiece_wp_terms_checklist_args( $args, $post_id ) {
 
    $args[ 'checked_ontop' ] = false;
 
    return $args;
 
 }
-add_filter( 'wp_terms_checklist_args', 'my_website_wp_terms_checklist_args', 1, 2 );
+add_filter( 'wp_terms_checklist_args', 'onepiece_wp_terms_checklist_args', 1, 2 );
 
 // Remove Emoji junk by Christine Cooper
 // Found on http://wordpress.stackexchange.com/questions/185577/disable-emojicons-introduced-with-wp-4-2

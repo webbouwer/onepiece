@@ -1,5 +1,19 @@
 <?php // source  https://gist.github.com/Gibbs/3920259
-$currency_symbols = array(
+
+function register_currencies() {
+
+    global $currency_symbols; // use as $GLOBALS['currency_symbols']['AOA']
+
+	$currency_symbols = array(
+	"EUR" => "&#8364;",
+    "USD" => "&#36;",
+    "JPY" => "&#165;",
+    "CNY" => "&#165;",
+    "GBP" => "&#163;",
+    "AUD" => "&#36;",
+    "CAD" => "&#36;",
+    "CHF" => "&#67;&#72;&#70;"
+	/*
 	'AED' => '&#1583;.&#1573;', // ?
 	'AFN' => '&#65;&#102;',
 	'ALL' => '&#76;&#101;&#107;',
@@ -158,5 +172,8 @@ $currency_symbols = array(
 	'YER' => '&#65020;',
 	'ZAR' => '&#82;',
 	'ZMK' => '&#90;&#75;', // ?
-	'ZWL' => '&#90;&#36;',
+	'ZWL' => '&#90;&#36;'
+	*/
 );
+}
+add_action( 'parse_query', 'register_currencies' );

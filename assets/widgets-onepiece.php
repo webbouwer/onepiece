@@ -7,23 +7,63 @@
 add_action( 'wp_dashboard_setup', 'onepiece_dashboard_widget' );
 
 function onepiece_dashboard_widget() {
-    add_meta_box( 'onepiece_dashboard_widgetbox', 'Onepiece Dashboard', 'onepiece_dashboard_widget_content', 'dashboard', 'side', 'high' );
+    add_meta_box( 'onepiece_dashboard_widgetbox', 'Onepiece @ Github', 'onepiece_dashboard_widget_content', 'dashboard', 'side', 'high' );
 }
+
 function onepiece_dashboard_widget_content() {
     // widget content goes here
-    echo '<h4>Dashboard Widget in Development</h4>';
-	//get github info; exaple  https://api.github.com/users/google/repos
-	//echo json_decode( file_get_contents( 'https://api.github.com/users/oddsized' ) );
-$request = wp_remote_get('https://api.github.com/users/oddsized');
-$response = wp_remote_retrieve_body( $request );
-//echo $response 
-$output = json_decode( $response );
-echo '<a href="'.$output->html_url.'" target="_blank"><img src="'.$output->avatar_url.'" style="display:inline-block;vertical-align:text-top;" border="0" width="24" height="auto" />'.$output->login.' @ github</a>';
-//https://api.github.com/users/Oddsized/events
+	
+	//https://api.github.com/users/oddsized
+	//$gitdata = wp_remote_get('https://api.github.com/users/oddsized');
+	//$gitprofile_data = wp_remote_retrieve_body( $gitdata );
+	//$gitprofile = json_decode( $gitprofile_data );
+	//echo '<a href="'.$gitprofile->html_url.'" target="_blank"><img src="'.$gitprofile->avatar_url.'" style="display:inline-block;vertical-align:text-top;" border="0" width="24" height="auto" />'.$gitprofile->login.' @ github</a>';
+
+	//https://api.github.com/repos/Oddsized/onepiece/events
+	$gitdata = wp_remote_get('https://api.github.com/repos/Oddsized/onepiece/events');
+	$gitevent_data = wp_remote_retrieve_body( $gitdata );
+	$events = json_decode( $gitevent_data );
+	
+	if(count($events) > 0){
+	echo '<ul>';
+	foreach(array_slice($events, 0, 5) as $event){
+		if($event->payload->commits[0]->message != ''){
+		echo '<li><b>'.$event->payload->commits[0]->message.'</b><br />';
+		echo '<small>'.$event->type.' '.tweetTime($event->created_at).' by <a href="https://github.com/'.$event->actor->login.'" target="_blank">'.$event->payload->commits[0]->author->name.'</a></small></li>';
+		}	
+	}
+	echo '</ul>';
+	}
 }
 
-
-	
+function tweetTime( $t ) {
+	/**** Begin Time Loop ****/
+	// Set time zone
+	date_default_timezone_set('America/New_York');
+	// Get Current Server Time
+	$server_time = $_SERVER['REQUEST_TIME'];
+	// Convert Twitter Time to UNIX
+	$new_tweet_time = strtotime($t);
+	// Set Up Output for the Timestamp if over 24 hours
+	$this_tweet_day =  date('D. M j, Y', strtotime($t));
+	// Subtract Twitter time from current server time
+	$time = $server_time - $new_tweet_time;			
+	// less than an hour, output 'minutes' messaging
+	if( $time < 3599) {
+		$time = round($time / 60) . ' minutes ago';
+			}
+	// less than a day but over an hour, output 'hours' messaging 
+	else if ($time >= 3600 && $time <= 86400) {
+		$time = round($time / 3600) . ' hours ago';
+		}
+	// over a day, output the $tweet_day formatting
+	else if ( $time > 86400)  {
+		$time = $this_tweet_day;
+		}
+	// return final time from tweetTime()
+	return $time;
+	/**** End Time Loop ****/
+}
 
 
 

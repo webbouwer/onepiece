@@ -373,9 +373,10 @@ overflow:hidden;
 padding:0px;
 }
 .post-coverimage img,
+#maincontent .contentpadding img, /* small screens */
 #maincontent .follow-post.has-post-thumbnail .post-title,
 #maincontent .follow-post.has-post-thumbnail .post-content,
-#maincontent .follow-post .post-coverimage  
+#maincontent .follow-post .post-coverimage
 {   
 width:100%;
 height:auto;
@@ -389,17 +390,17 @@ position:relative
 
 .contentpadding.align-left
 {
-text-align:left;
+/* text-align:left; // not on small screens */
 }
 .contentpadding.align-right
 {
-text-align:right;
+/* text-align:right; // not on small screens */
 }
 .contentpadding.align-center
 {
-text-align:center;
+text-align:center; /* available on small screens */
 }
-
+ 
 
 span.edit-link
 {
@@ -716,6 +717,21 @@ margin-left:15px;
 max-height:320px;
 overflow:hidden;
 }
+#maincontent .contentpadding p img  /* large screens */
+{
+width:auto;
+}
+#maincontent .contentpadding img.align-right  /* large screens */
+{
+width:auto;
+margin-left:2%;
+}
+#maincontent .contentpadding img.align-left  /* large screens */
+{
+width:auto;
+margin-right:2%;
+}
+
 
 #topsidebar .widgetpadding,
 #maincontent .type-post .contentpadding,
@@ -729,18 +745,36 @@ overflow:hidden;
 padding:0px;
 }
 
+.contentpadding.align-left
+{
+text-align:left;
+}
+.contentpadding.align-right
+{
+text-align:right; 
+}
+.contentpadding.align-center
+{
+text-align:center; /* available on small screens */
+}
+
 #maincontent .follow-post.has-post-thumbnail .imgalign-left .post-title,
-#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-excerpt
 {
     width:68%;
     float:right;
 }
 #maincontent .follow-post.has-post-thumbnail .imgalign-right .post-title,
-#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-excerpt
 {
     width:68%;
     float:left;
 }
+
+
+
 
 
 
@@ -765,8 +799,12 @@ padding:0px;
 	text-align:center;
 }
 
-
-
+.post-content .pricebox,
+.post-content .sizebox,
+.post-content .packagebox,
+.post-content .orderbox
+{
+}
 
 
 /******************** GALLERY THEME (MEDIUM)  ********************/
