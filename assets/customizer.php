@@ -109,6 +109,7 @@ Content:
 
     Post
         Featured image display replace header/inline left/right/ content
+		..inline image width
 		text alignment 
         Display date/author
         Display tag none/below title/below content
@@ -124,6 +125,7 @@ Content:
         Use highlight first posts
 		Excerpt length (amount of words)
 		inline image alignment
+		..inline image width
 		excerpt text alignment 
 		display post read more link inline/left/right
 		Exclude categories
@@ -162,7 +164,7 @@ Elements:
 		Headerimage min-height px
 		
 	Login tabbar    
-        Default display none/position 
+        Default display none/positions 
 		
     Main menu bar
         Display hide/position horizontal
@@ -172,16 +174,19 @@ Elements:
 		
     Main Sidebar
         Display hide/alignment
-        Placement top/bottom/topcontent
-        Width
+        Width (%)
             
     Second Sidebar
         Display none/position
         Position inside/outside
-        Width
+        Width (%)
 
     Footerbar
-        Bottom menu display none/position
+        Bottom menu display none/position (opposed to logo position)
+		Footer Sidebar position
+		Footer sidebar width (%)
+		Copyright display
+		Copyright text
 
 Menu's:
 	Mini
@@ -202,7 +207,8 @@ Widgets: (sidebars positions)
     Before (content) - widgets just before the main content, after the special widgets (ie. for page related info and banners)
     After (content) - widgets right the main content, sticking to the main content bottom (ie. for page related info and banners)
     Subcontent - widgets below the main content and siderbar area, before the header (ie. for a complete info section with site wide value)
-    Bottom - widgets below/besides the bottom menu and logo, before the copyright textbox (ie. for short contact info and sitemap)
+    Bottom - widgets below/besides the bottom menu and logo, before the copyright textbox, beside sidebar (ie. for short contact info and sitemap)
+	Bottom-sidebar - widgets besides the bottom menu/widgets and logo, before the copyright textbox (ie. for short contact info and sitemap)
 	
 	!Widgets Header - WP default widgets setup is available for admin but not used in the theme view (almost blank start screen) 
     
