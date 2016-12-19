@@ -7,7 +7,7 @@ display_userpanel();
 
 echo '<div class="sidebarpadding">';
 
-if ( has_nav_menu( 'sidemenu' ) ) {
+if ( has_nav_menu( 'sidemenu' ) ) { 
 echo '<div id="sidebar-navigation" class="main-navigation" role="navigation"><nav>';
 wp_nav_menu( array( 'theme_location' => 'sidemenu' ) );
 echo '<div class="clr"></div></nav></div>';

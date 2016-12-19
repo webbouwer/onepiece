@@ -2,7 +2,7 @@
 
 $loginbar_display = get_theme_mod('onepiece_elements_loginbar_option', 'none');
 
-if($loginbar_display == 'sb2top'){
+if($loginbar_display == 'sb2top'){ 
 display_userpanel();
 }
  

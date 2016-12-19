@@ -16,7 +16,7 @@ $bottomsidebarwidth = get_theme_mod( 'onepiece_elements_bottom_sidebar_width' , 
  */
 $logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
 
-
+ 
 
 /**
  *

@@ -1,10 +1,8 @@
 <?php 
-
 // htmlhead
 get_template_part('htmlhead');
 // header
 get_template_part('header');
-
 /*
  * main login 
  */
@@ -12,6 +10,9 @@ $logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
 
 // content
 echo '<div id="contentcontainer"><div class="outermargin">';
+
+ 
+
 
 $contentpercentage = 100; 
 
@@ -31,7 +32,7 @@ echo '<div class="clr"></div></div>';
 
 
 if( ( function_exists('is_sidebar_active') && is_sidebar_active('sidebar') && get_theme_mod('onepiece_elements_sidebar_position', 'left') != 'none' )
-|| $logindisplay == 'sbtop' || $logindisplay == 'sbbottom' ){
+|| $logindisplay == 'sbtop' || $logindisplay == 'sbbottom' || has_nav_menu( 'sidemenu' ) ){
 $contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_mainsidebar_width', 28); 
 echo '<div id="mainsidebar" class="'.get_theme_mod('onepiece_elements_sidebar_position', 'left').'side" style="float:'.get_theme_mod('onepiece_elements_sidebar_position', 'left').';width:'.get_theme_mod('onepiece_elements_mainsidebar_width', 28).'%;">';
 get_template_part('sidebar');
@@ -53,6 +54,11 @@ echo '<div class="clr"></div></div>';
 }
 }
 
+/**
+ *
+ *  Start html main content area 
+ *
+ */	
 $contentfloat = 'left';
 
 // main content area

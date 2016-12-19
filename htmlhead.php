@@ -708,7 +708,7 @@ echo '#headercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_p
 echo '#headerbar { min-height:'.get_theme_mod('onepiece_elements_headerimage_height',280).'px; }'; 
 
 echo '#footercontainer .logobox { max-width:'.get_theme_mod('onepiece_identity_panel_logosmall_maxwidth',80).'px !important; }';
-
+ 
 echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_small_width', 512).'%; max-width:'.get_theme_mod('onepiece_responsive_small_outermargin', 480 ).'px; margin:0 auto; }'; 
 
 // single column small /  medium

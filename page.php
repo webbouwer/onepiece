@@ -9,7 +9,7 @@ $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
  */	
 get_template_part('htmlhead');
 
-/**
+/** 
  *
  * content custom variables
  *
@@ -39,51 +39,56 @@ get_template_part('header');
  */	
 echo '<div id="contentcontainer"><div class="outermargin">';
 
+/*
+ * main login 
+ */
+$logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
+
+
 /**
  *
  *  PAGE SIDEBARS 
  *
- */	
-$contentpercentage = 100;
+ */
+$contentpercentage = 100; 
 
-if( get_theme_mod('onepiece_elements_sidebar2_position2') == 'out' && function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position') != 'none' && $secondsidebardisplay != 'hide' ){
-$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width'); 
-echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position').';width:'.get_theme_mod('onepiece_elements_sidebar2_width').'%;">';
+if( get_theme_mod('onepiece_elements_sidebar2_position2', 'out') == 'out' && $secondsidebardisplay != 'hide'){
+if (  ( function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position', 'none') != 'none' )
+|| ( $logindisplay == 'sb2top' || $logindisplay == 'sb2bottom' )  ){
+
+$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width', 28); 
+echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2', 'out').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').';width:'.get_theme_mod('onepiece_elements_sidebar2_width', 20).'%;">';
+
 get_template_part('sidebar2');
+
 echo '<div class="clr"></div></div>';
 }
-
-if( $pagesidebardisplay != 'none' && function_exists('is_sidebar_active') && get_theme_mod('onepiece_elements_sidebar_position') != 'none' && (is_sidebar_active('sidebar') || is_sidebar_active('pagesidebar') ) ){
-$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_mainsidebar_width');
-
-echo '<div id="pagesidebarcontainer" class="'.get_theme_mod('onepiece_elements_sidebar_position', 'left').'side" style="float:'.get_theme_mod('onepiece_elements_sidebar_position').';width:'.get_theme_mod('onepiece_elements_mainsidebar_width').'%;">';
-
-if( ( is_sidebar_active('pagesidebar')  || has_nav_menu( 'pagemenu' ) ) && ($pagesidebardisplay == 'top' || $pagesidebardisplay == 'replace')   ){
-echo '<div id="pagesidebar">';
-get_template_part('pagebar');
-echo '<div class="clr"></div></div>';
 }
-if( is_sidebar_active('sidebar') && ($pagesidebardisplay != 'replace' || !is_sidebar_active('pagesidebar')) ){ 
-echo '<div id="mainsidebar">';
+
+
+
+if( ( (function_exists('is_sidebar_active') && is_sidebar_active('sidebar') && get_theme_mod('onepiece_elements_sidebar_position', 'left') != 'none' )
+|| $logindisplay == 'sbtop' || $logindisplay == 'sbbottom' || has_nav_menu( 'sidemenu' ) ) && $pagesidebardisplay != 'none' ){
+$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_mainsidebar_width', 28); 
+echo '<div id="mainsidebar" class="'.get_theme_mod('onepiece_elements_sidebar_position', 'left').'side" style="float:'.get_theme_mod('onepiece_elements_sidebar_position', 'left').';width:'.get_theme_mod('onepiece_elements_mainsidebar_width', 28).'%;">';
 get_template_part('sidebar');
 echo '<div class="clr"></div></div>';
 }
-if( ( is_sidebar_active('pagesidebar') || has_nav_menu( 'pagemenu' ) ) && $pagesidebardisplay == 'below'   ){
-echo '<div id="pagesidebar">';
-get_template_part('pagebar');
-echo '<div class="clr"></div></div>';
-}
-echo '<div class="clr"></div></div>';
-}
 
-if( get_theme_mod('onepiece_elements_sidebar2_position2') == 'ins' && function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position') != 'none' && $secondsidebardisplay != 'hide' ){
-$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width'); 
-echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').';width:'.get_theme_mod('onepiece_elements_sidebar2_width').'%;">';
+
+
+if( get_theme_mod('onepiece_elements_sidebar2_position2', 'out') == 'ins' && $secondsidebardisplay != 'hide'){
+if (  ( function_exists('is_sidebar_active') && is_sidebar_active('sidebar2') && get_theme_mod('onepiece_elements_sidebar2_position', 'none') != 'none' )
+|| ( $logindisplay == 'sb2top' || $logindisplay == 'sb2bottom' )  ){
+
+$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width', 28); 
+echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2', 'out').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').';width:'.get_theme_mod('onepiece_elements_sidebar2_width', 20).'%;">';
+
 get_template_part('sidebar2');
+
 echo '<div class="clr"></div></div>';
 }
-
-
+}
 
 /**
  *

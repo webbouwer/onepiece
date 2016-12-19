@@ -211,7 +211,7 @@ function basic_setup_widgets_init() {
 	}
 }
 add_action( 'widgets_init', 'basic_setup_widgets_init' );
-
+ 
 
 /****** Javascript with customizer variables *****/
 // http://wordpress.stackexchange.com/questions/57386/how-do-i-force-wp-enqueue-scripts-to-load-at-the-end-of-head

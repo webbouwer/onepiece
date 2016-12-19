@@ -195,7 +195,7 @@ Menu's:
 	User
     Side
     Bottom
-    
+   
 Widgets: (sidebars positions)
 
 	Top - widgets on top of everything (ie. for banners or hidden menu's etc.)

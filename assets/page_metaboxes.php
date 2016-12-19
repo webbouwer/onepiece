@@ -113,7 +113,7 @@ $coverimage = get_post_meta($object->ID, "meta-box-display-coverimage", true);
 <p><label for="meta-box-display-parentcontent"><?php echo __('Parent content display', 'onepiece'); ?></label>
 <select name="meta-box-display-parentcontent" id="meta-box-display-parentcontent">
 <option value="none" <?php selected( $parent, 'none' ); ?>><?php echo __('Do not display', 'onepiece'); ?></option>
-<option value="like" <?php selected( $parent, 'intr' ); ?>><?php echo __('Display on top of childpages', 'onepiece'); ?></option>
+<option value="intr" <?php selected( $parent, 'intr' ); ?>><?php echo __('Display on top of childpages', 'onepiece'); ?></option> 
 </select>
 </p>
 

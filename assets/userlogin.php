@@ -124,7 +124,7 @@ if (!$user_ID) { // is not logged in
 			echo '<div class="loggedtext">'. __('You are signed in as', 'onepiece') .' <strong>'. $user_identity .'</strong></div>';
 		
 		
-		
+		 
 		
 		echo '<div class="loginmenubar"><ul class="menu">';
  

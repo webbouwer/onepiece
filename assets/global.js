@@ -77,7 +77,6 @@ $(document).ready(function() {
 	        }
 	    }
 	}
-	ResponsiveReorder();
 	
 
 /**
@@ -98,26 +97,6 @@ $(document).ready(function() {
 		
 		ResponsiveReorder(); // replace sidebar elements below content
 		
-		
-		//$('#topbar').css('width', $(window).width() +'px'); // add topbar width resize
-		
-		/* adjust mobile header
-		if( $('#pagecontainer').hasClass("mobile")  ){
-		
-		if(  $("#headercontainer").height() >= ( $(window).height() / 2.5 ) ){
-			
-			$("#sliderbox-head").css( 'height' , $(window).height() + 'px' );
-			
-		}else{
-			
-			$("#sliderbox-head").css( 'height' , 'auto' );
-		
-		}
-		
-	
-		} // end mobile
-		*/
-		
 		// headerbar height (fade bglayer)
 		
 		$('#headerbar').css( 'height' , $(window).height()/3*2 + 'px' );
@@ -126,7 +105,7 @@ $(document).ready(function() {
 	
 	doneGlobalResizing();
 
-	
+	 
 	
 /**
  * LOADING MESSAGEBOX

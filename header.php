@@ -365,7 +365,7 @@ if( $sliderdefaultwidth != 'full' ){
 echo '</div>';
 }
 }
-
+ 
 
 
 /**
