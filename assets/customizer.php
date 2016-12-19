@@ -64,10 +64,10 @@ Identity:
 		default (meta) description
 	
 	
-Style & Layout: 
+Style: 
 
-	Style
-		select style (css file)
+	Style & Layout
+		select style (custom css file)
 		fontsize 1-10
 		spacing 1-10
 		speed 1-10
@@ -108,24 +108,24 @@ Content:
         date/author display
 
     Post
-        Featured image header / inline
-		.. text alignment 
+        Featured image display replace header/inline left/right/ content
+		text alignment 
         Display date/author
-		
+        Display tag none/below title/below content
+        Display category none/below title/below content
+        Display next/prev none/ below content / above footer / content sides
 	
-		
-		Tags display
-		Categories Display
-		Next / Previous links
 	
 	Product
 		.. turn off product options
 		product order email address
         
     List (replacng category section)
-		.. text alignment 
         Use highlight first posts
 		Excerpt length (amount of words)
+		inline image alignment
+		excerpt text alignment 
+		display post read more link inline/left/right
 		Exclude categories
         Display category list Title & Description 
 
@@ -140,29 +140,29 @@ Content:
    
 Elements:
 
-
-    Background image    
-
+    Background image (wp core)    
 
     Top menu bar
-        Display none/position
         Behavior relative, absolute, fixed, minified
-		bg color 
+        Display none/position
+		bg display
+		bg color
 		text color
 		link color
 		link hover color
-		transparency bg (0-1)
+		transparency bg (0-100)
    
     Top Sidebar
         Display hide/position
         Width
       
     Header image
-		Image
-		Headerimage width (content/full)
+		Image select
+		Image width (content/full)
+		Headerimage min-height px
 		
 	Login tabbar    
-        Default display none/position
+        Default display none/position 
 		
     Main menu bar
         Display hide/position horizontal
@@ -1369,10 +1369,12 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'tsbot'   => __( 'Topbar sidebar bottom', 'onepiece' ),
             		'cbtop'   => __( 'Before main content', 'onepiece' ),
             		'cbbot'   => __( 'After main content', 'onepiece' ),
-            		'sbtop'   => __( 'Top main sidebar', 'onepiece' ),
-            		'sbbottom'   => __( 'Bottom main sidebar', 'onepiece' ),
-            		'sb2top'   => __( 'Top sidebar 2', 'onepiece' ),
-            		'sb2bottom'   => __( 'Bottom sidebar 2', 'onepiece' ),
+            		'sbtop'   => __( 'Main sidebar top', 'onepiece' ),
+            		'sbbottom'   => __( 'Main sidebar bottom', 'onepiece' ),
+            		'sb2top'   => __( 'Sidebar 2 Top', 'onepiece' ),
+            		'sb2bottom'   => __( 'Sidebar 2 bottom', 'onepiece' ),
+            		'bsbtop'   => __( 'Bottom sidebar top', 'onepiece' ),
+            		'bsbbot'   => __( 'Bottom sidebar bottom', 'onepiece' ),
             	)
     	)));
 		

@@ -7,7 +7,7 @@ function display_userpanel(){
 
 
 
-echo '<div id="userpanel">';
+echo '<div id="userpanel"><div class="sidebarpadding">';
 
 global $user_ID, $user_identity; wp_get_current_user(); //get_currentuserinfo(); 
 $regallowed = get_option( 'users_can_register' );
@@ -158,6 +158,6 @@ if (!$user_ID) { // is not logged in
 			
 		echo '</div></div>';
 } 
-echo '</div>';
+echo '</div></div>';
 } // end userpanel 
 ?>

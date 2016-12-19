@@ -206,7 +206,7 @@ $logindisplay == 'tstop' || $logindisplay == 'tsbot' ){
 $count = is_sidebar_active('widgets-top-sidebar');
 echo '<div id="topsidebar" class="colset-'.$count.' '.$topsidebarplace.'side" style="float:'.$topsidebarplace.';width:'.$topsidebarwidth.'%;">';
 
-if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'tstop'){
+if( $logindisplay == 'tstop'){
 display_userpanel();
 }
 
@@ -214,7 +214,7 @@ if( is_sidebar_active('widgets-top-sidebar') ){
 dynamic_sidebar('widgets-top-sidebar');
 }
 
-if( get_theme_mod('onepiece_elements_loginbar_option', 'none') == 'tsbot'){
+if( $logindisplay == 'tsbot'){
 display_userpanel();
 }
 

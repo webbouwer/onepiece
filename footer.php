@@ -8,8 +8,15 @@ $mobile = mobile_device_detect(true,false,true,true,true,true,true,false,false);
  * Bottom side bar
  *
  */ 
-$bottomsidebarplace = get_theme_mod('onepiece_elements_bottom_sidebar_position', 'none');
+$bottomsidebarplace = get_theme_mod('onepiece_elements_bottom_sidebar_position', 'right');
 $bottomsidebarwidth = get_theme_mod( 'onepiece_elements_bottom_sidebar_width' , '30'); 
+
+/*
+ * Bottom login
+ */
+$logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
+
+
 
 /**
  *
@@ -18,7 +25,7 @@ $bottomsidebarwidth = get_theme_mod( 'onepiece_elements_bottom_sidebar_width' , 
  */ 
 $bottombarclass = 'right';
 if( get_theme_mod( 'onepiece_elements_bottommenubar_position') ){
-    $bottombarclass = get_theme_mod( 'onepiece_elements_bottommenubar_position');
+    $bottombarclass = get_theme_mod( 'onepiece_elements_bottommenubar_position', 'right');
 }
 echo '<div id="footercontainer" class="menu-'.$bottombarclass.'">';
 
@@ -77,7 +84,8 @@ echo '<div class="clr"></div></div>';
  * set bottom bar floatmargin
  *
  */   
-if( $bottomsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-bottom-sidebar') ){
+if( ( $bottomsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-bottom-sidebar') ) 
+|| $logindisplay == 'bsbtop' || $logindisplay == 'bsbbot' ){
 $bottombarmarginfloatpos = 'left';
 if( $bottomsidebarplace == 'left'){
 $bottombarmarginfloatpos = 'right';
@@ -125,12 +133,24 @@ echo '</div>'; // close topbar float margin
  * widgets-bottom-sidebar
  *
  */  
-if( $bottomsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-bottom-sidebar')  ){
+if( ( $bottomsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-bottom-sidebar') ) ||
+$logindisplay == 'bsbtop' || $logindisplay == 'bsbbot'  ){
+
 $count = is_sidebar_active('widgets-bottom-sidebar');
 echo '<div id="bottomsidebar" class="colset-'.$count.' '.$bottomsidebarplace.'side" style="float:'.$bottomsidebarplace.';width:'.$bottomsidebarwidth.'%;">';
+
+if( $logindisplay == 'bsbtop'){
+display_userpanel();
+}
+
 if( is_sidebar_active('widgets-bottom-sidebar') ){
 dynamic_sidebar('widgets-bottom-sidebar');
 }
+
+if( $logindisplay == 'bsbbot'){
+display_userpanel();
+}
+
 echo '<div class="clr"></div></div>';
 } 
 
