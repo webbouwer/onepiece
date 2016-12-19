@@ -20,6 +20,10 @@ $(document).ready(function() {
 		var topstyleside = $("#topsidebar").attr('style');
 		var topstylemain = $("#topbarmargin").attr('style');
 	}
+	if( $("#bottomsidebar").length > 0 ){ // check top sidebar first
+		var bottomstyleside = $("#bottomsidebar").attr('style');
+		var bottomstylemain = $("#bottombarmargin").attr('style');
+	}
  
 	function ResponsiveReorder(){
 	    var small = 512;
@@ -29,6 +33,10 @@ $(document).ready(function() {
 			if( $("#topsidebar").length > 0 ){ // check top sidebar first
 				$("#topsidebar").attr('style', topstyleside).prependTo("#topmenubar .outermargin");
 				$("#topbarmargin").attr('style', topstylemain);
+			}
+			if( $("#bottomsidebar").length > 0 ){ // check top sidebar first
+				$("#bottomsidebar").attr('style', bottomstyleside); //.appendTo("#footercontainer .outermargin");
+				$("#bottombarmargin").attr('style', bottomstylemain);
 			}
 			
 	        // prepend 
@@ -47,8 +55,12 @@ $(document).ready(function() {
 	    if( $(window).width() < small ){
 			
 			if( $("#topsidebar").length > 0 ){ // check top sidebar first
-				$("#topsidebar").attr('style', 'width:100%;').prependTo("#contentcontainer .outermargin");;
+				$("#topsidebar").attr('style', 'width:100%;').prependTo("#contentcontainer .outermargin");
 				$("#topbarmargin").attr('style', 'width:100%;');
+			}
+			if( $("#bottomsidebar").length > 0 ){ // check top sidebar first
+				$("#bottomsidebar").attr('style', 'width:100%;'); //.appendTo("#footercontainer .outermargin");
+				$("#bottombarmargin").attr('style', 'width:100%;');
 			}
 			
 	        // append    

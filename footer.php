@@ -1,14 +1,32 @@
 <?php // footer
 $mobile = mobile_device_detect(true,false,true,true,true,true,true,false,false);
 
+
+
+/**
+ *
+ * Bottom side bar
+ *
+ */ 
+$bottomsidebarplace = get_theme_mod('onepiece_elements_bottom_sidebar_position', 'none');
+$bottomsidebarwidth = get_theme_mod( 'onepiece_elements_bottom_sidebar_width' , '30'); 
+
+/**
+ *
+ * Bottom menu position
+ *
+ */ 
 $bottombarclass = 'right';
 if( get_theme_mod( 'onepiece_elements_bottommenubar_position') ){
     $bottombarclass = get_theme_mod( 'onepiece_elements_bottommenubar_position');
 }
 echo '<div id="footercontainer" class="menu-'.$bottombarclass.'">';
 
-
-// slider options
+/**
+ *
+ * Bottom Slider
+ *
+ */ 
 $sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'none' );
 $sliderdefaultcat = get_theme_mod('onepiece_content_sliderbar_category', 'uncategorized' );
 $sliderdefaultheight = get_theme_mod('onepiece_content_sliderbar_height', '60' );
@@ -52,6 +70,29 @@ dynamic_sidebar('widgets-subcontent');
 echo '<div class="clr"></div></div>';
 } 
 
+
+
+/**
+ *
+ * set bottom bar floatmargin
+ *
+ */   
+if( $bottomsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-bottom-sidebar') ){
+$bottombarmarginfloatpos = 'left';
+if( $bottomsidebarplace == 'left'){
+$bottombarmarginfloatpos = 'right';
+}
+echo '<div id="bottombarmargin" class="'.$bottombarclass.' '.$bottombarmarginfloatpos.'side" style="float:'.$bottombarmarginfloatpos.';width:'.( 100 - $bottomsidebarwidth).'%;">';
+
+}else{
+
+echo '<div id="bottombarmargin" class="'.$bottombarclass.'" style="width:100%">';
+
+}
+
+
+
+
 echo '<div class="logobox small">';
 if ( get_theme_mod( 'onepiece_identity_logo_s' ) ){
 echo '<a href="'.esc_url( home_url( '/' ) ).'" id="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home"><img src="'.get_theme_mod( 'onepiece_identity_logo_s' ).'" alt="'.esc_attr( get_bloginfo( 'name', 'display' ) ).' - '.get_bloginfo( 'description' ).'"></a>';
@@ -59,6 +100,10 @@ echo '<a href="'.esc_url( home_url( '/' ) ).'" id="site-logo" title="'.esc_attr(
 echo '<h1 class="site-title"><a href="'.esc_url( home_url( '/' ) ).'" id="site-logo" title="'.esc_attr( get_bloginfo( 'name', 'display' ) ).'" rel="home">'.esc_attr( get_bloginfo( 'name', 'display' ) ).'</a></h1>';
 }
 echo '</div>';
+
+
+
+
 
 if ( has_nav_menu( 'bottommenu' ) && get_theme_mod( 'onepiece_elements_bottommenubar_position') != 'none' ) {
 echo '<div id="footer-navigation" class="main-navigation '.$bottombarclass.'" role="navigation"><nav>';
@@ -71,6 +116,24 @@ echo '<div id="widgets-bottom">';
 dynamic_sidebar('widgets-bottom');
 echo '<div class="clr"></div></div>';
 } 
+
+
+echo '</div>'; // close topbar float margin 
+
+/**
+ *
+ * widgets-bottom-sidebar
+ *
+ */  
+if( $bottomsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-bottom-sidebar')  ){
+$count = is_sidebar_active('widgets-bottom-sidebar');
+echo '<div id="bottomsidebar" class="colset-'.$count.' '.$bottomsidebarplace.'side" style="float:'.$bottomsidebarplace.';width:'.$bottomsidebarwidth.'%;">';
+if( is_sidebar_active('widgets-bottom-sidebar') ){
+dynamic_sidebar('widgets-bottom-sidebar');
+}
+echo '<div class="clr"></div></div>';
+} 
+
 
 $copyrighttext = get_theme_mod('onepiece_elements_bottom_copyrighttext' , '');
 $copyrightpos = get_theme_mod('onepiece_elements_bottom_copyrightposition', 'hide');

@@ -1455,6 +1455,9 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Select sidebar width (percentage).', 'onepiece' ),
     	)));
 		
+		
+		
+		
 		// BOTTOM MENU BAR
 		$wp_customize->add_setting( 'onepiece_elements_bottommenubar_position' , array(
 		'default' => 'right', 
@@ -1472,6 +1475,37 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'center'   => __( 'center', 'onepiece' ),
             		'right'   => __( 'right', 'onepiece' ),
             	)
+    	)));
+		
+		
+		// BOTTOM SIDEBAR
+		$wp_customize->add_setting( 'onepiece_elements_bottom_sidebar_position' , array(
+		'default' => 'none', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_bottom_sidebar_position', array(
+            	'label'          => __( 'Footer sidebar position', 'onepiece' ),
+            	'section'        => 'onepiece_elements_bottommenubar',
+            	'settings'       => 'onepiece_elements_bottom_sidebar_position',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select the default bottom sidebar position.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'none', 'onepiece' ),
+                	'left'   => __( 'left', 'onepiece' ),
+            		'right'   => __( 'right', 'onepiece' ),
+            	)
+    	)));
+		
+		$wp_customize->add_setting( 'onepiece_elements_bottom_sidebar_width' , array(
+		'default' => '30', 
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	)); 
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_bottom_sidebar_width', array(
+            	'label'          => __( 'Sidebar width', 'onepiece' ),
+            	'section'        => 'onepiece_elements_bottommenubar',
+            	'settings'       => 'onepiece_elements_bottom_sidebar_width',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Select sidebar width (percentage).', 'onepiece' ),
     	)));
 		
 		// BOTTOM MENU BAR - copyright
@@ -1492,6 +1526,9 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'right'   => __( 'right', 'onepiece' ),
             	)
     	)));
+		
+		
+		
 		
 		$wp_customize->add_setting( 'onepiece_elements_bottom_copyrighttext' , array(
 		'default' => 'Copyright 2016', 

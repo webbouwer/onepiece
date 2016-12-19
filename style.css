@@ -66,7 +66,7 @@ height:auto;
 .scrollToTop{
 position:fixed;
 display:block;
-bottom:5%;
+bottom:0px;
 right:0px;
 background-color:white;
 color:black;
@@ -216,12 +216,13 @@ list-style-type:none;
  */
 #topbarmargin nav.sticky ul li,
 #topsidebar ul li,
+#bottomsidebar ul li,
 #headercontainer #site-navigation ul li,
 #contentcontainer #site-navigation ul li,
 #footercontainer #footer-navigation .menu li
 {
 display:block;
-list-style-type:none;
+list-style-type:none; 
 }
 .menu li a
 {
@@ -237,6 +238,7 @@ padding:2px 1px;
  *
  */
 #topbarmargin.right .logobox,
+#bottombarmargin.right .logobox,
 #footercontainer.menu-right .logobox
 {
     float:left;
@@ -251,6 +253,7 @@ padding:2px 1px;
     float:right;
 }
 #headercontainer #topbarmargin.left .logobox,
+#footercontainer #bottombarmargin.left .logobox,
 #footercontainer.menu-left .logobox
 {
     float:right;
@@ -267,6 +270,7 @@ padding:2px 1px;
 #topbarmargin.center,
 #site-navigation.center,
 .center nav .menu-button,
+#footercontainer #bottombarmargin.center,
 #footercontainer.menu-center
 {
     text-align:center;
@@ -277,6 +281,7 @@ padding:2px 1px;
 #topbarmargin.center #topbar-navigation,
 #site-navigation.center,
 #topbarmargin.center nav.sticky,
+#bottombarmargin.center .logobox,
 #footercontainer.menu-center .logobox
 {
     float:none;
@@ -368,7 +373,8 @@ overflow:hidden;
 #mainsidebar .widgetpadding,
 #sidebar2 .widgetpadding,
 #specialpagewidgets .widgetpadding,
-#pagesidebar .widgetpadding
+#pagesidebar .widgetpadding,
+#bottomsidebar .widgetpadding
 {
 padding:0px;
 }
@@ -606,12 +612,13 @@ position:relative;
   
 
 /******************** HEADER / MENUS / FOOTER (MEDIUM)  ********************/
-#topbarmargin
+#topbarmargin,
+#bottombarmargin
 {
 text-align:left;
 }
 #topbarmargin .logobox,
-#footercontainer .logobox
+#bottombarmargin .logobox
 {
     width:30%;
 }
@@ -640,7 +647,7 @@ padding:4px 2px;
 
 
 #topbarmargin.right .logobox,
-#footercontainer.menu-right .logobox
+#bottombarmargin.right .logobox
 {
     float:left;
 }
@@ -648,12 +655,14 @@ padding:4px 2px;
 #topbarmargin.right #topbar-navigation,
 #site-navigation.right ul,
 #topbarmargin.right nav.sticky,
+#bottombarmargin.right #footer-navigation,
 #footercontainer.menu-right #footer-navigation,
 #copyright-textbox.right
 {
     float:right;
 }
 #headercontainer #topbarmargin.left .logobox,
+#bottombarmargin.left .logobox,
 #footercontainer.menu-left .logobox
 {
     float:right;
@@ -669,6 +678,7 @@ padding:4px 2px;
 }
 #topbarmargin.center,
 #site-navigation.center,
+#bottombarmargin.center,
 #footercontainer.menu-center
 {
     text-align:center;
@@ -680,6 +690,7 @@ padding:4px 2px;
 #topbarmargin.center #topbar-navigation,
 #site-navigation.center,
 #topbarmargin.center nav.sticky,
+#bottombarmargin.center .logobox,
 #footercontainer.menu-center .logobox,
 #copyright-textbox.center
 {
@@ -740,7 +751,8 @@ margin-right:2%;
 #mainsidebar .widgetpadding,
 #sidebar2 .widgetpadding,
 #specialpagewidgets .widgetpadding,
-#pagesidebar .widgetpadding
+#pagesidebar .widgetpadding,
+#bottomsidebar .widgetpadding
 {
 padding:0px;
 }

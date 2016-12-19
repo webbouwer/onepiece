@@ -191,8 +191,19 @@ function basic_setup_widgets_init() {
 		register_sidebar(array(
 			'name' => 'Widgets Bottom',
 			'id'   => 'widgets-bottom',
-			'description'   => 'This is a top frontpage widgetized area.',
+			'description'   => 'This is the default bottom widgetized area.',
 			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
+			'after_widget'  => '<div class="clr"></div></div></div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>'
+		));
+		
+		// the bottom widget
+		register_sidebar(array(
+			'name' => 'Widgets bottom sidebar',
+			'id'   => 'widgets-bottom-sidebar',
+			'description'   => 'This is the bottom sidebar area.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="sidebarpadding">',
 			'after_widget'  => '<div class="clr"></div></div></div>',
 			'before_title'  => '<h3>',
 			'after_title'   => '</h3>'
