@@ -11,6 +11,9 @@ require get_template_directory() . '/assets/widgets-onepiece.php'; // onepiece w
 require get_template_directory() . '/assets/colors.php'; // customizer colors
 require get_template_directory() . '/assets/ajax.php'; // ajax functions
 
+/* 'Return of the Links Manager' */
+add_filter( 'pre_option_link_manager_enabled', '__return_true' );
+
 /****** Register Theme Support ******/
 function basic_setup_theme_global() {
 	add_theme_support( 'post-thumbnails' );
