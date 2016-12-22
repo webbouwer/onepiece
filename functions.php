@@ -1,5 +1,4 @@
-<?php
-/* Functions WP */
+<?php /* Functions WP */
 require get_template_directory() . '/assets/mobile_detect.php';
 require get_template_directory() . '/assets/customizer.php'; // customizer functions
 require get_template_directory() . '/assets/metaboxes.php'; // metabox functions
@@ -413,7 +412,7 @@ function object_to_array($data){
 
 
 /**
- * Keep category select list in hiëarchy
+ * Keep category select list in hiÃŽarchy
  * source http://wordpress.stackexchange.com/questions/61922/add-post-screen-keep-category-structure
  */
 function onepiece_wp_terms_checklist_args( $args, $post_id ) {
