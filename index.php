@@ -11,9 +11,6 @@ $logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
 // content
 echo '<div id="contentcontainer"><div class="outermargin">';
 
- 
-
-
 $contentpercentage = 100; 
 
 if( get_theme_mod('onepiece_elements_sidebar2_position2', 'out') == 'out' ){
