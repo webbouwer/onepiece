@@ -1,4 +1,4 @@
-<?php 
+<?php /* Code made with love in Brackets on Github */
 // htmlhead
 get_template_part('htmlhead');
 // header
