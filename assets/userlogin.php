@@ -55,7 +55,12 @@ if (!$user_ID) { // is not logged in
 		echo '<div class="resetlogin">'.__( 'Forgot password?', 'onepiece' ).'</div>';
 		
 		do_action('login_form', 'login'); 
-			
+
+		/*
+		 *	Check login/user plugins
+		 */
+		// echo do_shortcode( '' );
+
 		echo '</li>';
 
 		if ( $regallowed ) {
