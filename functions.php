@@ -424,6 +424,45 @@ function onepiece_wp_terms_checklist_args( $args, $post_id ) {
 }
 add_filter( 'wp_terms_checklist_args', 'onepiece_wp_terms_checklist_args', 1, 2 );
 
+
+
+/**
+ * Date display in tweet('time ago') format
+ */
+function tweetTime( $t ) {
+	/**** Begin Time Loop ****/
+	// Set time zone
+	date_default_timezone_set('America/New_York');
+	// Get Current Server Time
+	$server_time = $_SERVER['REQUEST_TIME'];
+	// Convert Twitter Time to UNIX
+	$new_tweet_time = strtotime($t);
+	// Set Up Output for the Timestamp if over 24 hours
+	$this_tweet_day =  date('D. M j, Y', strtotime($t));
+	// Subtract Twitter time from current server time
+	$time = $server_time - $new_tweet_time;
+	// less than an hour, output 'minutes' messaging
+	if( $time < 3599) {
+		$time = round($time / 60) . ' minutes ago';
+			}
+	// less than a day but over an hour, output 'hours' messaging
+	else if ($time >= 3600 && $time <= 86400) {
+		$time = round($time / 3600) . ' hours ago';
+		}
+	// over a day, output the $tweet_day formatting
+	else if ( $time > 86400)  {
+		$time = $this_tweet_day;
+		}
+	// return final time from tweetTime()
+	return $time;
+	/**** End Time Loop ****/
+}
+
+
+
+
+
+
 // Remove Emoji junk by Christine Cooper
 // Found on http://wordpress.stackexchange.com/questions/185577/disable-emojicons-introduced-with-wp-4-2
 function disable_wp_emojicons() {

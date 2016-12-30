@@ -58,9 +58,8 @@ if (!$user_ID) { // is not logged in
 
 		/*
 		 *	Check login/user plugins
+		 * echo do_shortcode( '' );
 		 */
-		// echo do_shortcode( '' );
-
 		echo '</li>';
 
 		if ( $regallowed ) {
