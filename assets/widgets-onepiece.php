@@ -174,6 +174,7 @@ class onepiece_widget extends WP_Widget {
 	 * 2. Linkedin (rss?)
 	 * 3. Github
 	 * 4. etc.
+	 * or http://www.wpexplorer.com/create-widget-plugin-wordpress/
 	 */
 	
 	/* To Do
