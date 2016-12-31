@@ -79,14 +79,16 @@ Style:
 		body textlink hover
 		
 
-..Media Accounts
-	.. Facebook
-	.. Twitter
-	.. Google+
-	.. Thumblr
+Api & Media
 	.. Linkedin
-	.. Github	
-	...
+	.. Twitter
+	.. Facebook
+	.. Github
+	.. Google+
+	.. Pinterest
+	.. Instagram
+	.. Thumblr
+	..
 
 	   
 Content:
@@ -253,13 +255,17 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Style', 'onepiece'),
         	'priority' => 20,
     	));
+	    $wp_customize->add_panel('onepiece_media_panel', array(
+        	'title'    => __('Api & Media', 'onepiece'),
+        	'priority' => 40,
+    	));
 	    $wp_customize->add_panel('onepiece_content_panel', array( 
         	'title'    => __('Content', 'onepiece'),
-        	'priority' => 30,
+        	'priority' => 50,
     	));
 	    $wp_customize->add_panel('onepiece_elements_panel', array( 
         	'title'    => __('Elements', 'onepiece'),
-        	'priority' => 40,
+        	'priority' => 60,
     	));
 
 	    $wp_customize->add_panel('onepiece_elements_responsive', array( 
@@ -267,6 +273,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'priority' => 120,
     	)); 
 		
+
+
+
+
     	// add / move sections
     	$wp_customize->add_section('onepiece_identity_panel_logo', array( 
         	'title'    => __('Logo image', 'onepiece'),
@@ -296,6 +306,44 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'priority' => 50,
     	));
 
+
+	// Api & Media
+    	$wp_customize->add_section('onepiece_media_panel_wordpress', array(
+        	'title'    => __('Wordpress', 'onepiece'),
+        	'panel'  => 'onepiece_media_panel',
+			'priority' => 30,
+    	));
+
+    	$wp_customize->add_section('onepiece_media_panel_linkedin', array(
+        	'title'    => __('Linkedin', 'onepiece'),
+        	'panel'  => 'onepiece_media_panel',
+			'priority' => 30,
+    	));
+    	$wp_customize->add_section('onepiece_media_panel_facebook', array(
+        	'title'    => __('Facebook', 'onepiece'),
+        	'panel'  => 'onepiece_media_panel',
+			'priority' => 30,
+    	));
+    	$wp_customize->add_section('onepiece_media_panel_twitter', array(
+        	'title'    => __('Twitter', 'onepiece'),
+        	'panel'  => 'onepiece_media_panel',
+			'priority' => 30,
+    	));
+    	$wp_customize->add_section('onepiece_media_panel_github', array(
+        	'title'    => __('Github', 'onepiece'),
+        	'panel'  => 'onepiece_media_panel',
+			'priority' => 30,
+    	));
+    	$wp_customize->add_section('onepiece_media_panel_google', array(
+        	'title'    => __('Google', 'onepiece'),
+        	'panel'  => 'onepiece_media_panel',
+			'priority' => 30,
+    	));
+	// ..
+
+
+
+	// Responsive
     	$wp_customize->add_section('onepiece_responsive_small', array( 
         	'title'    => __('Small', 'onepiece'),
         	'panel'  => 'onepiece_elements_responsive',
@@ -313,6 +361,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'priority' => 30,
     	));
 
+	// Content
     	$wp_customize->add_section('onepiece_content_panel_frontpage', array( 
         	'title'    => __('Frontpage', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
@@ -350,6 +399,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_content_panel',
     	));
     	
+	// Elements
 		$wp_customize->add_section('onepiece_elements_topmenubar', array( 
         	'title'    => __('Topbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
@@ -408,6 +458,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'priority' => 30,
     	));
 		
+	// Frontpage (default)
 		$wp_customize->add_section('static_front_page', array( 
         	'title'    => __('Frontpage', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
@@ -633,9 +684,195 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	) ) ); 
 		
 		
-	
+		/**
+	 	* Api & Media
+	 	* Todo: do not use when activated socila media plugins found
+	 	*/
 		
-		
+		// API & MEDIA
+
+		// Linkedin
+		$wp_customize->add_setting( 'onepiece_media_panel_linkedin_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_linkedin_id', array(
+            	'label'          => __( 'Account ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_linkedin',
+            	'settings'       => 'onepiece_media_panel_linkedin_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Account ID', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_linkedin_api_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_linkedin_api_id', array(
+            	'label'          => __( 'Api ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_linkedin',
+            	'settings'       => 'onepiece_media_panel_linkedin_api_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api ID (see https://auth0.com/docs/connections/social/linkedin)', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_linkedin_api_secret' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_linkedin_api_secret', array(
+            	'label'          => __( 'Api secret', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_linkedin',
+            	'settings'       => 'onepiece_media_panel_linkedin_api_secret',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api secret key (see https://auth0.com/docs/connections/social/linkedin)', 'onepiece' ),
+    	)));
+
+		// Twitter
+		$wp_customize->add_setting( 'onepiece_media_panel_twitter_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_twitter_id', array(
+            	'label'          => __( 'Account ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_twitter',
+            	'settings'       => 'onepiece_media_panel_twitter_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Account ID', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_twitter_api_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_twitter_api_id', array(
+            	'label'          => __( 'Api ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_twitter',
+            	'settings'       => 'onepiece_media_panel_twitter_api_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api ID (see hhttps://dev.twitter.com/oauth/overview/introduction)', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_twitter_api_secret' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_twitter_api_secret', array(
+            	'label'          => __( 'Api secret', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_twitter',
+            	'settings'       => 'onepiece_media_panel_twitter_api_secret',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api secret key (see https://dev.twitter.com/oauth/overview/introduction)', 'onepiece' ),
+    	)));
+
+
+		// Facebook
+		$wp_customize->add_setting( 'onepiece_media_panel_facebook_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_facebook_id', array(
+            	'label'          => __( 'Account ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_facebook',
+            	'settings'       => 'onepiece_media_panel_facebook_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Account ID', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_facebook_api_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_facebook_api_id', array(
+            	'label'          => __( 'Api ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_facebook',
+            	'settings'       => 'onepiece_media_panel_facebook_api_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api ID (see https://developers.facebook.com/docs/apps/register)', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_facebook_api_secret' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_facebook_api_secret', array(
+            	'label'          => __( 'Api secret', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_facebook',
+            	'settings'       => 'onepiece_media_panel_facebook_api_secret',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api secret key (see https://developers.facebook.com/docs/apps/register)', 'onepiece' ),
+    	)));
+
+		//  Github
+		$wp_customize->add_setting( 'onepiece_media_panel_github_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_github_id', array(
+            	'label'          => __( 'Account ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_github',
+            	'settings'       => 'onepiece_media_panel_github_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Account ID', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_github_api_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_github_api_id', array(
+            	'label'          => __( 'Api ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_github',
+            	'settings'       => 'onepiece_media_panel_github_api_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api ID (see https://developer.github.com/guides/basics-of-authentication/)', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_github_api_secret' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_github_api_secret', array(
+            	'label'          => __( 'Api secret', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_github',
+            	'settings'       => 'onepiece_media_panel_github_api_secret',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api secret key (see https://developer.github.com/guides/basics-of-authentication/)', 'onepiece' ),
+    	)));
+
+
+
+		// Google
+		$wp_customize->add_setting( 'onepiece_media_panel_google_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_google_id', array(
+            	'label'          => __( 'Account ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_google',
+            	'settings'       => 'onepiece_media_panel_google_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Account ID', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_google_api_id' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_google_api_id', array(
+            	'label'          => __( 'Api ID', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_google',
+            	'settings'       => 'onepiece_media_panel_google_api_id',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api ID (see https://developers.google.com/identity/sign-in/web/devconsole-project)', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_media_panel_google_api_secret' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_media_panel_google_api_secret', array(
+            	'label'          => __( 'Api secret', 'onepiece' ),
+            	'section'        => 'onepiece_media_panel_google',
+            	'settings'       => 'onepiece_media_panel_google_api_secret',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Api secret key (see https://developers.google.com/identity/sign-in/web/devconsole-project)', 'onepiece' ),
+    	)));
+	// Pinterest
+	// Instagram
+	// Thumblr
+	// ..
+
 		
 
 		

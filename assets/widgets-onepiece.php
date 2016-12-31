@@ -168,7 +168,7 @@ class onepiece_widget extends WP_Widget {
 
 	/*
 	 * Updates from Site and Api's
-	 * Social media api sources configured in the customizer
+	 * Social media api sources configured in the customizer (apiMedia class)
 	 *
 	 * 1. Posts (any or from specific category)
 	 * 2. Linkedin (rss?)
