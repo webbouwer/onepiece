@@ -390,7 +390,8 @@ padding:0px;
 #maincontent .contentpadding img, /* small screens */
 #maincontent .follow-post.has-post-thumbnail .post-title,
 #maincontent .follow-post.has-post-thumbnail .post-content,
-#maincontent .follow-post .post-coverimage
+#maincontent .follow-post .post-coverimage,
+.widgetpadding .coverimage img
 {   
 width:100%;
 height:auto;
@@ -818,9 +819,37 @@ text-align:center; /* available on small screens */
     float:left;
 }
 
+.widgetpadding	.item-excerpt img
+{
+height:auto;
+}
 
+.widgetpadding	.item-excerpt img.align-center
+{
+width:100%;
+}
+.widgetpadding	.item-excerpt img.align-left,
+.widgetpadding	.item-excerpt img.align-right
+{
+width:36%;
+vertical-align: text-top;
+}
+.widgetpadding	.item-excerpt img.align-left
+{
+float:left;
+margin-right:4%;
+}
+.widgetpadding	.item-excerpt img.align-right
+{
+float:right;
+margin-left:4%;
+}
 
-
+.widgetpadding	.item-excerpt img,
+.widgetpadding .item-excerpt p
+{
+display: inline;
+}
 
 
 

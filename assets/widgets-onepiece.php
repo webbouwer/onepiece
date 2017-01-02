@@ -177,7 +177,7 @@ class onepiece_widget extends WP_Widget {
 		$dsp_date = 0;
 		$dsp_author = 0;
 		$dsp_tags = 0;
-
+		$currentid = get_queried_object_id();
 
 		if(isset($instance['itemcount']) && $instance['itemcount'] !='' )
 			$itemcount = $instance['itemcount'];
@@ -228,6 +228,8 @@ class onepiece_widget extends WP_Widget {
 
 		while (have_posts()) : the_post();
 
+		if($currentid!= get_the_ID()){
+
 		// define title link
 		$custom_metabox_url = get_post_meta( get_the_ID() , 'meta-box-custom-url', true);
 		$custom_metabox_useurl = get_post_meta( get_the_ID() , 'meta-box-custom-useurl', true);
@@ -254,16 +256,16 @@ class onepiece_widget extends WP_Widget {
 		echo '</div>';
 
 
+		echo '<div class="item-excerpt">'.$title_link;
+
 		if ( has_post_thumbnail() && $dsp_image != 'none' ) {
-			echo '<div class="coverimage">'.$title_link;
-			the_post_thumbnail('big-thumb');
-   			echo '</a></div>';
+			$align = 'align-'.$dsp_image;
+			echo get_the_post_thumbnail( get_the_ID(), 'big-thumb', array( 'class' => $align )); //the_post_thumbnail('big-thumb');
     	}
 
-
-		echo '<div class="post-excerpt">';
 		the_excerpt_length( $excerptlength );
-		'</div>';
+
+		echo '</a></div><div class="clr"></div>';
 
 
 
@@ -273,6 +275,8 @@ class onepiece_widget extends WP_Widget {
 			echo '</div>';
 		}
 
+
+		}
 
 		endwhile;
 
@@ -372,15 +376,48 @@ class onepiece_widget extends WP_Widget {
 		</p>
 
 		<?php
-		/*
-		$itemcount = 3;
-		$excerptlength = 10;
-		$dsp_image = 'center';//(none,center,left,right)
 		$dsp_date = 0;
-		$dsp_author = 0;
-		$dsp_tags = 0;
-		*/
+		if ( isset( $instance[ 'dsp_date' ] ) ) {
+		$dsp_date = $instance[ 'dsp_date' ];
+		}
 
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_date' ); ?>">Show date:</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_date' ); ?>" id="<?php echo $this->get_field_id( 'dsp_date' ); ?>">
+		<option value="0" <?php selected( $dsp_date, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_date, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+		<?php
+		$dsp_author = 0;
+		if ( isset( $instance[ 'dsp_author' ] ) ) {
+		$dsp_author = $instance[ 'dsp_author' ];
+		}
+
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_author' ); ?>">Show author:</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_author' ); ?>" id="<?php echo $this->get_field_id( 'dsp_author' ); ?>">
+		<option value="0" <?php selected( $dsp_author, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_author, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+		<?php
+		$dsp_tags = 0;
+		if ( isset( $instance[ 'dsp_tags' ] ) ) {
+		$dsp_tags = $instance[ 'dsp_tags' ];
+		}
+
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_tags' ); ?>">Show tags:</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_tags' ); ?>" id="<?php echo $this->get_field_id( 'dsp_tags' ); ?>">
+		<option value="0" <?php selected( $dsp_tags, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_tags, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+		<?php
 	}
 
 	// Updating widget replacing old instances with new

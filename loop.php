@@ -363,7 +363,7 @@ if ( !is_single() && !is_page() ) {
     	// post tags
 		echo '<div class="post-tags">';
     	the_tags('Tagged with: ',' '); // the_tags(', ');  //
-		echo '</div>'; 
+		echo '</div>';
 	}
 
 	if( is_single() && $nextprevdisplay == 'belowcontent' ){
