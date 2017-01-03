@@ -233,6 +233,10 @@ add_action('wp_enqueue_scripts', 'onepiece_global_js');
 
 
 
+
+
+
+
 /****** Adjust excerpt num words max ******/
 function the_excerpt_length( $words = null ) { 
     global $_the_excerpt_length_filter;
@@ -259,6 +263,9 @@ function _the_excerpt_length_filter( $default ) {
     return $default;
 }
 // the_excerpt_length( 25 );
+
+
+
 
 
 
@@ -299,6 +306,11 @@ function new_excerpt_more($more) {
 	
 }
 add_filter('excerpt_more', 'new_excerpt_more');
+
+
+
+
+
 
 
 

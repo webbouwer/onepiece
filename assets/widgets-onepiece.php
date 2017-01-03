@@ -54,97 +54,6 @@ function onepiece_dashboard_widget_content() {
 
 
 
-/* Category Posts Slider 
-this function can output different types of content lists for multiple usages like sliders and carrousels */
-/*
-function display_posts_by_category( $cat=0, $columnset=0, $content='full', $target='self', $url=''){
-
-	// $cat array or $id
- 	// $columnset amount of posts/items in a row/box, 0 for single most recent post
-	// $content title / text / image / full / imgtitle / imgtitlecat / imgtitletext / titlecat
-	// $target blank / self / none
-	// $url
-
-	
-	
-	if($cat == 0){
-		$cat = get_option('default_category');
-	}
-	$ppp = 50; // max posts to retrieve
-	if($columnset == 0){
-	$ppp = 1;
-	}
-	query_posts("cat=$cat&post_status=publish&posts_per_page=$ppp&orderby=date&order=ASC");
-	if( have_posts() ) :
-	$count = 0;
-	echo '<div class="listcategoryposts"><div class="covertop"></div><ul>';
-	while ( have_posts() ) : the_post();
-
-	$custom = get_post_custom( get_the_ID() ); 
-	if($target != 'none'){
-	$titlelink = '<a href="'.get_the_permalink().'" target="_'.$target.'">';
-	
-	if( $url !='' ){ // overwrite single target urls
-		$titlelink = '<a href="'.$url.'" target="_'.$target.'">';
-	}
-	}
-
-	if($count == 0){
-    	echo '<li class="colset'.$columnset.'">';
-	}
-	echo '<div class="cat-post">';
-    	if(get_the_post_thumbnail( $post->ID, 'medium' )!='' && ($content != 'title' || $content != 'text' || $content != 'titlecat') ){
-			if($target == 'none'){
-			    echo '<div class="imagebox">'.get_the_post_thumbnail( $post->ID, 'medium' ).'</div>';
-			}else{
-			    echo '<div class="imagebox">'.$titlelink.''.get_the_post_thumbnail( $post->ID, 'medium' ).'</a></div>';
-			}
-		}
-		
-		if($content != 'image' && $content != 'text'){
-		
-		$title = get_the_title();
-		
-		echo '<h4>';
-		if($target == 'none'){
-    	echo $title;
-		}else{
-		echo $titlelink.$title.'</a>';
-		}
-		echo '</h4>';
-		
-		}
-
-		if($content == 'full' || $content == 'imgtitlecat' || $content == 'titlecat'){
-		echo '<div class="catname signbut">';
-    		foreach((get_the_category()) as $category) { 
-    			echo $category->cat_name; 
-			break; // show only 1 category
-		}
-		echo '</div>';
-		}
-		if($content == 'full' || $content == 'text' || $content == 'imgtitletext'){
-		echo '<div class="textbox">';
-    		the_excerpt();
-		echo '</div>';
-		}
-	echo '</div>';
-	$count++;
-	if($count >= $columnset){
-    	echo '</li>';
-	$count = 0;
-	}
-	endwhile;
-	echo '</ul><div class="coverbottom"></div><div class="clr"></div></div>';
-	endif;
-	wp_reset_query();
-
-}
-
-*/
-
-
-
 
 
 
@@ -161,8 +70,8 @@ class onepiece_widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'onepiece_widget', // Base ID
-			__('Onepiece Widget', 'onepiece'), // Widget name and description in UI
-			array( 'description' => __( 'Onepiece Theme Widget', 'onepiece' ), )
+			__('Onepiece Postlist Widget', 'onepiece'), // Widget name and description in UI
+			array( 'description' => __( 'Onepiece Widget Post Listing with options', 'onepiece' ), )
 		);
 	}
 
@@ -171,7 +80,10 @@ class onepiece_widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 
 
+
+
 		$itemcount = 3;
+		$itemorder = 'DESC';
 		$excerptlength = 10;
 		$dsp_image = 'center';//(none,center,left,right)
 		$dsp_date = 0;
@@ -179,8 +91,14 @@ class onepiece_widget extends WP_Widget {
 		$dsp_tags = 0;
 		$currentid = get_queried_object_id();
 
+
+
+
 		if(isset($instance['itemcount']) && $instance['itemcount'] !='' )
 			$itemcount = $instance['itemcount'];
+
+		if(isset($instance['itemorder']) && $instance['itemorder'] !='' )
+			$itemorder = $instance['itemorder'];
 
 		if(isset($instance['excerptlength']) && $instance['excerptlength'] !='' )
 			$excerptlength = $instance['excerptlength'];
@@ -198,6 +116,10 @@ class onepiece_widget extends WP_Widget {
 			$dsp_tags = $instance['dsp_tags'];
 
 
+
+
+
+
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		// before and after widget arguments are defined by themes
 		echo $args['before_widget'];
@@ -207,17 +129,22 @@ class onepiece_widget extends WP_Widget {
 
 
 
+
+
 		if($instance['post_category'] == ''){
 
 		// latest of all
-		query_posts('post_status=publish&order=DESC&posts_per_page='.$itemcount);
+		query_posts('post_status=publish&order='.$itemorder.'&posts_per_page='.$itemcount);
 
 		}else{
 
 		// latest from category
-		query_posts('category_name='.$instance['post_category'].'&post_status=publish&order=DESC&posts_per_page='.$itemamount);
+		query_posts('category_name='.$instance['post_category'].'&post_status=publish&order='.$itemorder.'&posts_per_page='.$itemamount);
 
 		}
+
+
+
 
 
 
@@ -244,6 +171,13 @@ class onepiece_widget extends WP_Widget {
 
 
 
+
+		// include product options
+		include('product.php');
+
+
+
+		//start output
 		echo '<li>';
 
 		echo '<div><h4>'.$title_link . get_the_title() .'</a></h4>';
@@ -256,20 +190,54 @@ class onepiece_widget extends WP_Widget {
 		echo '</div>';
 
 
+
+
+		// post product label
+		if( isset($post_meta_label) && $post_meta_label[0] != 'none' &&  $instance[ 'dsp_label' ] != 0 ){
+		echo '<div class="labelbox"><span class="productlabel">'.$post_meta_label[0].'</span></div>';
+		}
+
+
+
+		// product box
+		if( isset( $instance[ 'dsp_price' ] ) && $instance[ 'dsp_price' ] != 0)
+		echo $productbox;
+
+
+
 		echo '<div class="item-excerpt">'.$title_link;
+
+
 
 		if ( has_post_thumbnail() && $dsp_image != 'none' ) {
 			$align = 'align-'.$dsp_image;
 			echo get_the_post_thumbnail( get_the_ID(), 'big-thumb', array( 'class' => $align )); //the_post_thumbnail('big-thumb');
     	}
 
+
+
+
+		// Post intro content
 		the_excerpt_length( $excerptlength );
+
+
+		// package box
+		if( $instance[ 'dsp_packweight' ] !=0)
+			echo $packagebox;
+
+
+
+
 
 		echo '</a></div><div class="clr"></div>';
 
+		// order box
+		if( isset( $instance[ 'dsp_order' ] )  && $instance[ 'dsp_order' ] != 0)
+			echo $orderbox;
 
 
-		if( $dsp_tags != 0 ){
+
+		if( isset( $instance[ 'dsp_tags' ] )  && $dsp_tags != 0 ){
 			echo '<div class="post-tags">';
     		the_tags('Tagged with: ',' '); // the_tags(', ');  //
 			echo '</div>';
@@ -277,6 +245,8 @@ class onepiece_widget extends WP_Widget {
 
 
 		}
+
+
 
 		endwhile;
 
@@ -300,11 +270,10 @@ class onepiece_widget extends WP_Widget {
 		}else{
 		$title = __( 'New title', 'onepiece' );
 		}
-		// Widget admin form
+
 
 		/*
-	 	 * TODO:
-	 	 * display options: max items, image[placement], date, author, excerpt length, readmore link, tags
+	 	 * Widget admin form
 		 */
 
 		?>
@@ -343,6 +312,19 @@ class onepiece_widget extends WP_Widget {
 		?>
 		<p><label for="<?php echo $this->get_field_id( 'itemcount' ); ?>">Amount of items:</label>
 		<input type="text" size="3" <?php echo $value; ?>name="<?php echo $this->get_field_name( 'itemcount' ); ?>" id="<?php echo $this->get_field_id( 'itemcount' ); ?>" />
+		</p>
+
+		<?php
+		$itemorder = 'DESC';
+		if ( isset( $instance[ 'itemorder' ] ) ) {
+		$itemorder = $instance[ 'itemorder' ];
+		}
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'itemorder' ); ?>">List order:</label>
+		<select name="<?php echo $this->get_field_name( 'itemorder' ); ?>" id="<?php echo $this->get_field_id( 'itemorder' ); ?>">
+		<option value="DESC" <?php selected( $itemorder, 'DESC' ); ?>>Recent</option>
+		<option value="ASC" <?php selected( $itemorder, 'ASC' ); ?>>Oldest first</option>
+		</select>
 		</p>
 
 
@@ -417,7 +399,78 @@ class onepiece_widget extends WP_Widget {
 		</select>
 		</p>
 
+		<h4>Product options</h4>
 		<?php
+		$dsp_label = 0;
+		if ( isset( $instance[ 'dsp_label' ] ) ) {
+		$dsp_label = $instance[ 'dsp_label' ];
+		}
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_label' ); ?>">Show label:</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_label' ); ?>" id="<?php echo $this->get_field_id( 'dsp_label' ); ?>">
+		<option value="0" <?php selected( $dsp_label, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_label, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+		<?php
+		$dsp_size = 0;
+		if ( isset( $instance[ 'dsp_size' ] ) ) {
+		$dsp_size = $instance[ 'dsp_size' ];
+		}
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_size' ); ?>">Show size:</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_size' ); ?>" id="<?php echo $this->get_field_id( 'dsp_size' ); ?>">
+		<option value="0" <?php selected( $dsp_size, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_size, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+		<?php
+		$dsp_price = 0;
+		if ( isset( $instance[ 'dsp_price' ] ) ) {
+		$dsp_price = $instance[ 'dsp_price' ];
+		}
+
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_price' ); ?>">Show price (incl. discount):</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_price' ); ?>" id="<?php echo $this->get_field_id( 'dsp_price' ); ?>">
+		<option value="0" <?php selected( $dsp_price, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_price, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+		<?php
+		$dsp_packweight = 0;
+		if ( isset( $instance[ 'dsp_packweight' ] ) ) {
+		$dsp_packweight = $instance[ 'dsp_packweight' ];
+		}
+
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_packweight' ); ?>">Show package weight and size:</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_packweight' ); ?>" id="<?php echo $this->get_field_id( 'dsp_packweight' ); ?>">
+		<option value="0" <?php selected( $dsp_packweight, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_packweight, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+
+		<?php
+		$dsp_order = 0;
+		if ( isset( $instance[ 'dsp_order' ] ) ) {
+		$dsp_order = $instance[ 'dsp_order' ];
+		}
+
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_order' ); ?>">Show order option(s):</label>
+		<select name="<?php echo $this->get_field_name( 'dsp_order' ); ?>" id="<?php echo $this->get_field_id( 'dsp_order' ); ?>">
+		<option value="0" <?php selected( $dsp_order, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_order, '1' ); ?>>Show</option>
+		</select>
+		</p>
+
+		<?php
+
 	}
 
 	// Updating widget replacing old instances with new
@@ -427,11 +480,19 @@ class onepiece_widget extends WP_Widget {
 		//$instance['function_type'] = ( ! empty( $new_instance['function_type'] ) ) ? strip_tags( $new_instance['function_type'] ) : '';
 		$instance['post_category'] = ( ! empty( $new_instance['post_category'] ) ) ? strip_tags( $new_instance['post_category'] ) : '';
 		$instance['itemcount'] = ( ! empty( $new_instance['itemcount'] ) ) ? strip_tags( $new_instance['itemcount'] ) : '';
+		$instance['itemorder'] = ( ! empty( $new_instance['itemorder'] ) ) ? strip_tags( $new_instance['itemorder'] ) : '';
 		$instance['excerptlength'] = ( ! empty( $new_instance['excerptlength'] ) ) ? strip_tags( $new_instance['excerptlength'] ) : '';
 		$instance['dsp_image'] = ( ! empty( $new_instance['dsp_image'] ) ) ? strip_tags( $new_instance['dsp_image'] ) : '';
 		$instance['dsp_date'] = ( ! empty( $new_instance['dsp_date'] ) ) ? strip_tags( $new_instance['dsp_date'] ) : '';
 		$instance['dsp_author'] = ( ! empty( $new_instance['dsp_author'] ) ) ? strip_tags( $new_instance['dsp_author'] ) : '';
 		$instance['dsp_tags'] = ( ! empty( $new_instance['dsp_tags'] ) ) ? strip_tags( $new_instance['dsp_tags'] ) : '';
+
+
+		$instance['dsp_label'] = ( ! empty( $new_instance['dsp_label'] ) ) ? strip_tags( $new_instance['dsp_label'] ) : '';
+		$instance['dsp_size'] = ( ! empty( $new_instance['dsp_size'] ) ) ? strip_tags( $new_instance['dsp_size'] ) : '';
+		$instance['dsp_price'] = ( ! empty( $new_instance['dsp_price'] ) ) ? strip_tags( $new_instance['dsp_price'] ) : '';
+		$instance['dsp_packweight'] = ( ! empty( $new_instance['dsp_packweight'] ) ) ? strip_tags( $new_instance['dsp_packweight'] ) : '';
+		$instance['dsp_order'] = ( ! empty( $new_instance['dsp_order'] ) ) ? strip_tags( $new_instance['dsp_order'] ) : '';
 		return $instance;
 	}
 
@@ -444,4 +505,105 @@ function onepiece_load_widget() {
 add_action( 'widgets_init', 'onepiece_load_widget' );
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Category Posts Slider
+this function can output different types of content lists for multiple usages like sliders and carrousels */
+/*
+function display_posts_by_category( $cat=0, $columnset=0, $content='full', $target='self', $url=''){
+
+	// $cat array or $id
+ 	// $columnset amount of posts/items in a row/box, 0 for single most recent post
+	// $content title / text / image / full / imgtitle / imgtitlecat / imgtitletext / titlecat
+	// $target blank / self / none
+	// $url
+
+
+
+	if($cat == 0){
+		$cat = get_option('default_category');
+	}
+	$ppp = 50; // max posts to retrieve
+	if($columnset == 0){
+	$ppp = 1;
+	}
+	query_posts("cat=$cat&post_status=publish&posts_per_page=$ppp&orderby=date&order=ASC");
+	if( have_posts() ) :
+	$count = 0;
+	echo '<div class="listcategoryposts"><div class="covertop"></div><ul>';
+	while ( have_posts() ) : the_post();
+
+	$custom = get_post_custom( get_the_ID() );
+	if($target != 'none'){
+	$titlelink = '<a href="'.get_the_permalink().'" target="_'.$target.'">';
+
+	if( $url !='' ){ // overwrite single target urls
+		$titlelink = '<a href="'.$url.'" target="_'.$target.'">';
+	}
+	}
+
+	if($count == 0){
+    	echo '<li class="colset'.$columnset.'">';
+	}
+	echo '<div class="cat-post">';
+    	if(get_the_post_thumbnail( $post->ID, 'medium' )!='' && ($content != 'title' || $content != 'text' || $content != 'titlecat') ){
+			if($target == 'none'){
+			    echo '<div class="imagebox">'.get_the_post_thumbnail( $post->ID, 'medium' ).'</div>';
+			}else{
+			    echo '<div class="imagebox">'.$titlelink.''.get_the_post_thumbnail( $post->ID, 'medium' ).'</a></div>';
+			}
+		}
+
+		if($content != 'image' && $content != 'text'){
+
+		$title = get_the_title();
+
+		echo '<h4>';
+		if($target == 'none'){
+    	echo $title;
+		}else{
+		echo $titlelink.$title.'</a>';
+		}
+		echo '</h4>';
+
+		}
+
+		if($content == 'full' || $content == 'imgtitlecat' || $content == 'titlecat'){
+		echo '<div class="catname signbut">';
+    		foreach((get_the_category()) as $category) {
+    			echo $category->cat_name;
+			break; // show only 1 category
+		}
+		echo '</div>';
+		}
+		if($content == 'full' || $content == 'text' || $content == 'imgtitletext'){
+		echo '<div class="textbox">';
+    		the_excerpt();
+		echo '</div>';
+		}
+	echo '</div>';
+	$count++;
+	if($count >= $columnset){
+    	echo '</li>';
+	$count = 0;
+	}
+	endwhile;
+	echo '</ul><div class="coverbottom"></div><div class="clr"></div></div>';
+	endif;
+	wp_reset_query();
+
+}
+
+*/
 ?>
