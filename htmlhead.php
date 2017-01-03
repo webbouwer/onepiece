@@ -141,6 +141,9 @@ $stylelayout_fontsize = get_theme_mod('onepiece_identity_stylelayout_fontsize', 
 $stylelayout_spacing = get_theme_mod('onepiece_identity_stylelayout_spacing', 5);
 $stylelayout_speed = 100 * get_theme_mod('onepiece_identity_stylelayout_speed', 5);
 
+// icons
+$loaderboxicon = get_theme_mod('onepiece_identity_icons_loader', esc_url( get_template_directory_uri() ).'/icons/loader_icon_circle_default.gif');
+
 // topbar
 $topbarbehavior = get_theme_mod('onepiece_elements_topmenubar_behavior', 'rela');
 $topbarbgfixed = get_theme_mod('onepiece_elements_topmenubar_bgfixed', 'keep');
@@ -244,6 +247,13 @@ if( $sliderdisplay == 'topfooter' ){
 ?>
 <script type="text/javascript" language="javascript">
 jQuery(function($) {
+
+
+/*
+Loaderbox icon image
+*/
+$('.loadbox span').html('<img width="100%" height="auto" src="<?php echo $loaderboxicon;?>" alt="loader" />');
+
 /*
 Header Height Resize
 */
@@ -1736,6 +1746,7 @@ echo '<style>';
 echo 'body{ font-size:'.$globalfontsize.'em !important; }';
 echo '#site-navigation .menu-button, ul li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
 echo '.post-title, h1, .readmore, p, #copyright-textbox { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
+
 if( $mainmenubarplace == 'above' ){ 
 echo '#headercontainer #site-navigation{ position: relative; z-index:999;}';
 }

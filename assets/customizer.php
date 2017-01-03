@@ -62,21 +62,6 @@ Identity:
 	SEO
 		default website (meta) keywords
 		default (meta) description
-	
-	
-Style: 
-
-	Style & Layout
-		select style (custom css file)
-		fontsize 1-10
-		spacing 1-10
-		speed 1-10
-	
-	Colors
-		body bg
-		body text
-		body textlink
-		body textlink hover
 		
 
 Api & Media
@@ -227,7 +212,25 @@ Responsive
 		content max width in px
 	Large screen
 		content max width in px
+
+
+
+
+Style:
+
+	Style & Layout
+		select style (custom css file)
+		fontsize 1-10
+		spacing 1-10
+		speed 1-10
 	
+	Colors
+		body bg
+		body text
+		body textlink
+		body textlink hover
+
+
 */
 
 
@@ -251,10 +254,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Identity', 'onepiece'),
         	'priority' => 10,
     	));
-	    $wp_customize->add_panel('onepiece_content_style', array( 
-        	'title'    => __('Style', 'onepiece'),
-        	'priority' => 20,
-    	));
 	    $wp_customize->add_panel('onepiece_media_panel', array(
         	'title'    => __('Api & Media', 'onepiece'),
         	'priority' => 40,
@@ -272,6 +271,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Responsive', 'onepiece'),
         	'priority' => 120,
     	)); 
+	    $wp_customize->add_panel('onepiece_content_style', array(
+        	'title'    => __('Style', 'onepiece'),
+        	'priority' => 130,
+    	));
 		
 
 
@@ -302,6 +305,12 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
         $wp_customize->add_section('colors', array( 
         	'title'    => __('Colors', 'onepiece'),
+        	'panel'  => 'onepiece_content_style',
+		'priority' => 50,
+    	));
+
+		$wp_customize->add_section('icons', array(
+        	'title'    => __('Icons', 'onepiece'),
         	'panel'  => 'onepiece_content_style',
 		'priority' => 50,
     	));
@@ -339,11 +348,11 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_media_panel',
 			'priority' => 30,
     	));
-	// ..
 
 
 
-	// Responsive
+
+	// Responsive panels
     	$wp_customize->add_section('onepiece_responsive_small', array( 
         	'title'    => __('Small', 'onepiece'),
         	'panel'  => 'onepiece_elements_responsive',
@@ -361,7 +370,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'priority' => 30,
     	));
 
-	// Content
+	// Content panels
     	$wp_customize->add_section('onepiece_content_panel_frontpage', array( 
         	'title'    => __('Frontpage', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
@@ -399,7 +408,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_content_panel',
     	));
     	
-	// Elements
+	// Elements panels
 		$wp_customize->add_section('onepiece_elements_topmenubar', array( 
         	'title'    => __('Topbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
@@ -467,7 +476,16 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		
 		
-		// IDENTITY
+
+
+
+	/*
+	 *
+	 * IDENTITY
+	 *
+	 */
+
+
 		$wp_customize->add_setting( 'onepiece_identity_logo_m', array( 
 		'sanitize_callback' => 'onepiece_sanitize_default', 
 	    )); 
@@ -578,111 +596,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
     	
 
-		// STYLE & LAYOUT
-		
-		// STYLESHEET
-		$wp_customize->add_setting( 'onepiece_identity_stylelayout_stylesheet' , array(
-				'default' => 'default.css', 
-				'sanitize_callback' => 'onepiece_sanitize_default',
-				)); 
-		$list = get_theme_cssfilelist();
-		$files = [];
-		foreach($list as $file){
-		$files[$file] = $file;
-		}
-
-		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_stylesheet', array(
-            	'label'          => __( 'Layout stylesheet', 'onepiece' ),
-            	'section'        => 'onepiece_identity_stylelayout',
-            	'settings'       => 'onepiece_identity_stylelayout_stylesheet',
-            	'type'           => 'select',
- 	    	'description'    => __( 'Select the main style', 'onepiece' ),
-            	'choices'        => $files,
-            	
-    	)));
-		
-		// FONTSIZE AVERAGE
-		$wp_customize->add_setting( 'onepiece_identity_stylelayout_fontsize' , array(
-		'default' => '5', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_fontsize', array(
-            	'label'          => __( 'Fontsize', 'onepiece' ),
-            	'section'        => 'onepiece_identity_stylelayout',
-            	'settings'       => 'onepiece_identity_stylelayout_fontsize',
-            	'type'           => 'number',
- 	    	'description'    => __( 'Average fontsize (1-10).', 'onepiece' ),
-    	)));
-		// SPACING AVERAGE
-		$wp_customize->add_setting( 'onepiece_identity_stylelayout_spacing' , array(
-		'default' => '5', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_spacing', array(
-            	'label'          => __( 'Spacing', 'onepiece' ),
-            	'section'        => 'onepiece_identity_stylelayout',
-            	'settings'       => 'onepiece_identity_stylelayout_spacing',
-            	'type'           => 'number',
- 	    	'description'    => __( 'Average margins and paddings (1-10).', 'onepiece' ),
-    	)));
-		// SPEED AVERAGE
-		$wp_customize->add_setting( 'onepiece_identity_stylelayout_speed' , array(
-		'default' => '5', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_speed', array(
-            	'label'          => __( 'Speed', 'onepiece' ),
-            	'section'        => 'onepiece_identity_stylelayout',
-            	'settings'       => 'onepiece_identity_stylelayout_speed',
-            	'type'           => 'number',
- 	    	'description'    => __( 'Average speed (1-10).', 'onepiece' ),
-    	)));
 
 
 
-		// COLORS
-		// body bg 
-		$wp_customize->add_setting( 'onepiece_identity_colors_bodybg' , array(
-		'default' => '#ffffff', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodybg', array(
-		'label' => __( 'Body background Color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_bodybg',
-    	) ) ); 
-		
-		// body text 
-		$wp_customize->add_setting( 'onepiece_identity_colors_bodytext' , array(
-		'default' => '#232323', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodytext', array(
-		'label' => __( 'Body text Color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_bodytext',
-    	) ) ); 
-		// body link 
-		$wp_customize->add_setting( 'onepiece_identity_colors_bodylink' , array(
-		'default' => '#000000', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylink', array(
-		'label' => __( 'Body textlink Color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_bodylink',
-    	) ) ); 
-		// body link hover 
-		$wp_customize->add_setting( 'onepiece_identity_colors_bodylinkhover' , array(
-		'default' => '#232323', 
-		'sanitize_callback' => 'onepiece_sanitize_default',
-    	)); 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylinkhover', array(
-		'label' => __( 'Body textlink hover Color', 'onepiece' ),
-		'section' => 'colors',
-		'settings' => 'onepiece_identity_colors_bodylinkhover',
-    	) ) ); 
-		
+
+
+
+
 		
 		/**
 	 	* Api & Media
@@ -875,8 +795,11 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 		
 
-		
-		
+	/*
+	 *
+	 * CONTENT
+	 *
+	 */
 
 		// CONTENT - SLIDER 
 		$wp_customize->add_setting( 'onepiece_content_sliderbar_display' , array(
@@ -998,9 +921,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 
 
-
-
-
     
     	// CONTENT - PAGES 
 		$wp_customize->add_setting( 'onepiece_content_panel_page_authortime' , array(
@@ -1021,18 +941,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'author'   => __( 'Display author name only', 'onepiece' ),
             	)
     	)));
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 		
+
 
     	// CONTENT - POSTS - FEATURED IMAGE DISPLAY
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_featuredimage' , array(
@@ -1267,10 +1176,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'left'   => __( 'Left side below intro tekst', 'onepiece' ),
             	)
     	)));
-		 
-		
-		
-		
+
 		
     	// CONTENT - LIST - EXCLUDE CATEGORIES  Add multi select 
 		// source used: http://themefoundation.com/customizer-multiple-category-control/
@@ -1309,14 +1215,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'text'   => __( 'Title and description', 'onepiece' ),
             	)
     	)));
-		
-		
-		 
-		 
-		 
-		 
-    	
-    	
+
     	// CONTENT - GALLERY 
     	$wp_customize->add_setting( 'onepiece_content_gallery_category' , array(
 		'default' => 'uncategorized', 
@@ -1336,7 +1235,16 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 
 
-		
+
+
+
+	/*
+	 *
+	 * ELEMENTS
+	 *
+	 */
+
+
 		// ELEMENTS - HEADER IMAGE - WIDTH
 		$wp_customize->add_setting( 'onepiece_elements_headerimage_width' , array(
 		'default' => 'outer', 
@@ -1787,15 +1695,16 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Copyright information text.', 'onepiece' ),
     	)));
 		
-		
-		
-	
+
 
 	
-    	
-    	
 
-    	// RESPONSIVE	
+	/*
+	 *
+	 * RESPONSIVE
+	 *
+	 */
+
 		$wp_customize->add_setting( 'onepiece_responsive_small_max' , array(
 		'default' => '512', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1881,6 +1790,141 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
+
+
+
+	/*
+	 *
+	 * STYLE & LAYOUT
+	 *
+	 */
+
+		// STYLESHEET
+		$wp_customize->add_setting( 'onepiece_identity_stylelayout_stylesheet' , array(
+				'default' => 'default.css',
+				'sanitize_callback' => 'onepiece_sanitize_default',
+				));
+		$list = get_theme_cssfilelist();
+		$files = [];
+		foreach($list as $file){
+		$files[$file] = $file;
+		}
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_stylesheet', array(
+            	'label'          => __( 'Layout stylesheet', 'onepiece' ),
+            	'section'        => 'onepiece_identity_stylelayout',
+            	'settings'       => 'onepiece_identity_stylelayout_stylesheet',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select the main style', 'onepiece' ),
+            	'choices'        => $files,
+
+    	)));
+
+		// FONTSIZE AVERAGE
+		$wp_customize->add_setting( 'onepiece_identity_stylelayout_fontsize' , array(
+		'default' => '5',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_fontsize', array(
+            	'label'          => __( 'Fontsize', 'onepiece' ),
+            	'section'        => 'onepiece_identity_stylelayout',
+            	'settings'       => 'onepiece_identity_stylelayout_fontsize',
+            	'type'           => 'number',
+ 	    	'description'    => __( 'Average fontsize (1-10).', 'onepiece' ),
+    	)));
+		// SPACING AVERAGE
+		$wp_customize->add_setting( 'onepiece_identity_stylelayout_spacing' , array(
+		'default' => '5',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_spacing', array(
+            	'label'          => __( 'Spacing', 'onepiece' ),
+            	'section'        => 'onepiece_identity_stylelayout',
+            	'settings'       => 'onepiece_identity_stylelayout_spacing',
+            	'type'           => 'number',
+ 	    	'description'    => __( 'Average margins and paddings (1-10).', 'onepiece' ),
+    	)));
+		// SPEED AVERAGE
+		$wp_customize->add_setting( 'onepiece_identity_stylelayout_speed' , array(
+		'default' => '5',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_stylelayout_speed', array(
+            	'label'          => __( 'Speed', 'onepiece' ),
+            	'section'        => 'onepiece_identity_stylelayout',
+            	'settings'       => 'onepiece_identity_stylelayout_speed',
+            	'type'           => 'number',
+ 	    	'description'    => __( 'Average speed (1-10).', 'onepiece' ),
+    	)));
+
+
+
+		/*
+		 *
+		 * COLORS
+		 *
+		 */
+
+
+
+		$wp_customize->add_setting( 'onepiece_identity_colors_bodybg' , array(
+		'default' => '#ffffff',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodybg', array(
+		'label' => __( 'Body background Color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_bodybg',
+    	) ) );
+
+		// body text
+		$wp_customize->add_setting( 'onepiece_identity_colors_bodytext' , array(
+		'default' => '#232323',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodytext', array(
+		'label' => __( 'Body text Color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_bodytext',
+    	) ) );
+		// body link
+		$wp_customize->add_setting( 'onepiece_identity_colors_bodylink' , array(
+		'default' => '#000000',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylink', array(
+		'label' => __( 'Body textlink Color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_bodylink',
+    	) ) );
+		// body link hover
+		$wp_customize->add_setting( 'onepiece_identity_colors_bodylinkhover' , array(
+		'default' => '#232323',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'onepiece_identity_colors_bodylinkhover', array(
+		'label' => __( 'Body textlink hover Color', 'onepiece' ),
+		'section' => 'colors',
+		'settings' => 'onepiece_identity_colors_bodylinkhover',
+    	) ) );
+
+
+	// Icons
+		$wp_customize->add_setting( 'onepiece_identity_icons_loader', array(
+		'sanitize_callback' => 'onepiece_sanitize_default',
+		'default' => esc_url( get_template_directory_uri() ).'/icons/loader_icon_circle_default.gif',
+	    ));
+
+	    $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'onepiece_identity_icons_loader', array(
+        	'label'    => __( 'Loader image', 'onepiece' ),
+        	'section'  => 'icons',
+        	'settings' => 'onepiece_identity_icons_loader',
+		'description' => __( 'Upload or select a loader icon (replacing the default loader).', 'onepiece' ),
+        	'priority' => 10,
+    	) ) );
+
+
+
 		
     	
 		
