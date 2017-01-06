@@ -82,7 +82,7 @@ body .loadbox
 {
 position:fixed;
 left:45%;
-width:8%;
+width:6%;
 min-width:80px;
 top:46%;
 text-align:center;
@@ -91,9 +91,11 @@ z-index:90;
 body .loadbox span
 {
 display:block;
+	/*
 padding:5px;
 background-color:#000;
 color:#CCCCCC;
+	*/
 font-size:0.9em; 
 }
 

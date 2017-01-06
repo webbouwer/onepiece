@@ -255,7 +255,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'priority' => 10,
     	));
 	    $wp_customize->add_panel('onepiece_media_panel', array(
-        	'title'    => __('Api & Media', 'onepiece'),
+        	'title'    => __('Api & Media (in development)', 'onepiece'),
         	'priority' => 40,
     	));
 	    $wp_customize->add_panel('onepiece_content_panel', array( 
@@ -606,7 +606,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		/**
 	 	* Api & Media
-	 	* Todo: do not use when activated socila media plugins found
+	 	* Todo: Hookup to WSL (or other oauth plugin)
 	 	*/
 		
 		// API & MEDIA
@@ -755,6 +755,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 
 		// Google
+		//https://developers.google.com/identity/protocols/OAuth2
 		$wp_customize->add_setting( 'onepiece_media_panel_google_id' , array(
 		'default' => '',
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1696,8 +1697,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 
-
 	
+
 
 	/*
 	 *
