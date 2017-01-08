@@ -41,35 +41,13 @@ function onepiece_dashboard_widget_content() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Add Custom Onepiece Widget */
-class onepiece_widget extends WP_Widget {
+/* Recent posts Widget */
+class onepiece_postlist_widget extends WP_Widget {
 
 
 	function __construct() {
 		parent::__construct(
-			'onepiece_widget', // Base ID
+			'onepiece_postlist_widget', // Base ID
 			__('Onepiece Postlist Widget', 'onepiece'), // Widget name and description in UI
 			array( 'description' => __( 'Onepiece Widget Post Listing with options', 'onepiece' ), )
 		);
@@ -80,8 +58,6 @@ class onepiece_widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 
 
-
-
 		$itemcount = 3;
 		$itemorder = 'DESC';
 		$excerptlength = 10;
@@ -90,8 +66,6 @@ class onepiece_widget extends WP_Widget {
 		$dsp_author = 0;
 		$dsp_tags = 0;
 		$currentid = get_queried_object_id();
-
-
 
 
 		if(isset($instance['itemcount']) && $instance['itemcount'] !='' )
@@ -116,20 +90,12 @@ class onepiece_widget extends WP_Widget {
 			$dsp_tags = $instance['dsp_tags'];
 
 
-
-
-
-
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		// before and after widget arguments are defined by themes
 		echo $args['before_widget'];
 
 		if ( ! empty( $title ) )
 		echo $args['before_title'] . $title . $args['after_title'];
-
-
-
-
 
 		if($instance['post_category'] == ''){
 
@@ -142,10 +108,6 @@ class onepiece_widget extends WP_Widget {
 		query_posts('category_name='.$instance['post_category'].'&post_status=publish&order='.$itemorder.'&posts_per_page='.$itemamount);
 
 		}
-
-
-
-
 
 
 		//query_posts('category_name='.$category->slug); // or use  something with get_category_link( $category )
@@ -170,12 +132,8 @@ class onepiece_widget extends WP_Widget {
 		}
 
 
-
-
 		// include product options
 		include('product.php');
-
-
 
 		//start output
 		echo '<li>';
@@ -189,44 +147,28 @@ class onepiece_widget extends WP_Widget {
 		}
 		echo '</div>';
 
-
-
-
 		// post product label
 		if( isset($post_meta_label) && $post_meta_label[0] != 'none' &&  $instance[ 'dsp_label' ] != 0 ){
 		echo '<div class="labelbox"><span class="productlabel">'.$post_meta_label[0].'</span></div>';
 		}
 
-
-
 		// product box
 		if( isset( $instance[ 'dsp_price' ] ) && $instance[ 'dsp_price' ] != 0)
 		echo $productbox;
 
-
-
 		echo '<div class="item-excerpt">'.$title_link;
-
-
 
 		if ( has_post_thumbnail() && $dsp_image != 'none' ) {
 			$align = 'align-'.$dsp_image;
 			echo get_the_post_thumbnail( get_the_ID(), 'big-thumb', array( 'class' => $align )); //the_post_thumbnail('big-thumb');
     	}
 
-
-
-
 		// Post intro content
 		the_excerpt_length( $excerptlength );
-
 
 		// package box
 		if( $instance[ 'dsp_packweight' ] !=0)
 			echo $packagebox;
-
-
-
 
 
 		echo '</a></div><div class="clr"></div>';
@@ -235,18 +177,13 @@ class onepiece_widget extends WP_Widget {
 		if( isset( $instance[ 'dsp_order' ] )  && $instance[ 'dsp_order' ] != 0)
 			echo $orderbox;
 
-
-
 		if( isset( $instance[ 'dsp_tags' ] )  && $dsp_tags != 0 ){
 			echo '<div class="post-tags">';
     		the_tags('Tagged with: ',' '); // the_tags(', ');  //
 			echo '</div>';
 		}
 
-
 		}
-
-
 
 		endwhile;
 
@@ -256,10 +193,8 @@ class onepiece_widget extends WP_Widget {
 
 		wp_reset_query();
 
-
 		echo $args['after_widget'];
 	}
-
 
 
 
@@ -268,7 +203,7 @@ class onepiece_widget extends WP_Widget {
 		if ( isset( $instance[ 'title' ] ) ) {
 		$title = $instance[ 'title' ];
 		}else{
-		$title = __( 'New title', 'onepiece' );
+		$title = __( 'New title', 'Posts listed' );
 		}
 
 
@@ -500,7 +435,7 @@ class onepiece_widget extends WP_Widget {
 
 // Register and load the widget
 function onepiece_load_widget() {
-	register_widget( 'onepiece_widget' );
+	register_widget( 'onepiece_postlist_widget' );
 }
 add_action( 'widgets_init', 'onepiece_load_widget' );
 
@@ -509,11 +444,213 @@ add_action( 'widgets_init', 'onepiece_load_widget' );
 
 
 
+class onepiece_share_widget extends WP_Widget {
+
+
+	function __construct() {
+		parent::__construct(
+			'onepiece_widget', // Base ID
+			__('Onepiece Share Widget', 'onepiece'), // Widget name and description in UI
+			array( 'description' => __( 'Display your favourite share buttons', 'onepiece' ), )
+		);
+	}
+
+
+	// Widget front-end
+	public function widget( $args, $instance ) {
+
+
+		$itemcount = 3;
+
+		if(isset($instance['itemcount']) && $instance['itemcount'] !='' )
+		$itemcount = $instance['itemcount'];
+
+		$title = apply_filters( 'widget_title', $instance['title'] );
+
+		echo $args['before_widget']; // before and after widget arguments are defined by themes
+
+
+		if ( ! empty( $title ) )
+		echo $args['before_title'] . $title . $args['after_title'];
+
+		echo $itemamount;
 
 
 
+		/*
+		option:
+  - custom share link (or current page)
+  - display text (name)
+  - display icons (position)
+  - set default share image
+  */
 
 
+		echo '<ul class="sharebox">';
+
+		echo '<li><a href="mailto:?Subject='.$titletext.'&Body='.$bodytext.'" target="_blank">Email</a></li>';
+
+		echo '<li><a href="http://www.linkedin.com/shareArticle?mini=true&title='.$titletext.'&summary='.$desctext.'&source=http://www.webdesigndenhaag.net&url='.$siteurl.'" target="_blank">Linkedin</a></li>';
+
+		echo '<li><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Whatsapp</a></li>';
+
+		echo '<li><a href="https://www.facebook.com/sharer/sharer.php?u='.$siteurl.'" target="_blank">Facebook</a></li>';
+
+		echo '<li><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Instagram</a></li>';
+
+		echo '<li><a href="https://plus.google.com/share?url='.$siteurl.'" target="_blank">Google+</a></li>';
+
+		echo '<li><a href="https://twitter.com/intent/tweet?url='.$siteurl.'&text='.$titletext.' - '.$desctext.'&via='.get_bloginfo('name').'" target="_blank">Twitter</a></li>';
+
+		echo '<li><a href="http://pinterest.com/pin/create/button/?url='.$siteurl.'&media={'.$imageurl.'}&description='.$titletext.' - '.$desctext.'" target="_blank">Pinterest</a></li>';
+
+		echo '<li><a href="http://www.tumblr.com/share/link?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Tumblr</a></li>';
+
+		echo '<li><a href="http://reddit.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Reddit</a></li>';
+
+		echo '<li><a href="http://www.stumbleupon.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">StumbleUpon</a></li>';
+
+		echo '<li><a href="http://www.digg.com/submit?url='.$siteurl.'" target="_blank">Digg</a></li>';
+
+		echo '</ul>';
+
+		/* HTML with links to be configured:
+
+if($titletext == ''){
+$titletext = 'Shared link';
+}
+if($desctext == ''){
+$desctext = 'shared from '.get_bloginfo( 'name' ).' website';
+}
+if($imageurl == '' && get_theme_mod( 'onepiece_identity_featured_image' ) ){
+$imageurl = get_theme_mod( 'onepiece_identity_featured_image' ); // default featured image
+}
+
+echo '<ul class="sharebox">'.__('Share this' , 'fndtn' ).' ';
+
+// Email
+if( get_theme_mod( 'fndtn_elements_frontendshare_email' ) == 1 ){
+$bodytext = $titletext.'<br />'.$siteurl;
+echo '<li><a href="mailto:?Subject='.$titletext.'&Body='.$bodytext.'" target="_blank">Email</a></li>';
+}
+
+// Tumblr
+if( get_theme_mod( 'fndtn_elements_frontendshare_tumblr' ) == 1 ){
+echo '<li><a href="http://www.tumblr.com/share/link?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Tumblr</a></li>';
+}
+
+// Instagram
+//if( get_theme_mod( 'fndtn_elements_frontendshare_instagram' ) == 1 ){
+//echo '<li><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Instagram</a></li>';
+//}
+
+// Whatsapp
+if( get_theme_mod( 'fndtn_elements_frontendshare_whatsapp' ) == 1 ){
+echo '<li><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Whatsapp</a></li>';
+}
+
+// Facebook
+if( get_theme_mod( 'fndtn_elements_frontendshare_facebook' ) == 1 ){
+echo '<li><a href="https://www.facebook.com/sharer/sharer.php?u='.$siteurl.'" target="_blank">Facebook</a></li>';
+}
+
+// Linkedin
+if( get_theme_mod( 'fndtn_elements_frontendshare_linkedin' ) == 1 ){
+echo '<li><a href="http://www.linkedin.com/shareArticle?mini=true&title='.$titletext.'&summary='.$desctext.'&source=http://www.webdesigndenhaag.net&url='.$siteurl.'" target="_blank">Linkedin</a></li>';
+}
+
+// Google
+if( get_theme_mod( 'fndtn_elements_frontendshare_google' ) == 1 ){
+echo '<li><a href="https://plus.google.com/share?url='.$siteurl.'" target="_blank">Google+</a></li>';
+}
+
+// Pinterest
+if( get_theme_mod( 'fndtn_elements_frontendshare_pinterest' ) == 1 ){
+echo '<li><a href="http://pinterest.com/pin/create/button/?url='.$siteurl.'&media={'.$imageurl.'}&description='.$titletext.' - '.$desctext.'" target="_blank">Pinterest</a></li>';
+}
+
+// Twitter
+if( get_theme_mod( 'fndtn_elements_frontendshare_twitter' ) == 1 ){
+echo '<li><a href="https://twitter.com/intent/tweet?url='.$siteurl.'&text='.$titletext.' - '.$desctext.'&via='.get_bloginfo('name').'" target="_blank">Twitter</a></li>';
+}
+
+// Reddit
+if( get_theme_mod( 'fndtn_elements_frontendshare_reddit' ) == 1 ){
+echo '<li><a href="http://reddit.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Reddit</a></li>';
+}
+
+// Digg
+if( get_theme_mod( 'fndtn_elements_frontendshare_digg' ) == 1 ){
+echo '<li><a href="http://www.digg.com/submit?url='.$siteurl.'" target="_blank">Digg</a></li>';
+}
+
+// StumbleUpon
+if( get_theme_mod( 'fndtn_elements_frontendshare_stumbleupon' ) == 1 ){
+echo '<li><a href="http://www.stumbleupon.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">StumbleUpon</a></li>';
+}
+
+echo '</ul>';
+*/
+		echo $args['after_widget'];
+
+	}
+
+
+
+	// Widget Backend
+	public function form( $instance ) {
+
+		/*
+
+		options 		none | site | post | all
+
+
+		*/
+
+
+
+		if ( isset( $instance[ 'title' ] ) ) {
+		$title = $instance[ 'title' ];
+		}else{
+		$title = __( 'New title', 'Posts listed' );
+		}
+
+		?>
+
+		<p>
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php __( 'Title:', 'onepiece' ); ?></label>
+		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+		</p>
+
+		<?php
+		$value = '';
+		if ( isset( $instance[ 'itemcount' ] ) ) {
+			$value = 'value="'.$instance[ 'itemcount' ].'" ';
+		}
+		?>
+		<p><label for="<?php echo $this->get_field_id( 'itemcount' ); ?>">Amount of items:</label>
+		<input type="text" size="3" <?php echo $value; ?>name="<?php echo $this->get_field_name( 'itemcount' ); ?>" id="<?php echo $this->get_field_id( 'itemcount' ); ?>" />
+		</p>
+
+		<?php
+
+	}
+
+	// Widget update/save settings
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['itemcount'] = ( ! empty( $new_instance['itemcount'] ) ) ? strip_tags( $new_instance['itemcount'] ) : '';
+		return $instance;
+	}
+
+} // Class wpb_widget ends here
+
+// Register and load the widget
+function onepiece_load_share_widget() {
+	register_widget( 'onepiece_share_widget' );
+}
+add_action( 'widgets_init', 'onepiece_load_share_widget' );
 
 
 

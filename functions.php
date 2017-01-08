@@ -1,4 +1,9 @@
 <?php /* Functions WP */
+
+
+/*
+ * Include more functions
+ */
 require get_template_directory() . '/assets/mobile_detect.php';
 require get_template_directory() . '/assets/customizer.php'; // customizer functions
 require get_template_directory() . '/assets/metaboxes.php'; // metabox functions
@@ -10,10 +15,18 @@ require get_template_directory() . '/assets/widgets-onepiece.php'; // onepiece w
 require get_template_directory() . '/assets/colors.php'; // customizer colors
 require get_template_directory() . '/assets/ajax.php'; // ajax functions
 
-/* 'Return of the Links Manager' */
+
+
+/*
+ * Return of the Links Manager'
+ */
 add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
-/****** Register Theme Support ******/
+
+
+/*
+ * Register Theme Support
+ */
 function basic_setup_theme_global() {
 	add_theme_support( 'post-thumbnails' );
 	/*
@@ -33,7 +46,10 @@ function basic_setup_theme_global() {
 add_action( 'after_setup_theme', 'basic_setup_theme_global' );
 
 
-/****** Editor style WP THEME STANDARD ******/
+
+/*
+ * Editor style WP THEME STANDARD
+ */
 function onepiece_editor_styles() {
     add_editor_style( 'style.css' );
     add_editor_style( get_theme_mod('onepiece_identity_stylelayout_stylesheet', 'default.css') );
@@ -41,7 +57,10 @@ function onepiece_editor_styles() {
 add_action( 'admin_init', 'onepiece_editor_styles' );
   
 
-/****** Register menu's ******/
+
+/*
+ *Register menu's
+ */
 function basic_setup_register_menus() {
 	
 	register_nav_menus(
@@ -59,7 +78,9 @@ function basic_setup_register_menus() {
 add_action( 'init', 'basic_setup_register_menus' );
 
 
-/****** Register widgets *******/
+/*
+ * Register widgets
+ */
 function basic_setup_widgets_init() {
 	if (function_exists('register_sidebar')) {
      
@@ -215,7 +236,9 @@ function basic_setup_widgets_init() {
 add_action( 'widgets_init', 'basic_setup_widgets_init' );
  
 
-/****** Javascript with customizer variables *****/
+/*
+ * Javascript with customizer variables
+ */
 // http://wordpress.stackexchange.com/questions/57386/how-do-i-force-wp-enqueue-scripts-to-load-at-the-end-of-head
 function onepiece_global_js() {
     // Register the script first.
@@ -233,11 +256,9 @@ add_action('wp_enqueue_scripts', 'onepiece_global_js');
 
 
 
-
-
-
-
-/****** Adjust excerpt num words max ******/
+/*
+ * Adjust excerpt num words max
+ */
 function the_excerpt_length( $words = null ) { 
     global $_the_excerpt_length_filter;
 
@@ -269,7 +290,9 @@ function _the_excerpt_length_filter( $default ) {
 
 
 
-/****** Replace post readmore excerpt link ******/
+/*
+ * Replace post readmore excerpt link
+ */
 function new_excerpt_more($more) {
 
 	$readmore = get_theme_mod('onepiece_content_panel_posts_readmore', 'none');
@@ -310,11 +333,6 @@ add_filter('excerpt_more', 'new_excerpt_more');
 
 
 
-
-
-
-
-
 /****** Customize Adminbar ******/
 /* Not allowed for official themes
 function control_display_adminbar() {
@@ -324,6 +342,9 @@ function control_display_adminbar() {
 }
 add_action( 'after_setup_theme', 'control_display_adminbar' );
 */
+
+
+
 /******** Check active widgets **********/
 function is_sidebar_active( $sidebar_id ){
     $the_sidebars = wp_get_sidebars_widgets();
@@ -333,7 +354,9 @@ function is_sidebar_active( $sidebar_id ){
         return count( $the_sidebars[$sidebar_id] );
 }
 
-/**
+
+
+/*
  * Set max srcset image width to 1800px
  */
 function remove_max_srcset_image_width( $max_width ){
@@ -343,7 +366,9 @@ function remove_max_srcset_image_width( $max_width ){
 add_filter( 'max_srcset_image_width', 'remove_max_srcset_image_width' );
 
 
-/********* body tag class **********/
+/*
+ * body tag class
+ */
 function onepiece_body_class( $classes ) {
 	$classes[] = 'frontpage-'.get_theme_mod('onepiece_settings_frontpage_type');
 	return $classes;
@@ -353,7 +378,9 @@ add_filter( 'body_class', 'onepiece_body_class' );
 
 
 
-/** Exclude specific categories from the loop */
+/*
+ * Exclude specific categories from the loop
+ */
 add_action( 'pre_get_posts', 'exclude_specific_cats' );
 function exclude_specific_cats( $wp_query ) {   
     if( !is_admin() && is_main_query() && is_home() ){
@@ -364,9 +391,9 @@ function exclude_specific_cats( $wp_query ) {
 
 
 
-
-
-/********* CATEGORY LIST **********/
+/*
+ * CATEGORY LIST - for metaboxes / customizer functions
+ */
 function get_categories_select(){
  	$get_cats = get_categories();
     	$results;
@@ -382,7 +409,9 @@ function get_categories_select(){
 
 
 
-/******** css file listing ********/
+/*
+ * css file listing
+ */
 function get_theme_cssfilelist(){
 $dir =  get_template_directory(); //dirname( __DIR__ );
 $arr = [];
@@ -405,7 +434,10 @@ return $arr;
 }
 
 
-/******** object_to_array ********/
+
+/*
+ * object_to_array
+ */
 function object_to_array($data){
     if(is_array($data) || is_object($data))
     {
@@ -435,6 +467,7 @@ function onepiece_wp_terms_checklist_args( $args, $post_id ) {
 
 }
 add_filter( 'wp_terms_checklist_args', 'onepiece_wp_terms_checklist_args', 1, 2 );
+
 
 
 
@@ -475,8 +508,15 @@ function tweetTime( $t ) {
 
 
 
-// Remove Emoji junk by Christine Cooper
-// Found on http://wordpress.stackexchange.com/questions/185577/disable-emojicons-introduced-with-wp-4-2
+/***********************
+* Remove unneeded code *
+***********************/
+
+
+
+/* Remove Emoji junk by Christine Cooper
+ * Found on http://wordpress.stackexchange.com/questions/185577/disable-emojicons-introduced-with-wp-4-2
+ */
 function disable_wp_emojicons() {
 
   // all actions related to emojis
@@ -500,7 +540,9 @@ function disable_emojicons_tinymce( $plugins ) {
   }
 }
 
-/* control (remove) gravatar */
+/*
+ * control (remove) gravatar
+ */
 function bp_remove_gravatar ($image, $params, $item_id, $avatar_dir, $css_id, $html_width, $html_height, $avatar_folder_url, $avatar_folder_dir) {
 	$default = get_stylesheet_directory_uri() .'/images/avatar.png';
 	if( $image && strpos( $image, "gravatar.com" ) ){ 

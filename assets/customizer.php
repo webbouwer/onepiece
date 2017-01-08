@@ -54,7 +54,8 @@ Identity:
         Site Description/Tagline
         Site Icon image
     
-    Sharing
+    Site info viral / default sharing
+
         Site featured image
 	    Site featured description
 		.. site sharing url (might be optimized page for social media etc.)
@@ -62,9 +63,9 @@ Identity:
 	SEO
 		default website (meta) keywords
 		default (meta) description
-		
 
-Api & Media
+
+Api
 	.. Linkedin
 	.. Twitter
 	.. Facebook
@@ -255,7 +256,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'priority' => 10,
     	));
 	    $wp_customize->add_panel('onepiece_media_panel', array(
-        	'title'    => __('Api & Media (in development)', 'onepiece'),
+        	'title'    => __('Api', 'onepiece'),
+			'description' => __('in development', 'onepiece'),
         	'priority' => 40,
     	));
 	    $wp_customize->add_panel('onepiece_content_panel', array( 
@@ -553,7 +555,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'label'    => __( 'Site featured image', 'onepiece' ),
         	'section'  => 'onepiece_identity_panel_featured_image',
         	'settings' => 'onepiece_identity_featured_image',
-		'description' => __( 'Upload or select a featured site-image, for website sharing in social media.(ie. Facebook 1200 x 630 - 1.91:1)', 'onepiece' ),
+		'description' => __( 'Upload or select a featured site-image for default sharing (social media, searchbots, trackers etc.)', 'onepiece' ),
         	'priority' => 10,
     	) ) );
 		
