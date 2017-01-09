@@ -1752,6 +1752,13 @@ echo '#headercontainer #site-navigation{ position: relative; z-index:999;}';
 }
 echo '</style>';
 
+
+// font (overwrites)
+add_fonts_frontend();
+
+
+
+
 echo '</head><body '; body_class(); 
 echo '><div id="pagecontainer"';
 if($mobile){
