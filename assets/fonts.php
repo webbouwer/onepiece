@@ -55,10 +55,44 @@ function get_fonts_select(){
 
 	// available font selection
 	$fontselectlist = array(
+/*
+Aladin|Almendra+SC|Bubblegum+Sans|
+Cabin+Condensed|Caveat
+|Croissant+One|Cutive+Mono
+|Days+One|Droid+Sans+Mono|Happy+Monkey
+|Italiana|Julius+Sans+One|Lemon|
+Libre+Franklin|Lilita+One|Modak|Montez|Noto+Sans|Permanent+Marker|Quicksand|Racing+Sans+One|Ropa+Sans|Russo+One|Sanchez|Schoolbell|Vesper+Libre|Work+Sans
+
+*/
+
+
+		'Aladin'=>'Aladin',
+		'Almendra+SC'=>'Almendra SC',
+		'Bubblegum+Sans'=>'Bubblegum Sans',
+		'Cabin+Condensed'=>'Cabin Condensed',
+		'Caveat'=>'Caveat',
+		'Croissant+One'=>'Croissant One',
+		'Cutive+Mono'=>'Cutive Mono',
+		'Days+One'=>'Days One',
+		'Droid+Sans+Mono'=>'Droid Sans Mono',
+		'Happy+Monkey'=>'Happy Monkey',
+		'Italiana'=>'Italiana',
+		'Julius+Sans+One'=>'Julius Sans One',
+		'Lemon'=>'Lemon',
+		'Libre+Franklin'=>'Libre Franklin',
+		'Lilita+One'=>'Lilita One',
+		'Modak'=>'Modak',
+		'Montez'=>'Montez',
+		'Noto+Sans'=>'Noto Sans',
+		'Permanent+Marker'=>'Permanent+Marker',
+		'Quicksand'=>'Quicksand',
+
 
 		'default'=>'Use default (main) font',
 
 		'arial'=>'Arial',
+
+		'Chelsea+Market'=>'Chelsea Market',
 
 		'Courgette'=> 'Courgette',
 
@@ -82,6 +116,8 @@ function get_fonts_select(){
 
 		'Pompiere'=> 'Pompiere',
 
+		'Racing+Sans+One'=>'Racing Sans One',
+
 		'Roboto+Mono'=>'Roboto Mono',
 
 		'Roboto+Slab'=>'Roboto Slab',
@@ -90,10 +126,21 @@ function get_fonts_select(){
 
 		'Rock+Salt'=> 'Rock Salt',
 
+		'Ropa+Sans'=>'Ropa Sans',
+
+		'Russo+One'=>'Russo One',
+
 		'Rosario'=>'Rosario',
 
-		'verdana'=>'Verdana'
+		'Sanchez'=>'Sanchez',
 
+		'Schoolbell'=>'Schoolbell',
+
+		'verdana'=>'Verdana',
+
+		'Vesper+Libre'=>'Vesper Libre',
+
+		'Work+Sans'=>'Work Sans',
 	);
 
 	return $fontselectlist;
@@ -201,8 +248,7 @@ function add_fonts_frontend(){
 		echo '<link href="https://fonts.googleapis.com/css?family='.$googlefontlist.'" rel="stylesheet">';
 		}
 
-		/* Aladin|Almendra+SC|Bubblegum+Sans|Cabin+Condensed|Caveat|Croissant+One|Cutive+Mono|Days+One|Droid+Sans+Mono|Happy+Monkey|Italiana|Julius+Sans+One|Lemon|Libre+Franklin|Lilita+One|Modak|Montez|Noto+Sans|Permanent+Marker|Quicksand|Racing+Sans+One|Ropa+Sans|Russo+One|Sanchez|Schoolbell|Vesper+Libre|Work+Sans
-		*/
+
 		echo '<style>/* fonts check */ '.$fontcode.'</style>';
 
 }
