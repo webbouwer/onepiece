@@ -55,50 +55,56 @@ function get_fonts_select(){
 
 	// available font selection
 	$fontselectlist = array(
-/*
-Aladin|Almendra+SC|Bubblegum+Sans|
-Cabin+Condensed|Caveat
-|Croissant+One|Cutive+Mono
-|Days+One|Droid+Sans+Mono|Happy+Monkey
-|Italiana|Julius+Sans+One|Lemon|
-Libre+Franklin|Lilita+One|Modak|Montez|Noto+Sans|Permanent+Marker|Quicksand|Racing+Sans+One|Ropa+Sans|Russo+One|Sanchez|Schoolbell|Vesper+Libre|Work+Sans
 
-*/
-
-
-		'Aladin'=>'Aladin',
-		'Almendra+SC'=>'Almendra SC',
-		'Bubblegum+Sans'=>'Bubblegum Sans',
-		'Cabin+Condensed'=>'Cabin Condensed',
-		'Caveat'=>'Caveat',
-		'Croissant+One'=>'Croissant One',
-		'Cutive+Mono'=>'Cutive Mono',
-		'Days+One'=>'Days One',
-		'Droid+Sans+Mono'=>'Droid Sans Mono',
-		'Happy+Monkey'=>'Happy Monkey',
-		'Italiana'=>'Italiana',
-		'Julius+Sans+One'=>'Julius Sans One',
-		'Lemon'=>'Lemon',
-		'Libre+Franklin'=>'Libre Franklin',
-		'Lilita+One'=>'Lilita One',
-		'Modak'=>'Modak',
-		'Montez'=>'Montez',
-		'Noto+Sans'=>'Noto Sans',
-		'Permanent+Marker'=>'Permanent+Marker',
-		'Quicksand'=>'Quicksand',
 
 
 		'default'=>'Use default (main) font',
 
+		'Aladin'=>'Aladin',
+
+		'Almendra+SC'=>'Almendra SC',
+
+		'Andada'=>'Andada',
+
 		'arial'=>'Arial',
+
+		'Bubblegum+Sans'=>'Bubblegum Sans',
+
+		'Cabin+Condensed'=>'Cabin Condensed',
+
+		'Cambo'=>'Cambo',
+
+		'Caveat'=>'Caveat',
 
 		'Chelsea+Market'=>'Chelsea Market',
 
 		'Courgette'=> 'Courgette',
 
+		'Croissant+One'=>'Croissant One',
+
+		'Cutive+Mono'=>'Cutive Mono',
+
+		'Days+One'=>'Days One',
+
+		'Droid+Sans+Mono'=>'Droid Sans Mono',
+
+		'Gochi+Hand'=>'Gochi Hand',
+
+		'Happy+Monkey'=>'Happy Monkey',
+
+		'Italiana'=>'Italiana',
+
 		'Journal__'=>'Journal',
 
+		'Julius+Sans+One'=>'Julius Sans One',
+
 		'Kelly+Slab'=> 'Kelly Slab',
+
+		'Lemon'=>'Lemon',
+
+		'Libre+Franklin'=>'Libre Franklin',
+
+		'Lilita+One'=>'Lilita One',
 
 		'Magra'=> 'Magra',
 
@@ -112,9 +118,19 @@ Libre+Franklin|Lilita+One|Modak|Montez|Noto+Sans|Permanent+Marker|Quicksand|Raci
 
 		'Michroma'=> 'Michroma',
 
+		'Modak'=>'Modak',
+
+		'Montez'=>'Montez',
+
+		'Noto+Sans'=>'Noto Sans',
+
+		'Permanent+Marker'=>'Permanent+Marker',
+
 		'Poiret+One'=> 'Poiret One',
 
 		'Pompiere'=> 'Pompiere',
+
+		'Quicksand'=>'Quicksand',
 
 		'Racing+Sans+One'=>'Racing Sans One',
 
@@ -127,6 +143,10 @@ Libre+Franklin|Lilita+One|Modak|Montez|Noto+Sans|Permanent+Marker|Quicksand|Raci
 		'Rock+Salt'=> 'Rock Salt',
 
 		'Ropa+Sans'=>'Ropa Sans',
+
+		'Rubik+Mono+One'=>'Rubik Mono One',
+
+		'Rubik+One'=>'Rubik One',
 
 		'Russo+One'=>'Russo One',
 

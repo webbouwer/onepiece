@@ -810,15 +810,15 @@ text-align:center; /* available on small screens */
 }
 
 #maincontent .follow-post.has-post-thumbnail .imgalign-left .post-title,
-#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content,
-#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-excerpt
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content
+/*#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-excerpt*/
 {
     width:68%;
     float:right;
 }
 #maincontent .follow-post.has-post-thumbnail .imgalign-right .post-title,
-#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content,
-#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-excerpt
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content
+/*#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-excerpt*/
 {
     width:68%;
     float:left;
