@@ -348,7 +348,7 @@ class Menu_Image_Plugin {
 		 */
 		$desc		 = ''; // Menu item description.
 		if(!empty($item->description) && $position != 'hide'){
-		$desc		 = "<br/><span class='menu-image-description'>".$item->description."</span>";
+		$desc		 = "<span class='menu-image-description'>".$item->description."</span>";
 		}
 		
 		$none		 = ''; // Sugar.
@@ -367,13 +367,13 @@ class Menu_Image_Plugin {
 		switch ( $position ) {
 			case 'hide':
 			case 'before':
-				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc.'</span>', $image );
+				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc, $image.'</span>' );
 			case 'above':
-				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc.'</span>', $image );
+				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc, $image.'</span>' );
 				break;
 			case 'after':
 			default:
-				$item_args = array( $image, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc.'</span>', $none, $none);
+				$item_args = array( '<span class="menu-image-textwrap text-'.$position.'">'.$image, $link, $desc.'</span>', $none, $none);
 				break;
 		}
 		

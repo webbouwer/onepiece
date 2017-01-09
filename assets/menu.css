@@ -58,11 +58,11 @@ text-align:left; /* should be replaced with RTL option */
 }
 .menu-item a.menu-image-title-after.menu-image-not-hovered img,
 .menu-item a.menu-image-hovered.menu-image-title-after .menu-image-hover-wrapper {
-    padding-right: 10px;
+    padding-right: 5px;
 }
 .menu-item a.menu-image-title-before.menu-image-not-hovered img,
 .menu-item a.menu-image-hovered.menu-image-title-before .menu-image-hover-wrapper {
-    padding-left: 10px;
+    padding-left: 5px;
 }
 .menu-item a.menu-image-title-above,
 .menu-item a.menu-image-title-below {
@@ -112,13 +112,14 @@ display:inline-block;
 /* title text wrapper */
 .menu-image-textwrap
 {
-display:inline-block;
 }
 .menu-image-textwrap .menu-image-title
 {
 }
 .menu-image-textwrap .menu-image-description
 {
+display: block;
+font-size:0.8em;
 }
 
 .text-before .menu-image-textwrap
