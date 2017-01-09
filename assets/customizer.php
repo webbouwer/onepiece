@@ -1890,7 +1890,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 		// FONTS - Page / default h1 title (type/size)
 		$wp_customize->add_setting( 'onepiece_style_fonts_pagetitle' , array(
-		'default' => 'arial',
+		'default' => 'default',
     	//'capability' => 'edit_theme_options',
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	));
@@ -1905,7 +1905,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 		// FONTS - List/Category post title h2 (type/size)
 		$wp_customize->add_setting( 'onepiece_style_fonts_postlisttitle' , array(
-		'default' => 'arial',
+		'default' => 'default',
     	//'capability' => 'edit_theme_options',
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	));
@@ -1920,7 +1920,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 		// FONTS - Post title h1 (type/size)
 		$wp_customize->add_setting( 'onepiece_style_fonts_posttitle' , array(
-		'default' => 'arial',
+		'default' => 'default',
     	//'capability' => 'edit_theme_options',
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	));
@@ -1935,7 +1935,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 		// FONTS -Widget title h3 (type/size)
 		$wp_customize->add_setting( 'onepiece_style_fonts_widgettitle' , array(
-		'default' => 'arial',
+		'default' => 'default',
     	//'capability' => 'edit_theme_options',
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	));
@@ -1950,7 +1950,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 		// FONTS -Widget list item title h4 (type/size)
 		$wp_customize->add_setting( 'onepiece_style_fonts_widgetitemtitle' , array(
-		'default' => 'arial',
+		'default' => 'default',
     	//'capability' => 'edit_theme_options',
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	));

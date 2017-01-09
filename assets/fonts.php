@@ -166,7 +166,7 @@ function add_fonts_frontend(){
 
 		if( get_theme_mod('onepiece_style_fonts_pagetitle' ) != 'default' ){
 		$fontkey = get_theme_mod('onepiece_style_fonts_pagetitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.page-title h1, .category-titlebar h1, #childpagecontent .subtitle h3');
+		$fontcode .= generate_font_css($fontkey,'.page-title h1, .category-titlebar h1, .gallery-titlebar h1, #childpagecontent .subtitle h3');
 		if( strpos($fontkey, '__') !== true ){
 		$googlefontlist .= '|'.$fontkey;
 		}
@@ -180,7 +180,7 @@ function add_fonts_frontend(){
 		}
 		if( get_theme_mod('onepiece_style_fonts_postlisttitle' ) != 'default' ){
 		$fontkey = get_theme_mod('onepiece_style_fonts_postlisttitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.post-title h2');
+		$fontcode .= generate_font_css($fontkey,'.post-title h2, .titlebox h3');
 		if( strpos($fontkey, '__') !== true ){
 		$googlefontlist .= '|'.$fontkey;
 		}

@@ -653,6 +653,11 @@ li.page_item
 {
 display:inline-block;
 }
+/* if collapsable */
+nav.minisize ul.menu li
+{
+display:block !important;
+}
 
 
 /*
