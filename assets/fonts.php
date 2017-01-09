@@ -3,51 +3,11 @@
  * Fonts for Onepiece theme
  */
 
-
 /*
-
 Devhowto:
-
-
 https://www.google.com/webfonts
 http://www.wpexplorer.com/google-fonts-wordpress/
-
-
-function myprefix_enqueue_google_fonts() {
-	wp_enqueue_style( 'roboto', 'https://fonts.googleapis.com/css?family=Roboto' );
-}
-add_action( 'wp_enqueue_scripts', 'myprefix_enqueue_google_fonts' );
-
-
-body { font-family: "Roboto"; } (main font)
-.page-tile h1 (page title)
-.post-tile h1 (single post)
-.post-tile h2 (post in list)
-.widgetpadding h3 (widget titlebar)
-/*
- * Main font
- */
-
-
-/*
- * Page / default h1 title (type/size)
- */
-
-/*
- * List/Category post title h2 (type/size)
- */
-
-/*
- * Post title h1 (type/size)
- */
-
-/*
- * Widget title h3 (type/size)
- */
-
-/*
- * Widget list item title h4 (type/size)
- */
+*/
 
 
 
@@ -70,27 +30,21 @@ function get_fonts_select(){
 
 		'Bubblegum+Sans'=>'Bubblegum Sans',
 
-		'Cabin+Condensed'=>'Cabin Condensed',
-
-		'Cambo'=>'Cambo',
-
-		'Caveat'=>'Caveat',
-
 		'Chelsea+Market'=>'Chelsea Market',
+
+		'ChunkFive__'=> 'ChunkFive',
 
 		'Courgette'=> 'Courgette',
 
 		'Croissant+One'=>'Croissant One',
 
-		'Cutive+Mono'=>'Cutive Mono',
-
-		'Days+One'=>'Days One',
+		'decade__'=>'Decade',
 
 		'Droid+Sans+Mono'=>'Droid Sans Mono',
 
 		'Gochi+Hand'=>'Gochi Hand',
 
-		'Happy+Monkey'=>'Happy Monkey',
+		'GoodDog__'=>'Good Dog',
 
 		'Italiana'=>'Italiana',
 
@@ -116,15 +70,9 @@ function get_fonts_select(){
 
 		'Marvel'=> 'Marvel',
 
-		'Michroma'=> 'Michroma',
-
-		'Modak'=>'Modak',
-
-		'Montez'=>'Montez',
-
-		'Noto+Sans'=>'Noto Sans',
-
 		'Permanent+Marker'=>'Permanent+Marker',
+
+		'playbill'=>'Playbill',
 
 		'Poiret+One'=> 'Poiret One',
 
@@ -149,6 +97,10 @@ function get_fonts_select(){
 		'Rubik+One'=>'Rubik One',
 
 		'Russo+One'=>'Russo One',
+
+		'rockwell__'=>'Rockwell',
+
+		'Rockwell_Extra_Bold__'=>'Rockwell Extra Bold',
 
 		'Rosario'=>'Rosario',
 
@@ -231,6 +183,7 @@ function add_fonts_frontend(){
 		$googlefontlist .= $fontkey_default;
 		}
 
+		// page / default / gallery / subtitles
 		if( get_theme_mod('onepiece_style_fonts_pagetitle' ) != 'default' ){
 		$fontkey = get_theme_mod('onepiece_style_fonts_pagetitle', $fontkey_default );
 		$fontcode .= generate_font_css($fontkey,'.page-title h1, .category-titlebar h1, .gallery-titlebar h1, #childpagecontent .subtitle h3');
@@ -238,13 +191,8 @@ function add_fonts_frontend(){
 		$googlefontlist .= '|'.$fontkey;
 		}
 		}
-		if( get_theme_mod('onepiece_style_fonts_posttitle' ) != 'default' ){
-		$fontkey = get_theme_mod('onepiece_style_fonts_posttitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.post-title h1');
-		if( strpos($fontkey, '__') !== true ){
-		$googlefontlist .= '|'.$fontkey;
-		}
-		}
+
+	    // list titles posts
 		if( get_theme_mod('onepiece_style_fonts_postlisttitle' ) != 'default' ){
 		$fontkey = get_theme_mod('onepiece_style_fonts_postlisttitle', $fontkey_default );
 		$fontcode .= generate_font_css($fontkey,'.post-title h2, .titlebox h3');
@@ -252,10 +200,24 @@ function add_fonts_frontend(){
 		$googlefontlist .= '|'.$fontkey;
 		}
 		}
+		// single post titles
+		if( get_theme_mod('onepiece_style_fonts_posttitle' ) != 'default' ){
+		$fontkey = get_theme_mod('onepiece_style_fonts_posttitle', $fontkey_default );
+		$fontcode .= generate_font_css($fontkey,'.post-title h1');
+		if( strpos($fontkey, '__') !== true ){
+		$googlefontlist .= '|'.$fontkey;
+		}
+		}
+
+		// Widget title
 		if( get_theme_mod('onepiece_style_fonts_widgettitle' ) != 'default' ){
 		$fontkey = get_theme_mod('onepiece_style_fonts_widgettitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.widgetpadding h3');
+		$fontcode .= generate_font_css($fontkey,'.widgetpadding h3,.sidebarpadding h3');
+		if( strpos($fontkey, '__') !== true ){
+		$googlefontlist .= '|'.$fontkey;
 		}
+		}
+
 		if( get_theme_mod('onepiece_style_fonts_widgetitemtitle' ) != 'default' ){
 		$fontkey = get_theme_mod('onepiece_style_fonts_widgetitemtitle', $fontkey_default );
 		$fontcode .= generate_font_css($fontkey,'.widgetpadding ul li h4');
@@ -269,7 +231,7 @@ function add_fonts_frontend(){
 		}
 
 
-		echo '<style>/* fonts check */ '.$fontcode.'</style>';
+		echo '<style>'.$fontcode.'</style>';
 
 }
 
