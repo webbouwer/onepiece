@@ -11,7 +11,6 @@ text-align:center;
 padding:0;
 }
 
-
 ul.nav-menu li,
 ul.menu li
 {
@@ -26,9 +25,8 @@ display:block;
 }
 .menu-item a .nav-item-box
 {
-display:inline-block;
+display:block;
 text-align:left; /* should be replaced with RTL option */
-
 }
 
 
@@ -102,7 +100,7 @@ display:inline-block;
 .text-before img.menu-image,
 .text-before .menu-image-hover-wrapper
 {
-/*float:right;*/
+float:right;
 }
 .text-after img.menu-image,
 .text-after .menu-image-hover-wrapper
@@ -115,23 +113,26 @@ float:left;
 .menu-image-textwrap
 {
 }
+.menu-image-description
+{
+	display:block;
+	clear: both;
+}
+
 .menu-image-textwrap .menu-image-title
 {
 }
 .menu-image-textwrap .menu-image-description
 {
-display: block;
 }
 
 .text-before .menu-image-title,
 .text-before .menu-image-description
-{
-float:left;
 }
+
+.text-after .menu-image-title,
 .text-after .menu-image-description
 {
-float:right;
-
 }
 
 
