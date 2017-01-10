@@ -737,6 +737,12 @@ padding:4px 2px;
     margin:0 auto;
 }    
 
+
+#copyright-textbox
+{
+	font-size:0.6em;
+}
+
 #copyright-textbox.center
 {
 	width:100%;
@@ -824,37 +830,7 @@ text-align:center; /* available on small screens */
     float:left;
 }
 
-.widgetpadding	.item-excerpt img
-{
-height:auto;
-}
 
-.widgetpadding	.item-excerpt img.align-center
-{
-width:100%;
-}
-.widgetpadding	.item-excerpt img.align-left,
-.widgetpadding	.item-excerpt img.align-right
-{
-width:36%;
-vertical-align: text-top;
-}
-.widgetpadding	.item-excerpt img.align-left
-{
-float:left;
-margin-right:4%;
-}
-.widgetpadding	.item-excerpt img.align-right
-{
-float:right;
-margin-left:4%;
-}
-
-.widgetpadding	.item-excerpt img,
-.widgetpadding .item-excerpt p
-{
-display: inline;
-}
 
 
 
@@ -879,6 +855,12 @@ display: inline;
 	text-align:center;
 }
 
+.post-date,
+.post-author
+{
+	font-size:0.8em;
+}
+
 .post-content p
 {
 display:block;
@@ -891,6 +873,68 @@ width:auto;
 .post-content .orderbox
 {
 }
+
+
+
+
+/******************** POSTLIST WIDGET (MEDIUM) ********************/
+/* overwrites post-loop style properties */
+.widget_onepiece_postlist_widget
+{
+}
+.widgetpadding	.item-excerpt img,
+.sidebarpadding .item-excerpt img
+{
+height:auto;
+}
+
+.widgetpadding	.item-excerpt img.align-center,
+.sidebarpadding .item-excerpt img.align-center
+{
+width:100%;
+}
+.widgetpadding	.item-excerpt img.align-left,
+.widgetpadding	.item-excerpt img.align-right,
+.sidebarpadding .item-excerpt img.align-left,
+.sidebarpadding .item-excerpt img.align-right
+{
+width:36%;
+vertical-align: text-top;
+}
+.widgetpadding	.item-excerpt img.align-left,
+.sidebarpadding .item-excerpt img.align-left
+{
+float:left;
+margin-right:4%;
+}
+.widgetpadding	.item-excerpt img.align-right,
+.sidebarpadding .item-excerpt img.align-right
+{
+float:right;
+margin-left:4%;
+}
+
+.widgetpadding	.item-excerpt img,
+.sidebarpadding .item-excerpt img
+{
+display: inline;
+}
+
+.widgetpadding ul li div h4,
+.sidebarpadding ul li div h4
+{
+font-size:1.1em;
+}
+
+.widgetpadding .item-excerpt p,
+.sidebarpadding .item-excerpt p
+{
+display: inline;
+font-size:0.8em;
+}
+
+
+
 
 
 /******************** GALLERY THEME (MEDIUM)  ********************/

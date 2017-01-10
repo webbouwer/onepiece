@@ -492,31 +492,31 @@ class onepiece_share_widget extends WP_Widget {
 
 		echo '<ul class="sharebox">';
 
-		echo '<li><a href="http://www.linkedin.com/shareArticle?mini=true&title='.$titletext.'&summary='.$desctext.'&source=http://www.webdesigndenhaag.net&url='.$siteurl.'" target="_blank">Linkedin</a></li>';
+		echo '<li style="display:inline-block;"><a href="http://www.linkedin.com/shareArticle?mini=true&title='.$titletext.'&summary='.$desctext.'&source=http://www.webdesigndenhaag.net&url='.$siteurl.'" target="_blank">Linkedin</a></li>';
 
-		echo '<li><a href="https://plus.google.com/share?url='.$siteurl.'" target="_blank">Google+</a></li>';
+		echo '<li style="display:inline-block;"><a href="https://plus.google.com/share?url='.$siteurl.'" target="_blank">Google+</a></li>';
 
-		echo '<li><a href="https://twitter.com/intent/tweet?url='.$siteurl.'&text='.$titletext.' - '.$desctext.'&via='.get_bloginfo('name').'" target="_blank">Twitter</a></li>';
+		echo '<li style="display:inline-block;"><a href="https://twitter.com/intent/tweet?url='.$siteurl.'&text='.$titletext.' - '.$desctext.'&via='.get_bloginfo('name').'" target="_blank">Twitter</a></li>';
 
-		echo '<li><a href="https://www.facebook.com/sharer/sharer.php?u='.$siteurl.'" target="_blank">Facebook</a></li>';
+		echo '<li style="display:inline-block;"><a href="https://www.facebook.com/sharer/sharer.php?u='.$siteurl.'" target="_blank">Facebook</a></li>';
 
-		echo '<li><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Whatsapp</a></li>';
+		echo '<li style="display:inline-block;"><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Whatsapp</a></li>';
 
-		echo '<li><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Instagram</a></li>';
+		echo '<li style="display:inline-block;"><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Instagram</a></li>';
 
-		echo '<li><a href="http://pinterest.com/pin/create/button/?url='.$siteurl.'&media={'.$imageurl.'}&description='.$titletext.' - '.$desctext.'" target="_blank">Pinterest</a></li>';
+		echo '<li style="display:inline-block;"><a href="http://pinterest.com/pin/create/button/?url='.$siteurl.'&media={'.$imageurl.'}&description='.$titletext.' - '.$desctext.'" target="_blank">Pinterest</a></li>';
 
-		echo '<li><a href="mailto:?Subject='.$titletext.'&Body='.$bodytext.'" target="_blank">Email</a></li>';
+		echo '<li style="display:inline-block;"><a href="mailto:?Subject='.$titletext.'&Body='.$bodytext.'" target="_blank">Email</a></li>';
 
 
 		/*
-		echo '<li><a href="http://www.tumblr.com/share/link?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Tumblr</a></li>';
+		echo '<li style="display:inline-block;"><a href="http://www.tumblr.com/share/link?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Tumblr</a></li>';
 
-		echo '<li><a href="http://reddit.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Reddit</a></li>';
+		echo '<li style="display:inline-block;"><a href="http://reddit.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Reddit</a></li>';
 
-		echo '<li><a href="http://www.stumbleupon.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">StumbleUpon</a></li>';
+		echo '<li style="display:inline-block;"><a href="http://www.stumbleupon.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">StumbleUpon</a></li>';
 
-		echo '<li><a href="http://www.digg.com/submit?url='.$siteurl.'" target="_blank">Digg</a></li>';
+		echo '<li style="display:inline-block;"><a href="http://www.digg.com/submit?url='.$siteurl.'" target="_blank">Digg</a></li>';
 		*/
 		echo '</ul>';
 
