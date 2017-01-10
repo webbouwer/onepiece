@@ -102,10 +102,12 @@ display:inline-block;
 .text-before img.menu-image,
 .text-before .menu-image-hover-wrapper
 {
+/*float:right;*/
 }
 .text-after img.menu-image,
 .text-after .menu-image-hover-wrapper
 {
+float:left;
 }
 
 
@@ -119,18 +121,18 @@ display:inline-block;
 .menu-image-textwrap .menu-image-description
 {
 display: block;
-font-size:0.8em;
 }
 
-.text-before .menu-image-textwrap
+.text-before .menu-image-title,
+.text-before .menu-image-description
 {
 float:left;
 }
-.text-after .menu-image-textwrap
+.text-after .menu-image-description
 {
 float:right;
-}
 
+}
 
 
 

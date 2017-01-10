@@ -356,18 +356,23 @@ class Menu_Image_Plugin {
 		
 		
 		/** 
-		 * Modified Oddsized 20161007: 
+		 * Modified Oddsized 20170109:
 		 *
-		 * Added order in before case 
-		 * Removed most original html (moved in variable strings)
-		 * Added div textbox 
-		 * original: none
+		 * =Moved span.menu-image-textwrap in outside order
+		 *
+ 		 * Modified Oddsized 20161007:
+		 *
+		 * +Added order in before case
+		 * -Removed most original html (moved in variable strings)
+		 * +Added div textbox description
 		 *
 		 */
+
 		switch ( $position ) {
+
 			case 'hide':
 			case 'before':
-				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc, $image.'</span>' );
+				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$image, $link, $desc.'</span>' );
 			case 'above':
 				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc, $image.'</span>' );
 				break;
@@ -377,8 +382,7 @@ class Menu_Image_Plugin {
 				break;
 		}
 		
-		
-		
+
 		/** 
 		 * Modified Oddsized 20161007: 
 		 *
