@@ -373,6 +373,7 @@ class Menu_Image_Plugin {
 			case 'hide':
 			case 'before':
 				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$image, $link, $desc.'</span>' );
+				break;
 			case 'above':
 				$item_args = array( $none, $none, '<span class="menu-image-textwrap text-'.$position.'">'.$link, $desc, $image.'</span>' );
 				break;
