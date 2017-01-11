@@ -46,6 +46,8 @@ function get_fonts_select(){
 
 		'GoodDog__'=>'Good Dog',
 
+		'HelveticaNeue__'=>'Helvetica Neue',
+
 		'Italiana'=>'Italiana',
 
 		'Journal__'=>'Journal',
