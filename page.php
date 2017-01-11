@@ -336,16 +336,13 @@ if( isset($childpagedisplay) && $childpagedisplay != 'none'){
 			
 			
 			$content .= apply_filters('the_content',  $maintext ); // add filter on full content
-			
-            if($childpagedisplay == 'slddwn' && !empty($pieces['extended']) ){ // inline readmore
-			$content .= '<a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.__('Read more', 'onepiece').'</a>'; 
-			}
+
 			$content .= '</div>';
 			
 			if($childpagedisplay != 'bloc'){
             $content .= '<div class="childcontent moretextbox">'.apply_filters('the_content',$pieces['extended']).'</div>';
 			}
-            if($childpagedisplay != 'fade' && $childpagedisplay != 'slddwn' && !empty($pieces['extended'])){
+            if($childpagedisplay != 'fade' && !empty($pieces['extended'])){ // && $childpagedisplay != 'slddwn'
             $content .= '<a class="readmore" href="'.get_permalink($page->ID).'" target="_self">'.__('Read more', 'onepiece').'</a>';
             }
 			$content .= '</li>';
