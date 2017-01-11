@@ -48,6 +48,8 @@ function get_fonts_select(){
 
 		'HelveticaNeue__'=>'Helvetica Neue',
 
+		'KGBlockedOff'=>'KGB Blocked off',
+
 		'Italiana'=>'Italiana',
 
 		'Journal__'=>'Journal',
@@ -55,6 +57,8 @@ function get_fonts_select(){
 		'Julius+Sans+One'=>'Julius Sans One',
 
 		'Kelly+Slab'=> 'Kelly Slab',
+
+		'KGBlockedOff'=>'KGB Blocked off',
 
 		'Lemon'=>'Lemon',
 
