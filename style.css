@@ -51,6 +51,11 @@ line-height:0;
 
 
 /* image defaults */
+ul li a
+{
+text-decoration: none;
+}
+
 a img
 {
 border:none;
@@ -429,8 +434,8 @@ span.edit-link a
 display:inline-block;
 font-size:0.8em;
 color:white;
-background-color:blue;
-padding:4px;
+background-color:green;
+padding:1px 2px;
 }
 
 
