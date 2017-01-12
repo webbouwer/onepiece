@@ -447,17 +447,44 @@ add_action( 'widgets_init', 'onepiece_load_widget' );
 class onepiece_share_widget extends WP_Widget {
 
 
+
 	function __construct() {
+
 		parent::__construct(
 			'onepiece_widget', // Base ID
 			__('Onepiece Share Widget', 'onepiece'), // Widget name and description in UI
 			array( 'description' => __( 'Display your favourite share buttons', 'onepiece' ), )
 		);
+
 	}
 
 
 	// Widget front-end
 	public function widget( $args, $instance ) {
+
+
+		$clients = array(
+
+		"google" => array(
+			"q_web" => "https://plus.google.com/share",
+			"q_url" => "url=",
+			//"q_txt" => "text=",
+			//"q_img" => "media=",
+			//"q_via" => "via=",
+			//"q_dta" => "data-action="
+		),
+		"twitter" => array(
+			"q_web" => "https://twitter.com/intent/tweet",
+			"q_url" => "url=",
+			"q_txt" => "text=",
+			//"q_img" => "media=",
+			"q_via" => "via=",
+			//"q_dta" => "data-action="
+		),
+		);
+
+
+
 
 
 		$itemcount = 3;
@@ -480,16 +507,23 @@ class onepiece_share_widget extends WP_Widget {
 		$siteurl = site_url();
 
 
-
 		/*
+
+		plus.google.com
+		twitter.com
+		facebook.com
+		whatsapp
+		pinterest.com
+
+
 		option:
-		  - custom share link (or current page)
+		  - select link/page to share (select page)
 		  - display text (name)
 		  - display icons (position)
-		  - set default share image
+		  - set default image to share
+
+
 		*/
-
-
 		echo '<ul class="sharebox">';
 
 		echo '<li style="display:inline-block;"><a href="http://www.linkedin.com/shareArticle?mini=true&title='.$titletext.'&summary='.$desctext.'&source=http://www.webdesigndenhaag.net&url='.$siteurl.'" target="_blank">Linkedin</a></li>';
@@ -502,11 +536,16 @@ class onepiece_share_widget extends WP_Widget {
 
 		echo '<li style="display:inline-block;"><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Whatsapp</a></li>';
 
-		echo '<li style="display:inline-block;"><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Instagram</a></li>';
-
 		echo '<li style="display:inline-block;"><a href="http://pinterest.com/pin/create/button/?url='.$siteurl.'&media={'.$imageurl.'}&description='.$titletext.' - '.$desctext.'" target="_blank">Pinterest</a></li>';
 
 		echo '<li style="display:inline-block;"><a href="mailto:?Subject='.$titletext.'&Body='.$bodytext.'" target="_blank">Email</a></li>';
+
+
+
+
+
+
+
 
 
 		/*
@@ -517,6 +556,10 @@ class onepiece_share_widget extends WP_Widget {
 		echo '<li style="display:inline-block;"><a href="http://www.stumbleupon.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">StumbleUpon</a></li>';
 
 		echo '<li style="display:inline-block;"><a href="http://www.digg.com/submit?url='.$siteurl.'" target="_blank">Digg</a></li>';
+
+
+
+		echo '<li style="display:inline-block;"><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Instagram</a></li>'; // ?
 		*/
 		echo '</ul>';
 
@@ -615,6 +658,13 @@ echo '</ul>';
 		*/
 
 		echo '!Widget in development!';
+
+
+		// available links/networks to share with
+
+
+
+
 
 
 		if ( isset( $instance[ 'title' ] ) ) {

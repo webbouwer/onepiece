@@ -17,7 +17,6 @@ function get_fonts_select(){
 	$fontselectlist = array(
 
 
-
 		'default'=>'Use default (main) font',
 
 		'Aladin'=>'Aladin',
@@ -27,6 +26,8 @@ function get_fonts_select(){
 		'Andada'=>'Andada',
 
 		'arial'=>'Arial',
+
+		//'Avantgarde__'=>'Avant Garde',
 
 		'Bubblegum+Sans'=>'Bubblegum Sans',
 
@@ -47,6 +48,8 @@ function get_fonts_select(){
 		'GoodDog__'=>'Good Dog',
 
 		'HelveticaNeue__'=>'Helvetica Neue',
+
+		//'HelveticaNeueThin__'=>'Helvetica Neue Thin',
 
 		'Italiana'=>'Italiana',
 
