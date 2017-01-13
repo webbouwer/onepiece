@@ -28,7 +28,7 @@ $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
 // default SEO
 $seodesc = get_theme_mod('onepiece_identity_panel_seo_description', 'Check out this cool website!');
 $seokeywords = get_theme_mod('onepiece_identity_panel_seo_keywords', 'cool, website, webdesign');
-
+$seotrackcode = get_theme_mod('onepiece_identity_panel_seo_trackcode', '');
 
 
 /**
@@ -1759,7 +1759,9 @@ add_fonts_frontend();
 
 
 echo '</head><body '; body_class(); 
-echo '><div id="pagecontainer"';
+echo '>';
+echo $seotrackcode;
+echo '<div id="pagecontainer"';
 if($mobile){
 echo ' class="mobile">';
 }else{

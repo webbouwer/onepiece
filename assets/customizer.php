@@ -602,13 +602,19 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'textarea',
  	    		'description'    => __( 'Description text for SEO. Tune it to your keywords.', 'onepiece' ),
     	)));
-    	
 
 
-
-
-
-
+		$wp_customize->add_setting( 'onepiece_identity_panel_seo_trackcode' , array(
+		'default' => '',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_panel_seo_trackcode', array(
+            	'label'          => __( 'Analytics Code', 'onepiece' ),
+            	'section'        => 'onepiece_identity_panel_seo',
+            	'settings'       => 'onepiece_identity_panel_seo_trackcode',
+            	'type'           => 'textarea',
+ 	    		'description'    => __( 'Analytics Javascript Codes (ie. google js tracking). The code is place right after the body open tag.', 'onepiece' ),
+    	)));
 
 
 		
