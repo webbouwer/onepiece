@@ -1,7 +1,10 @@
 <?php
 /**
  * Onepiece Share Widget
+ */
 
+
+/*
 class onepiece_share_widget extends WP_Widget {
 
 

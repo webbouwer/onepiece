@@ -5,16 +5,17 @@
  * Include more functions
  */
 require get_template_directory() . '/assets/mobile_detect.php';
-require get_template_directory() . '/assets/fonts.php'; // customizer fonts
-require get_template_directory() . '/assets/colors.php'; // customizer colors
-require get_template_directory() . '/assets/customizer.php'; // customizer functions
-require get_template_directory() . '/assets/metaboxes.php'; // metabox functions
-require get_template_directory() . '/assets/menu.php'; // metabox functions
-require get_template_directory() . '/assets/slider.php'; // metabox functions
-require get_template_directory() . '/assets/userlogin.php'; // login functions
-require get_template_directory() . '/assets/widgets-onepiece.php'; // onepiece widget functions
-require get_template_directory() . '/assets/widgets-sharebox.php';
-require get_template_directory() . '/assets/ajax.php'; // ajax functions
+require get_template_directory() . '/assets/clients.php'; 				// web companies / networks
+require get_template_directory() . '/assets/fonts.php'; 				// customizer fonts
+require get_template_directory() . '/assets/colors.php'; 				// customizer colors
+require get_template_directory() . '/assets/customizer.php'; 			// customizer functions
+require get_template_directory() . '/assets/metaboxes.php'; 			// metabox functions
+require get_template_directory() . '/assets/menu.php'; 					// metabox functions
+require get_template_directory() . '/assets/slider.php'; 				// metabox functions
+require get_template_directory() . '/assets/userlogin.php'; 			// login functions
+require get_template_directory() . '/assets/widgets-onepiece.php'; 		// onepiece widget
+//require get_template_directory() . '/assets/widgets-sharebox.php'; 	// onepiece widgets
+require get_template_directory() . '/assets/ajax.php'; 					// ajax functions
 
 
 
