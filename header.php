@@ -55,7 +55,6 @@ $slidercat = get_post_meta(get_the_ID(), "pagetheme_slide_selectbox", true);
 $sliderheight = get_post_meta(get_the_ID(), "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true);
 
-
 /**
  *
  * headercontent container
@@ -408,4 +407,7 @@ echo '<div class="clr"></div></nav></div></div>';
 
 
 echo '<div class="clr"></div></div>';
+
+
+
 ?>

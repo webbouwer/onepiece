@@ -4,6 +4,17 @@
  */
 
 
+
+
+
+
+
+
+
+
+
+
+
 /*
 class onepiece_share_widget extends WP_Widget {
 
@@ -104,6 +115,8 @@ class onepiece_share_widget extends WP_Widget {
 
 		$widget_ops = array('classname' => 'onepiece_share_widget', 'description' => __('Display your favourite share buttons'));
     	$control_ops = array('clients' => $clients);
+
+
     	parent::__construct('onepiece_share_widget', __('Share buttons'), $widget_ops, $control_ops);
 
 		//parent::__construct( 'onepiece_share_widget', // Base ID
@@ -120,7 +133,7 @@ class onepiece_share_widget extends WP_Widget {
 
 		extract( $args );
 
-    	$clients   = ($instance['clients']);
+    	$clients   = $instance['clients'];
 
 		// Widget Title
 		$title = apply_filters( 'widget_title', $instance['title'] );
