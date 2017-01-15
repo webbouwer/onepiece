@@ -1,7 +1,188 @@
 <?php
 /**
  * Onepiece Share Widget
+ *
+ * Display share/follow 'social' buttons
+ *
+ * Based on custom webentities data array (https://github.com/oddsized/webentities)
+ * See first entity (email) for info
  */
+
+
+// Create the global entity array to use
+// (might move to functions.php or retrieve this from github production branch
+// if not available in other themes, contruct the array here)
+function onepiece_global_share_entities() {
+
+	/* contruct the global array */
+    global $onepiece_share_entities;
+    $onepiece_share_entities = array(
+
+		/* Update list on github */
+
+		"email" => array(
+			'company' => array(
+				'name' => 'Email',
+			),
+			'share' => array(
+				"l_name"=> "Email",
+				"l_icon"=> 'fa:envelope-square', // testing font awsome https://icons8.com/welovesvg
+				"l_url" => "mailto:?",
+				//"l_attr" => 'data-action=', //unused properties kept in place for future changes
+
+				"s_url" => "Body=",
+				"s_ttl" => "Subject=",
+				//"s_txt" => "desc=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		),
+		"google" => array(
+			'company' => array(
+				'name' => 'Google',
+			),
+			'share' => array(
+				"l_name"=> "Google+", 							// link name
+				"l_icon"=> 'fa:google-plus-square', 					// link icon
+				"l_url" => "https://plus.google.com/share?", 	// link url
+				//"l_attr" => "data-action=", 					// link data-action attribute
+
+				"s_url" => "url=", 								// share url
+				//"s_txt" => "text=", 							// share description
+				//"s_ttl" => "title=", 							// share title
+				//"s_img" => "media=", 							// share image
+				//"s_via" => "via=", 							// share via/source
+			),
+			//'api' => Array(),
+		),
+
+		"linkedin" => array(
+			'company' => array(
+				'name' => 'LinkedIn',
+			),
+			'share' => array(
+				"l_name"=> "Linkedin",
+				"l_icon"=> 'fa:linkedin-square',
+				"l_url" => "http://www.linkedin.com/shareArticle?mini=true&",
+				//"l_attr" => "data-action="
+
+				"s_url" => "url=",
+				"s_ttl" => "title=",
+				"s_txt" => "summary=",
+				//"s_img" => "media=",
+				"s_via" => "source=",
+			),
+		),
+		"twitter" => array(
+			'company' => array(
+					'name' => 'Twitter',
+			),
+			'share' => array(
+				"l_name"=> "Twitter",
+				"l_icon"=> 'fa:twitter-square',
+				"l_url" => "https://twitter.com/intent/tweet?",
+				//"l_attr" => "data-action=",
+				"s_url" => "url=",
+				//"s_ttl" => "",
+				"s_txt" => "text=",
+				//"s_img" => "media=",
+				"s_via" => "via=",
+			),
+		),
+		"facebook" => array(
+			'company' => array(
+					'name' => 'Facebook',
+			),
+			'share' => array(
+				"l_name"=> "Facebook",
+				"l_icon"=> 'fa:facebook-square',
+				"l_url" => "https://www.facebook.com/sharer/sharer.php?",
+				//"l_attr" => "data-action=",
+
+				"s_url" => "u=",
+				"s_ttl" => "title=",
+				//"s_txt" => "text=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		),
+		"whatsapp" => array(
+			'company' => array(
+					'name' => 'Whatsapp',
+			),
+			'share' => array(
+				"l_name"=> "Whatsapp",
+				"l_icon"=> 'fa:whatsapp',
+				"l_url" => "whatsapp://send?",
+				"l_attr" => 'data-action="share/whatsapp/share"',
+
+				"s_url" => "text=",
+				//"s_ttl" => "",
+				//"s_txt" => "text=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		),
+		"pinterest" => array(
+			'company' => array(
+					'name' => 'Pinterest',
+			),
+			'share' => array(
+				"l_name"=> "Pinterest",
+				"l_icon"=> 'fa:pinterest-square',
+				"l_url" => "http://pinterest.com/pin/create/bookmarklet/?",
+				//"l_attr" => 'data-action=',
+
+				"s_url" => "url=",
+				"s_ttl" => "description=",
+				//"s_txt" => "description=",
+				"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		),
+		"tumblr" => array(
+			'company' => array(
+				'name' => 'Tumblr',
+			),
+			'share' => array(
+				"l_name"=> "Tumblr",
+				"l_icon"=> 'fa:tumblr-quare',
+				"l_url" => "http://www.tumblr.com/share?v=3&",
+				//"l_attr" => 'data-action=',
+
+				"s_url" => "u=",
+				"s_ttl" => "t=",
+				//"s_txt" => "desc=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		),
+
+		'slashdot' => array(), // http://slashdot.org/bookmark.pl?url=[URL]&title=[TITLE]
+		'technorati' => array(),// http://technorati.com/faves?add=[URL]&title=[TITLE]
+		'tapiture' => array(), // http://tapiture.com/bookmarklet/image?img_src=[IMAGE]&page_url=[URL]&page_title=[TITLE]&img_title=[TITLE]&img_width=[IMG WIDTH]img_height=[IMG HEIGHT]
+		'reddit' => array(), // http://www.reddit.com/submit?url=[URL]&title=[TITLE]
+		'stumbleupon' => array(), //http://www.stumbleupon.com/submit?url=[URL]&title=[TITLE]
+		'posterous' => array(), // http://posterous.com/share?linkto=[URL]
+
+		'delicious' => array(), // http://del.icio.us/post?url=[URL]&title=[TITLE]&notes=[DESCRIPTION]
+		'newsvine' => array(), // http://www.newsvine.com/_tools/seed&save?u=[URL]&h=[TITLE]
+		'evernote' => array(), // http://www.evernote.com/clip.action?url=[URL]&title=[TITLE]
+		'friendfeed' => array(), // http://www.friendfeed.com/share?url=[URL]&title=[TITLE]
+
+		// Google Bookmarks // http://www.google.com/bookmarks/mark?op=edit&bkmk=[URL]&title=[title]&annotation=[DESCRIPTION]
+		// Ping.fm // http://ping.fm/ref/?link=[URL]&title=[TITLE]&body=[DESCRIPTION]
+		// Evernote // http://www.evernote.com/clip.action?url=[URL]&title=[TITLE]
+		// 'instagram' => array(),
+		//'github' => array(),
+		//'gitlab' => array(),
+
+		// source: http://petragregorova.com/articles/social-share-buttons-with-custom-icons/
+
+		);
+
+}
+add_action( 'init', 'onepiece_global_share_entities' ); // add early in flow
 
 
 
@@ -16,292 +197,198 @@
 
 
 /*
+ *
+ * Create the widget (onepiece theme)
+ *
+ */
+
 class onepiece_share_widget extends WP_Widget {
 
-
-	///Contruct
-	function __construct() {
-
-		// clients to share to
-		$clients = array(
-
-			"google" => array(
-				"a_name"=> "Google+",
-				//"a_icon"=> 'ICONURL',
-				"a_url" => "https://plus.google.com/share?",
-				"q_url" => "url=",
-				//"q_txt" => "text=",
-				//"q_ttl" => "title=",
-				//"q_img" => "media=",
-				//"q_via" => "via=",
-				//"d_attr" => "data-action="
-			),
-
-			"linkedin" => array(
-
-				"a_name"=> "Linkedin",
-				//"a_icon"=> 'ICONURL',
-				"a_url" => "http://www.linkedin.com/shareArticle?mini=true&",
-				"q_url" => "url=",
-				"q_ttl" => "title=",
-				"q_txt" => "summary=",
-				//"q_img" => "media=",
-				"q_via" => "source=",
-				//"d_attr" => "data-action="
-			),
-
-			"twitter" => array(
-				"a_name"=> "Twitter",
-				//"a_icon"=> 'ICONURL',
-				"a_url" => "https://twitter.com/intent/tweet?",
-				"q_url" => "url=",
-				//"q_ttl" => "",
-				"q_txt" => "text=",
-				//"q_img" => "media=",
-				"q_via" => "via=",
-				//"d_attr" => "data-action="
-			),
-
-			"facebook" => array(
-				"a_name"=> "Facebook",
-				//"a_icon"=> 'ICONURL',
-				"a_url" => "https://www.facebook.com/sharer/sharer.php?",
-				"q_url" => "u=",
-				//"q_ttl" => "",
-				//"q_txt" => "text=",
-				//"q_img" => "media=",
-				//"q_via" => "via=",
-				//"d_attr" => "data-action="
-			),
-
-			"whatsapp" => array(
-				"a_name"=> "Whatsapp",
-				//"a_icon"=> 'ICONURL',
-				"a_url" => "whatsapp://send?",
-				"q_url" => "text=",
-				//"q_ttl" => "",
-				//"q_txt" => "text=",
-				//"q_img" => "media=",
-				//"q_via" => "via=",
-				"d_attr" => 'data-action="share/whatsapp/share"',
-			),
-
-			"pinterest" => array(
-				"a_name"=> "Pinterest",
-				//"a_icon"=> 'ICONURL',
-				"a_url" => "http://pinterest.com/pin/create/button/?",
-				"q_url" => "url=",
-				//"q_ttl" => "",
-				"q_txt" => "description=",
-				"q_img" => "media=",
-				//"q_via" => "via=",
-				//"d_attr" => 'data-action=',
-			),
-
-			"email" => array(
-				"a_name"=> "Email",
-				//"a_icon"=> 'ICONURL',
-				"a_url" => "mailto:?",
-				"q_url" => "Body=",
-				"q_ttl" => "Subject=",
-				//"q_txt" => "desc=",
-				//"q_img" => "media=",
-				//"q_via" => "via=",
-				//"d_attr" => 'data-action=',
-			),
-
+	public function __construct() {
+	    // basic wp stuff for widget id
+		$widget_options = array(
+		  'classname' => 'onepiece_share_widget',
+		  'description' => 'This is an Example Widget',
 		);
 
+		parent::__construct( 'onepiece_share_widget', 'Onepiece Share Widget', $widget_options );
 
-		$widget_ops = array('classname' => 'onepiece_share_widget', 'description' => __('Display your favourite share buttons'));
-    	$control_ops = array('clients' => $clients);
-
-
-    	parent::__construct('onepiece_share_widget', __('Share buttons'), $widget_ops, $control_ops);
-
-		//parent::__construct( 'onepiece_share_widget', // Base ID
-			//__('Onepiece Share Widget', 'onepiece'), // Widget name and description in UI
-			//array( 'description' => __( 'Display your favourite share buttons', 'onepiece' ),
-
-			//)
-		//);
 	}
 
 
-	//Widget front-end
+
+
+
+	/**
+	 * Frontend widget
+	 */
+
 	public function widget( $args, $instance ) {
 
-		extract( $args );
+	  	// get/set variables for frontend output
+	  	$title = apply_filters( 'widget_title', $instance[ 'title' ] );
 
-    	$clients   = $instance['clients'];
 
-		// Widget Title
-		$title = apply_filters( 'widget_title', $instance['title'] );
+		// Title/text to share
+		$sttl = get_bloginfo( 'title' );
+		$stxt = get_bloginfo( 'description' );
 
-		// Share Title & Text
-		$titletext = get_bloginfo( 'title' );
-		$desctext = get_bloginfo( 'description' );
+		// url to share
+		$surl = site_url();
 
-		// Share Url
-		$siteurl = site_url();
+		// media to share
+		$simg = get_theme_mod('onepiece_identity_featured_image');
 
-		// Share image
-		//if(get_theme_mod()){ // check theme site featured image(onepiece theme)
-		//}else{ // check site logo
-		//}else{ // check widgets image set
-		//}
-		$imageurl = get_theme_mod('onepiece_identity_featured_image');
+		$entities = $GLOBALS['onepiece_share_entities'];
+	  	$select_entities = $instance['select_entities'];
 
-		//$itemcount = 3;
-		//if(isset($instance['itemcount']) && $instance['itemcount'] !='' )
-		//$itemcount = $instance['itemcount'];
-		//echo $itemamount;
+		// prepare bundle
+		$select_entities_data = array();
+	  	foreach( $select_entities as $id ){
+		  	$select_entities_data[$id] = $entities[$id];
+	  	}
 
 
 
+	  	// output frontend html
+	  	echo $args['before_widget'] . $args['before_title'] . $title . $args['after_title'];
 
+	  	echo '<ul>';
 
+		// button list
+	  	$entities_html = array();
+		foreach( $select_entities_data as $id => $entity ){
 
-
-		$linklist = '';
-		foreach( $clients as $nm => $client ){
-
-			//.. check if selected (maybe check if an api is available..)
-			// if no a_url(fixed) or q_url(var)
-			// if selected in widget settings
-
-			$button = $client['a_name'];
-			if(isset($client['a_icon'])){
-				$button = '<img src="'.$client['a_icon'].'" name="Share on '.$client['a_name'].'" />';
+			// button html (text or img)
+			$button = $entity['company']['name'];
+			if(isset($entity['share']['l_icon'])){
+				//$button = '<img src="'.$entity['share']['l_icon'].'" name="Share on '.$entity['share']['l_name'].'" />';
+				$button = '<webicon icon="'.$entity['share']['l_icon'].'"/>';
 			}
 
+			// url string part 1: specific sharer url
+			$urlstr = $entity['share']['l_url'].$entity['share']['s_url'].$surl;
 
-			$urlstr = $client['a_url'].$client['q_url'].$siteurl;
+			// url string part 2: share title and/or text
+			if( isset($entity['share']['s_ttl']) && isset($entity['share']['s_txt'])){ // title & text
 
-			if( isset($client['q_ttl']) && isset($client['q_txt'])){ // title & text
-				$urlstr .='&'.$client['q_ttl'].$titletext.'&'.$client['q_txt'].$desctext;
-			}else if( isset($client['q_ttl']) && !isset($client['q_txt']) ){ // description
-				$urlstr .='&'.$client['q_ttl'].$titletext;
-			}else if( isset($client['q_txt']) ){ // description
-				$urlstr .='&'.$client['q_txt'].$titletext.' - '.$desctext;
+				$urlstr .='&'.$entity['share']['s_ttl'].$sttl.'&'.$entity['share']['s_txt'].$stxt;
+
+			}else if( isset($entity['share']['s_ttl']) && !isset($entity['share']['s_txt']) ){ // description
+
+				$urlstr .='&'.$entity['share']['s_ttl'].$sttl;
+
+			}else if( isset($entity['share']['s_txt']) ){ // description
+
+				$urlstr .='&'.$entity['share']['s_txt'].$stxt;
+
 			}
 
-			if(isset($client['q_img'])){ // site featured image
-				$urlstr .='&'.$client['q_img'].'{'.$imageurl.'}';
+			// url string part 3: share media
+			if(isset($entity['share']['s_img'])){
+				$urlstr .='&'.$entity['share']['s_img'].'{'.$simg.'}';
 			}
 
-			if(isset($client['q_via'])){ // from website name
-				$urlstr .='&'.$client['q_via'].get_bloginfo( 'name' );
+			// url string part 4: shared from/via
+			if(isset($entity['share']['s_via'])){
+				$urlstr .='&'.$entity['share']['s_via'].get_bloginfo( 'name' );
 			}
 
-			// data-action attribute like 'share/whatsapp/share' for whats app
+			// html add full data-action attribute like 'share/whatsapp/share' for whats app
 			$data_attr = '';
-			if(isset($client['d_attr'])){ // data-action attribute like 'share/whatsapp/share' for whats app
-				$data_attr = ' data-action="share/whatsapp/share"';
+			if(isset($entity['share']['l_attr'])){
+				// data-action attribute like 'share/whatsapp/share' for whats app
+				$data_attr = ' '.$entity['share']['l_attr']; //' data-action="share/whatsapp/share"';
 			}
 
-			// create html
-			$linklist .= '<li style="display:inline-block"><a href="'.$urlstr.'" title="Share on '.$client['a_name'].'" target="_blank"'.$data_attr.'><span>'.$button.'</span></a></li>';
+			// create & output html
+			echo '<li style="display:inline-block;max-width:32px;max-height:32px;"><a href="'.$urlstr.'" title="Share on '.$entity['company']['name'].'" target="_blank"'.$data_attr.'><span>'.$button.'</span></a></li>';
 
 		}
+		echo '<ul>';
 
-
-
-
-		echo $args['before_widget']; // before and after widget arguments are defined by themes
-
-		if ( ! empty( $title ) )
-		echo $args['before_title'] . $title . $args['after_title'];
-
-		echo '<ul class="sharebox">'.$linklist.'</ul>';
-
-		echo $args['after_widget'];
-
-
-
-		//echo '<ul class="sharebox">';
-
-		//echo '<li style="display:inline-block;"><a href="http://www.linkedin.com/shareArticle?mini=true&title='.$titletext.'&summary='.$desctext.'&source=http://www.webdesigndenhaag.net&url='.$siteurl.'" target="_blank">Linkedin</a></li>';
-		//echo '<li style="display:inline-block;"><a href="https://plus.google.com/share?url='.$siteurl.'" target="_blank">Google+</a></li>';
-		//echo '<li style="display:inline-block;"><a href="https://twitter.com/intent/tweet?url='.$siteurl.'&text='.$titletext.' - '.$desctext.'&via='.get_bloginfo('name').'" target="_blank">Twitter</a></li>';
-		//echo '<li style="display:inline-block;"><a href="https://www.facebook.com/sharer/sharer.php?u='.$siteurl.'" target="_blank">Facebook</a></li>';
-		//echo '<li style="display:inline-block;"><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Whatsapp</a></li>';
-		//echo '<li style="display:inline-block;"><a href="http://pinterest.com/pin/create/button/?url='.$siteurl.'&media={'.$imageurl.'}&description='.$titletext.' - '.$desctext.'" target="_blank">Pinterest</a></li>';
-		//echo '<li style="display:inline-block;"><a href="mailto:?Subject='.$titletext.'&Body='.$bodytext.'" target="_blank">Email</a></li>';
-		//echo '<li style="display:inline-block;"><a href="http://www.tumblr.com/share/link?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Tumblr</a></li>';
-		//echo '<li style="display:inline-block;"><a href="http://reddit.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">Reddit</a></li>';
-		//echo '<li style="display:inline-block;"><a href="http://www.stumbleupon.com/submit?url='.$siteurl.'&amp;title='.$titletext.'" target="_blank">StumbleUpon</a></li>';
-		//echo '<li style="display:inline-block;"><a href="http://www.digg.com/submit?url='.$siteurl.'" target="_blank">Digg</a></li>';
-		//echo '<li style="display:inline-block;"><a href="whatsapp://send?text='.$titletext.' - '.$desctext.' - '.$siteurl.' " data-action="share/whatsapp/share">Instagram</a></li>'; // ?
-
-
+	  	echo $args['after_widget'];
 	}
 
 
 
-	// Widget Backend
+
+
+
+
+
+
+	/**
+	 * Backend widget
+	 */
+
 	public function form( $instance ) {
 
+		// initialize widget instance variables
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'select_entities' => '' ));
 
+		// collect variables for backend form output
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+		$entities = $GLOBALS['onepiece_share_entities'];
+		$select_entities = (array)$instance['select_entities'];
 
-		echo '!Widget in development!';
-
-
-
-		//option:
-		 // - select link/page to share (select page)
-		 // - display text (name)
-		 // - display icons (positioning)
-		 // - set image to share
-
-
-
-
-
-		if ( isset( $instance[ 'title' ] ) ) {
-			$title = $instance[ 'title' ];
-		}else{
-			$title = __( 'New title', 'Posts listed' );
-		}
-
+		// output backend form
 		?>
+	    <p><label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label>
+		<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
+	    </p><?php
 
-		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php __( 'Title:', 'onepiece' ); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-		</p>
+		$htmllist = '';
 
-		<?php
-		$value = '';
-		if ( isset( $instance[ 'itemcount' ] ) ) {
-			$value = 'value="'.$instance[ 'itemcount' ].'" ';
-		}
-		?>
-		<p><label for="<?php echo $this->get_field_id( 'itemcount' ); ?>">Amount of items:</label>
-		<input type="text" size="3" <?php echo $value; ?>name="<?php echo $this->get_field_name( 'itemcount' ); ?>" id="<?php echo $this->get_field_id( 'itemcount' ); ?>" />
-		</p>
-
-		<?php
-		if(isset($instance['clients'])){
-			print_r($instance['clients']);
-		}
+		// entity listing
+		foreach($entities as $id => $entity) {
+   			if( $entity['company']['name'] != '' && $entity['share']['l_url'] != ''){ // minimal property check
+			?>
+    			<label>
+					<?php echo $entity['company']['name']; ?>
+					<input id="<?php echo $this->get_field_id( 'select_entities' ) . $id; ?>"
+						name="<?php echo $this->get_field_name('select_entities'); ?>[]"
+						type="checkbox" value="<?php echo $id; ?>"
+						<?php foreach ( $select_entities as $checked ) { checked( $checked, $id, true ); } ?>>
+				</label><br>
+			<?php
+			}
+        }
 
 	}
 
-	// Widget update/save settings
+
+
+
+	/**
+	 * Update widget
+	 */
+
 	public function update( $new_instance, $old_instance ) {
-		$instance = array();
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-		$instance['itemcount'] = ( ! empty( $new_instance['itemcount'] ) ) ? strip_tags( $new_instance['itemcount'] ) : '';
-		return $instance;
+
+	  // save it
+	  $instance = $old_instance; // $instance = array();
+	  $instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
+	  $instance['select_entities'] = $new_instance['select_entities'];
+	  return $instance;
+
 	}
 
-} // Class wpb_widget ends here
+
+
+}
+
 
 // Register and load the widget
 function onepiece_load_share_widget() {
 	register_widget( 'onepiece_share_widget' );
 }
 add_action( 'widgets_init', 'onepiece_load_share_widget' );
-*/
+
+
+function onepiece_load_share_widget_icons(){
+wp_enqueue_script('jquery-webicon', '//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js');
+}
+add_action( 'wp_print_scripts', 'onepiece_load_share_widget_icons' );
+
 ?>

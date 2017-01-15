@@ -13,7 +13,7 @@ require get_template_directory() . '/assets/menu.php'; 					// metabox functions
 require get_template_directory() . '/assets/slider.php'; 				// metabox functions
 require get_template_directory() . '/assets/userlogin.php'; 			// login functions
 require get_template_directory() . '/assets/widgets-onepiece.php'; 		// onepiece widget
-require get_template_directory() . '/assets/widgets-sharebox.php'; 	// onepiece widgets
+require get_template_directory() . '/assets/widgets-sharebox.php'; 		// onepiece sharebox
 require get_template_directory() . '/assets/ajax.php'; 					// ajax functions
 
 
