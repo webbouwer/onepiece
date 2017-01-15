@@ -4,21 +4,28 @@
  *
  * Display share/follow 'social' buttons
  *
- * Based on custom webentities data array (https://github.com/oddsized/webentities)
- * See first entity (email) for info
+ * $onepiece_share_entities is based on a custom webentities property array
+ * (https://github.com/oddsized/webentities)
+ * The array might move to functions.php or imported from github production branch
+ * if not available, contruct the array here)
+ *
+ *
  */
 
 
-// Create the global entity array to use
-// (might move to functions.php or retrieve this from github production branch
-// if not available in other themes, contruct the array here)
+/*
+ * Create the global entity array to use
+ */
 function onepiece_global_share_entities() {
 
-	/* contruct the global array */
-    global $onepiece_share_entities;
-    $onepiece_share_entities = array(
 
-		/* Update list on github */
+
+	// contruct the global array
+    global $onepiece_share_entities;
+
+
+
+    $onepiece_share_entities = array(
 
 		"email" => array(
 			'company' => array(
@@ -37,13 +44,14 @@ function onepiece_global_share_entities() {
 				//"s_via" => "via=",
 			),
 		),
+
 		"google" => array(
 			'company' => array(
 				'name' => 'Google',
 			),
 			'share' => array(
 				"l_name"=> "Google+", 							// link name
-				"l_icon"=> 'fa:google-plus-square', 					// link icon
+				"l_icon"=> 'fa:google-plus-square', 			// link icon
 				"l_url" => "https://plus.google.com/share?", 	// link url
 				//"l_attr" => "data-action=", 					// link data-action attribute
 
@@ -73,22 +81,7 @@ function onepiece_global_share_entities() {
 				"s_via" => "source=",
 			),
 		),
-		"twitter" => array(
-			'company' => array(
-					'name' => 'Twitter',
-			),
-			'share' => array(
-				"l_name"=> "Twitter",
-				"l_icon"=> 'fa:twitter-square',
-				"l_url" => "https://twitter.com/intent/tweet?",
-				//"l_attr" => "data-action=",
-				"s_url" => "url=",
-				//"s_ttl" => "",
-				"s_txt" => "text=",
-				//"s_img" => "media=",
-				"s_via" => "via=",
-			),
-		),
+
 		"facebook" => array(
 			'company' => array(
 					'name' => 'Facebook',
@@ -106,6 +99,7 @@ function onepiece_global_share_entities() {
 				//"s_via" => "via=",
 			),
 		),
+
 		"whatsapp" => array(
 			'company' => array(
 					'name' => 'Whatsapp',
@@ -123,6 +117,7 @@ function onepiece_global_share_entities() {
 				//"s_via" => "via=",
 			),
 		),
+
 		"pinterest" => array(
 			'company' => array(
 					'name' => 'Pinterest',
@@ -140,6 +135,24 @@ function onepiece_global_share_entities() {
 				//"s_via" => "via=",
 			),
 		),
+
+		"twitter" => array(
+			'company' => array(
+					'name' => 'Twitter',
+			),
+			'share' => array(
+				"l_name"=> "Twitter",
+				"l_icon"=> 'fa:twitter-square',
+				"l_url" => "https://twitter.com/intent/tweet?",
+				//"l_attr" => "data-action=",
+				"s_url" => "url=",
+				//"s_ttl" => "",
+				"s_txt" => "text=",
+				//"s_img" => "media=",
+				"s_via" => "via=",
+			),
+		),
+
 		"tumblr" => array(
 			'company' => array(
 				'name' => 'Tumblr',
@@ -182,14 +195,9 @@ function onepiece_global_share_entities() {
 		);
 
 }
+
+
 add_action( 'init', 'onepiece_global_share_entities' ); // add early in flow
-
-
-
-
-
-
-
 
 
 
@@ -198,17 +206,26 @@ add_action( 'init', 'onepiece_global_share_entities' ); // add early in flow
 
 /*
  *
+ *
  * Create the widget (onepiece theme)
  *
+ *
  */
-
 class onepiece_share_widget extends WP_Widget {
 
+
+
+
+
 	public function __construct() {
+
+
 	    // basic wp stuff for widget id
 		$widget_options = array(
+
 		  'classname' => 'onepiece_share_widget',
 		  'description' => 'This is an Example Widget',
+
 		);
 
 		parent::__construct( 'onepiece_share_widget', 'Onepiece Share Widget', $widget_options );
@@ -216,23 +233,29 @@ class onepiece_share_widget extends WP_Widget {
 	}
 
 
-	/**
-	 * Frontend widget
-	 */
 
+
+
+	//Frontend widget
 	public function widget( $args, $instance ) {
+
+
 
 	  	// Default widget title
 	  	$title = apply_filters( 'widget_title', $instance[ 'title' ] );
 
+
+
 		// Default settings
-		$icos = 24;							// Default iconsize for sharebutton
+		$icos = 24;								// Default iconsize for sharebutton
 		$sttl = get_bloginfo( 'title' );		// Default title to share
 		$stxt = get_bloginfo( 'description' );	// Default text to share
 		$surl = site_url();						// Default url to share
 
 		// Default media to share
 		$simg = get_theme_mod('onepiece_identity_featured_image');
+
+
 
 		// overwrite defaults with widget settings
 		if( !empty($instance[ 'share_title' ]) ){
@@ -251,9 +274,15 @@ class onepiece_share_widget extends WP_Widget {
 			$icos = $instance[ 'icon_size' ];
 		}
 
+
+
+
 		// get share data
 		$entities = $GLOBALS['onepiece_share_entities'];
 	  	$select_entities = $instance['select_entities'];
+
+
+
 
 		// prepare share bundle
 		$select_entities_data = array();
@@ -261,24 +290,30 @@ class onepiece_share_widget extends WP_Widget {
 		  	$select_entities_data[$id] = $entities[$id];
 	  	}
 
+
+
 	  	// output frontend html
 	  	echo $args['before_widget'] . $args['before_title'] . $title . $args['after_title'];
 
-	  	echo '<ul>';
+
 
 		// button list
-	  	$entities_html = array();
+	  	echo '<ul>';
+
 		foreach( $select_entities_data as $id => $entity ){
+
 
 			// button html (text or img)
 			$button = $entity['company']['name'];
 			if(isset($entity['share']['l_icon']) && $icos != 0){
-				$button = '<webicon style="display:block;max-width:'.$icos.'px;max-height:'.$icos.'px;" icon="'.$entity['share']['l_icon'].'"/>';
+				$button = '<webicon style="display:block;margin:1px;max-width:'.$icos.'px;max-height:'.$icos.'px;" icon="'.$entity['share']['l_icon'].'"/>';
 				//$button = '<img src="'.$entity['share']['l_icon'].'" name="Share on '.$entity['share']['l_name'].'" />';
 			}
 
+
 			// url string part 1: specific sharer url
 			$urlstr = $entity['share']['l_url'].$entity['share']['s_url'].$surl;
+
 
 			// url string part 2: share title and/or text
 			if( isset($entity['share']['s_ttl']) && isset($entity['share']['s_txt'])){ // title & text
@@ -300,15 +335,18 @@ class onepiece_share_widget extends WP_Widget {
 
 			}
 
+
 			// url string part 3: share media
 			if(isset($entity['share']['s_img'])){
 				$urlstr .='&'.$entity['share']['s_img'].'{'.$simg.'}';
 			}
 
+
 			// url string part 4: shared from/via
 			if(isset($entity['share']['s_via'])){
 				$urlstr .='&'.$entity['share']['s_via'].get_bloginfo( 'name' );
 			}
+
 
 			// html add full data-action attribute like 'share/whatsapp/share' for whats app
 			$data_attr = '';
@@ -321,9 +359,13 @@ class onepiece_share_widget extends WP_Widget {
 			echo '<li style="display:inline-block;"><a href="'.$urlstr.'" title="Share on '.$entity['company']['name'].'" target="_blank"'.$data_attr.'><span>'.$button.'</span></a></li>';
 
 		}
-		echo '<ul>';
+		echo '</ul>';
+
+
 
 	  	echo $args['after_widget'];
+
+
 	}
 
 
@@ -333,18 +375,20 @@ class onepiece_share_widget extends WP_Widget {
 
 
 
-
-	/**
-	 * Backend widget
-	 */
-
+	// Backend widget
 	public function form( $instance ) {
+
+
 
 		// initialize widget instance variables
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '', 'select_entities' => '' ));
 
+
+
 		// collect variables for backend form output
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+
+
 
 		// widget settings
 		$icos = 24;							// Default iconsize for sharebutton
@@ -352,7 +396,6 @@ class onepiece_share_widget extends WP_Widget {
 		$stxt = get_bloginfo( 'description' );	// Default text to share
 		$surl = site_url();						// Default url to share
 		$simg = get_theme_mod('onepiece_identity_featured_image'); // Default media to share
-
 
 		if( !empty($instance[ 'share_title' ]) ){
 			$sttl = $instance[ 'share_title' ];
@@ -375,28 +418,29 @@ class onepiece_share_widget extends WP_Widget {
 		$entities = $GLOBALS['onepiece_share_entities'];
 		$select_entities = (array)$instance['select_entities'];
 
+
+
 		// output backend form
 		?>
 	    <p><label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label>
-		<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
+		<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" class="input_widget_title widefat" value="<?php echo esc_attr( $title ); ?>" />
 	    </p>
 
 		<p><label for="<?php echo $this->get_field_id( 'share_title' ); ?>">Share Title:</label>
-		<input type="text" id="<?php echo $this->get_field_id( 'share_title' ); ?>" name="<?php echo $this->get_field_name( 'share_title' ); ?>" value="<?php echo esc_attr( $sttl ); ?>" />
+		<input type="text" id="<?php echo $this->get_field_id( 'share_title' ); ?>" name="<?php echo $this->get_field_name( 'share_title' ); ?>" class="input_share_title widefat" type="text" value="<?php echo esc_attr( $sttl ); ?>" />
 	    </p>
 
 		<p><label for="<?php echo $this->get_field_id( 'share_text' ); ?>">Share Text:</label>
-			<textarea id="<?php echo $this->get_field_id( 'share_text' ); ?>" name="<?php echo $this->get_field_name( 'share_text' ); ?>"><?php echo esc_attr( $stxt ); ?></textarea>
+			<textarea id="<?php echo $this->get_field_id( 'share_text' ); ?>" name="<?php echo $this->get_field_name( 'share_text' ); ?>" class="input_share_text widefat"><?php echo esc_attr( $stxt ); ?></textarea>
 	    </p>
 
-        <p>
-            <label for="<?php echo $this->get_field_name( 'share_image' ); ?>">Share Image:</label>
-            <input name="<?php echo $this->get_field_name( 'share_image' ); ?>" id="<?php echo $this->get_field_id( 'share_image' ); ?>" class="upload_share_image widefat" type="text" size="36"  value="<?php echo esc_url( $simg ); ?>" />
-            <input class="upload_image_button button button-primary" type="button" value="Upload Image" />
+        <p><label for="<?php echo $this->get_field_name( 'share_image' ); ?>">Share Image:</label>
+        <input name="<?php echo $this->get_field_name( 'share_image' ); ?>" id="<?php echo $this->get_field_id( 'share_image' ); ?>" class="upload_share_image widefat" type="text" size="36"  value="<?php echo esc_url( $simg ); ?>" />
+        <input class="upload_image_button button button-primary" type="button" value="Upload Image" />
         </p>
 
 		<p><label for="<?php echo $this->get_field_id( 'share_url' ); ?>">Share url:</label>
-			<textarea id="<?php echo $this->get_field_id( 'share_url' ); ?>" name="<?php echo $this->get_field_name( 'share_url' ); ?>"><?php echo esc_attr( $surl ); ?></textarea>
+		<input id="<?php echo $this->get_field_id( 'share_url' ); ?>" name="<?php echo $this->get_field_name( 'share_url' ); ?>" class="input_share_url widefat" type="text" value="<?php echo esc_attr( $surl ); ?>" />
 	    </p>
 
 		<p><label for="<?php echo $this->get_field_id( 'icon_size' ); ?>">Button icon display:</label>
@@ -411,6 +455,7 @@ class onepiece_share_widget extends WP_Widget {
 		<?php
 
 		$htmllist = '';
+
 
 		// entity listing
 		foreach($entities as $id => $entity) {
@@ -432,10 +477,9 @@ class onepiece_share_widget extends WP_Widget {
 
 
 
-	/**
-	 * Update widget
-	 */
 
+
+	// Update widget
 	public function update( $new_instance, $old_instance ) {
 
 	  	// save it
@@ -460,21 +504,40 @@ class onepiece_share_widget extends WP_Widget {
 	}
 
 
+} // end widget class
 
-}
+
+
+
+
+/*
+ *
+ *
+ * Required functions and scripts:
+ * - register widget
+ * - load webicons (ext)
+ * - load image upload scripts
+ *
+ */
 
 
 // Register and load the widget
 function onepiece_load_share_widget() {
+
 	register_widget( 'onepiece_share_widget' );
+
 }
 add_action( 'widgets_init', 'onepiece_load_share_widget' );
 
+
 // include webicon
 function onepiece_load_share_widget_icons(){
+
 wp_enqueue_script('jquery-webicon', '//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js');
+
 }
 add_action( 'wp_print_scripts', 'onepiece_load_share_widget_icons' );
+
 
 // upload image scripts
 function photo_upload_option($hook) {
@@ -482,8 +545,7 @@ function photo_upload_option($hook) {
     	if( $hook != 'widgets.php' )
         return; //not in widget admin
 
-    	//enque Javasript Media API
-		// sources
+    	// sources enque Javasript Media API
 		// https://dzone.com/articles/add-upload-media-library), http://stackoverflow.com/questions/41438151/image-upload-in-custom-widget-wp
 		// final solution -> http://www.divyanshiinfotech.com/add-wp-media-uploader-plugin/
 		wp_enqueue_media();
