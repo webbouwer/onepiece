@@ -32,7 +32,7 @@ function onepiece_global_share_entities() {
 
 				"s_url" => "Body=",
 				"s_ttl" => "Subject=",
-				//"s_txt" => "desc=",
+				//"s_txt" => "text=",
 				//"s_img" => "media=",
 				//"s_via" => "via=",
 			),
@@ -116,9 +116,9 @@ function onepiece_global_share_entities() {
 				"l_url" => "whatsapp://send?",
 				"l_attr" => 'data-action="share/whatsapp/share"',
 
-				"s_url" => "text=",
+				//"s_url" => "u=",
 				//"s_ttl" => "",
-				//"s_txt" => "text=",
+				"s_txt" => "text=",
 				//"s_img" => "media=",
 				//"s_via" => "via=",
 			),
@@ -213,6 +213,10 @@ class onepiece_share_widget extends WP_Widget {
 
 		parent::__construct( 'onepiece_share_widget', 'Onepiece Share Widget', $widget_options );
 
+		// upload image codes (https://dzone.com/articles/add-upload-media-library)
+		add_action('admin_enqueue_scripts', array($this, 'upload_scripts'));
+        add_action('admin_enqueue_styles', array($this, 'upload_styles'));
+
 	}
 
 
@@ -225,30 +229,44 @@ class onepiece_share_widget extends WP_Widget {
 
 	public function widget( $args, $instance ) {
 
-	  	// get/set variables for frontend output
+	  	// Default widget title
 	  	$title = apply_filters( 'widget_title', $instance[ 'title' ] );
 
+		// Default settings
+		$icos = 24;							// Default iconsize for sharebutton
+		$sttl = get_bloginfo( 'title' );		// Default title to share
+		$stxt = get_bloginfo( 'description' );	// Default text to share
+		$surl = site_url();						// Default url to share
 
-		// Title/text to share
-		$sttl = get_bloginfo( 'title' );
-		$stxt = get_bloginfo( 'description' );
-
-		// url to share
-		$surl = site_url();
-
-		// media to share
+		// Default media to share
 		$simg = get_theme_mod('onepiece_identity_featured_image');
 
+		// overwrite defaults with widget settings
+		if( !empty($instance[ 'share_title' ]) ){
+			$sttl = $instance[ 'share_title' ];
+		}
+		if( !empty($instance[ 'share_text' ]) ){
+			$stxt = $instance[ 'share_text' ];
+		}
+		if( !empty($instance[ 'share_url' ]) ){
+			$surl = $instance[ 'share_url' ];
+		}
+		if( !empty($instance[ 'share_image' ]) ){
+			$simg = $instance[ 'share_image' ];
+		}
+		if( !empty($instance[ 'icon_size' ]) || $instance[ 'icon_size' ] == 0 ){
+			$icos = $instance[ 'icon_size' ];
+		}
+
+		// get share data
 		$entities = $GLOBALS['onepiece_share_entities'];
 	  	$select_entities = $instance['select_entities'];
 
-		// prepare bundle
+		// prepare share bundle
 		$select_entities_data = array();
 	  	foreach( $select_entities as $id ){
 		  	$select_entities_data[$id] = $entities[$id];
 	  	}
-
-
 
 	  	// output frontend html
 	  	echo $args['before_widget'] . $args['before_title'] . $title . $args['after_title'];
@@ -261,7 +279,7 @@ class onepiece_share_widget extends WP_Widget {
 
 			// button html (text or img)
 			$button = $entity['company']['name'];
-			if(isset($entity['share']['l_icon'])){
+			if(isset($entity['share']['l_icon']) && $icos != 0){
 				//$button = '<img src="'.$entity['share']['l_icon'].'" name="Share on '.$entity['share']['l_name'].'" />';
 				$button = '<webicon icon="'.$entity['share']['l_icon'].'"/>';
 			}
@@ -279,6 +297,11 @@ class onepiece_share_widget extends WP_Widget {
 				$urlstr .='&'.$entity['share']['s_ttl'].$sttl;
 
 			}else if( isset($entity['share']['s_txt']) ){ // description
+
+				if(!isset($entity['share']['s_ttl']))
+					$stxt = $sttl.' - '.$stxt;
+				if(!isset($entity['share']['s_url']))
+					$stxt = $stxt.' - '.$s_url;
 
 				$urlstr .='&'.$entity['share']['s_txt'].$stxt;
 
@@ -302,7 +325,7 @@ class onepiece_share_widget extends WP_Widget {
 			}
 
 			// create & output html
-			echo '<li style="display:inline-block;max-width:32px;max-height:32px;"><a href="'.$urlstr.'" title="Share on '.$entity['company']['name'].'" target="_blank"'.$data_attr.'><span>'.$button.'</span></a></li>';
+			echo '<li style="display:inline-block;max-width:'.$icos.'px;max-height:'.$icos.'px;"><a href="'.$urlstr.'" title="Share on '.$entity['company']['name'].'" target="_blank"'.$data_attr.'><span>'.$button.'</span></a></li>';
 
 		}
 		echo '<ul>';
@@ -329,6 +352,33 @@ class onepiece_share_widget extends WP_Widget {
 
 		// collect variables for backend form output
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+
+		// widget settings
+		$icos = 24;							// Default iconsize for sharebutton
+		$sttl = get_bloginfo( 'title' );		// Default title to share
+		$stxt = get_bloginfo( 'description' );	// Default text to share
+		$surl = site_url();						// Default url to share
+		$simg = get_theme_mod('onepiece_identity_featured_image'); // Default media to share
+
+
+		if( !empty($instance[ 'share_title' ]) ){
+			$sttl = $instance[ 'share_title' ];
+		}
+		if( !empty($instance[ 'share_text' ]) ){
+			$stxt = $instance[ 'share_text' ];
+		}
+		if( !empty($instance[ 'share_url' ]) ){
+			$surl = $instance[ 'share_url' ];
+		}
+		if( !empty($instance[ 'share_image' ]) ){
+			$simg = $instance[ 'share_image' ];
+		}
+		if( !empty($instance[ 'icon_size' ]) || $instance[ 'icon_size' ] == 0 ){
+			$icos = $instance[ 'icon_size' ];
+		}
+
+
+
 		$entities = $GLOBALS['onepiece_share_entities'];
 		$select_entities = (array)$instance['select_entities'];
 
@@ -336,7 +386,36 @@ class onepiece_share_widget extends WP_Widget {
 		?>
 	    <p><label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label>
 		<input type="text" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
-	    </p><?php
+	    </p>
+
+		<p><label for="<?php echo $this->get_field_id( 'share_title' ); ?>">Share Title:</label>
+		<input type="text" id="<?php echo $this->get_field_id( 'share_title' ); ?>" name="<?php echo $this->get_field_name( 'share_title' ); ?>" value="<?php echo esc_attr( $sttl ); ?>" />
+	    </p>
+
+		<p><label for="<?php echo $this->get_field_id( 'share_text' ); ?>">Share Text:</label>
+			<textarea id="<?php echo $this->get_field_id( 'share_text' ); ?>" name="<?php echo $this->get_field_name( 'share_text' ); ?>"><?php echo esc_attr( $stxt ); ?></textarea>
+	    </p>
+
+        <p>
+            <label for="<?php echo $this->get_field_name( 'share_image' ); ?>">Share Image:</label>
+            <input name="<?php echo $this->get_field_name( 'share_image' ); ?>" id="<?php echo $this->get_field_id( 'share_image' ); ?>" class="widefat" type="text" size="36"  value="<?php echo esc_url( $simg ); ?>" />
+            <input class="upload_image_button button button-primary" type="button" value="Upload Image" />
+        </p>
+
+		<p><label for="<?php echo $this->get_field_id( 'share_url' ); ?>">Share url:</label>
+			<textarea id="<?php echo $this->get_field_id( 'share_url' ); ?>" name="<?php echo $this->get_field_name( 'share_url' ); ?>"><?php echo esc_attr( $surl ); ?></textarea>
+	    </p>
+
+		<p><label for="<?php echo $this->get_field_id( 'icon_size' ); ?>">Button icon display:</label>
+			<select id="<?php echo $this->get_field_id( 'icon_size' ); ?>" name="<?php echo $this->get_field_name( 'icon_size' ); ?>">
+				<option value="0" <?php if($icos == 0) echo 'selected="selected"'; ?>>No icon, text only</option>
+				<option value="16" <?php if($icos == 16) echo 'selected="selected"'; ?>>16px</option>
+				<option value="24" <?php if($icos == 24) echo 'selected="selected"'; ?>>24px</option>
+				<option value="32" <?php if($icos == 32) echo 'selected="selected"'; ?>>32px</option>
+				<option value="48" <?php if($icos == 48) echo 'selected="selected"'; ?>>48px</option>
+			</select>
+		</p>
+		<?php
 
 		$htmllist = '';
 
@@ -366,15 +445,46 @@ class onepiece_share_widget extends WP_Widget {
 
 	public function update( $new_instance, $old_instance ) {
 
-	  // save it
-	  $instance = $old_instance; // $instance = array();
-	  $instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
-	  $instance['select_entities'] = $new_instance['select_entities'];
-	  return $instance;
+	  	// save it
+	  	$instance = $old_instance; // $instance = array();
+
+	  	$instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
+
+		$instance[ 'share_title' ] = strip_tags( $new_instance[ 'share_title' ] );
+
+		$instance[ 'share_text' ] = strip_tags( $new_instance[ 'share_text' ] );
+
+		$instance[ 'share_url' ] = $new_instance[ 'share_url' ];
+
+		$instance[ 'share_image' ] = $new_instance[ 'share_image' ];
+
+		$instance[ 'icon_size' ] = $new_instance[ 'icon_size' ];
+
+	  	$instance['select_entities'] = $new_instance['select_entities'];
+
+		return $instance;
 
 	}
 
 
+	/**
+     * Upload the Javascripts for the media uploader
+     */
+    public function upload_scripts()
+    {
+        //wp_enqueue_script('media-upload');
+        //wp_enqueue_script('thickbox');
+        wp_enqueue_media();
+		wp_enqueue_script('upload_media_widget', get_template_directory() . '/assets/upload-media.js');
+    }
+
+    /**
+     * Add the styles for the upload media box
+     */
+    public function upload_styles()
+    {
+        wp_enqueue_style('thickbox');
+    }
 
 }
 
