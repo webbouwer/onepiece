@@ -213,14 +213,7 @@ class onepiece_share_widget extends WP_Widget {
 
 		parent::__construct( 'onepiece_share_widget', 'Onepiece Share Widget', $widget_options );
 
-		// upload image codes (https://dzone.com/articles/add-upload-media-library)
-		add_action('admin_enqueue_scripts', array($this, 'upload_scripts'));
-        add_action('admin_enqueue_styles', array($this, 'upload_styles'));
-
 	}
-
-
-
 
 
 	/**
@@ -280,8 +273,8 @@ class onepiece_share_widget extends WP_Widget {
 			// button html (text or img)
 			$button = $entity['company']['name'];
 			if(isset($entity['share']['l_icon']) && $icos != 0){
+				$button = '<webicon style="display:block;max-width:'.$icos.'px;max-height:'.$icos.'px;" icon="'.$entity['share']['l_icon'].'"/>';
 				//$button = '<img src="'.$entity['share']['l_icon'].'" name="Share on '.$entity['share']['l_name'].'" />';
-				$button = '<webicon icon="'.$entity['share']['l_icon'].'"/>';
 			}
 
 			// url string part 1: specific sharer url
@@ -325,7 +318,7 @@ class onepiece_share_widget extends WP_Widget {
 			}
 
 			// create & output html
-			echo '<li style="display:inline-block;max-width:'.$icos.'px;max-height:'.$icos.'px;"><a href="'.$urlstr.'" title="Share on '.$entity['company']['name'].'" target="_blank"'.$data_attr.'><span>'.$button.'</span></a></li>';
+			echo '<li style="display:inline-block;"><a href="'.$urlstr.'" title="Share on '.$entity['company']['name'].'" target="_blank"'.$data_attr.'><span>'.$button.'</span></a></li>';
 
 		}
 		echo '<ul>';
@@ -398,7 +391,7 @@ class onepiece_share_widget extends WP_Widget {
 
         <p>
             <label for="<?php echo $this->get_field_name( 'share_image' ); ?>">Share Image:</label>
-            <input name="<?php echo $this->get_field_name( 'share_image' ); ?>" id="<?php echo $this->get_field_id( 'share_image' ); ?>" class="widefat" type="text" size="36"  value="<?php echo esc_url( $simg ); ?>" />
+            <input name="<?php echo $this->get_field_name( 'share_image' ); ?>" id="<?php echo $this->get_field_id( 'share_image' ); ?>" class="upload_share_image widefat" type="text" size="36"  value="<?php echo esc_url( $simg ); ?>" />
             <input class="upload_image_button button button-primary" type="button" value="Upload Image" />
         </p>
 
@@ -467,24 +460,6 @@ class onepiece_share_widget extends WP_Widget {
 	}
 
 
-	/**
-     * Upload the Javascripts for the media uploader
-     */
-    public function upload_scripts()
-    {
-        //wp_enqueue_script('media-upload');
-        //wp_enqueue_script('thickbox');
-        wp_enqueue_media();
-		wp_enqueue_script('upload_media_widget', get_template_directory() . '/assets/upload-media.js');
-    }
-
-    /**
-     * Add the styles for the upload media box
-     */
-    public function upload_styles()
-    {
-        wp_enqueue_style('thickbox');
-    }
 
 }
 
@@ -495,10 +470,27 @@ function onepiece_load_share_widget() {
 }
 add_action( 'widgets_init', 'onepiece_load_share_widget' );
 
-
+// include webicon
 function onepiece_load_share_widget_icons(){
 wp_enqueue_script('jquery-webicon', '//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js');
 }
 add_action( 'wp_print_scripts', 'onepiece_load_share_widget_icons' );
+
+// upload image scripts
+function photo_upload_option($hook) {
+
+    	if( $hook != 'widgets.php' )
+        return; //not in widget admin
+
+    	//enque Javasript Media API
+		// sources
+		// https://dzone.com/articles/add-upload-media-library), http://stackoverflow.com/questions/41438151/image-upload-in-custom-widget-wp
+		// final solution -> http://www.divyanshiinfotech.com/add-wp-media-uploader-plugin/
+		wp_enqueue_media();
+    	wp_register_script( 'uploadphoto', get_template_directory_uri() . '/assets/upload-media.js', array('jquery'), '1.0', 'true' );
+		wp_enqueue_script('uploadphoto');
+
+}
+add_action('admin_enqueue_scripts', 'photo_upload_option');
 
 ?>
