@@ -160,7 +160,7 @@ function onepiece_global_share_entities() {
 			),
 			'share' => array(
 				"l_name"=> "Tumblr",
-				"l_icon"=> 'fa:tumblr-quare',
+				"l_icon"=> 'fa:tumblr-square',
 				"l_url" => "http://www.tumblr.com/share?v=3&",
 				//"l_attr" => 'data-action=',
 
@@ -172,21 +172,92 @@ function onepiece_global_share_entities() {
 			),
 		),
 
+		"reddit" => array(
+			'company' => array(
+				'name' => 'Reddit',
+			),
+			'share' => array(
+				"l_name"=> "Reddit",
+				"l_icon"=> 'fa:reddit-square',
+				"l_url" => "http://www.reddit.com/submit?",
+				//"l_attr" => 'data-action=',
+
+				"s_url" => "url=",
+				"s_ttl" => "title=",
+				//"s_txt" => "desc=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		), // http://www.reddit.com/submit?url=[URL]&title=[TITLE]
+
+		"friendfeed"> array(
+			'company' => array(
+				'name' => 'Friendfeed',
+			),
+			'share' => array(
+				"l_name"=> "Friendfeed",
+				"l_icon"=> 'brandico:friendfeed-rect',
+				"l_url" => "http://www.friendfeed.com/share?u",
+				//"l_attr" => 'data-action=',
+
+				"s_url" => "url=",
+				"s_ttl" => "title=",
+				//"s_txt" => "desc=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		), // http://www.friendfeed.com/share?url=[URL]&title=[TITLE]
+
+		/* // need better icon
+		"stumbleupon" => array(
+			'company' => array(
+				'name' => 'Stumbleupon',
+			),
+			'share' => array(
+				"l_name"=> "Stumbleupon",
+				"l_icon"=> 'fa:stumbleupon',
+				"l_url" => "http://www.stumbleupon.com/submit?",
+				//"l_attr" => 'data-action=',
+
+				"s_url" => "url=",
+				"s_ttl" => "title=",
+				//"s_txt" => "desc=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		),
+		*/ //http://www.stumbleupon.com/submit?url=[URL]&title=[TITLE]
+
+		 // need better icon
+		"evernote" => array(
+			'company' => array(
+				'name' => 'Evernote',
+			),
+			'share' => array(
+				"l_name"=> "Evernote",
+				"l_icon"=> 'lsf:evernote', // foundation:social-evernote', //webhostinghub:evernote
+				"l_url" => "http://www.evernote.com/clip.action?",
+				//"l_attr" => 'data-action=',
+
+				"s_url" => "url=",
+				"s_ttl" => "title=",
+				//"s_txt" => "desc=",
+				//"s_img" => "media=",
+				//"s_via" => "via=",
+			),
+		),
+		 // http://www.evernote.com/clip.action?url=[URL]&title=[TITLE]
+
 		'slashdot' => array(), // http://slashdot.org/bookmark.pl?url=[URL]&title=[TITLE]
 		'technorati' => array(),// http://technorati.com/faves?add=[URL]&title=[TITLE]
 		'tapiture' => array(), // http://tapiture.com/bookmarklet/image?img_src=[IMAGE]&page_url=[URL]&page_title=[TITLE]&img_title=[TITLE]&img_width=[IMG WIDTH]img_height=[IMG HEIGHT]
-		'reddit' => array(), // http://www.reddit.com/submit?url=[URL]&title=[TITLE]
-		'stumbleupon' => array(), //http://www.stumbleupon.com/submit?url=[URL]&title=[TITLE]
 		'posterous' => array(), // http://posterous.com/share?linkto=[URL]
 
 		'delicious' => array(), // http://del.icio.us/post?url=[URL]&title=[TITLE]&notes=[DESCRIPTION]
 		'newsvine' => array(), // http://www.newsvine.com/_tools/seed&save?u=[URL]&h=[TITLE]
-		'evernote' => array(), // http://www.evernote.com/clip.action?url=[URL]&title=[TITLE]
-		'friendfeed' => array(), // http://www.friendfeed.com/share?url=[URL]&title=[TITLE]
 
 		// Google Bookmarks // http://www.google.com/bookmarks/mark?op=edit&bkmk=[URL]&title=[title]&annotation=[DESCRIPTION]
 		// Ping.fm // http://ping.fm/ref/?link=[URL]&title=[TITLE]&body=[DESCRIPTION]
-		// Evernote // http://www.evernote.com/clip.action?url=[URL]&title=[TITLE]
 		// 'instagram' => array(),
 		//'github' => array(),
 		//'gitlab' => array(),
@@ -311,7 +382,7 @@ class onepiece_share_widget extends WP_Widget {
 			// button html (text or img)
 			$button = $entity['company']['name'];
 			if(isset($entity['share']['l_icon']) && $icos != 0){
-				$button = '<webicon style="display:block;margin:1px;max-width:'.$icos.'px;max-height:'.$icos.'px;" icon="'.$entity['share']['l_icon'].'"/>';
+				$button = '<webicon style="display:block;margin:0px;height:'.($icos).'px;width:'.($icos -5).'px;padding:0;border:none;" icon="'.$entity['share']['l_icon'].'"/>';
 				//$button = '<img src="'.$entity['share']['l_icon'].'" name="Share on '.$entity['share']['l_name'].'" />';
 			}
 
