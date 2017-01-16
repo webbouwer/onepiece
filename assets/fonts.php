@@ -27,7 +27,7 @@ function get_fonts_select(){
 
 		'arial'=>'Arial',
 
-		'ITCAvantGardeGothic1__'=>'Avant Garde Gothic ITC',
+		//'AvantGarBoo__'=>'Avant Garde Book',
 
 		'Bubblegum+Sans'=>'Bubblegum Sans',
 
@@ -48,8 +48,6 @@ function get_fonts_select(){
 		'GoodDog__'=>'Good Dog',
 
 		'HelveticaNeue__'=>'Helvetica Neue',
-
-		//'HelveticaNeueThin__'=>'Helvetica Neue Thin',
 
 		'Italiana'=>'Italiana',
 
@@ -140,9 +138,9 @@ function generate_font_style($fontkey){
 			font-family: '.$fontname.';
 			src: url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.eot" );
 			src: url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.eot?#iefix") format("embedded-opentype"),
-			url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.woff") format("woff"),
 			url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.ttf") format("truetype"),
 		}';
+		/* add woff after the embedded-opentype line .. url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.woff") format("woff"), */
 
 	}
 	/*
