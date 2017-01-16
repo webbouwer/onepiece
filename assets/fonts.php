@@ -27,7 +27,7 @@ function get_fonts_select(){
 
 		'arial'=>'Arial',
 
-		//'Avantgarde__'=>'Avant Garde',
+		'ITCAvantGardeGothic1__'=>'Avant Garde Gothic ITC',
 
 		'Bubblegum+Sans'=>'Bubblegum Sans',
 
