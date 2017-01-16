@@ -10,6 +10,7 @@
  * if not available, contruct the array here)
  *
  *
+ *
  */
 
 
@@ -209,6 +210,10 @@ add_action( 'init', 'onepiece_global_share_entities' ); // add early in flow
  *
  * Create the widget (onepiece theme)
  *
+ * Requires function get_attachment_id( $url )
+ * from https://wpscholar.com/blog/get-attachment-id-from-wp-image-url/
+ * in functions.php
+ *
  *
  */
 class onepiece_share_widget extends WP_Widget {
@@ -338,7 +343,13 @@ class onepiece_share_widget extends WP_Widget {
 
 			// url string part 3: share media
 			if(isset($entity['share']['s_img'])){
-				$urlstr .='&'.$entity['share']['s_img'].'{'.$simg.'}';
+
+				$attid = get_attachment_id( $simg ); // get image id by url ! :)
+
+				$simg = wp_get_attachment_image_src( $attid, 'thumbnail' ); // get thumb attachtment by id
+
+				$urlstr .='&'.$entity['share']['s_img'].'{'.$simg[0].'}'; // add media url
+
 			}
 
 
@@ -542,7 +553,7 @@ add_action( 'wp_print_scripts', 'onepiece_load_share_widget_icons' );
 // upload image scripts
 function photo_upload_option($hook) {
 
-    	if( $hook != 'widgets.php' )
+    	if( $hook != 'widgets.php'  && $hook != 'customize.php')
         return; //not in widget admin
 
     	// sources enque Javasript Media API
