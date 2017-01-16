@@ -346,7 +346,7 @@ class onepiece_share_widget extends WP_Widget {
 
 				$attid = get_attachment_id( $simg ); // get image id by url ! :)
 
-				$smallimg = wp_get_attachment_image_src( $attid, 'thumbnail' ); // get thumb attachtment by id
+				$smallimg = wp_get_attachment_image_src( $attid, 'medium' ); // get medium sized attachtment by id
 
 				if($smallimg[0]){
 					$image = $smallimg[0];

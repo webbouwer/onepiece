@@ -939,6 +939,8 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 
 } // end minify logobox
 
+
+
 <?php  
 } // end minify logobox or fixed topbar
 
@@ -958,13 +960,13 @@ if( $mainmenubarbehavior == 'stic' && ( $topbarbehavior == 'fixe' || $topbarbeha
  * MAIN MENU FIXED IN TOPBAR ONSCROLL
  */ 
 $stickymenu_triggerheight = '$("#topbar").height()';
+
 if($mainmenubarplace == 'topbar'){
 $stickymenu_triggerheight = 0;
 }
 
 ?> 
 var offset = $('#site-navigation').offset();
-
 
 if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight; ?> && !menubox.hasClass('sticky')){
 	
@@ -1027,6 +1029,7 @@ if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight;
 
 }); /// endon scroll
 
+	$(window).trigger('scroll');
 
 });// end ready doc
 
@@ -1711,9 +1714,7 @@ $(document).ready(function() {
 });
 
 
-$(window).load(function() { 
-	
-
+$(window).load(function() {
 });
 
 });
