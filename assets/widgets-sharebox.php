@@ -382,7 +382,7 @@ class onepiece_share_widget extends WP_Widget {
 			// button html (text or img)
 			$button = $entity['company']['name'];
 			if(isset($entity['share']['l_icon']) && $icos != 0){
-				$button = '<webicon style="display:block;margin:0px;height:'.($icos).'px;width:'.($icos -5).'px;padding:0;border:none;" icon="'.$entity['share']['l_icon'].'"/>';
+				$button = '<webicon style="display:block;margin-right:2px;height:'.($icos).'px;width:'.($icos -5).'px;padding:0;border:none;" icon="'.$entity['share']['l_icon'].'"/>';
 				//$button = '<img src="'.$entity['share']['l_icon'].'" name="Share on '.$entity['share']['l_name'].'" />';
 			}
 
@@ -547,13 +547,23 @@ class onepiece_share_widget extends WP_Widget {
 		foreach($entities as $id => $entity) {
    			if( $entity['company']['name'] != '' && $entity['share']['l_url'] != ''){ // minimal property check
 			?>
+			<div align="center" style="position:relative;display:inline-block;">
     			<label>
+					<div>
+					<?php echo '<webicon style="display:block;margin:0px;height:48px;width:48px;padding:0;border:none;" icon="'.$entity['share']['l_icon'].'"/>'; ?>
+					</div>
+					<small>
 					<?php echo $entity['company']['name']; ?>
+					</small>
+					<div style="position:absolute;right:12px;bottom:12px;">
 					<input id="<?php echo $this->get_field_id( 'select_entities' ) . $id; ?>"
 						name="<?php echo $this->get_field_name('select_entities'); ?>[]"
 						type="checkbox" value="<?php echo $id; ?>"
+						style="background:transparent;border:none;"
 						<?php foreach ( $select_entities as $checked ) { checked( $checked, $id, true ); } ?>>
-				</label><br>
+					</div>
+				</label>
+			</div>
 			<?php
 			}
         }
