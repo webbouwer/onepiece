@@ -611,7 +611,7 @@ class onepiece_share_widget extends WP_Widget {
  *
  * Required functions and scripts:
  * - register widget
- * - load webicons (ext)
+ * - load webicons (functions.php)
  * - load image upload scripts
  *
  */
@@ -626,13 +626,7 @@ function onepiece_load_share_widget() {
 add_action( 'widgets_init', 'onepiece_load_share_widget' );
 
 
-// include webicon
-function onepiece_load_share_widget_icons(){
 
-wp_enqueue_script('jquery-webicon', '//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js');
-
-}
-add_action( 'wp_print_scripts', 'onepiece_load_share_widget_icons' );
 
 
 // upload image scripts

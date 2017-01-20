@@ -195,7 +195,7 @@ get_theme_mod('onepiece_content_sliderbar_display', 'default' ) != 'none'
 && get_theme_mod('onepiece_content_sliderbar_category', 'uncategorized' ) != 'uncategorized') // 1
 || ( get_post_meta($post->ID, "pagetheme_slide_displaytype", true) != 'none' && get_post_meta($post->ID, "pagetheme_slide_selectbox", true) != 'uncategorized' ) 
 ) // 2
-&& ( get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replacemargin' || get_post_meta($post->ID, "onepiece_content_sliderbar_display", true) == 'topfooter')
+&& ( get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replacemargin' || get_post_meta($post->ID, "onepiece_content_sliderbar_display", true) == 'topfooter') // 3
 && ( get_post_meta($post->ID, "meta-page-headerimage", true) != 'replace' || get_post_meta($post->ID, "pagetheme_slide_displaytype", true) == 'topfooter' )  
 && (!is_single() || get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default') != 'replace')  )
 || get_theme_mod('onepiece_content_sliderbar_display', 'default' ) != 'hide'
@@ -270,6 +270,7 @@ $(window).resize(function() {
     }
 
 });
+
 
 function resizeend() {
 	if(new Date() - rtime < delta) {
@@ -457,18 +458,7 @@ $toppos = 'relative';
 }
 }
 ?>
-div#topbar
-{
-position:<?php echo $toppos; ?>;
-width:100%;
-z-index:69;
-}
-div#topbar.minified
-{
-position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
-top:0px;
-left:0px;
-}
+
 
 /*
  * SLIDER STYLING 
@@ -632,6 +622,32 @@ width:40%;
 }
 }
 
+</style>
+
+<?php
+}else{
+	$toppos = 'relative';
+} // end if header area slider/image
+?>
+
+
+<style type="text/css">
+
+/* final header styling	*/
+div#topbar
+{
+position:<?php echo $toppos; ?>;
+width:100%;
+z-index:69;
+}
+div#topbar.minified
+{
+position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
+top:0px;
+left:0px;
+}
+
+
 
 /*
  *
@@ -686,8 +702,6 @@ padding:4% 5%;
 }
 </style>
 
-<?php 
-}
 
 
 
@@ -698,6 +712,7 @@ padding:4% 5%;
 
 
 
+<?php
 
 /**
  * HTML HEAD THEME DEFAULT CSS/JS
@@ -752,7 +767,6 @@ jQuery(function ($) {
 
 
 $(document).ready(function() {   
-
 
 	<?php if($topbarbgfixed == 'keep'){ ?>
 	/**
@@ -851,6 +865,7 @@ echo  'var width_responsive_menu = '.get_theme_mod('onepiece_responsive_medium_m
 		}else{
 			resetminisizemenu();
 		}
+
 	}
 	
 	doneResizing(); // ondoc ready trigger
@@ -871,8 +886,6 @@ echo  'var width_responsive_menu = '.get_theme_mod('onepiece_responsive_medium_m
 $(window).on("mousewheel scroll", function() {
 
 
-
-
 // sticky
 <?php
 if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
@@ -882,6 +895,7 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 	/**
 	 * FIX TOPBAR & ADD BG
 	 */
+
 	 $("#topbar .minifiedtopbarbg").remove();
      $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
@@ -910,12 +924,15 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_minwidth',80).'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
   
+
+
   <?php } ?>
-  
-   
+
 
 }else if( $(window).scrollTop() <= 0 && $("#topbar").hasClass('minified') ){
    
+
+
    <?php if($topbarbgfixed != 'keep'){ ?>
 	/**
 	 * RELEASE FIXED / MINIFIED TOPBAR & BG
@@ -932,10 +949,10 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
+
    
-   
+
    $("#topbar").removeClass('minified');
-   
 
 } // end minify logobox
 

@@ -10,11 +10,23 @@ jQuery(function ($) {
 $(document).ready(function() {    
 
 	
+/*
+ * Available js variables (localized)
+ * functions.php - $$wp_global_data array
+ * functions.php - onepiece_global_js function
+ * !! get api / user variables out of public var
+ */
+var wp_custom_vars = JSON.parse(site_data['customizer']);
+// example: alert(wp_custom_vars['onepiece_elements_topsidebar_responsive']);
+
+
+
 /**
  * RESPONSIVE ORDER
  * #topbarmargin, #topsidebar, #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
  */
- 
+
+
  
 	if( $("#topsidebar").length > 0 ){ // check top sidebar first
 		var topstyleside = $("#topsidebar").attr('style');
@@ -54,10 +66,7 @@ $(document).ready(function() {
 	    }
 	    if( $(window).width() < small ){
 			
-			if( $("#topsidebar").length > 0 ){ // check top sidebar first
-				$("#topsidebar").attr('style', 'width:100%;').prependTo("#contentcontainer .outermargin");
-				$("#topbarmargin").attr('style', 'width:100%;');
-			}
+
 			if( $("#bottomsidebar").length > 0 ){ // check top sidebar first
 				$("#bottomsidebar").attr('style', 'width:100%;'); //.appendTo("#footercontainer .outermargin");
 				$("#bottombarmargin").attr('style', 'width:100%;');
@@ -75,6 +84,13 @@ $(document).ready(function() {
 	        if( $("#sidebar2").hasClass('out') ){ // outside first
 	        $("#sidebar2").appendTo("#contentcontainer .outermargin");
 	        }
+
+
+			if( $("#topsidebar").length > 0 ){ // check top sidebar first
+
+				$("#topsidebar").attr('style', 'width:100%;').appendTo("#contentcontainer .outermargin");
+				$("#topbarmargin").attr('style', 'width:100%;');
+			}
 	    }
 	}
 	

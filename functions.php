@@ -16,7 +16,11 @@ require get_template_directory() . '/assets/widgets-onepiece.php'; 		// onepiece
 require get_template_directory() . '/assets/widgets-sharebox.php'; 		// onepiece sharebox
 require get_template_directory() . '/assets/ajax.php'; 					// ajax functions
 
-
+/*
+ * Register global variables (options/customizer)
+ */
+$wp_global_data = array();
+$wp_global_data['customizer'] = json_encode(get_theme_mods());
 
 /*
  * Return of the Links Manager'
@@ -263,7 +267,14 @@ function onepiece_global_js() {
     // Register the script first.
     wp_register_script( 'custom_global_js', get_template_directory_uri().'/assets/global.js', 99, '1.0', false);
 
-    // Now we can localize the script with our data.
+    // Get the global data list.
+    global $wp_global_data;
+
+	// Localize the global data list for the script
+	wp_localize_script( 'custom_global_js', 'site_data', $wp_global_data );
+
+
+    // localize the script with specific data.
     //$color_array = array( 'color1' => get_theme_mod('color1'), 'color2' => '#000099' );
     //wp_localize_script( 'custom_global_js', 'object_name', $color_array );
 
@@ -271,6 +282,11 @@ function onepiece_global_js() {
     wp_enqueue_script( 'custom_global_js');
 }
 add_action('wp_enqueue_scripts', 'onepiece_global_js');
+
+
+
+
+
 
 
 
@@ -426,7 +442,13 @@ function get_categories_select(){
   	return $results;
 }
 
+// include webicon
+function onepiece_load_share_widget_icons(){
 
+wp_enqueue_script('jquery-webicon', '//cdn.rawgit.com/icons8/bower-webicon/v0.10.7/jquery-webicon.min.js');
+
+}
+add_action( 'wp_print_scripts', 'onepiece_load_share_widget_icons' );
 
 /*
  * css file listing
