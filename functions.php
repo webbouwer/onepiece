@@ -16,11 +16,18 @@ require get_template_directory() . '/assets/widgets-onepiece.php'; 		// onepiece
 require get_template_directory() . '/assets/widgets-sharebox.php'; 		// onepiece sharebox
 require get_template_directory() . '/assets/ajax.php'; 					// ajax functions
 
+
+
+
 /*
  * Register global variables (options/customizer)
  */
 $wp_global_data = array();
 $wp_global_data['customizer'] = json_encode(get_theme_mods());
+
+
+
+
 
 /*
  * Return of the Links Manager'
@@ -79,6 +86,7 @@ function basic_setup_register_menus() {
 	
 }
 add_action( 'init', 'basic_setup_register_menus' );
+
 
 
 /* unregister widgets (if really not needed)"*/
