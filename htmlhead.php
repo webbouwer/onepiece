@@ -985,7 +985,7 @@ $stickymenu_triggerheight = 0;
 ?> 
 var offset = $('#site-navigation').offset();
 
-if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight; ?> && !menubox.hasClass('sticky')){
+if( (offset.top - $(window).scrollTop()) < <?php echo ($stickymenu_triggerheight - 1 ); ?> && !menubox.hasClass('sticky')){
 	
 	/**
 	 * POSITION MAIN MENU IN TOPBAR 
@@ -1013,7 +1013,7 @@ if( (offset.top - $(window).scrollTop()) < <?php echo $stickymenu_triggerheight;
 	}
 		
 	
-}else if( (offset.top - $(window).scrollTop()) >= <?php echo $stickymenu_triggerheight; ?> && menubox.hasClass('sticky')){
+}else if( (offset.top - $(window).scrollTop()) >= <?php echo ($stickymenu_triggerheight - 1); ?> && menubox.hasClass('sticky')){
 	
 	
 	if( mainmenuminisize == 'sticky' ){

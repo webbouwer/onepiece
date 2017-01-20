@@ -32,17 +32,19 @@ $childcoverimage = get_post_meta(get_the_ID(), "meta-box-display-coverimage", tr
  */	
 get_template_part('header');
 
+
+/*
+ * main login
+ */
+$logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
+
+
 /**
  *
  * main container
  *
  */	
 echo '<div id="contentcontainer"><div class="outermargin">';
-
-/*
- * main login 
- */
-$logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
 
 
 /**
