@@ -336,6 +336,24 @@ min-height:100%;
 z-index:50;
 }
 
+#sliderbox-head .topelement
+{
+/*
+background-image:url(http://dasglueck.nl/preview/wp-content/uploads/2016/12/hoekjerechtsbovengoed.png);
+background-position:right bottom;
+background-repeat:no-repeat;
+*/
+}
+#sliderbox-head .bottomelement
+{
+/*
+background-image:url(http://dasglueck.nl/preview/wp-content/uploads/2016/12/hoekjelinksondergoed.png);
+background-position:left top;
+background-repeat:no-repeat;
+*/
+}
+
+
 
 
 
@@ -662,6 +680,15 @@ display:inline-block;
 nav.minisize ul.menu li
 {
 display:block !important;
+}
+
+
+/*
+ *  Topsidebar menu's
+ */
+#topsidebar .sidebarpadding ul.menu li
+{
+float:left;
 }
 
 
