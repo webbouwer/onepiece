@@ -1761,7 +1761,7 @@ $vertical_padding_box = $stylelayout_spacing * 2;
 
 echo '<style>';
 echo 'body{ font-size:'.$globalfontsize.'em !important; }';
-echo '#site-navigation .menu-button, ul.menu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
+echo '#site-navigation .menu-button, .contentpadding, .sidebarpadding, ul.menu li a, .categorymenu li a, .tagmenu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
 echo '.post-title, h1, .readmore, p, #copyright-textbox { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
 
 if( $mainmenubarplace == 'above' ){ 
