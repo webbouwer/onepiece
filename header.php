@@ -55,12 +55,25 @@ $slidercat = get_post_meta(get_the_ID(), "pagetheme_slide_selectbox", true);
 $sliderheight = get_post_meta(get_the_ID(), "pagetheme_slide_displayheight", true);
 $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true);
 
+
+/*
+ * Header min height / maincontent start height
+ *
+ */
+
+$headerimagedefaultheight = get_theme_mod('onepiece_elements_headerimage_height', '180'); //
+// header image defuslt height
+if(  ( empty( $header_image ) || $useheaderimage == 'hide'  ) || ( $sliderdisplay == 'none' || $slidercat == 'uncategorized' || $childpagedisplay == 'fade') ){
+	// % $sliderdefaultheight
+	$headerminheight = 'style="min-height:'.$headerimagedefaultheight.'px;"';
+}
+
 /**
  *
  * headercontent container
  *
  */  
-echo '<div id="headercontainer">'; 
+echo '<div id="headercontainer" '.$headerminheight.'>';
 
 echo '<div id="topbar">';
 
