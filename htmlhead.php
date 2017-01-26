@@ -982,6 +982,8 @@ if($mainmenubarplace == 'topbar'){
 $stickymenu_triggerheight = 0;
 }
 
+
+
 ?> 
 var offset = $('#site-navigation').offset();
 
@@ -1046,9 +1048,14 @@ if( (offset.top - $(window).scrollTop()) < <?php echo ($stickymenu_triggerheight
 
 }); /// endon scroll
 
-	$(window).trigger('scroll');
+
+
+    $(window).trigger('scroll');
+
 
 });// end ready doc
+
+
 
 
 });
@@ -1732,6 +1739,7 @@ $(document).ready(function() {
 
 
 $(window).load(function() {
+
 });
 
 });
