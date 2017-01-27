@@ -38,12 +38,17 @@ var wp_custom_vars = JSON.parse(site_data['customizer']);
 	}
  
 	function ResponsiveReorder(){
-	    var small = 512;
+
+		var small = 512;
 		var toprepos = wp_custom_vars['onepiece_elements_topsidebar_responsive'];
+
+
+
 		
 	    if( $(window).width() > small ){
 			
 			if( $("#topsidebar").length > 0 ){ // check top sidebar first
+				$("#topsidebar").show();
 				$("#topsidebar").attr('style', topstyleside).prependTo("#topmenubar .outermargin");
 				$("#topbarmargin").attr('style', topstylemain);
 			}
@@ -65,7 +70,7 @@ var wp_custom_vars = JSON.parse(site_data['customizer']);
 	        $("#sidebar2").prependTo("#contentcontainer .outermargin");
 	        }
 	    }
-	    if( $(window).width() < small ){
+	    if( $(window).width() <= small ){
 			
 
 			if( $("#bottomsidebar").length > 0 ){ // check top sidebar first
@@ -87,19 +92,27 @@ var wp_custom_vars = JSON.parse(site_data['customizer']);
 	        }
 
 			if( $("#topsidebar").length > 0 ){ // check top sidebar first
+
+
 				if(toprepos == 'top'){
 					$("#topsidebar").attr('style', 'width:100%;').prependTo("#topmenubar .outermargin");
-				}
-				if(toprepos == 'before'){
-					$("#topsidebar").attr('style', 'width:100%;').prependTo("#contentcontainer .outermargin");
 				}
 				if(toprepos == 'after'){
 					$("#topsidebar").insertAfter( $("#maincontent") ).attr('style', 'width:100%;');
 				}
+				if(toprepos == 'before'){
+					$("#topsidebar").attr('style', 'width:100%;').prependTo("#contentcontainer .outermargin");
+				}
+
 				if(toprepos == 'bottom'){
 					$("#topsidebar").attr('style', 'width:100%;').appendTo("#contentcontainer .outermargin");
 				}
+				if(toprepos == 'hide'){
+					$("#topsidebar").hide();
+				}
+
 				$("#topbarmargin").attr('style', 'width:100%;');
+
 			}
 	    }
 	}
