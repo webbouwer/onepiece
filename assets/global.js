@@ -138,7 +138,7 @@ var wp_custom_vars = JSON.parse(site_data['customizer']);
 		
 		// headerbar height (fade bglayer)
 		
-		$('#headerbar').css( 'height' , $(window).height()/3*2 + 'px' );
+		//  $('#headerbar').css( 'height' , $(window).height()/3*2 + 'px' );
 		//$('#headerbar .bglayer').css( 'height' , $(window).height()/3*2 + 'px' ); //called in htmlhead.php in resizeend function
 	}
 	
