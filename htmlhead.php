@@ -31,12 +31,19 @@ $seokeywords = get_theme_mod('onepiece_identity_panel_seo_keywords', 'cool, webs
 $seotrackcode = get_theme_mod('onepiece_identity_panel_seo_trackcode', '');
 
 
+
+
+
+
+
+
 /**
  * PAGE TEMPLATE GALLERY
  * gallery.php
  */ 
 if($pageTemplate == 'gallery.php'){ 
     
+
 /** 
  * $values variables page template
  */ 
@@ -68,7 +75,8 @@ $topcat = $gallerydefault;
 $topcat = 'uncategorized';
 }
 
-}
+
+} // end gallery page template
 
 
 
@@ -278,14 +286,20 @@ function resizeend() {
     }else{
         timeout = false;
 		
-		var rMinHeight = $('#topbar .outermargin').outerHeight(true);
+		var rMinHeight = $('#topbar .outermargin').outerHeight();
 		var rSetHeight = ($(window).height() / 100) * <?php echo $displaytype; ?>;
 		//var rToHeight = (  rMinHeight > rSetHeight ? rMinHeight : rSetHeight );
-				
-		$("#sliderbox-head,#headerbar").css("min-height", rMinHeight );
-		$("#sliderbox-head,#headerbar").css("height", rSetHeight );	
-		$('#headerbar .bglayer').css( 'height' , $('#headerbar').height() );	
-        //if (window.console) console.log('check!');
+
+
+		$("#sliderbox-head, #headerbar").css("min-height", rMinHeight );
+
+		// check if slider active > slide min-height
+		if( $('#sliderbox-head .anythingSlider').length > 0 ){
+			$("#sliderbox-head").css("min-height", rSetHeight );
+		}
+
+		$('#headerbar .bglayer').css( 'height' , $('#headerbar').height() );	// reset topbar bglayer height
+
     }   
 }
 
@@ -792,12 +806,7 @@ $(document).ready(function() {
    
 /* 
  * Mainmenu sticky / minisize
- */	
-
-var menubox = $('#site-navigation nav').prepend('<div class="navcontrol"><div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div></div>');
-var menubutton = $('#site-navigation nav .menu-button').hide();
-var menupanel = $('#site-navigation nav div ul.menu');
-
+ */
 <?php
 
 /* 
@@ -806,6 +815,10 @@ var menupanel = $('#site-navigation nav div ul.menu');
 if( $mainmenubarminisize != 'none' ){
 echo 'var mainmenuminisize = "'.$mainmenubarminisize.'";';
 ?>
+
+var menubox = $('#site-navigation nav').prepend('<div class="navcontrol"><div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div></div>');
+var menubutton = $('#site-navigation nav .menu-button').hide();
+var menupanel = $('#site-navigation nav div ul.menu');
 
 
 function setminisizemenu(){
@@ -971,28 +984,25 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
  */
 if( $mainmenubarbehavior == 'stic' && ( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini') ){ 
 // #site-navigation or #topbar-navigation 
-
+?>
 
 /**
  * MAIN MENU FIXED IN TOPBAR ONSCROLL
  */ 
-$stickymenu_triggerheight = '$("#topbar").height()';
+//$stickymenu_triggerheight = '$("#topbar").height()';
 
-if($mainmenubarplace == 'topbar'){
-$stickymenu_triggerheight = 0;
-}
+var stickymenutriggerheight = $("#topbar").height();
 
-
-
-?> 
 var offset = $('#site-navigation').offset();
 
-if( (offset.top - $(window).scrollTop()) < <?php echo ($stickymenu_triggerheight - 1 ); ?> && !menubox.hasClass('sticky')){
+if( (offset.top - $(window).scrollTop()) < stickymenutriggerheight && !menubox.hasClass('sticky')){
 	
 	/**
 	 * POSITION MAIN MENU IN TOPBAR 
 	 */
- 	menubox.addClass('sticky');
+
+
+	menubox.addClass('sticky');
 	if( $('#minibar-navigation').length > 0 ){
 	$('#minibar-navigation').next().after(menubox);
 	}else if( $('#topbar-navigation').length > 0 ){
@@ -1015,12 +1025,14 @@ if( (offset.top - $(window).scrollTop()) < <?php echo ($stickymenu_triggerheight
 	}
 		
 	
-}else if( (offset.top - $(window).scrollTop()) >= <?php echo ($stickymenu_triggerheight - 1); ?> && menubox.hasClass('sticky')){
+}else if( (offset.top - $(window).scrollTop()) >= stickymenutriggerheight && menubox.hasClass('sticky')){
 	
 	
 	if( mainmenuminisize == 'sticky' ){
    	resetminisizemenu();
 	}
+
+
 	<?php
 	if($mainmenubarplace == 'content'){
 	?>
@@ -1049,8 +1061,28 @@ if( (offset.top - $(window).scrollTop()) < <?php echo ($stickymenu_triggerheight
 }); /// endon scroll
 
 
+<?php
+if($mainmenubarplace == 'below'){
+?>
 
-    $(window).trigger('scroll');
+    //alert('!check!');
+	if( ($('#sliderbox-head').length == 0 && $('#headerbar').length == 0)&& $('#site-navigation') ){
+		//alert('!check!');
+		// insert header placeholder
+		//$('#maincontainer').css('margin-top', $("#headercontainer").height() );
+		$("#headercontainer").append($('<div id="sliderbox-head" style="min-height:'+$("#topmenubar").height()+'px;"></div>'));
+		$("#headercontainer").append($('#site-navigation'));
+		//$('#topbarmenu').append($('#site-navigation'));
+		// $('#headercontainer').prepend( $("#topbar") ); works only for maincontent
+
+	}
+
+<?php
+}
+?>
+
+
+    //$(window).trigger('scroll');
 
 
 });// end ready doc
