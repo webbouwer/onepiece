@@ -291,7 +291,7 @@ function resizeend() {
 		//var rToHeight = (  rMinHeight > rSetHeight ? rMinHeight : rSetHeight );
 
 
-		$("#sliderbox-head, #headerbar").css("min-height", rMinHeight );
+		$("#sliderbox-head").css("min-height", rMinHeight );
 
 		// check if slider active > slide min-height
 		if( $('#sliderbox-head .anythingSlider').length > 0 ){
