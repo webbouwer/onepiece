@@ -136,9 +136,9 @@ class onepiece_postlist_widget extends WP_Widget {
 		include('product.php');
 
 		//start output
-		echo '<li>';
+		echo '<li>'. $title_link;
 
-		echo '<div><h4>'.$title_link . get_the_title() .'</a></h4>';
+		echo '<div class="post-titlebox"><h4>'. get_the_title() .'</h4>';
 		if($dsp_date != 0 ){
 		echo '<span class="post-date">'.tweetTime(get_the_date('c')).' </span>';
 		}
@@ -156,7 +156,7 @@ class onepiece_postlist_widget extends WP_Widget {
 		if( isset( $instance[ 'dsp_price' ] ) && $instance[ 'dsp_price' ] != 0)
 		echo $productbox;
 
-		echo '<div class="item-excerpt">'.$title_link;
+		echo '<div class="item-excerpt">'; //.$title_link;
 
 		if ( has_post_thumbnail() && $dsp_image != 'none' ) {
 			$align = 'align-'.$dsp_image;
@@ -171,7 +171,7 @@ class onepiece_postlist_widget extends WP_Widget {
 			echo $packagebox;
 
 
-		echo '</a></div><div class="clr"></div>';
+		echo '</div><div class="clr"></div>';
 
 		// order box
 		if( isset( $instance[ 'dsp_order' ] )  && $instance[ 'dsp_order' ] != 0)
@@ -182,7 +182,7 @@ class onepiece_postlist_widget extends WP_Widget {
     		the_tags('Tagged with: ',' '); // the_tags(', ');  //
 			echo '</div>';
 		}
-
+			echo '</a></li>';
 		}
 
 		endwhile;
