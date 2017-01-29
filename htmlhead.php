@@ -1424,7 +1424,7 @@ $(document).ready(function() {
         markup += '<span class="datebox">'+obj.date+'</span>';
     }
     if( authortime == 'both'  ){
-        markup += '<span class="authorbox">'+obj.author+'</span>';
+        markup += ' by <span class="authorbox">'+obj.author+'</span>';
     }
     <?php } ?>
 
