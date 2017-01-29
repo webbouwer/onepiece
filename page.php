@@ -168,17 +168,17 @@ $post_obj = $wp_query->get_queried_object();
  */	
 if ( has_post_thumbnail() && $useheaderimage != 'replace' && $childpagedisplay != 'fade' ) {
 
-if( $childparentcontent != 'none' ){ 
-  
+if( $childparentcontent == 'none'  || ($childparentcontent != 'none' && $childcoverimage != 'none') ){
+
 $title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
 
 echo '<div class="post-coverimage">'.$title_link;
 $pagefeaturedimage =  '';
 if($mobile){
-the_post_thumbnail('big-thumb');
+the_post_thumbnail('medium');
 $pagefeaturedimage = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'big-thumb' ); 
 }else{
-the_post_thumbnail('medium');
+the_post_thumbnail('normal');
 $pagefeaturedimage = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'medium' ); 
 }
 echo '</a></div>'; // default, 'thumb' or 'medium'
