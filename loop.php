@@ -66,10 +66,10 @@ edit_post_link( __( '<webicon icon="fa:edit"/>' , 'onepiece' ), '<span class="ed
 }
 
 // Titles on top in lists/loops
-if ( !is_single() && !is_page() ) { 
-echo '<div class="post-title"><h2>'. $title_link . get_the_title().'</a></h2></div>';
+if ( !is_single() && !is_page() ) {
 
-}
+	echo '<div class="post-title"><h2>'. $title_link . get_the_title().'</a></h2></div>';
+
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 
@@ -90,6 +90,8 @@ echo '</div>';
 
 }
 
+}
+
 
 // featured (cover) image
 $postimagesingle = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');  
@@ -104,15 +106,15 @@ if ( has_post_thumbnail()  ) {
 echo '<div class="post-coverimage">'.$title_link;
 if($mobile){
     if( $counter < $firstcount && !$paged ){ // (first page)
-        the_post_thumbnail('big-thumb');
+        the_post_thumbnail('medium');
     }else{
-        the_post_thumbnail('thumbnail');
+        the_post_thumbnail('big-thumb');
     }
 }else{
     if( $counter < $firstcount && !$paged ){
         the_post_thumbnail('large');
     }else{
-        the_post_thumbnail('medium');
+        the_post_thumbnail('normal');
     }
 }
 echo '</a></div>'; // default, 'thumb' or 'medium'
@@ -220,6 +222,23 @@ if ( !is_single() && !is_page() ) {
 	
     // Post full content
     echo '<div class="post-content">'.apply_filters('the_content', $maintext.$productbox.$packagebox.$orderbox ).'<div class="clr"></div></div>';
+
+
+	// define custom link (internal / external)
+	if( $custom_metabox_url != '' && ($custom_metabox_useurl == 'external' || $custom_metabox_useurl == 'internal') ){
+	$custom_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
+	if( $custom_metabox_url != '' && $custom_metabox_useurl == 'external'){
+	$custom_link = '<a href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
+	}elseif( $custom_metabox_url != '' && $custom_metabox_useurl == 'internal'){
+	$custom_link = '<a href="'.$custom_metabox_url.'" target="_self" title="'.get_the_title().'">';
+	}
+
+	echo $custom_link.$custom_metabox_urltext.'</a>';
+
+
+	}
+
+
 
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags
