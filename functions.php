@@ -49,6 +49,7 @@ function basic_setup_theme_global() {
 	*/
 	add_image_size( 'big-thumb', 320, 9999 );
 	add_image_size( 'medium', 480, 9999 );
+	add_image_size( 'normal', 960, 9999 );
     add_theme_support( 'title-tag' );
 	add_theme_support( 'automatic-feed-links' ); 
 

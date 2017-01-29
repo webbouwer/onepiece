@@ -221,6 +221,23 @@ if ( !is_single() && !is_page() ) {
     // Post full content
     echo '<div class="post-content">'.apply_filters('the_content', $maintext.$productbox.$packagebox.$orderbox ).'<div class="clr"></div></div>';
 
+
+	// define custom link (internal / external)
+	if( $custom_metabox_url != '' && ($custom_metabox_useurl == 'external' || $custom_metabox_useurl == 'internal') ){
+	$custom_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
+	if( $custom_metabox_url != '' && $custom_metabox_useurl == 'external'){
+	$custom_link = '<a href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
+	}elseif( $custom_metabox_url != '' && $custom_metabox_useurl == 'internal'){
+	$custom_link = '<a href="'.$custom_metabox_url.'" target="_self" title="'.get_the_title().'">';
+	}
+
+	echo $custom_link.$custom_metabox_urltext.'</a>';
+
+
+	}
+
+
+
 	if( $tagdisplay == 'belowcontent' ){
     	// post tags
     	// post tags
