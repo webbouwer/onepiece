@@ -16,8 +16,8 @@ $(document).ready(function() {
  * functions.php - onepiece_global_js function
  * !! get api / user variables out of public var
  */
-var wp_custom_vars = JSON.parse(site_data['customizer']);
-// example: alert(wp_custom_vars['onepiece_elements_topsidebar_responsive']);
+var $wp_custom_vars = JSON.parse(site_data['customizer']);
+// example: alert($wp_custom_vars['onepiece_elements_topsidebar_responsive']);
 
 
 
@@ -40,7 +40,7 @@ var wp_custom_vars = JSON.parse(site_data['customizer']);
 	function ResponsiveReorder(){
 
 		var small = 512;
-		var toprepos = wp_custom_vars['onepiece_elements_topsidebar_responsive'];
+		var toprepos = $wp_custom_vars['onepiece_elements_topsidebar_responsive'];
 
 
 
@@ -160,19 +160,34 @@ var wp_custom_vars = JSON.parse(site_data['customizer']);
  * SCROLL TO TOP
  * window top (index.php, page.php, gallery.php)
  */ 
-	$('#maincontent').append('<a href="#" class="scrollToTop"><span>Scroll To Top</span></a>');
+	var sttdspl = $wp_custom_vars['onepiece_identity_scrolltotop_display'];
+	var stthtml = $wp_custom_vars['onepiece_identity_scrolltotop_html'];
+	var sttmarg = $wp_custom_vars['onepiece_identity_scrolltotop_margin'];
+	var sttpadd = $wp_custom_vars['onepiece_identity_scrolltotop_padding'];
+
+	if(sttdspl != 'hi'){
+
+		var sttstyle = 'style="margin:'+sttmarg+';padding:'+sttpadd+';"';
+		var sttbut = '<a href="#" '+sttstyle+' class="scrollToTop"><span>'+stthtml+'</span></a>';
+
+	$('#maincontent').append(sttbut);
+
 	$('.scrollToTop').hide();
 	$('.scrollToTop').click(function(){
 		$('html, body').animate({scrollTop : 0},800);
 		return false;
 	});
-    $(window).scroll(function(s){
+
+	$(window).scroll(function(s){
 		if ($(this).scrollTop() > 100) {
 			$('.scrollToTop').fadeIn();
 		} else {
 			$('.scrollToTop').fadeOut();
 		}			  
     });
+
+	}
+
     $('.site-logo').click(function(){
         
         if ($(window).scrollTop() > 100) {

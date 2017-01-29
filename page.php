@@ -188,7 +188,7 @@ echo '</a></div>'; // default, 'thumb' or 'medium'
 }
 
 if ( is_super_admin() ) { // admin/editor options
-edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>' );
+edit_post_link( __( '<webicon icon="fa:edit"/>' , 'onepiece' ), '<span class="edit-link">', '</span>' );
 }
 
 
