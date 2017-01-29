@@ -527,6 +527,9 @@ jQuery(document).ready(function($) {
 			$('ul#childpagecontent li.childcontent .readmore').fadeIn('slow');
     		$(this).find('.moretextbox').slideDown();
 			$(this).find('.readmore').slideUp('fast');
+			$('html, body').animate({
+        		scrollTop: $(this).offset().top - 20
+    		}, 'slow');
         }
 		return false;
 		});
