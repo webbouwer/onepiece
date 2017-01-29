@@ -327,8 +327,8 @@ $('.sliderarea').anythingSlider({
 	autoPlayLocked      : false, 
     startPanel          : 1,
     startStopped        : false,
-    forwardText         : ">", 
-    backText            : "<",
+    forwardText         : '<webicon icon="fa:chevron-right"/>', // >
+    backText            : '<webicon icon="fa:chevron-left"/>', // <
     stopAtEnd           : false,     
     playRtl             : false,    
     startText           : "Start",   
@@ -565,18 +565,24 @@ div.anythingSlider span.arrow
 {
 position:absolute;
 top:48%;
-padding:10px;
-background-color:#ffffff;
+padding:0px;
 z-index:80;
 }
 div.anythingSlider span.back
 {
-left:5px;
+margin-left:1%;
 }
 div.anythingSlider span.forward
 {
-right:5px;
+margin-right:1%;
 }
+
+div.anythingSlider span.back webicon,
+div.anythingSlider span.forward	webicon
+{
+width:24px !important;
+}
+
 div.anythingSlider div.slidebox,
 div.anythingSlider div.slidebox div.outermargin
 {

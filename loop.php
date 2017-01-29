@@ -62,7 +62,7 @@ $title_link = '<a href="'.$custom_metabox_url.'" target="_self" title="'.get_the
 
 // editor
 if ( is_super_admin() ) {
-edit_post_link( __( 'Edit' , 'onepiece' ), '<span class="edit-link">', '</span>' );
+edit_post_link( __( '<webicon icon="fa:edit"/>' , 'onepiece' ), '<span class="edit-link">', '</span>' );
 }
 
 // Titles on top in lists/loops
@@ -74,10 +74,15 @@ if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ||
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 
 echo '<div class="post-subtitle">';
+
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
-echo '<span class="post-date">'.get_the_date().'</span>';
+
+	echo '<span class="post-date">';
+	echo get_the_date();
+	echo '</span>';
 }
+
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
 echo ' <span class="post-author">'.get_the_author().'</span> ';
 }
@@ -288,4 +293,6 @@ if ( !is_single() && !is_page() ) {
 }
 
 endif; 
+
+
 ?>

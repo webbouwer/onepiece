@@ -319,7 +319,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
 
 		$wp_customize->add_section('icons', array(
-        	'title'    => __('Icons', 'onepiece'),
+        	'title'    => __('Icons & buttons', 'onepiece'),
         	'panel'  => 'onepiece_content_style',
 		'priority' => 70,
     	));
@@ -2057,6 +2057,63 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 
 
+	// Scroll to top button
+
+		$wp_customize->add_setting( 'onepiece_identity_scrolltotop_display' , array(
+		'default' => 'br',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_scrolltotop_display', array(
+            	'label'          => __( 'ScrolltoTop Button display', 'onepiece' ),
+            	'section'        => 'icons',
+            	'settings'       => 'onepiece_identity_scrolltotop_display',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Display/position scroll-to-top button.', 'onepiece' ),
+            	'choices'        => array(
+                	'hi'   => __( 'hide', 'onepiece' ),
+                	'br'   => __( 'bottom right', 'onepiece' ),
+            		'bl'   => __( 'bottom left', 'onepiece' ),
+            		'tr'   => __( 'top right', 'onepiece' ),
+            		'tl'   => __( 'top left', 'onepiece' ),
+            	)
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_identity_scrolltotop_html' , array(
+		'default' => '<webicon icon="fa:chevron-up"/>',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_scrolltotop_html', array(
+            	'label'          => __( 'Button text or html', 'onepiece' ),
+            	'section'        => 'icons',
+            	'settings'       => 'onepiece_identity_scrolltotop_html',
+            	'type'           => 'text',
+ 	    		'description'    => __( 'Scroll-to-top button text or html(icon) content.', 'onepiece' ),
+    	)));
+
+
+		$wp_customize->add_setting( 'onepiece_identity_scrolltotop_margin' , array(
+		'default' => '15px 15px',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_scrolltotop_margin', array(
+            	'label'          => __( 'ScrolltoTop button Margin', 'onepiece' ),
+            	'section'        => 'icons',
+            	'settings'       => 'onepiece_identity_scrolltotop_margin',
+            	'type'           => 'text',
+ 	    		'description'    => __( 'Distance from window borders ( [top/bottom]px [left/right]px )', 'onepiece' ),
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_identity_scrolltotop_padding' , array(
+		'default' => '5px 9px',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_identity_scrolltotop_padding', array(
+            	'label'          => __( 'ScrolltoTop button padding', 'onepiece' ),
+            	'section'        => 'icons',
+            	'settings'       => 'onepiece_identity_scrolltotop_padding',
+            	'type'           => 'text',
+ 	    		'description'    => __( 'Button inside padding ( [top/bottom]px [left/right]px )', 'onepiece' ),
+    	)));
 		
     	
 		
