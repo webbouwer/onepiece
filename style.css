@@ -75,10 +75,19 @@ bottom:0px;
 right:0px;
 background-color:white;
 color:black;
-padding:5px 6px;
 z-index:79;
 }
 
+
+
+
+webicon,
+.svg-webicon /* div.anythingSlider span.arrow webicon*/
+{
+display: block;
+width:32px;
+height:auto;
+}
 
 
 
@@ -90,12 +99,12 @@ left:45%;
 width:6%;
 min-width:80px;
 top:46%;
-text-align:center;
 z-index:90;
 }
 body .loadbox span
 {
 display:block;
+text-align:center;
 	/*
 padding:5px;
 background-color:#000;
@@ -338,19 +347,9 @@ z-index:50;
 
 #sliderbox-head .topelement
 {
-/*
-background-image:url(http://dasglueck.nl/preview/wp-content/uploads/2016/12/hoekjerechtsbovengoed.png);
-background-position:right bottom;
-background-repeat:no-repeat;
-*/
 }
 #sliderbox-head .bottomelement
 {
-/*
-background-image:url(http://dasglueck.nl/preview/wp-content/uploads/2016/12/hoekjelinksondergoed.png);
-background-position:left top;
-background-repeat:no-repeat;
-*/
 }
 
 
@@ -451,8 +450,6 @@ span.edit-link a
 {
 display:inline-block;
 font-size:0.8em;
-color:white;
-background-color:green;
 padding:1px 2px;
 }
 

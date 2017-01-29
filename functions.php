@@ -302,7 +302,7 @@ add_action('wp_enqueue_scripts', 'onepiece_global_js');
 /*
  * Adjust excerpt num words max
  */
-function the_excerpt_length( $words = null ) { 
+function the_excerpt_length( $words = null, $links = true ) {
     global $_the_excerpt_length_filter;
 
     if( isset($words) ) { 
@@ -310,8 +310,13 @@ function the_excerpt_length( $words = null ) {
     }   
 
     add_filter( 'excerpt_length', '_the_excerpt_length_filter' );
-    the_excerpt();
-    remove_filter( 'excerpt_length', '_the_excerpt_length_filter' );
+    if( $links == false){
+		echo preg_replace('/(?i)<a([^>]+)>(.+?)<\/a>/','', get_the_excerpt() );
+	}else{
+		the_excerpt();
+	}
+
+	remove_filter( 'excerpt_length', '_the_excerpt_length_filter' );
 
     // reset the global
     $_the_excerpt_length_filter = null;
@@ -327,7 +332,6 @@ function _the_excerpt_length_filter( $default ) {
     return $default;
 }
 // the_excerpt_length( 25 );
-
 
 
 

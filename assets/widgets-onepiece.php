@@ -29,7 +29,7 @@ function onepiece_dashboard_widget_content() {
 	foreach(array_slice($events, 0, 5) as $event){
 		if($event->payload->commits[0]->message != ''){
 		echo '<li><b>'.$event->payload->commits[0]->message.'</b><br />';
-		echo '<small>'.$event->type.' '.tweetTime($event->created_at).' by <a href="https://github.com/'.$event->actor->login.'" target="_blank">'.$event->payload->commits[0]->author->name.'</a></small></li>';
+		echo '<small>'.$event->type.' '.$event->created_at.' by <a href="https://github.com/'.$event->actor->login.'" target="_blank">'.$event->payload->commits[0]->author->name.'</a></small></li>';
 		}	
 	}
 	echo '</ul>';
@@ -125,6 +125,7 @@ class onepiece_postlist_widget extends WP_Widget {
 		$custom_metabox_urltext = get_post_meta( get_the_ID() , 'meta-box-custom-urltext', true);
 
 		$title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
+
 		if( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceblank'){
 		$title_link = '<a href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
 		}elseif( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceself'){
@@ -136,9 +137,9 @@ class onepiece_postlist_widget extends WP_Widget {
 		include('product.php');
 
 		//start output
-		echo '<li>';
+		echo '<li>'. $title_link;
 
-		echo '<div><h4>'.$title_link . get_the_title() .'</a></h4>';
+		echo '<div class="post-titlebox"><h4>'. get_the_title() .'</h4>';
 		if($dsp_date != 0 ){
 		echo '<span class="post-date">'.tweetTime(get_the_date('c')).' </span>';
 		}
@@ -156,7 +157,7 @@ class onepiece_postlist_widget extends WP_Widget {
 		if( isset( $instance[ 'dsp_price' ] ) && $instance[ 'dsp_price' ] != 0)
 		echo $productbox;
 
-		echo '<div class="item-excerpt">'.$title_link;
+		echo '<div class="item-excerpt">'; //.$title_link;
 
 		if ( has_post_thumbnail() && $dsp_image != 'none' ) {
 			$align = 'align-'.$dsp_image;
@@ -164,14 +165,20 @@ class onepiece_postlist_widget extends WP_Widget {
     	}
 
 		// Post intro content
-		the_excerpt_length( $excerptlength );
+
+		// preg_replace('/(?i)<a([^>]+)>(.+?)<\/a>/','', get_the_excerpt() );
+
+		echo '<p>';
+		the_excerpt_length( $excerptlength, false );
+		echo '</p>';
+
+		echo '</div><div class="clr"></div>';
+
+		echo '</a>';
 
 		// package box
 		if( $instance[ 'dsp_packweight' ] !=0)
 			echo $packagebox;
-
-
-		echo '</a></div><div class="clr"></div>';
 
 		// order box
 		if( isset( $instance[ 'dsp_order' ] )  && $instance[ 'dsp_order' ] != 0)
@@ -183,6 +190,7 @@ class onepiece_postlist_widget extends WP_Widget {
 			echo '</div>';
 		}
 
+			echo '</li>';
 		}
 
 		endwhile;
