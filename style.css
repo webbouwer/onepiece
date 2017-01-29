@@ -73,8 +73,6 @@ position:fixed;
 display:block;
 bottom:0px;
 right:0px;
-background-color:white;
-color:black;
 z-index:79;
 }
 
@@ -219,7 +217,8 @@ width:auto;
  * Minibar menu item always inline
  *
  */
-#topbarmargin #minibar-navigation .menu li
+#topbarmargin #minibar-navigation .menu li,
+#bottombarmargin ul  li
 {
 display:inline-block;
 list-style-type:none;
