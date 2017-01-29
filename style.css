@@ -395,6 +395,15 @@ overflow:hidden;
 
 
 
+/* Content Padding */
+.contentpadding
+{
+display:block;
+width: 100%;
+-webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+        box-sizing: border-box;
+}
 
 #topsidebar .widgetpadding,
 #maincontent .type-post .contentpadding,
@@ -408,6 +417,11 @@ overflow:hidden;
 {
 padding:0px;
 }
+
+
+
+
+
 .post-coverimage img,
 #maincontent .contentpadding img, /* small screens */
 #maincontent .follow-post.has-post-thumbnail .post-title,
@@ -845,20 +859,31 @@ text-align:center; /* available on small screens */
 }
 
 #maincontent .follow-post.has-post-thumbnail .imgalign-left .post-title,
-#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-subtitle,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .pricebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .sizebox
 /*#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-excerpt*/
 {
     width:68%;
     float:right;
 }
 #maincontent .follow-post.has-post-thumbnail .imgalign-right .post-title,
-#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-subtitle,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .pricebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .sizebox
 /*#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-excerpt*/
 {
     width:68%;
     float:left;
 }
 
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-excerpt,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-excerpt
+{
+	display: inline-block;
+}
 
 
 
@@ -880,8 +905,13 @@ text-align:center; /* available on small screens */
 
 #maincontent .follow-post .imgalign-center .post-coverimage
 {
+	width:100%;
     margin:0px auto;
 	text-align:center;
+}
+
+#maincontent .post-subtitle
+{
 }
 
 .post-date,
