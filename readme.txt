@@ -3,16 +3,25 @@ Wordpress Theme in Development
 /**
 README.md
 
-by CP Müller - 2016 The Hague 
+by CP Müller - 2017 The Hague 
 Webdesign Den Haag | Oddsized
 
 Many thanks to the great work of the Wordpress Team
 **/
 
-Theme to be applied by Wordpress Code Monkeys :-)
-  Not available in the Wordpress Theme directory
+
+
+#### Beta - Theme to be applied by Wordpress Code Monkeys :-)
+
+	This Wordpress theme is in Beta. With current stability and features of the theme I do build real production sites with it (earlybird branch) and I'll make en effort to support the library and maintain backwards compatibility in the future. While the theme is still in Beta, I reserve the right to make incompatible changes. 
+
+  This theme is not available in the Wordpress Theme directory
   Keep track of updates here - https://github.com/Oddsized/onepiece
-  Use the github-updater plugin by Andy Fragen - https://github.com/afragen
+  To use this theme I suggest to fork the Earlybird branch (when available) and use the github-updater plugin by Andy Fragen - https://github.com/afrage inside wordpress linking your Onepiece theme to your own fork with your own github acces token. 
+
+### WARNING: PHP / JAVASCRIPT is not used the wordpress way (yet) - only a bit of js vars are localized and most of the Javascript is inside htmlhead.php
+
+### WARNING: This theme customizer is without sanitation of data, meaning the customizer variables are passed through by the sanitation function without any real check (customizer.php). While still in Beta 
 
 HTML and basic css is available, custom theme style can be applied in a custom stylesheet wich can be selected inside the theme customizer. ! Current all Branches testing php fread to get .css files this might result in errors or blank screen on some shared-hosting platforms.
 
@@ -32,8 +41,14 @@ Made with the Menu Image code by Alex Davyskiba aka Zviryatko - http://html-and-
 Views are enhanced with responsive methodes
 Mobile detection made with code by Andy Moore http://detectmobilebrowsers.mobi 
 
+SVG icon layout options with webicons html
+Icons8 We Love SVGβ https://icons8.com/welovesvg
 
-WARNING: This theme customizer is without sanitation of data, meaning the customizer variables are passed through by the sanitation function without any real check (customizer.php) 
++ Share Widget creating share links with webicons
++ Postlist Widget listing a post cateory with extended options
+
++ Dashboard Widget with latest repository updates
+
 
 Version 0.6.5.2
 Update including customizer settings to exclude multiple post categories from the main loop.
