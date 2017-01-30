@@ -3,25 +3,46 @@ Wordpress Theme in Development
 /**
 README.md
 
-by CP Müller - 2016 The Hague 
+by CP Müller - 2017 The Hague 
 Webdesign Den Haag | Oddsized
 
 Many thanks to the great work of the Wordpress Team
 **/
 
-Theme to be applied by Wordpress Code Monkeys :-)
-  Not available in the Wordpress Theme directory
-  Keep track of updates here - https://github.com/Oddsized/onepiece
-  Use the github-updater plugin by Andy Fragen - https://github.com/afragen
 
-https://github.com/Oddsized/onepiece/projects/1
+
+#### Beta - Theme to be applied by Wordpress Code Monkeys :-)
+
+	This Wordpress theme is in Beta. With current stability and features of the theme I do build real production sites with it (earlybird branch) and I'll make en effort to support the library and maintain backwards compatibility in the future. While the theme is still in Beta, I reserve the right to make incompatible changes. 
+
+  This theme is not available in the Wordpress Theme directory. 
+  Keep track of updates here - https://github.com/Oddsized/onepiece
+  
+  To use this theme I suggest to fork the Earlybird branch (when available) and use the github-updater plugin by Andy Fragen - https://github.com/afrage inside wordpress linking your Onepiece theme to your own fork with your own github acces token. 
+
+
+### WARNING: PHP / JAVASCRIPT is not used the wordpress way (yet) - only a bit of js vars are localized and most of the Javascript is inside htmlhead.php
+
+### WARNING: This theme customizer is without sanitation of data, meaning the customizer variables are passed through by the sanitation function without any real check (customizer.php). While still in Beta 
+
 
 HTML and basic css is available, custom theme style can be applied in a custom stylesheet wich can be selected inside the theme customizer. ! Current all Branches testing php fread to get .css files this might result in errors or blank screen on some shared-hosting platforms.
 
-Most common page markups can be achieved without any code hassle:
+#### Most common page markups can be achieved without any code hassle:
 
 Theme options are build in the theme customizer, post metaboxes and page-templates.
 The basic post/page view has extended meta options by default, including controlling 2 default sidebars and a headerimage or content slider. 
+
+
+### Onepiece has a few widgets:
+
+Share Widget creating share links with webicons
+
+Postlist Widget listing a post cateory with extended options
+
+Dashboard Widget with latest repository updates
+
+
 
 The isotope gallery theme adds it own gallery settings to a page including category and tag filter menu's.
 Made with Isotope code by David DeSandro - https://github.com/desandro. 
@@ -32,10 +53,11 @@ Menu's can have positioned images.
 Made with the Menu Image code by Alex Davyskiba aka Zviryatko - http://html-and-cms.com/plugins/menu-image/
 
 Views are enhanced with responsive methodes
+- Repositioning html blocks onresize / page load
 Mobile detection made with code by Andy Moore http://detectmobilebrowsers.mobi 
 
+SVG icon layout options with webicons html
 
-WARNING: This theme customizer is without sanitation of data, meaning the customizer variables are passed through by the sanitation function without any real check (customizer.php) 
 
 Version 0.6.5.2
 Update including customizer settings to exclude multiple post categories from the main loop.
@@ -49,6 +71,8 @@ Highlights:
 > lot's of default options in customizer (ie. show author/date)
 > featured images can replace header image
 > isotope masonry gallery with filtermenu
+> extended postlist widget
+> share buttons widget
 
 In development:
 
@@ -94,6 +118,10 @@ Product Metabox Posts:
 - [implement todo..] Weight measurement in mg, gram, kilogram, ton
 - Labeled ( No/New/Special/Featured/Coming soon/All time favourite)
 
+Widgets:
+> Extended postlist widget
+> Share buttons widget
+> Dashboard Github Theme Events
 
 Customizer Options:
 
@@ -131,13 +159,15 @@ Content:
 
    
 Elements:
-
     Background image    
     Top menu bar
         Display none/position  
-    
-    [todo] Login tabbar    
-        [todo] Display none/position
+    	..
+	topsidebar 
+	..
+	
+    Loginbar    
+        Display none/position
       
     Header image
 		Image
