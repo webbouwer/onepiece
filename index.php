@@ -100,7 +100,11 @@ echo '<div class="clr"></div></nav></div>';
 }
 
 
+$breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
 
+if($breadcrumbsdisplay == 'top'){
+custom_breadcrumbs();
+}
 
 
 

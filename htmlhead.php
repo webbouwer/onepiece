@@ -262,12 +262,19 @@ Loaderbox icon image
 */
 $('.loadbox span').html('<img width="100%" height="auto" src="<?php echo $loaderboxicon;?>" alt="loader" />');
 
-/*
+
+
+
+jQuery(document).ready(function($) {
+
+
+
+	/*
 Header Height Resize
 */
 var rtime;
 var timeout = false;
-var delta = 200;
+var delta = 20;
 $(window).resize(function() {
 
 
@@ -285,7 +292,13 @@ function resizeend() {
         setTimeout(resizeend, delta);
     }else{
         timeout = false;
-		
+		sizeHeaderElements();
+    }
+}
+
+
+function sizeHeaderElements(){
+
 		var rMinHeight = $('#topbar .outermargin').outerHeight();
 		var rSetHeight = ($(window).height() / 100) * <?php echo $displaytype; ?>;
 		//var rToHeight = (  rMinHeight > rSetHeight ? rMinHeight : rSetHeight );
@@ -300,10 +313,11 @@ function resizeend() {
 
 		$('#headerbar .bglayer').css( 'height' , $('#headerbar').height() );	// reset topbar bglayer height
 
-    }   
 }
 
-jQuery(document).ready(function($) {
+
+
+
 
 /* AnythingSlider */
 $(window).trigger('resize'); // adjust slider on resize

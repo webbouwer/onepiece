@@ -356,6 +356,23 @@ z-index:50;
 
 
 /******************** CONTENT & SIDEBARS (SMALL)  ********************/
+
+#breadcrumbs{
+    list-style:none;
+    margin:5px 0;
+    overflow:hidden;
+}
+
+#breadcrumbs li{
+    display:inline-block;
+    vertical-align:middle;
+    margin-right:5px;
+}
+
+#breadcrumbs .separator{
+}
+
+
 #maincontent,
 #mainsidebar,
 #sidebar2,

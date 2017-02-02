@@ -7,6 +7,14 @@ $firstcount = get_theme_mod('onepiece_content_panel_postlist_firstcount', 3);
 $excerptlength = get_theme_mod('onepiece_content_panel_postlist_excerptlength', 25);
 
 
+$breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
+
+if($breadcrumbsdisplay == 'befor'){
+custom_breadcrumbs();
+}
+
+
+
 if ( is_category() && get_theme_mod( 'onepiece_content_panel_list_titledisplay' ) != 'none') {
 echo '<div class="category-titlebar"><h1>'.single_cat_title( '', false ).'</h1>';
 if ( category_description() && get_theme_mod( 'onepiece_content_panel_category_titledisplay' ) == 'text') : 
