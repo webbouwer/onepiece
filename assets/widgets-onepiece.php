@@ -91,33 +91,90 @@ class onepiece_postlist_widget extends WP_Widget {
 
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
+
+
+
 		// before and after widget arguments are defined by themes
 		echo $args['before_widget'];
 
 		if ( ! empty( $title ) )
 		echo $args['before_title'] . $title . $args['after_title'];
 
+
+
+		/*
+		 * Query for post category or related
+		 * - widget selected category
+		 * .. related categories / tags (or default / recent posts)
+		 */
+
+
+
+
+			// Category related posts
+			$catsrel = "";
+			//$posttags = get_the_tags();
+			$postcats = get_the_category();
+			if ($postcats) {
+			foreach($postcats as $tag) {
+				$catsrel .= ',' . $tag->name;
+			}
+			}
+			$catsrel = substr($catsrel, 1); // remove first comma
+
+			// Tag related posts
+			$tagsrel = "";
+			$posttags = get_the_tags();
+			if ($posttags) {
+			foreach($posttags as $tag) {
+				$tagsrel .= ',' . $tag->name;
+			}
+			}
+			$tagsrel = substr($tagsrel, 1); // remove first comma
+
+
+		// list the post accoording to settings category/related
 		if($instance['post_category'] == ''){
 
-		// latest of all
-		query_posts('post_status=publish&order='.$itemorder.'&posts_per_page='.$itemcount);
+			// latest of all or any '' category
+			query_posts('post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
+
+		}elseif($instance['post_category'] == 'PostRelCat' && $catsrel != ""){
+
+			// posts with same categories
+			query_posts('category_name=' .$catsrel . '&post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
+
+		}elseif($instance['post_category'] == 'PostRelTag' && $tagsrel != ""){
+
+			// posts with same tags
+			query_posts('tag=' .$tagsrel . '&post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
+
+		}elseif($instance['post_category'] == 'PostRelCatTag'){
+
+			// or both tags and cats : cat=6&tag=a1
+			query_posts('category_name=' .$catsrel . '&tag=' .$tagsrel . '&post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
 
 		}else{
 
-		// latest from category
-		query_posts('category_name='.$instance['post_category'].'&post_status=publish&order='.$itemorder.'&posts_per_page='.$itemamount);
+			// latest from specific category
+			query_posts('category_name='.$instance['post_category'].'&post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
 
 		}
 
+		if ( ! have_posts() ){
+			// if no results try a new global query
+			query_posts('post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
+		}
 
-		//query_posts('category_name='.$category->slug); // or use  something with get_category_link( $category )
+
+
 		if (have_posts()) :
 
 		echo '<ul>';
 
 		while (have_posts()) : the_post();
 
-		if($currentid!= get_the_ID()){
+		if($currentid!= get_the_ID()){ // double check if item is current active page/post id
 
 		// define title link
 		$custom_metabox_url = get_post_meta( get_the_ID() , 'meta-box-custom-url', true);
@@ -236,14 +293,17 @@ class onepiece_postlist_widget extends WP_Widget {
 
 		$catarr = get_categories_select(); // functions.php
 		?>
-		<p><label for="<?php echo $this->get_field_id( 'post_category' ); ?>">Posts category:</label>
+		<p><label for="<?php echo $this->get_field_id( 'post_category' ); ?>">Posts category or related:</label>
 		<select name="<?php echo $this->get_field_name( 'post_category' ); ?>" id="<?php echo $this->get_field_id( 'post_category' ); ?>">
-		<option value="" <?php selected( $post_category, '' ); ?>>Any</option>
 		<?php
 		foreach($catarr as $slg => $nm){
-			echo '<option value="'.$slg.'" '.selected( $post_category, $slg ).'>'.$nm.'</option>';
+			echo '<option value="'.$slg.'" '.selected( $post_category, $slg ).'>- '.$nm.'</option>';
 		}
 		?>
+		<option value="PostRelCatTag" <?php selected( $post_category, 'PostRelCatTag' ); ?>>Related by cats &amp; tags</option>
+		<option value="PostRelCat" <?php selected( $post_category, 'PostRelCat' ); ?>>Related by category</option>
+		<option value="PostRelTag" <?php selected( $post_category, 'PostRelTag' ); ?>>Related by tags</option>
+		<option value="" <?php selected( $post_category, '' ); ?>>Any (Recents) Posts</option>
 		</select>
 		</p>
 
