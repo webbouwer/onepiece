@@ -52,7 +52,7 @@ echo '<div id="contentcontainer"><div class="outermargin">';
 
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'top'){
+if($breadcrumbsdisplay == 'top' ){
 custom_breadcrumbs();
 }
 
@@ -159,7 +159,7 @@ echo '<div class="clr"></div></nav></div>';
 
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'before'){
+if($breadcrumbsdisplay == 'befor'){
 custom_breadcrumbs();
 }
 
@@ -178,6 +178,9 @@ echo '><div class="contentpadding">';
 $page_ID = get_the_ID();
 $values = get_post_custom( $page_ID );
 $post_obj = $wp_query->get_queried_object();
+
+
+
 
 /**
  *
