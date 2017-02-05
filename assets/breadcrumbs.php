@@ -20,9 +20,11 @@ function custom_breadcrumbs() {
         // Build the breadcrums
         echo '<ul id="' . $breadcrums_id . '" class="' . $breadcrums_class . '">';
 
-        // Home page
+        // Home page (if customizer set)
+		if( get_theme_mod('onepiece_elements_breadcrumbs_homelink','yes') == 'yes'){
         echo '<li class="item-home"><a class="bread-link bread-home" href="' . get_home_url() . '" title="' . $home_title . '">' . $home_title . '</a></li>';
         echo '<li class="separator separator-home"> ' . $separator . ' </li>';
+		}
 
         if ( is_archive() && !is_tax() && !is_category() && !is_tag() ) {
 
