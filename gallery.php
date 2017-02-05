@@ -10,7 +10,7 @@ $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
  *
  * get header variables
  *
- */	
+ */
 $useheaderimage = get_post_meta( get_the_ID() , "meta-page-headerimage", true);
 $pagesidebardisplay = get_post_meta(get_the_ID(), "meta-page-pagesidebardisplay", true);
 $specialwidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-specialwidgetsdisplay", true);
@@ -125,6 +125,11 @@ $filtermenubox .= '<ul class="tagmenu overview active">'.$alltagmenuoptions.'</u
 $filtermenubox .= $cat_tags;
 }
 
+/*
+ * Breadcrumbs
+ */
+$breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
+
 
 
 
@@ -148,6 +153,7 @@ get_template_part('header');
  *
  */
 echo '<div id="contentcontainer"><div class="outermargin">';
+
 
 
 
@@ -257,6 +263,11 @@ $contentfloat = 'left';
  */
 echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
 
+/* Breadcrumbs */
+if($breadcrumbsdisplay == 'top' ){
+custom_breadcrumbs();
+}
+
 
 /**
  * login 
@@ -285,6 +296,14 @@ echo '<div id="specialpagewidgets">';
 dynamic_sidebar('special-page-widgets');
 echo '<div class="clr"></div></div>';
 }
+
+
+
+/* Breadcrumbs */
+if($breadcrumbsdisplay == 'befor' ){
+custom_breadcrumbs();
+}
+
 
 
 /**

@@ -8,6 +8,12 @@ get_template_part('header');
  */
 $logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
 
+
+/*
+ * Breadcrumbs
+ */
+$breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
+
 // content
 echo '<div id="contentcontainer"><div class="outermargin">';
 
@@ -61,6 +67,11 @@ $contentfloat = 'left';
 // main content area
 echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
 
+/* Breadcrumbs */
+if($breadcrumbsdisplay == 'top'){
+custom_breadcrumbs();
+}
+
 
 /**
  * 
@@ -98,7 +109,6 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 } 
 echo '<div class="clr"></div></nav></div>';
 }
-
 
 
 
