@@ -129,6 +129,7 @@ $filtermenubox .= $cat_tags;
  * Breadcrumbs
  */
 $breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
+$breadcrumbspageshow = get_theme_mod( 'onepiece_elements_breadcrumbs_onpages' , 'all');
 
 
 
@@ -220,7 +221,7 @@ $contentfloat = 'left';
 echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'top' ){
+if($breadcrumbsdisplay == 'top' && $breadcrumbspageshow == 'all'){
 custom_breadcrumbs();
 }
 
@@ -256,7 +257,7 @@ echo '<div class="clr"></div></div>';
 
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'befor' ){
+if($breadcrumbsdisplay == 'befor' && $breadcrumbspageshow == 'all'){
 custom_breadcrumbs();
 }
 
