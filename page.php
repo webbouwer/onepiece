@@ -27,6 +27,7 @@ $childcoverimage = get_post_meta(get_the_ID(), "meta-box-display-coverimage", tr
 
 
 $breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
+$breadcrumbspageshow = get_theme_mod( 'onepiece_elements_breadcrumbs_onpages' , 'all');
 
 
 /**
@@ -52,7 +53,7 @@ echo '<div id="contentcontainer"><div class="outermargin">';
 
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'top' ){
+if($breadcrumbsdisplay == 'top' && $breadcrumbspageshow == 'all'){
 custom_breadcrumbs();
 }
 
@@ -159,7 +160,7 @@ echo '<div class="clr"></div></nav></div>';
 
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'befor'){
+if($breadcrumbsdisplay == 'befor' && $breadcrumbspageshow == 'all'){
 custom_breadcrumbs();
 }
 

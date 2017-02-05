@@ -129,6 +129,7 @@ $filtermenubox .= $cat_tags;
  * Breadcrumbs
  */
 $breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
+$breadcrumbspageshow = get_theme_mod( 'onepiece_elements_breadcrumbs_onpages' , 'all');
 
 
 
@@ -153,50 +154,6 @@ get_template_part('header');
  *
  */
 echo '<div id="contentcontainer"><div class="outermargin">';
-
-
-
-
-/**
- * 
- * set sidebars
- *
-
-$contentpercentage = 100;
-if( get_theme_mod('onepiece_elements_sidebar2_position2') == 'out' && get_theme_mod('onepiece_elements_sidebar2_position') != 'none' && $secondsidebardisplay != 'hide'){
-$contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width'); 
-echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position').';width:'.get_theme_mod('onepiece_elements_sidebar2_width').'%;">';
-get_template_part('sidebar2');
-echo '<div class="clr"></div></div>';
-}
-if( $pagesidebardisplay != 'none' && function_exists('is_sidebar_active') && get_theme_mod('onepiece_elements_sidebar_position') != 'none' && (is_sidebar_active('sidebar') || is_sidebar_active('pagesidebar') ) ){
-    $contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_mainsidebar_width');
-    echo '<div id="pagesidebarcontainer" class="'.get_theme_mod('onepiece_elements_sidebar_position', 'right').'side" style="float:'.get_theme_mod('onepiece_elements_sidebar_position','right').';width:'.get_theme_mod('onepiece_elements_mainsidebar_width').'%;">';
-    if( ( is_sidebar_active('pagesidebar')  || has_nav_menu( 'pagemenu' ) ) && ($pagesidebardisplay == 'top' || $pagesidebardisplay == 'replace') ){
-    echo '<div id="pagesidebar">';
-    get_template_part('pagebar');
-    echo '<div class="clr"></div></div>';
-    }
-    if( is_sidebar_active('sidebar') && ($pagesidebardisplay != 'replace' || !is_sidebar_active('pagesidebar')) ){ 
-    echo '<div id="mainsidebar">';
-    get_template_part('sidebar');
-    echo '<div class="clr"></div></div>';
-    }
-    if( ( is_sidebar_active('pagesidebar') || has_nav_menu( 'pagemenu' ) ) && $pagesidebardisplay == 'below' ){
-    echo '<div id="pagesidebar">';
-    get_template_part('pagebar');
-    echo '<div class="clr"></div></div>';
-    }
-    echo '<div class="clr"></div></div>';
-}
-if( get_theme_mod('onepiece_elements_sidebar2_position2') == 'ins' && get_theme_mod('onepiece_elements_sidebar2_position') != 'none' && $secondsidebardisplay != 'hide'){
-    $contentpercentage = $contentpercentage - get_theme_mod('onepiece_elements_sidebar2_width'); 
-    echo '<div id="sidebar2" class="'.get_theme_mod('onepiece_elements_sidebar2_position', 'right').'side '.get_theme_mod('onepiece_elements_sidebar2_position2').'" style="float:'.get_theme_mod('onepiece_elements_sidebar2_position').';width:'.get_theme_mod('onepiece_elements_sidebar2_width').'%;">';
-    echo '<div class="sidebarpadding">';
-    get_template_part('sidebar2');
-    echo '<div class="clr"></div></div></div>';
-}
- */
  
  
 /*
@@ -264,7 +221,7 @@ $contentfloat = 'left';
 echo '<div id="maincontent" style="float:'.$contentfloat.';width:'.$contentpercentage.'%;">';
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'top' ){
+if($breadcrumbsdisplay == 'top' && $breadcrumbspageshow == 'all'){
 custom_breadcrumbs();
 }
 
@@ -300,7 +257,7 @@ echo '<div class="clr"></div></div>';
 
 
 /* Breadcrumbs */
-if($breadcrumbsdisplay == 'befor' ){
+if($breadcrumbsdisplay == 'befor' && $breadcrumbspageshow == 'all'){
 custom_breadcrumbs();
 }
 
@@ -370,7 +327,7 @@ if($filters != 'none'){
 
 /**
  * 
- * start isotope item container
+ * start isotope item container (see code in htmlhead.php :)
  *
  */
 echo '<div id="itemcontainer" class="category-contentbar"></div>'; // Gallery content container

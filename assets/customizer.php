@@ -1535,7 +1535,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	));
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_breadcrumbs_display', array(
-            	'label'          => __( 'Sidebar Position', 'onepiece' ),
+            	'label'          => __( 'Breadcrumbsbar Position', 'onepiece' ),
             	'section'        => 'onepiece_elements_breadcrumbs',
             	'settings'       => 'onepiece_elements_breadcrumbs_display',
             	'type'           => 'select',
@@ -1546,6 +1546,42 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'befor'   => __( 'Before the page main content (after before widgets)', 'onepiece' ),
             	)
     	)));
+
+
+		$wp_customize->add_setting( 'onepiece_elements_breadcrumbs_onpages' , array(
+		'default' => 'all',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_breadcrumbs_onpages', array(
+            	'label'          => __( 'Where to display', 'onepiece' ),
+            	'section'        => 'onepiece_elements_breadcrumbs',
+            	'settings'       => 'onepiece_elements_breadcrumbs_onpages',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select when to show breadcrumbs bar.', 'onepiece' ),
+            	'choices'        => array(
+                	'all'   => __( 'Always', 'onepiece' ),
+                	'post'   => __( 'Only category/post views', 'onepiece' ),
+            	)
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_elements_breadcrumbs_homelink' , array(
+		'default' => 'no',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_breadcrumbs_homelink', array(
+            	'label'          => __( 'Show Home link', 'onepiece' ),
+            	'section'        => 'onepiece_elements_breadcrumbs',
+            	'settings'       => 'onepiece_elements_breadcrumbs_homelink',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select to display the breadcrumbs home link.', 'onepiece' ),
+            	'choices'        => array(
+                	'no'   => __( 'No', 'onepiece' ),
+                	'yes'   => __( 'Yes', 'onepiece' ),
+            	)
+    	)));
+
+
+
 		
 		// ELEMENTS - MAIN SIDEBAR
 		$wp_customize->add_setting( 'onepiece_elements_sidebar_position' , array(
