@@ -262,12 +262,19 @@ Loaderbox icon image
 */
 $('.loadbox span').html('<img width="100%" height="auto" src="<?php echo $loaderboxicon;?>" alt="loader" />');
 
-/*
+
+
+
+jQuery(document).ready(function($) {
+
+
+
+	/*
 Header Height Resize
 */
 var rtime;
 var timeout = false;
-var delta = 200;
+var delta = 20;
 $(window).resize(function() {
 
 
@@ -285,7 +292,13 @@ function resizeend() {
         setTimeout(resizeend, delta);
     }else{
         timeout = false;
-		
+		sizeHeaderElements();
+    }
+}
+
+
+function sizeHeaderElements(){
+
 		var rMinHeight = $('#topbar .outermargin').outerHeight();
 		var rSetHeight = ($(window).height() / 100) * <?php echo $displaytype; ?>;
 		//var rToHeight = (  rMinHeight > rSetHeight ? rMinHeight : rSetHeight );
@@ -300,10 +313,11 @@ function resizeend() {
 
 		$('#headerbar .bglayer').css( 'height' , $('#headerbar').height() );	// reset topbar bglayer height
 
-    }   
 }
 
-jQuery(document).ready(function($) {
+
+
+
 
 /* AnythingSlider */
 $(window).trigger('resize'); // adjust slider on resize
@@ -1355,7 +1369,31 @@ $(document).ready(function() {
         cat += obj['category'][i]['slug']+' ';
       }
     }
-    var markup = '<div id="post-'+obj.id+'" data-category="'+cat+'" class="item '+cat+' '+tags+'"><div class="innerpadding">';
+
+
+	/*
+	 * Item (custom) url/clickaction
+ 	 */
+
+	var readmoreurl = obj.posturl;
+    var itemdatalink = readmoreurl;
+	var customurl = obj.meta['meta-box-custom-url'];
+	var useurl = obj.meta['meta-box-custom-useurl'];
+
+	var posturl = '<a href="'+readmoreurl+'" title="'+obj.title+'" target="_self">';
+
+	if( customurl != '' && typeof customurl !== 'undefined' && useurl == 'replaceself' ){
+		var posturl = '<a href="'+customurl+'" title="'+obj.title+'" target="_self">';
+	}
+	if( customurl != '' && typeof customurl !== 'undefined' && useurl == 'replaceblank' ){
+		var posturl = '<a href="'+customurl+'" title="'+obj.title+'" target="_blank">';
+	}
+	if( customurl != '' && typeof customurl !== 'undefined'){
+		itemdatalink = customurl;
+	}
+
+
+    var markup = '<div id="post-'+obj.id+'" data-link="'+itemdatalink+'" data-linktarget="'+useurl+'" data-category="'+cat+'" class="item '+cat+' '+tags+'"><div class="innerpadding">';
 
 
 	var smallscreen = false;
@@ -1400,20 +1438,19 @@ $(document).ready(function() {
 	 */ 
 	
     markup += '<div class="titlebox"><h3>';
+	
+	<?php if( isset($clickaction) && $clickaction != 'none' ){ ?>
 
-	var readmoreurl = obj.posturl;
-	var customurl = obj.meta['meta-box-custom-url'];
-	var useurl = obj.meta['meta-box-custom-useurl'];
-	
-	var posturl = '<a href="'+readmoreurl+'" title="'+obj.title+'" target="_self">';
-	if( customurl != '' && typeof customurl !== 'undefined' && useurl == 'replaceself' ){
-		var posturl = '<a href="'+customurl+'" title="'+obj.title+'" target="_self">';
-	}
-	if( customurl != '' && typeof customurl !== 'undefined' && useurl == 'replaceblank' ){
-		var posturl = '<a href="'+customurl+'" title="'+obj.title+'" target="_blank">';
-	}
-	
     markup += posturl+''+obj.title+'</a></h3>';
+
+	<?php }else{ ?>
+
+    markup += obj.title+'</h3>';
+
+	<?php } ?>
+
+
+
 
     <?php // check for customizer posts display settings
     if( get_theme_mod('onepiece_content_panel_postlist_authortime') ){
@@ -1620,6 +1657,18 @@ $(document).ready(function() {
 		$('#mainpopupbox').fadeIn(300);
     }
 	
+	<?php if( $clickaction != 'none' ){ ?>
+
+		$container.on('mouseover', '.item', function(m){
+			if( !$(this).hasClass('active') )
+				$(this).css('cursor','pointer');
+		});
+
+		$container.on('mouseleave', '.item', function(m){
+			$(this).css('cursor','default');
+		});
+
+	<?php } ?>
 	
 	
 	$container.on('click', '.item', function(e){
@@ -1637,21 +1686,17 @@ $(document).ready(function() {
 		<?php if( $clickaction == 'sizeup' ){ ?>
 
 		$('.item').removeClass('active');
-		
-		<?php if( $mobile ){ ?>
-		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' ); // set min-height item
-		<?php } ?>
+
 		
 		$('.item .fullinfobox').addClass('hidden');
 		
 		<?php if( $mobile ){ ?>
-		$(this).find('.coverbox').css('min-height', '<?php echo $itembigh; ?>px' );
+		$('.item').find('.coverbox').css('min-height', '<?php echo $itemminh; ?>px' ); // set min-height other items
+		$(this).find('.coverbox').css('min-height', '<?php echo $itembigh; ?>px' );// height this item
 		<?php } ?>
 		
 		$(this).addClass('active');
 		$(this).find('.fullinfobox').removeClass('hidden');
-		
-		
 		$currCat = $(this).attr('data-category');
 		var $this = $(this);
 
@@ -1671,10 +1716,8 @@ $(document).ready(function() {
 			$('html, body').animate({ scrollTop: $('#itemcontainer').offset().top -  ( $(window).height() / 4 )  }, 400);
 		});
 		
-		
-		<?php }
-		if( $clickaction == 'poppost' ){ 
-		?>
+		<?php }else if( $clickaction == 'poppost' ){ ?>
+
 		var title = $(this).find('.titlebox').wrap('<p/>').parent().html();
 		var image = $(this).find('.coverbox').wrap('<p/>').parent().html();
 		var text =  $(this).find('.fullinfobox').html(); 
@@ -1683,7 +1726,17 @@ $(document).ready(function() {
 		$(this).find('.coverbox').unwrap();
 		loadpopup( content );
 	
-		<?php } ?>
+		<?php }else if( $clickaction == 'link' ){ ?>
+
+		var dataUrl = $(this).attr('data-link');
+		var dataTarget = "_blank";
+		if( $(this).attr('data-linktarget') == 'replaceself'){
+			dataTarget = "_self";
+		}
+		e.preventDefault();
+		window.open( dataUrl, dataTarget );
+
+		<?php }?>
 
 		return false;
 	}); 

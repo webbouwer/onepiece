@@ -25,6 +25,11 @@ $childparentcontent = get_post_meta(get_the_ID(), "meta-box-display-parentconten
 $childalignment = get_post_meta(get_the_ID(), "meta-box-display-alignment", true);
 $childcoverimage = get_post_meta(get_the_ID(), "meta-box-display-coverimage", true);
 
+
+$breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
+$breadcrumbspageshow = get_theme_mod( 'onepiece_elements_breadcrumbs_onpages' , 'all');
+
+
 /**
  *
  * header
@@ -45,6 +50,12 @@ $logindisplay = get_theme_mod('onepiece_elements_loginbar_option', 'none');
  *
  */	
 echo '<div id="contentcontainer"><div class="outermargin">';
+
+
+/* Breadcrumbs */
+if($breadcrumbsdisplay == 'top' && $breadcrumbspageshow == 'all'){
+custom_breadcrumbs();
+}
 
 
 /**
@@ -146,6 +157,14 @@ wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) 
 echo '<div class="clr"></div></nav></div>';
 }
 
+
+
+/* Breadcrumbs */
+if($breadcrumbsdisplay == 'befor' && $breadcrumbspageshow == 'all'){
+custom_breadcrumbs();
+}
+
+
 /**
  *
  *  MAIN CONTENT LOOP
@@ -160,6 +179,9 @@ echo '><div class="contentpadding">';
 $page_ID = get_the_ID();
 $values = get_post_custom( $page_ID );
 $post_obj = $wp_query->get_queried_object();
+
+
+
 
 /**
  *
