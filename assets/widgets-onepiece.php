@@ -134,7 +134,8 @@ class onepiece_postlist_widget extends WP_Widget {
 
 
 		// list the post accoording to settings category/related
-		if($instance['post_category'] == ''){
+		if($instance['post_category'] == '' ||
+		   (is_category() && ( $instance['post_category'] == 'PostRelCat' || $instance['post_category'] == 'PostRelTag' || $instance['post_category'] == 'PostRelCatTag' ) )  ){
 
 			// latest of all or any '' category
 			query_posts('post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
@@ -161,8 +162,8 @@ class onepiece_postlist_widget extends WP_Widget {
 
 		}
 
+		// if no results throw global query
 		if ( ! have_posts() ){
-			// if no results try a new global query
 			query_posts('post_status=publish&post_not_in='.$currentid.'&order='.$itemorder.'&posts_per_page='.$itemcount);
 		}
 
