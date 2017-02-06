@@ -394,7 +394,8 @@ class onepiece_share_widget extends WP_Widget {
 
 			}else if (!has_post_thumbnail($post->ID)) {
 
-				$simg = get_children( "post_parent='.$post->ID.'&amp;post_type=attachment&amp;post_mime_type=image&amp;numberposts=1" );
+				$im = get_children( "post_parent='.$post->ID.'&amp;post_type=attachment&amp;post_mime_type=image&amp;numberposts=1" );
+				$simg = $im[0];
 			}
 
 			else if( get_theme_mod( 'onepiece_identity_featured_image', '') != ''){ // default 'current' share image from customizer
