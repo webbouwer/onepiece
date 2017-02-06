@@ -470,16 +470,22 @@ class onepiece_share_widget extends WP_Widget {
 
 
 			// url string part 3: share media
-			if(isset($entity['share']['s_img'])){
+			if(isset($entity['share']['s_img']) && $simg != ''){
 
 				/*$attid = get_attachment_id( $simg ); // get image id by url ! :)
 				$smallimg = wp_get_attachment_image_src( $attid, 'medium' ); // get medium sized attachtment by id
-				if($smallimg[0]){
-					$image = $smallimg[0];
-				}else{
-					$image = $simg;
-				}*/
+				*/
+
 				$image = $simg;
+
+				$medium_image = wp_get_attachment_image_src( get_attachment_id_by_url($simg), 'medium');
+
+				if( $medium_image[0] ){
+
+					$image = $medium_image[0];
+
+				}
+
 				$urlstr .='&'.$entity['share']['s_img'].'{'.$image.'}'; // add media url
 			}
 
