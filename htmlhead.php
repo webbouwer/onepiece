@@ -99,9 +99,18 @@ wp_head();                      // http://codex.wordpress.org/Function_Reference
 
 // generate header meta info
 $site_description = get_bloginfo( 'description' );
-if( !empty($seodesc)){ 
-$site_description = $seodesc;
+
+if( is_category() ){
+	$cat = get_query_var('cat');
+	$metacat= strip_tags(category_description($cat));
+	$site_description =  $metacat;
+}else
+	if( !empty($seodesc)){
+		$site_description = $seodesc;
 }
+
+
+
 $site_keywords = 'cool, website, amazing, webdesign';
 if( !empty($seokeywords)){
 $site_keywords = $seokeywords;
