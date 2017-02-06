@@ -604,7 +604,7 @@ function get_attachment_id( $url ) {
 	}
 	return $attachment_id;
 }
-*/
+
 
 
 // http://stackoverflow.com/questions/5487444/wordpress-image-size-based-on-url
@@ -632,8 +632,9 @@ function get_attachment_id_by_url( $url ) {
 
     // Returns null if no attachment is found
     return $attachment[0];
-}
 
+}
+*/
 
 /***********************
 * Remove unneeded code *

@@ -382,23 +382,16 @@ class onepiece_share_widget extends WP_Widget {
 				$stxt =  $metacat;
 			}
 
-			/*if( (is_single() || is_page() ) && get_the_post_thumbnail('normal') ){
 
-				$simg = get_the_post_thumbnail_url('normal'); // current post featured image
-
-			}
-			*/
 			if ( has_post_thumbnail($post->ID) && ( is_single() || is_page() ) ) {
 
 				$simg = get_the_post_thumbnail_url($post->ID, 'normal'); // current post featured image
 
 			}else if (!has_post_thumbnail($post->ID)) {
 
-				$im = get_children( "post_parent='.$post->ID.'&amp;post_type=attachment&amp;post_mime_type=image&amp;numberposts=1" );
-				$simg = $im[0];
-			}
+				$simg = get_children( "post_parent='.$post->ID.'&amp;post_type=attachment&amp;post_mime_type=image&amp;numberposts=1" );
 
-			else if( get_theme_mod( 'onepiece_identity_featured_image', '') != ''){ // default 'current' share image from customizer
+			}else if( get_theme_mod( 'onepiece_identity_featured_image', '') != ''){ // default 'current' share image from customizer
 
 				$simg = get_theme_mod( 'onepiece_identity_featured_image', '');
 
@@ -475,19 +468,14 @@ class onepiece_share_widget extends WP_Widget {
 
 				/*$attid = get_attachment_id( $simg ); // get image id by url ! :)
 				$smallimg = wp_get_attachment_image_src( $attid, 'medium' ); // get medium sized attachtment by id
-				*/
+				$medium_image = wp_get_attachment_image_src( get_attachment_id_by_url($simg), 'medium');
+				if( $medium_image[0] ){
+					$image = $medium_image[0];
+				}*/
 
 				$image = $simg;
-
-				$medium_image = wp_get_attachment_image_src( get_attachment_id_by_url($simg), 'medium');
-
-				if( $medium_image[0] ){
-
-					$image = $medium_image[0];
-
-				}
-
 				$urlstr .='&'.$entity['share']['s_img'].'{'.$image.'}'; // add media url
+
 			}
 
 
