@@ -575,7 +575,7 @@ function tweetTime( $t ) {
 function get_attachment_id( $url ) {
 	$attachment_id = 0;
 	$dir = wp_upload_dir();
-	if ( false !== strpos( $url, $dir['baseurl'] . '/' ) ) { // Is URL in uploads directory?
+	if ( $url != '' && false !== strpos( $url, $dir['baseurl'] . '/' ) ) { // Is URL in uploads directory?
 		$file = basename( $url );
 		$query_args = array(
 			'post_type'   => 'attachment',
