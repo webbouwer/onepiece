@@ -1365,19 +1365,24 @@ $(document).ready(function() {
     
     function itemmarkup(obj){
 
-    var tags = '';
-    var taglist = obj['tags'].toString();
-    var tags_arr = taglist.split(/\s*,\s*/);
-    for(i=0;i<tags_arr.length;i++){
-        tags += tags_arr[i]+' ';
-      }
-
+	// get item categories
     var cat = '';
     if(obj['category'].length > 0 ){
       for(i=0;i<obj['category'].length;i++){
         cat += obj['category'][i]['slug']+' ';
       }
     }
+	// get item tags
+    var tags = '';
+    var taglist = obj['tags'].toString();
+    var tags_arr = taglist.split(/\s*,\s*/);
+    for(i=0;i<tags_arr.length;i++){
+        tags += tags_arr[i]+' ';
+    }
+	// add custom field product label to item tags
+	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
+		tags += obj.meta['meta-box-product-label'];
+	}
 
 
 	/*
@@ -1402,7 +1407,7 @@ $(document).ready(function() {
 	}
 
 
-    var markup = '<div id="post-'+obj.id+'" data-link="'+itemdatalink+'" data-linktarget="'+useurl+'" data-category="'+cat+'" class="item '+cat+' '+tags+'"><div class="innerpadding">';
+    var markup = '<div id="post-'+obj.id+'" data-link="'+itemdatalink+'" data-linktarget="'+useurl+'" data-category="'+cat+'" class="item '+cat + tags+'"><div class="innerpadding">';
 
 
 	var smallscreen = false;
@@ -1445,8 +1450,8 @@ $(document).ready(function() {
 
 	markup += '<div class="labelbox">';
 	
-	markup += '<span class="productlabel">check'+labelcontent+'</span>';
-	
+	markup += '<span class="productlabel">'+labelcontent+'</span>';
+
 	markup += '</div>';
 	
 	}

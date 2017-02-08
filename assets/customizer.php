@@ -108,6 +108,14 @@ Content:
 	Product
 		.. turn off product options
 		product order email address
+
+
+		.. product labels
+		new
+		featured
+		special
+		coming soon
+		alltimefavourite
         
     List (replacng category section)
         Use highlight first posts
@@ -127,6 +135,8 @@ Content:
 		.. default item minimal height
 		.. default item clickaction
 		.. default itemview
+
+
    
 Elements:
 
@@ -1107,7 +1117,65 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		// http://wordpress.stackexchange.com/questions/27856/is-there-a-way-to-send-html-formatted-emails-with-wordpress-wp-mail-function
 		// onepiece_content_panel_product
-		
+
+
+
+		//Product LABELS
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_new' , array(
+		'default' => 'New',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_new', array(
+            	'label'          => __( 'Label New', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_new',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_special' , array(
+		'default' => 'Special',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_special', array(
+            	'label'          => __( 'Label Special', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_special',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_featured' , array(
+		'default' => 'Featured',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_featured', array(
+            	'label'          => __( 'Label Featured', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_featured',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_comingsoon' , array(
+		'default' => 'Coming soon',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_comingsoon', array(
+            	'label'          => __( 'Label Coming Soon', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_comingsoon',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_alltimefavourite' , array(
+		'default' => 'All time favourite',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_alltimefavourite', array(
+            	'label'          => __( 'Label All Time Favourite', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_alltimefavourite',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
 		
 
     	// CONTENT - LIST - HIGHLIGHT

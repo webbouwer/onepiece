@@ -592,6 +592,8 @@ height:auto;
 
 
 
+
+
 /******************** GALLERY THEME (DEFAULT/SMALL)  ********************/
 #itemcontainer
 {
@@ -634,9 +636,6 @@ width:100%;
 height:auto;
 }
 
-
-
-
 .item .hidden
 {
 display:none;
@@ -661,14 +660,6 @@ left:0px;
 z-index:30;
 }
 
-.item .labelbox span.productlabel webicon
-{
-position:relative;
-	width:32px;
-	height:32px;
-	background-color:green;
-}
-
 .item.active .labelbox
 {
 top:0px;
@@ -681,6 +672,26 @@ z-index:30;
 {
 position:relative;
 }
+
+
+
+
+
+/* Label icons not loaded? */
+.item .labelbox span.productlabel webicon
+{
+position:relative;
+width:32px;
+height:32px;
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -741,8 +752,6 @@ ul.children li
 {
 display:block;
 }
-
-
 
 
 .menu li a,
