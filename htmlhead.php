@@ -1381,7 +1381,7 @@ $(document).ready(function() {
     }
 	// add custom field product label to item tags
 	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
-		tags += obj.meta['meta-box-product-label'];
+		tags += 'label-'+obj.meta['meta-box-product-label'];
 	}
 
 
