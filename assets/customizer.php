@@ -77,21 +77,14 @@ Api
 	..
 
 	   
+
+
+
+
 Content:
+
     Static front page (default)
-	
-	Slider
-		display ( replace header/below header / footer top)
-		category 
-		height (percentage)
-		width type (full/margin)
-		
-	Popup
-		display ( wide, medium, small )  
-		color bg overlay
-		transparency bg overlay (0-1)
-		.. display close button
-		
+
     Page
         date/author display
 
@@ -108,6 +101,14 @@ Content:
 	Product
 		.. turn off product options
 		product order email address
+
+
+		.. product labels
+		new
+		featured
+		special
+		coming soon
+		alltimefavourite
         
     List (replacng category section)
         Use highlight first posts
@@ -127,12 +128,34 @@ Content:
 		.. default item minimal height
 		.. default item clickaction
 		.. default itemview
+
+
    
 Elements:
 
     Background image (wp core)    
 
-    Top menu bar
+	Slider
+		display ( replace header/below header / footer top)
+		category
+		height (percentage)
+		width type (full/margin)
+
+
+    Header image
+		Image select
+		Image width (content/full)
+		Headerimage min-height px
+
+
+	Popup
+		display ( wide, medium, small )
+		color bg overlay
+		transparency bg overlay (0-1)
+		.. display close button
+
+
+    Topbar
         Behavior relative, absolute, fixed, minified
         Display none/position
 		bg display
@@ -141,17 +164,11 @@ Elements:
 		link color
 		link hover color
 		transparency bg (0-100)
-   
-    Top Sidebar < move to topbar
-        Display hide/position
+
+        Top Sidebar Display hide/position
         Width
-		..Responsive Positioning
-      
-    Header image
-		Image select
-		Image width (content/full)
-		Headerimage min-height px
-		
+		Responsive Positioning
+
 	Login tabbar    
         Default display none/positions 
 		
@@ -260,8 +277,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'priority' => 10,
     	));
 	    $wp_customize->add_panel('onepiece_media_panel', array(
-        	'title'    => __('Api', 'onepiece'),
-			'description' => __('in development', 'onepiece'),
+        	'title'    => __('Api (in development)', 'onepiece'),
+			'text' => __('in development', 'onepiece'),
         	'priority' => 40,
     	));
 	    $wp_customize->add_panel('onepiece_content_panel', array( 
@@ -328,7 +345,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
 
 
-	// Api & Media
+	/* Api & Media
     	$wp_customize->add_section('onepiece_media_panel_wordpress', array(
         	'title'    => __('Wordpress', 'onepiece'),
         	'panel'  => 'onepiece_media_panel',
@@ -360,7 +377,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_media_panel',
 			'priority' => 30,
     	));
-
+	*/
 
 
 
@@ -393,12 +410,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_content_panel',
 			'priority' => 50,
     	));
-		
-    	$wp_customize->add_section('onepiece_content_mainpopup', array( 
-        	'title'    => __('Popup', 'onepiece'),
-        	'panel'  => 'onepiece_content_panel',
-			'priority' => 60,
-    	));
+
     	$wp_customize->add_section('onepiece_content_panel_page', array( 
         	'title'    => __('Page', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
@@ -421,22 +433,32 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
     	
 	// Elements panels
-		$wp_customize->add_section('onepiece_elements_topmenubar', array( 
-        	'title'    => __('Topbar', 'onepiece'),
-        	'panel'  => 'onepiece_elements_panel',
-			'priority' => 20,
-    	));
 
+    	$wp_customize->add_section('background_image', array(
+        	'title'    => __('Background Image', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 10,
+    	));
     	$wp_customize->add_section('onepiece_content_sliderbar', array( 
         	'title'    => __('Slider', 'onepiece'),
-        	'panel'  => 'onepiece_content_panel',
-			'priority' => 40,
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 30,
     	));
 		
+    	$wp_customize->add_section('onepiece_content_mainpopup', array(
+        	'title'    => __('Popup', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 50,
+    	));
+		$wp_customize->add_section('onepiece_elements_topmenubar', array(
+        	'title'    => __('Topbar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 70,
+    	));
     	$wp_customize->add_section('onepiece_elements_loginbar', array( 
         	'title'    => __('Loginbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
-			'priority' => 50,	
+			'priority' => 90,
     	));
     	$wp_customize->add_section('onepiece_elements_mainmenubar', array( 
         	'title'    => __('Main menubar', 'onepiece'),
@@ -467,11 +489,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_elements_identity',
 		'priority' => 20,
     	));
-    	$wp_customize->add_section('background_image', array( 
-        	'title'    => __('Background Image', 'onepiece'),
-        	'panel'  => 'onepiece_elements_panel',
-		'priority' => 10,
-    	)); 
 	    $wp_customize->add_section('header_image', array( 
         	'title'    => __('Header Image', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
@@ -1107,7 +1124,65 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		
 		// http://wordpress.stackexchange.com/questions/27856/is-there-a-way-to-send-html-formatted-emails-with-wordpress-wp-mail-function
 		// onepiece_content_panel_product
-		
+
+
+
+		//Product LABELS
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_new' , array(
+		'default' => 'New',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_new', array(
+            	'label'          => __( 'Label New', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_new',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_special' , array(
+		'default' => 'Special',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_special', array(
+            	'label'          => __( 'Label Special', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_special',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_featured' , array(
+		'default' => 'Featured',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_featured', array(
+            	'label'          => __( 'Label Featured', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_featured',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_comingsoon' , array(
+		'default' => 'Coming soon',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_comingsoon', array(
+            	'label'          => __( 'Label Coming Soon', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_comingsoon',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_content_panel_product_label_alltimefavourite' , array(
+		'default' => 'All time favourite',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_alltimefavourite', array(
+            	'label'          => __( 'Label All Time Favourite', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_label_alltimefavourite',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
+    	)));
 		
 
     	// CONTENT - LIST - HIGHLIGHT

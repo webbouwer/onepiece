@@ -17,6 +17,21 @@ function register_sizes() {
 }
 add_action( 'parse_query', 'register_sizes' );
 
+function register_productlabel_webicons() {
+
+    global $product_label_webicons; // use as $GLOBALS['product_label_webicons']
+
+	$product_label_webicons = array(
+    "none" => "",
+    "new" => get_theme_mod( 'onepiece_content_panel_product_label_new', ''),
+    "special" => get_theme_mod( 'onepiece_content_panel_product_label_special', ''),
+    "featured" => get_theme_mod( 'onepiece_content_panel_product_label_featured', ''),
+    "comingsoon" => get_theme_mod( 'onepiece_content_panel_product_label_comingsoon', ''),
+    "alltimefavourite" => get_theme_mod( 'onepiece_content_panel_product_label_alltimefavourite', '')
+	);
+
+}
+add_action( 'parse_query', 'register_productlabel_webicons' );
 
 
 /* POST PRODUCTMAKER META FIELDS */
