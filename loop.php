@@ -142,9 +142,8 @@ echo '<div class="clr"></div>';
 */
 
 // post product label
-if( isset($post_meta_label) && $post_meta_label[0] != 'none'){
-echo '<div class="labelbox"><span class="productlabel">'.$post_meta_label[0].'</span></div>';
-}
+echo $productlabel;
+
 
 // Title below image for single/page items
 if ( is_single() || is_page() ) { 

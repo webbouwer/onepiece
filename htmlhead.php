@@ -1430,11 +1430,22 @@ $(document).ready(function() {
 	/*
 	 * LABEL
 	 */
+
+	var product_labelicons = <?php echo json_encode($GLOBALS['product_label_webicons']); ?>;
+
+
+
+
 	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
 	
+	var labelcontent = obj.meta['meta-box-product-label'];
+	if( product_labelicons != '' &&  typeof product_labelicons !== 'undefined'){
+		labelcontent = product_labelicons[labelcontent];
+	}
+
 	markup += '<div class="labelbox">';
 	
-	markup += '<span class="productlabel">'+obj.meta['meta-box-product-label']+'</span>';
+	markup += '<span class="productlabel">check'+labelcontent+'</span>';
 	
 	markup += '</div>';
 	
@@ -1882,7 +1893,6 @@ echo '</style>';
 
 // font (overwrites)
 add_fonts_frontend();
-
 
 
 

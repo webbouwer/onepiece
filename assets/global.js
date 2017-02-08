@@ -7,6 +7,7 @@
  */
 jQuery(function ($) { 
 
+
 $(document).ready(function() {    
 
 	
@@ -271,6 +272,9 @@ $('a[href*=#]:not([href=#])').click(function() {
         }
     }
 }); 
+
+
+
 
 
 

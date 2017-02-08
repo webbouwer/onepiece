@@ -17,6 +17,20 @@ function register_sizes() {
 }
 add_action( 'parse_query', 'register_sizes' );
 
+function register_productlabel_webicons() {
+
+    global $product_label_webicons; // use as $GLOBALS['product_label_webicons']
+	$product_label_webicons = array(
+    "none" => "",
+    "new" => '<webicon icon="foundation:sheriff-badge"/>',
+    "special" => '<webicon icon="foundation:bookmark"/>',
+    "featured" => '<webicon icon="foundation:megaphone"/>',
+    "comingsoon" => '<webicon icon="foundation:calendar"/>',
+    "alltimefavourite" => '<webicon icon="foundation:sheriff-badge"/>'
+	);
+
+}
+add_action( 'parse_query', 'register_productlabel_webicons' );
 
 
 /* POST PRODUCTMAKER META FIELDS */
