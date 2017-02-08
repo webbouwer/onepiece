@@ -77,21 +77,14 @@ Api
 	..
 
 	   
+
+
+
+
 Content:
+
     Static front page (default)
-	
-	Slider
-		display ( replace header/below header / footer top)
-		category 
-		height (percentage)
-		width type (full/margin)
-		
-	Popup
-		display ( wide, medium, small )  
-		color bg overlay
-		transparency bg overlay (0-1)
-		.. display close button
-		
+
     Page
         date/author display
 
@@ -142,7 +135,27 @@ Elements:
 
     Background image (wp core)    
 
-    Top menu bar
+	Slider
+		display ( replace header/below header / footer top)
+		category
+		height (percentage)
+		width type (full/margin)
+
+
+    Header image
+		Image select
+		Image width (content/full)
+		Headerimage min-height px
+
+
+	Popup
+		display ( wide, medium, small )
+		color bg overlay
+		transparency bg overlay (0-1)
+		.. display close button
+
+
+    Topbar
         Behavior relative, absolute, fixed, minified
         Display none/position
 		bg display
@@ -151,17 +164,11 @@ Elements:
 		link color
 		link hover color
 		transparency bg (0-100)
-   
-    Top Sidebar < move to topbar
-        Display hide/position
+
+        Top Sidebar Display hide/position
         Width
-		..Responsive Positioning
-      
-    Header image
-		Image select
-		Image width (content/full)
-		Headerimage min-height px
-		
+		Responsive Positioning
+
 	Login tabbar    
         Default display none/positions 
 		
@@ -403,12 +410,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_content_panel',
 			'priority' => 50,
     	));
-		
-    	$wp_customize->add_section('onepiece_content_mainpopup', array( 
-        	'title'    => __('Popup', 'onepiece'),
-        	'panel'  => 'onepiece_content_panel',
-			'priority' => 60,
-    	));
+
     	$wp_customize->add_section('onepiece_content_panel_page', array( 
         	'title'    => __('Page', 'onepiece'),
         	'panel'  => 'onepiece_content_panel',
@@ -431,22 +433,32 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
     	
 	// Elements panels
-		$wp_customize->add_section('onepiece_elements_topmenubar', array( 
-        	'title'    => __('Topbar', 'onepiece'),
-        	'panel'  => 'onepiece_elements_panel',
-			'priority' => 20,
-    	));
 
+    	$wp_customize->add_section('background_image', array(
+        	'title'    => __('Background Image', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 10,
+    	));
     	$wp_customize->add_section('onepiece_content_sliderbar', array( 
         	'title'    => __('Slider', 'onepiece'),
-        	'panel'  => 'onepiece_content_panel',
-			'priority' => 40,
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 30,
     	));
 		
+    	$wp_customize->add_section('onepiece_content_mainpopup', array(
+        	'title'    => __('Popup', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 50,
+    	));
+		$wp_customize->add_section('onepiece_elements_topmenubar', array(
+        	'title'    => __('Topbar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+			'priority' => 70,
+    	));
     	$wp_customize->add_section('onepiece_elements_loginbar', array( 
         	'title'    => __('Loginbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
-			'priority' => 50,	
+			'priority' => 90,
     	));
     	$wp_customize->add_section('onepiece_elements_mainmenubar', array( 
         	'title'    => __('Main menubar', 'onepiece'),
@@ -477,11 +489,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_elements_identity',
 		'priority' => 20,
     	));
-    	$wp_customize->add_section('background_image', array( 
-        	'title'    => __('Background Image', 'onepiece'),
-        	'panel'  => 'onepiece_elements_panel',
-		'priority' => 10,
-    	)); 
 	    $wp_customize->add_section('header_image', array( 
         	'title'    => __('Header Image', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
