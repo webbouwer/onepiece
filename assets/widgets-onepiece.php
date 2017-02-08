@@ -207,9 +207,12 @@ class onepiece_postlist_widget extends WP_Widget {
 		echo '</div>';
 
 		// post product label
-		if( isset($post_meta_label) && $post_meta_label[0] != 'none' &&  $instance[ 'dsp_label' ] != 0 ){
+		/*if( isset($post_meta_label) && $post_meta_label[0] != 'none' &&  $instance[ 'dsp_label' ] != 0 ){
 		echo '<div class="labelbox"><span class="productlabel">'.$post_meta_label[0].'</span></div>';
-		}
+		}*/
+
+			// post product label
+			echo $productlabel;
 
 		// product box
 		if( isset( $instance[ 'dsp_price' ] ) && $instance[ 'dsp_price' ] != 0)

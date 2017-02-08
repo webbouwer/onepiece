@@ -34,10 +34,13 @@ $counter = 0;
 while( have_posts() ) : the_post();
 
 echo '<div id="post-'.get_the_ID().'" ';
+
+$classproductlabel = get_post_meta( get_the_ID() , 'meta-box-product-label', true);
+
 if( $counter < $firstcount && !$paged  ){
-post_class('first-group-post');
+post_class('first-group-post label-'.$classproductlabel);
 }else{
-post_class('follow-post');
+post_class('follow-post label-'.$classproductlabel);
 }
 
 $textalign = get_theme_mod('onepiece_content_panel_posts_textalign', 'left');   
@@ -142,9 +145,8 @@ echo '<div class="clr"></div>';
 */
 
 // post product label
-if( isset($post_meta_label) && $post_meta_label[0] != 'none'){
-echo '<div class="labelbox"><span class="productlabel">'.$post_meta_label[0].'</span></div>';
-}
+echo $productlabel;
+
 
 // Title below image for single/page items
 if ( is_single() || is_page() ) { 

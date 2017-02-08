@@ -2,7 +2,21 @@
 	/**
  	 * Define post label
   	 */
-	$post_meta_label = get_post_meta( get_the_ID() , 'meta-box-product-label', '');
+	$post_meta_label = get_post_meta( get_the_ID() , 'meta-box-product-label', true);
+
+
+	$productlabelicons = $GLOBALS['product_label_webicons'];
+
+
+
+	if( isset($post_meta_label) && $post_meta_label != 'none'){
+
+		if($productlabelicons[$post_meta_label]){
+			$post_meta_label = $productlabelicons[$post_meta_label];
+		}
+		$productlabel = '<div class="labelbox"><span class="productlabel">'.$post_meta_label.'</span></div>';
+
+	}
 
 	/**
  	 * Define post product properties
