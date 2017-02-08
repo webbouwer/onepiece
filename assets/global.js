@@ -137,13 +137,11 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 		
 		ResponsiveReorder(); // replace sidebar elements below content
 		
-		// headerbar height (fade bglayer)
-		
-		//  $('#headerbar').css( 'height' , $(window).height()/3*2 + 'px' );
-		//$('#headerbar .bglayer').css( 'height' , $(window).height()/3*2 + 'px' ); //called in htmlhead.php in resizeend function
+		// headerbar height (pushing maincontainer below topbar if no header image  or slider)
+		$('#headercontainer').css('min-height', $('#topbar .outermargin').height() );
+
 	}
-	
-	doneGlobalResizing();
+
 
 	 
 	
@@ -244,13 +242,6 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
     
 	
 	
-	
-});
-
-
-
-
-
 
 $(window).load(function() { 
     
@@ -276,6 +267,7 @@ $('a[href*=#]:not([href=#])').click(function() {
 
 
 
+	doneGlobalResizing();
 
 
 /**
@@ -286,8 +278,12 @@ $('body > .loadbox').fadeOut(1200);
 
 });
  
- 
 
+
+
+
+
+});
  
  
 });

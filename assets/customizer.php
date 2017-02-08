@@ -277,8 +277,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'priority' => 10,
     	));
 	    $wp_customize->add_panel('onepiece_media_panel', array(
-        	'title'    => __('Api', 'onepiece'),
-			'description' => __('in development', 'onepiece'),
+        	'title'    => __('Api (in development)', 'onepiece'),
+			'text' => __('in development', 'onepiece'),
         	'priority' => 40,
     	));
 	    $wp_customize->add_panel('onepiece_content_panel', array( 
@@ -345,7 +345,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
 
 
-	// Api & Media
+	/* Api & Media
     	$wp_customize->add_section('onepiece_media_panel_wordpress', array(
         	'title'    => __('Wordpress', 'onepiece'),
         	'panel'  => 'onepiece_media_panel',
@@ -377,7 +377,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'panel'  => 'onepiece_media_panel',
 			'priority' => 30,
     	));
-
+	*/
 
 
 
