@@ -832,6 +832,11 @@ $(document).ready(function() {
    } 
 	?>
    
+
+
+
+
+
    
 /* 
  * Mainmenu sticky / minisize
@@ -846,7 +851,9 @@ echo 'var mainmenuminisize = "'.$mainmenubarminisize.'";';
 ?>
 
 var menubox = $('#site-navigation nav').prepend('<div class="navcontrol"><div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div></div>');
+
 var menubutton = $('#site-navigation nav .menu-button').hide();
+
 var menupanel = $('#site-navigation nav div ul.menu');
 
 
@@ -1091,6 +1098,7 @@ if( (offset.top - $(window).scrollTop()) < stickymenutriggerheight && !menubox.h
 
 
 <?php
+/*
 if($mainmenubarplace == 'below'){
 ?>
 
@@ -1107,7 +1115,7 @@ if($mainmenubarplace == 'below'){
 	}
 
 <?php
-}
+}*/
 ?>
 
 
@@ -1885,9 +1893,10 @@ $vertical_padding_box = $stylelayout_spacing * 2;
 
 echo '<style>';
 echo 'body{ font-size:'.$globalfontsize.'em !important; }';
-echo '#site-navigation .menu-button, .contentpadding, .sidebarpadding, ul.menu li a, .categorymenu li a, .tagmenu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
+echo '#site-navigation .menu-button, .contentpadding, .sidebarpadding ul.menu li a, .categorymenu li a, .tagmenu li a { display:inline-block;padding:'.$vertical_padding_line.'px '.$horizontal_padding_line.'px; }';
 echo '.readmore, #copyright-textbox { display:inline-block;padding:'.$vertical_padding_line.'px 0px; }';
-echo '.post-title, h1, p, .widgetpadding h3, .widgetpadding h4 { display:block; padding:'.$vertical_padding_line.'px 0px; }';
+echo '#maincontent .post .contentpadding { display:block; padding:'.(3*$vertical_padding_line).'px 0px; }';
+echo '#maincontent .post, .post-title, h1, p, .widgetpadding h3, .widgetpadding h4 { display:block; padding:'.$vertical_padding_line.'px 0px; }';
 
 
 if( $mainmenubarplace == 'above' ){ 

@@ -1210,7 +1210,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Amount of words for intro texts in a (basic) list.', 'onepiece' ),
     	)));
-		
+
 		// CONTENT - LIST - IMAGE ALIGNMENT
 		$wp_customize->add_setting( 'onepiece_content_panel_postlist_inlineimage' , array(
 		'default' => 'left', 
@@ -1226,6 +1226,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'choices'        => array(
                 	'left'   => __( 'Left', 'onepiece' ),
                 	'right'   => __( 'Right', 'onepiece' ),
+                	'zigzag'   => __( 'Inline odd left and even right', 'onepiece' ),
                 	'center'   => __( 'Center', 'onepiece' ),
             	)
     	)));

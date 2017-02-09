@@ -153,8 +153,8 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	$('body > .loadbox').hide().fadeIn(400);
 	
 	
-	
-	
+
+
 /**
  * SCROLL TO TOP
  * window top (index.php, page.php, gallery.php)
