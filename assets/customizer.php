@@ -478,6 +478,10 @@ function onepiece_register_theme_customizer( $wp_customize ) {
         	'title'    => __('Second Sidebar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
     	));
+    	$wp_customize->add_section('onepiece_elements_subcontent', array(
+        	'title'    => __('Subcontentbar', 'onepiece'),
+        	'panel'  => 'onepiece_elements_panel',
+    	));
     	$wp_customize->add_section('onepiece_elements_bottommenubar', array( 
         	'title'    => __('Footerbar', 'onepiece'),
         	'panel'  => 'onepiece_elements_panel',
@@ -1597,6 +1601,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'sbbottom'   => __( 'Main sidebar bottom', 'onepiece' ),
             		'sb2top'   => __( 'Sidebar 2 Top', 'onepiece' ),
             		'sb2bottom'   => __( 'Sidebar 2 bottom', 'onepiece' ),
+            		'sbctop'   => __( 'Subcontent sidebar top', 'onepiece' ),
+            		'sbcbot'   => __( 'Subcontent sidebar bottom', 'onepiece' ),
             		'bsbtop'   => __( 'Bottom sidebar top', 'onepiece' ),
             		'bsbbot'   => __( 'Bottom sidebar bottom', 'onepiece' ),
             	)
@@ -1735,6 +1741,41 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Select sidebar width (percentage).', 'onepiece' ),
     	)));
 		
+
+
+
+	// SUBCONTENT SIDEBAR
+		$wp_customize->add_setting( 'onepiece_elements_subcontent_sidebar_position' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_subcontent_sidebar_position', array(
+            	'label'          => __( 'Subcontent sidebar position', 'onepiece' ),
+            	'section'        => 'onepiece_elements_subcontent',
+            	'settings'       => 'onepiece_elements_subcontent_sidebar_position',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select the default subcontent sidebar position.', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'none', 'onepiece' ),
+                	'left'   => __( 'left', 'onepiece' ),
+            		'right'   => __( 'right', 'onepiece' ),
+            	)
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_elements_subcontent_sidebar_width' , array(
+		'default' => '30',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_subcontent_sidebar_width', array(
+            	'label'          => __( 'Sidebar width', 'onepiece' ),
+            	'section'        => 'onepiece_elements_subcontent',
+            	'settings'       => 'onepiece_elements_subcontent_sidebar_width',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Select sidebar width (percentage).', 'onepiece' ),
+    	)));
+
+
+
 		
 		
 		

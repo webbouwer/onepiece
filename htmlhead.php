@@ -781,7 +781,7 @@ echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_small_width', 51
 
 // single column small /  medium
 echo '@media screen and (max-width: '.get_theme_mod('onepiece_responsive_small_max', 512).'px) {';
-echo '#maincontent,#mainsidebar,#pagesidebarcontainer,#sidebar2{float:none !important;width:100% !important;margin:0px auto;}';
+echo '#maincontent,#mainsidebar,#pagesidebarcontainer,#sidebar2,#subcontentbarmargin,#subcontentsidebar{float:none !important;width:100% !important;margin:0px auto;}';
 echo '}';
 
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_small_max', 512 ).'px) {';

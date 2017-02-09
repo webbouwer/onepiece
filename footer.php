@@ -29,6 +29,17 @@ if( get_theme_mod( 'onepiece_elements_bottommenubar_position') ){
 }
 echo '<div id="footercontainer" class="menu-'.$bottombarclass.'">';
 
+
+
+if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-bottom-top') ){
+echo '<div class="outermargin"><div id="widgets-bottom-top">';
+dynamic_sidebar('widgets-bottom-top');
+echo '<div class="clr"></div></div></div>';
+}
+
+
+
+
 /**
  *
  * Bottom Slider
@@ -71,11 +82,7 @@ echo '</div>';
 
 echo '<div class="outermargin">';
 
-if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-subcontent') ){
-echo '<div id="widgets-subcontent">';
-dynamic_sidebar('widgets-subcontent');
-echo '<div class="clr"></div></div>';
-} 
+
 
 
 

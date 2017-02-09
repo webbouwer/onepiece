@@ -430,6 +430,8 @@ width: 100%;
 #sidebar2 .widgetpadding,
 #specialpagewidgets .widgetpadding,
 #pagesidebar .widgetpadding,
+#subcontentbarmargin .widgetpadding,
+#subcontentsidebar .widgetpadding,
 #bottomsidebar .widgetpadding
 {
 padding:0px;
