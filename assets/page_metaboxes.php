@@ -204,10 +204,13 @@ $slidedisplayheight = isset( $values['pagetheme_slide_displayheight'] ) ? esc_at
 <option value="variable" <?php selected( $slidedisplayheight, 'variable' ); ?>>Variable (image) height</option>
 <option value="25" <?php selected( $slidedisplayheight, '25' ); ?>>25% (window) height</option>
 <option value="33" <?php selected( $slidedisplayheight, '33' ); ?>>33% (window) height</option>
+<option value="40" <?php selected( $slidedisplayheight, '40' ); ?>>40% (window) height</option>
+<option value="45" <?php selected( $slidedisplayheight, '45' ); ?>>45% (window) height</option>
 <option value="50" <?php selected( $slidedisplayheight, '50' ); ?>>50% (window) height</option>
 <option value="66" <?php selected( $slidedisplayheight, '66' ); ?>>66% (window) height</option>
 <option value="75" <?php selected( $slidedisplayheight, '75' ); ?>>75% (window) height</option>
 <option value="80" <?php selected( $slidedisplayheight, '80' ); ?>>80% (window) height</option>
+<option value="85" <?php selected( $slidedisplayheight, '85' ); ?>>85% (window) height</option>
 <option value="100" <?php selected( $slidedisplayheight, '100' ); ?>>Full (window) height</option>
 </select>
 </p>

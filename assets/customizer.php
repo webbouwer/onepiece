@@ -898,10 +898,14 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'20'   => __( '20', 'onepiece' ),
                 	'25'   => __( '25', 'onepiece' ),
                 	'33'   => __( '33', 'onepiece' ),
+                	'40'   => __( '40', 'onepiece' ),
+                	'45'   => __( '45', 'onepiece' ),
             		'50'   => __( '50', 'onepiece' ),
+            		'60'   => __( '60', 'onepiece' ),
             		'66'   => __( '66', 'onepiece' ),
             		'75'   => __( '75', 'onepiece' ),
-                	'80'   => __( '80', 'onepiece' ),
+            		'80'   => __( '80', 'onepiece' ),
+                	'85'   => __( '85', 'onepiece' ),
             		'100'   => __( '100', 'onepiece' ),
             	)
     	)));
