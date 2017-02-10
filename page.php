@@ -454,6 +454,11 @@ echo '</div>';
 echo '<div class="clr"></div></div></div>';
 
 
+
+// subcontent
+get_template_part('subcontent');
+
+
 /**
  * 
  * Footer
