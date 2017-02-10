@@ -308,8 +308,6 @@ padding:2px 1px;
 
 
 
-
-
 /******************** HEADER / SLIDER / FEATURED IMAGE  ********************/
 img.header-image
 {
@@ -677,8 +675,6 @@ position:relative;
 
 
 
-
-
 /* Label icons not loaded? */
 .item .labelbox span.productlabel webicon
 {
@@ -691,6 +687,19 @@ height:32px;
 
 
 
+/* Custom Widgets */
+.align-left.widgetpadding
+{
+text-align:left !important;
+}
+.align-right.widgetpadding
+{
+text-align:right !important;
+}
+.align-center.widgetpadding
+{
+text-align:center !important; /* available on small screens */
+}
 
 
 
