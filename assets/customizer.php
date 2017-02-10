@@ -345,6 +345,15 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	));
 
 
+		$wp_customize->add_section('custom_css', array(
+        	'title'    => __('Custom CSS', 'onepiece'),
+        	'panel'  => 'onepiece_content_style',
+		'priority' => 80,
+    	));
+
+
+
+
 	/* Api & Media
     	$wp_customize->add_section('onepiece_media_panel_wordpress', array(
         	'title'    => __('Wordpress', 'onepiece'),
