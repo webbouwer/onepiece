@@ -44,10 +44,17 @@ post_class('follow-post label-'.$classproductlabel);
 }
 
 $textalign = get_theme_mod('onepiece_content_panel_posts_textalign', 'left');   
-$postimagelist = get_theme_mod('onepiece_content_panel_postlist_inlineimage', 'left'); 
+$postimagelist = get_theme_mod('onepiece_content_panel_postlist_inlineimage', 'left'); // needed in the loop again to redefine next..
 
 if ( !is_single() && !is_page() ) { 
 	$textalign = get_theme_mod('onepiece_content_panel_postlist_textalign', 'left'); 
+	if($postimagelist == 'zigzag'){
+
+		$postimagelist = 'right';
+		if ($counter % 2 == 0) {
+			$postimagelist = 'left';
+		}
+	}
 }
 
 echo '><div class="contentpadding align-'.$textalign.' imgalign-'.$postimagelist.'">';

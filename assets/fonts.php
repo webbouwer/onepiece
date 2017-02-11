@@ -103,8 +103,6 @@ function get_fonts_select(){
 
 		'rockwell__'=>'Rockwell',
 
-		'Rockwell_Extra_Bold__'=>'Rockwell Extra Bold',
-
 		'Rosario'=>'Rosario',
 
 		'Sanchez'=>'Sanchez',

@@ -343,6 +343,12 @@ class onepiece_share_widget extends WP_Widget {
 			$but = $instance[ 'share_button' ];
 		}
 
+		$align = 'left';
+		if( !empty($instance[ 'share_alignment' ]) ){
+			$align = $instance[ 'share_alignment' ];
+		}
+
+
 		if( !empty($instance[ 'share_title' ]) ){
 			$sttl = $instance[ 'share_title' ];
 		}
@@ -408,15 +414,16 @@ class onepiece_share_widget extends WP_Widget {
 		  	$select_entities_data[$id] = $entities[$id];
 	  	}
 
-
+		// add custom before elementproperties
+		$before_widget = str_replace('class="', 'class="align-'. $align . ' ', $args['before_widget']);
 
 	  	// output frontend html
-	  	echo $args['before_widget'] . $args['before_title'] . $title . $args['after_title'];
+	  	echo $before_widget . $args['before_title'] . $title . $args['after_title'];
 
 
 
 		// button list
-	  	echo '<ul>';
+	  	echo '<ul id="widget-share-box" class="align-'. $align . '">';
 
 		foreach( $select_entities_data as $id => $entity ){
 
@@ -522,6 +529,7 @@ class onepiece_share_widget extends WP_Widget {
 		// widget settings
 		$use = 'custom';					// Default use input variables to share / otherwise current page variables
 		$but = 'ico';						// Default button icon only (or text or both)
+		$align =  'left';
 		$icos = 24;							// Default iconsize for sharebutton
 		$sttl = get_bloginfo( 'title' );		// Default title to share
 		$stxt = get_bloginfo( 'description' );	// Default text to share
@@ -534,6 +542,10 @@ class onepiece_share_widget extends WP_Widget {
 		}
 		if( !empty($instance[ 'share_button' ]) ){
 			$but = $instance[ 'share_button' ];
+		}
+
+		if( !empty($instance[ 'share_alignment' ]) ){
+			$align = $instance[ 'share_alignment' ];
 		}
 		if( !empty($instance[ 'share_title' ]) ){
 			$sttl = $instance[ 'share_title' ];
@@ -616,6 +628,13 @@ class onepiece_share_widget extends WP_Widget {
 			</select>
 		</p>
 
+		<p><label for="<?php echo $this->get_field_id( 'share_alignment' ); ?>">Select content alignment:</label>
+			<select id="<?php echo $this->get_field_id( 'share_alignment' ); ?>" name="<?php echo $this->get_field_name( 'share_alignment' ); ?>">
+				<option value="left" <?php if($align == 'left') echo 'selected="selected"'; ?>>Left</option>
+				<option value="right" <?php if($align == 'right') echo 'selected="selected"'; ?>>Right</option>
+				<option value="center" <?php if($align == 'center') echo 'selected="selected"'; ?>>Center</option>
+			</select>
+		</p>
 
 		<hr/>
 
@@ -664,6 +683,8 @@ class onepiece_share_widget extends WP_Widget {
 	  	$instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
 
 		$instance[ 'share_button' ] = strip_tags( $new_instance[ 'share_button' ] );
+
+		$instance[ 'share_alignment' ] = strip_tags( $new_instance[ 'share_alignment' ] );
 
 		$instance[ 'share_usage' ] = strip_tags( $new_instance[ 'share_usage' ] );
 
