@@ -244,6 +244,27 @@ function basic_setup_widgets_init() {
 			'after_title'   => '</h3>'
 		));
 		
+	    // the subcontent widget
+		register_sidebar(array(
+			'name' => 'Widgets Subcontent sidebar',
+			'id'   => 'widgets-subcontent-sidebar',
+			'description'   => 'This is the sidebar in the subcontent widgetized area.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="sidebarpadding">',
+			'after_widget'  => '<div class="clr"></div></div></div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>'
+		));
+
+	    // the bottom top widget
+		register_sidebar(array(
+			'name' => 'Widgets Bottom Top',
+			'id'   => 'widgets-bottom-top',
+			'description'   => 'This is the full width bottom-top widgetized area.',
+			'before_widget' => '<div id="%1$s" class="widget %2$s"><div class="widgetpadding">',
+			'after_widget'  => '<div class="clr"></div></div></div>',
+			'before_title'  => '<h3>',
+			'after_title'   => '</h3>'
+		));
 	    // the bottom widget
 		register_sidebar(array(
 			'name' => 'Widgets Bottom',

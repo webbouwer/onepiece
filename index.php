@@ -154,9 +154,22 @@ echo '</div>';
 
 echo '<div class="clr"></div></div></div>';
 
+// subcontent
+get_template_part('subcontent');
+
 // footer
 get_template_part('footer');
 
 wp_footer();
 
-echo '</div></body>';
+echo '</div>';
+
+$loadiconcontent = __('loading', 'onepiece');
+$loaderboxicon = get_theme_mod('onepiece_identity_icons_loader', esc_url( get_template_directory_uri() ).'/icons/loader_icon_circle_default.gif');
+
+if($loaderboxicon != ''){
+	$loadiconcontent = '<img width="100%" height="auto" src="'.$loaderboxicon.'" alt="loader" />';
+}
+echo '<div class="loadbox"><span>'.$loadiconcontent.'</span></div>';
+
+echo '</body>';
