@@ -143,16 +143,13 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	}
 
 
-	 
 	
 /**
  * LOADING MESSAGEBOX
  * body (index.php, page.php, gallery.php)
  */ 
-	$('body').append('<div class="loadbox"><span>Loading</span></div>');
-	$('body > .loadbox').hide().fadeIn(400);
-	
-	
+	//$('body').append('<div class="loadbox"><span>Loading</span></div>');
+	//$('body > .loadbox').hide().fadeIn(400);
 
 
 /**
@@ -269,12 +266,11 @@ $('a[href*=#]:not([href=#])').click(function() {
 
 	doneGlobalResizing();
 
-
 /**
  * LOADER BOX
  * onload/content loaded
  */  
-$('body > .loadbox').fadeOut(1200);
+	$('body > .loadbox').fadeOut(1200);
 
 });
  

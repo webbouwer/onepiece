@@ -470,6 +470,15 @@ wp_footer();
 
 echo '</div>';
 
+$loadiconcontent = __('loading', 'onepiece');
+$loaderboxicon = get_theme_mod('onepiece_identity_icons_loader', esc_url( get_template_directory_uri() ).'/icons/loader_icon_circle_default.gif');
+
+if($loaderboxicon != ''){
+	$loadiconcontent = '<img width="100%" height="auto" src="'.$loaderboxicon.'" alt="loader" />';
+}
+echo '<div class="loadbox"><span>'.$loadiconcontent.'</span></div>';
+
+
 /** 
  *
  * JS CHILDPAGES

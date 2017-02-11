@@ -89,27 +89,27 @@ height:auto;
 
 
 
-
 body .loadbox
 {
 position:fixed;
-left:45%;
-width:6%;
-min-width:80px;
-top:46%;
-z-index:90;
+left:0px;
+width:100%;
+top:30%;
+z-index:999;
+text-align:center;
 }
 body .loadbox span
 {
-display:block;
-text-align:center;
-	/*
-padding:5px;
-background-color:#000;
-color:#CCCCCC;
-	*/
-font-size:0.9em; 
+display:inline-block;
+max-width:20%;
 }
+
+body .loadbox span img
+{
+max-width:196px;
+margin:5px auto;
+}
+
 
 
 

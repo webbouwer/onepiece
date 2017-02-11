@@ -269,7 +269,7 @@ jQuery(function($) {
 /*
 Loaderbox icon image
 */
-$('.loadbox span').html('<img width="100%" height="auto" src="<?php echo $loaderboxicon;?>" alt="loader" />');
+//$('.loadbox span').html('<img width="100%" height="auto" src="<?php echo $loaderboxicon;?>" alt="loader" />');
 
 
 
