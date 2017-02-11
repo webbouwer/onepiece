@@ -161,9 +161,26 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	var sttmarg = $wp_custom_vars['onepiece_identity_scrolltotop_margin'];
 	var sttpadd = $wp_custom_vars['onepiece_identity_scrolltotop_padding'];
 
+
 	if(sttdspl != 'hi'){
 
-		var sttstyle = 'style="margin:'+sttmarg+';padding:'+sttpadd+';"';
+	var butpos = "bottom:0px;right:0px;";
+	// sttdspl = br ||  bl ||  tr || tl
+	switch (sttdspl) {
+    case "tl":
+        butpos = "top:0px;left:0px;";
+        break;
+    case "bl":
+        butpos = "bottom:0px;left:0px;";
+        break;
+    case "tr":
+        butpos = "top:0px;right:0px;";
+        break;
+    default:
+        butpos = "bottom:0px;right:0px;"; // br
+
+	}
+		var sttstyle = 'style="'+butpos+'margin:'+sttmarg+';padding:'+sttpadd+';"';
 		var sttbut = '<a href="#" '+sttstyle+' class="scrollToTop"><span>'+stthtml+'</span></a>';
 
 	$('#maincontent').append(sttbut);
@@ -173,6 +190,7 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 		$('html, body').animate({scrollTop : 0},800);
 		return false;
 	});
+
 
 	$(window).scroll(function(s){
 		if ($(this).scrollTop() > 100) {
