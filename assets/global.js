@@ -217,7 +217,6 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	
 
 
-	
 
 	
 	
@@ -225,35 +224,40 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 /**
  * CONTENT POPUPBOX
  * body (index.php, page.php, gallery.php)
- */ 
-	$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div></div>');
+ */
+
+	$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div><div class="popupclosebutton"><webicon style="width:48px;height:48px;" icon="glyphicons:remove-sign"/></div></div>');
+
+
     $('#mainpopupbox').hide();
     $('.popupcloak').hide();
     $('div.childpages.pop .moretextbox').hide();
     
     function loadpopup( popcontent ){
 		$('.popupcloak').fadeIn(300);
-		$('#mainpopupbox .popupcontent').html( popcontent )
+		$('#mainpopupbox .popupcontent').html( popcontent );
 		$('#mainpopupbox').fadeIn(300);
     }
 	function closepopup(){
 		$('.popupcloak').fadeOut(300);
-		
+
 		$('#mainpopupbox').fadeOut(300, function(){
-			$('#mainpopupbox .popupcontent').html('');										 
+			$('#mainpopupbox .popupcontent').html('');
 		});
 	}
-    
+
     $('div.childpages.pop li').click(function(){
 		var content =  $(this).find('.subtitle').html() + $(this).find('.moretextbox').html();
 		loadpopup( content );
 		return false;
 	});
-	
-	$('.popupcloak').click(function(){
+	$('.popupcloak, .popupclosebutton, #mainpopupbox').click(function(){
 		closepopup();
 		return false;
 	});
+	$("#mainpopupbox .popupcontent").click(function(e) {
+        e.stopPropagation();
+   	});
     
 	
 	

@@ -68,8 +68,8 @@ echo '<option value="'.$slg.'" '.selected( $selected, $slg ).'>'.$nm.'</option>'
 <option value="none" <?php selected( $clickaction, 'none' ); ?>><?php echo __('No action', 'onepiece'); ?></option>
 <option value="link" <?php selected( $clickaction, 'link' ); ?>><?php echo __('Link to post (or custom link)', 'onepiece'); ?></option>
 <option value="sizeup" <?php selected( $clickaction, 'sizeup' ); ?>><?php echo __('Size up first (and link to post/custom)', 'onepiece'); ?></option>
-<option value="poppost" <?php selected( $clickaction, 'poppost' ); ?>><?php echo __('Popup overlay', 'onepiece'); ?></option>
-<?php /* <option value="popcat" <?php selected( $clickaction, 'popcat' ); ?>><?php echo __('Popup category overlay', 'onepiece'); ?></option> */ ?>
+<option value="poppost" <?php selected( $clickaction, 'poppost' ); ?>><?php echo __('Popup overlay custom default', 'onepiece'); ?></option>
+<option value="popcat" <?php selected( $clickaction, 'popcat' ); ?>><?php echo __('Popup overlay gallery', 'onepiece'); ?></option>
 </select>
 </p>
 
