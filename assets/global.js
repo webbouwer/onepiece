@@ -42,8 +42,8 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 
 		var small = 512;
 		var toprepos = $wp_custom_vars['onepiece_elements_topsidebar_responsive'];
-
-
+		var mainsidebarrepos = $wp_custom_vars['onepiece_elements_mainsidebar_responsive'];
+		var sidebar2repos = $wp_custom_vars['onepiece_elements_sidebar2_responsive'];
 
 		
 	    if( $(window).width() > small ){
@@ -63,10 +63,12 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	        $("#sidebar2").prependTo("#contentcontainer .outermargin");
 	        }
 	        if($("#pagesidebarcontainer").length){
-	        $("#pagesidebarcontainer").prependTo("#contentcontainer .outermargin");
+	            $("#pagesidebarcontainer").prependTo("#contentcontainer .outermargin");
+				$("#pagesidebarcontainer").show();
 	        }else if($("#mainsidebar").length){
-	        $("#mainsidebar").prependTo("#contentcontainer .outermargin");
-	        }
+	        	$("#mainsidebar").prependTo("#contentcontainer .outermargin");
+	        	$("#mainsidebar").show();
+			}
 	        if( $("#sidebar2").hasClass('out') ){ // outside last
 	        $("#sidebar2").prependTo("#contentcontainer .outermargin");
 	        }
@@ -80,16 +82,66 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 			}
 			
 	        // append    
-	        if( $("#sidebar2").hasClass('ins') ){ // inside first
-	        $("#sidebar2").appendTo("#contentcontainer .outermargin");
+	        /*if( $("#sidebar2").hasClass('ins') ){ // inside first
+	        //$("#sidebar2").appendTo("#contentcontainer .outermargin");
+
+				if(sidebar2repos == 'after'){
+					$("#sidebar2").appendTo("#contentcontainer .outermargin");
+				}
+				if(sidebar2repos == 'before'){
+					$("#sidebar2").prependTo("#contentcontainer .outermargin");
+				}
+
+				if(sidebar2repos == 'bottom'){
+					$("#sidebar2").prependTo("#footercontainer .outermargin");
+				}
+				if(sidebar2repos == 'hide'){
+					$("#sidebar2").hide();
+				}
+
+	        }*/
+			 if($("#pagesidebarcontainer").length){
+				 //$("#mainsidebar").appendTo("#contentcontainer .outermargin");
+
+				if(mainsidebarrepos == 'after'){
+					$("#pagesidebarcontainer").appendTo("#contentcontainer .outermargin");
+				}else if(mainsidebarrepos == 'before'){
+					$("#pagesidebarcontainer").prependTo("#contentcontainer .outermargin");
+				}else if(mainsidebarrepos == 'bottom'){
+					$("#pagesidebarcontainer").prependTo("#footercontainer .outermargin");
+				}else if(mainsidebarrepos == 'hide'){
+					$("#pagesidebarcontainer").hide();
+				}
+
+
+			 }else if( $("#mainsidebar").length ){
+
+	        //$("#mainsidebar").appendTo("#contentcontainer .outermargin");
+
+				if(mainsidebarrepos == 'after'){
+					$("#mainsidebar").appendTo("#contentcontainer .outermargin");
+				}else if(mainsidebarrepos == 'before'){
+					$("#mainsidebar").prependTo("#contentcontainer .outermargin");
+				}else if(mainsidebarrepos == 'bottom'){
+					$("#mainsidebar").prependTo("#contentcontainer .outermargin");
+				}else if(mainsidebarrepos == 'hide'){
+					$("#mainsidebar").hide();
+				}
+
+
 	        }
-	        if($("#pagesidebarcontainer").length){ 
-	        $("#pagesidebarcontainer").appendTo("#contentcontainer .outermargin");
-	        }else if($("#mainsidebar").length){
-	        $("#mainsidebar").appendTo("#contentcontainer .outermargin");
-	        }
-	        if( $("#sidebar2").hasClass('out') ){ // outside first
-	        $("#sidebar2").appendTo("#contentcontainer .outermargin");
+	        if( $("#sidebar2").length ){ // outside first    .hasClass('out')
+	        	//$("#sidebar2").appendTo("#contentcontainer .outermargin");
+				if(sidebar2repos == 'after'){
+					$("#sidebar2").appendTo("#contentcontainer .outermargin");
+				}else if(sidebar2repos == 'before'){
+					$("#sidebar2").prependTo("#contentcontainer .outermargin");
+				}else if(sidebar2repos == 'bottom'){
+					$("#sidebar2").prependTo("#contentcontainer .outermargin");
+				}else if(sidebar2repos == 'hide'){
+					$("#sidebar2").hide();
+				}
+
 	        }
 
 			if( $("#topsidebar").length > 0 ){ // check top sidebar first
