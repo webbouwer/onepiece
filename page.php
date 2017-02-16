@@ -250,7 +250,13 @@ echo '</div>';
  *
  */ 
 echo '<div class="page-content mainpage">';
-echo apply_filters('the_content', get_the_content());
+
+/* add 'more' tag */
+global $more;
+$more = 0;
+
+echo apply_filters('the_content', get_the_content( __('Read more', 'onepiece') ));
+
 echo '</div>';
 }
 
