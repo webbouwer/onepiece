@@ -1403,6 +1403,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'rela'   => __( 'Header top, scroll along', 'onepiece' ),
             		'abso'   => __( 'Overlay header, scroll along', 'onepiece' ),
                 	'fixe'   => __( 'Overlay header, scroll fixed', 'onepiece' ),
+                	'relf'   => __( 'Header top, scroll fixed minified', 'onepiece' ),
             		'mini'   => __( 'Overlay header, scroll fixed minified', 'onepiece' ),
             	)
     	)));

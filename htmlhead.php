@@ -485,10 +485,13 @@ var setupSwipe = function(slider) {
 <style type="text/css">
 <?php /* TOPBAR BEHAVIOR */
 if( ( $displaytype == '50' && $mobile ) || ($displaytype == '66' || $displaytype == '75' 
-|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade' && $topbarbehavior != 'rela'){ 
+|| $displaytype == '80' || $displaytype == '100' ) && $childpagedisplay != 'fade' && $topbarbehavior != 'rela' && $topbarbehavior != 'relf'){
+
 $toppos = 'absolute'; 
+
 }else{
-if( $topbarbehavior != 'rela'){ 
+
+if( $topbarbehavior != 'rela' && $topbarbehavior != 'relf'){
 $toppos = 'absolute'; 
 }else{ 
 $toppos = 'relative';
@@ -685,7 +688,7 @@ z-index:69;
 }
 div#topbar.minified
 {
-position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
+position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' || $topbarbehavior == 'relf' ){ echo 'fixed'; }else{ echo 'absolute';} ?>;
 top:0px;
 left:0px;
 }
@@ -996,7 +999,7 @@ $(window).on("mousewheel scroll", function() {
 
 // sticky
 <?php
-if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' ){
+if( $topbarbehavior == 'mini' || $topbarbehavior == 'fixe' || $topbarbehavior == 'relf' ){
 ?>
 if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 
@@ -1021,7 +1024,7 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 
 	
 	
- 	<?php if($topbarbehavior == 'mini'){ ?>
+ 	<?php if($topbarbehavior == 'mini' || $topbarbehavior == 'relf'){ ?>
 	/**
 	 * MINIFY TOPBAR & BG
 	 */
@@ -1077,7 +1080,7 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 /** 
  * onscroll for fixed / minisize topbar:
  */
-if( $mainmenubarbehavior == 'stic' && ( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini') ){ 
+if( $mainmenubarbehavior == 'stic' && ( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' || $topbarbehavior == 'relf') ){
 // #site-navigation or #topbar-navigation 
 ?>
 
