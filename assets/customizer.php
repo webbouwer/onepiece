@@ -1403,6 +1403,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'rela'   => __( 'Header top, scroll along', 'onepiece' ),
             		'abso'   => __( 'Overlay header, scroll along', 'onepiece' ),
                 	'fixe'   => __( 'Overlay header, scroll fixed', 'onepiece' ),
+                	'relf'   => __( 'Header top, scroll fixed minified', 'onepiece' ),
             		'mini'   => __( 'Overlay header, scroll fixed minified', 'onepiece' ),
             	)
     	)));
@@ -1707,6 +1708,26 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Select sidebar width (percentage).', 'onepiece' ),
     	)));
+
+
+		$wp_customize->add_setting( 'onepiece_elements_mainsidebar_responsive' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainsidebar_responsive', array(
+            	'label'          => __( 'Main sidebar responsive position', 'onepiece' ),
+            	'section'        => 'onepiece_elements_sidebar',
+            	'settings'       => 'onepiece_elements_mainsidebar_responsive',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Where to position this sidebar on small screens:', 'onepiece' ),
+            	'choices'        => array(
+                	'hide'   => __( 'hide', 'onepiece' ),
+            		'before'   => __( 'before main content', 'onepiece' ),
+            		'after'   => __( 'after main content', 'onepiece' ),
+            	)
+    	)));
+
+
 		
 		// SECOND SIDEBAR
 		$wp_customize->add_setting( 'onepiece_elements_sidebar2_position' , array(
@@ -1754,6 +1775,22 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Select sidebar width (percentage).', 'onepiece' ),
     	)));
 		
+		$wp_customize->add_setting( 'onepiece_elements_sidebar2_responsive' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_sidebar2_responsive', array(
+            	'label'          => __( 'Second sidebar responsive position', 'onepiece' ),
+            	'section'        => 'onepiece_elements_sidebar2',
+            	'settings'       => 'onepiece_elements_sidebar2_responsive',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Where to position this sidebar on small screens:', 'onepiece' ),
+            	'choices'        => array(
+                	'hide'   => __( 'hide', 'onepiece' ),
+            		'before'   => __( 'before main content', 'onepiece' ),
+            		'after'   => __( 'after main content', 'onepiece' ),
+            	)
+    	)));
 
 
 

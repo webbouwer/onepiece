@@ -127,6 +127,12 @@ min-height:120px;
 max-height:100%;
 }
 
+/* popup min width */
+#mainpopupbox .popupcontent
+{
+min-width:320px;
+max-height:480px;
+}
 
 
 /*********************** default popup styling ********************
@@ -876,6 +882,16 @@ margin-left:2%;
 {
 width:auto;
 margin-right:2%;
+}
+
+
+/* popup min width */
+#mainpopupbox .popupcontent
+{
+min-width:560px;
+max-width:1240px;
+min-height:480px;
+max-height:780px;
 }
 
 
