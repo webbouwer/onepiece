@@ -20,8 +20,6 @@ $(document).ready(function() {
 var $wp_custom_vars = JSON.parse(site_data['customizer']);
 // example: alert($wp_custom_vars['onepiece_elements_topsidebar_responsive']);
 
-
-
 /**
  * RESPONSIVE ORDER
  * #topbarmargin, #topsidebar, #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
@@ -38,14 +36,31 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 		var bottomstylemain = $("#bottombarmargin").attr('style');
 	}
  
+
+
+
 	function ResponsiveReorder(){
 
-		var small = 512;
+
+		var small = 512 ; // defaults
+		var medium = 1024; // defaults
+		var small = $wp_custom_vars['onepiece_responsive_small_outermargin'];
+		var medium = $wp_custom_vars['onepiece_responsive_medium_outermargin'];
+
 		var toprepos = $wp_custom_vars['onepiece_elements_topsidebar_responsive'];
 		var mainsidebarrepos = $wp_custom_vars['onepiece_elements_mainsidebar_responsive'];
 		var sidebar2repos = $wp_custom_vars['onepiece_elements_sidebar2_responsive'];
 
+
+		var mainsidebarwidth = $wp_custom_vars['onepiece_elements_mainsidebar_width'];
+		var sidebar2width = $wp_custom_vars['onepiece_elements_sidebar2_width'];
+
 		
+
+
+		/*
+		 * Large / Medium Screens
+		 */
 	    if( $(window).width() > small ){
 			
 			if( $("#topsidebar").length > 0 ){ // check top sidebar first
@@ -58,10 +73,7 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 				$("#bottombarmargin").attr('style', bottomstylemain);
 			}
 			
-	        // prepend 
-	        if( $("#sidebar2").hasClass('ins') ){ // inside first
-	        $("#sidebar2").prependTo("#contentcontainer .outermargin");
-	        }
+	        // prepend
 	        if($("#pagesidebarcontainer").length){
 	            $("#pagesidebarcontainer").prependTo("#contentcontainer .outermargin");
 				$("#pagesidebarcontainer").show();
@@ -69,10 +81,66 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	        	$("#mainsidebar").prependTo("#contentcontainer .outermargin");
 	        	$("#mainsidebar").show();
 			}
-	        if( $("#sidebar2").hasClass('out') ){ // outside last
-	        $("#sidebar2").prependTo("#contentcontainer .outermargin");
-	        }
+
+			// new content width
+			var cw = 100;
+			if($("#sidebar2").length){
+			cw = cw - sidebar2width;
+			}
+			if($("#mainsidebar").length || $("#pagesidebarcontainer").length){
+			cw = cw - mainsidebarwidth;
+			}
+			$('#maincontent').css('width', cw+'%' );
+
+
 	    }
+
+
+		if( $(window).width() > medium && $("#sidebar2").length ){
+		    // prepend
+	        $("#sidebar2").prependTo("#contentcontainer .outermargin");
+
+			// new content width
+			var cw = 100;
+			cw = cw - sidebar2width;
+
+			if($("#mainsidebar").length || $("#pagesidebarcontainer").length){
+			cw = cw - mainsidebarwidth;
+			}
+			$('#maincontent').css('width', cw+'%' );
+
+		}
+
+		/*
+		 * Medium screens
+		 */
+		if( $("#sidebar2").length && $(window).width() <= medium && $(window).width() > small ){
+
+		    // append
+	        if( $("#mainsidebar").length || $("#pagesidebarcontainer").length ){
+
+				if(sidebar2repos == 'after'){
+					$("#sidebar2").appendTo("#contentcontainer .outermargin");
+				}
+				if(sidebar2repos == 'before'){
+					$("#sidebar2").prependTo("#contentcontainer .outermargin");
+				}
+				if(sidebar2repos == 'hide'){
+					$("#sidebar2").hide();
+				}
+
+				// new content width
+				$('#maincontent').css('width', ( 100 - mainsidebarwidth )+'%' );
+
+
+	        }
+
+		}
+
+		/*
+		 * Small Screens
+		 */
+
 	    if( $(window).width() <= small ){
 			
 
@@ -81,9 +149,10 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 				$("#bottombarmargin").attr('style', 'width:100%;');
 			}
 			
+
+
 	        // append    
-	        /*if( $("#sidebar2").hasClass('ins') ){ // inside first
-	        //$("#sidebar2").appendTo("#contentcontainer .outermargin");
+	        if( $("#sidebar2").hasClass('ins') ){
 
 				if(sidebar2repos == 'after'){
 					$("#sidebar2").appendTo("#contentcontainer .outermargin");
@@ -91,17 +160,13 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 				if(sidebar2repos == 'before'){
 					$("#sidebar2").prependTo("#contentcontainer .outermargin");
 				}
-
-				if(sidebar2repos == 'bottom'){
-					$("#sidebar2").prependTo("#footercontainer .outermargin");
-				}
 				if(sidebar2repos == 'hide'){
 					$("#sidebar2").hide();
 				}
 
-	        }*/
-			 if($("#pagesidebarcontainer").length){
-				 //$("#mainsidebar").appendTo("#contentcontainer .outermargin");
+	        }
+
+			if($("#pagesidebarcontainer").length){
 
 				if(mainsidebarrepos == 'after'){
 					$("#pagesidebarcontainer").appendTo("#contentcontainer .outermargin");
@@ -116,8 +181,6 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 
 			 }else if( $("#mainsidebar").length ){
 
-	        //$("#mainsidebar").appendTo("#contentcontainer .outermargin");
-
 				if(mainsidebarrepos == 'after'){
 					$("#mainsidebar").appendTo("#contentcontainer .outermargin");
 				}else if(mainsidebarrepos == 'before'){
@@ -130,8 +193,10 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 
 
 	        }
-	        if( $("#sidebar2").length ){ // outside first    .hasClass('out')
-	        	//$("#sidebar2").appendTo("#contentcontainer .outermargin");
+
+
+	        if( $("#sidebar2").hasClass('out') ){ // outside first    .length
+
 				if(sidebar2repos == 'after'){
 					$("#sidebar2").appendTo("#contentcontainer .outermargin");
 				}else if(sidebar2repos == 'before'){
