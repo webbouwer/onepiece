@@ -28,6 +28,7 @@ $topsidebarwidth = get_theme_mod( 'onepiece_elements_topsidebar_width' , '30');
 global $wp_query;
 $postid = $wp_query->post->ID;
 $useheaderimage = get_post_meta($postid, "meta-page-headerimage", true);
+$headerwidgetdisplay = get_post_meta($postid, "meta-page-headerwidgetdisplay", true);
 $usepostfeaturedimage = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');
 $childpagedisplay = get_post_meta($postid, "meta-box-display-childpages", true);
 $thumbelarge = wp_get_attachment_url(get_post_thumbnail_id($postid));
@@ -385,7 +386,9 @@ echo '</div>';
  * widgets header
  *
  */ 
-if( function_exists('is_sidebar_active') && is_sidebar_active('widgets-onepiece-header') ){
+
+
+if( $headerwidgetdisplay != 'hide' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-onepiece-header') ){
 $count = is_sidebar_active('widgets-onepiece-header');
 echo '<div id="widgets-header" class="colset-'.$count.'">';
 dynamic_sidebar('widgets-onepiece-header');
