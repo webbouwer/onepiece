@@ -17,6 +17,7 @@ function page_meta_custom_fields($object)
 {
 wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 $useheaderimage = get_post_meta($object->ID, "meta-page-headerimage", true);
+$headerwidgetdisplay = get_post_meta($object->ID, "meta-page-headerwidgetdisplay", true);
 $pagesidebardisplay = get_post_meta($object->ID, "meta-page-pagesidebardisplay", true);
 $specialwidgetsdisplay = get_post_meta($object->ID, "meta-page-specialwidgetsdisplay", true);
 $beforewidgetsdisplay = get_post_meta(get_the_ID(), "meta-page-beforewidgetsdisplay", true);
@@ -27,12 +28,18 @@ $secondsidebardisplay = get_post_meta($object->ID, "meta-page-secondsidebardispl
 <select name="meta-page-headerimage" id="meta-page-headerimage">
 <option value="default" <?php selected( $useheaderimage, 'default' ); ?>><?php echo __('Top content (default)', 'onepiece'); ?></option>
 <option value="replace" <?php selected( $useheaderimage, 'replace' ); ?>><?php echo __('Replace header', 'onepiece'); ?></option>
-
-
 <option value="hide" <?php selected( $useheaderimage, 'hide' ); ?>><?php echo __('top content, hide header', 'onepiece'); ?></option>
 </select>
 </p>
-<p><label for="meta-page-pagesidebardisplay"><?php echo __('Sidebar', 'onepiece'); ?></label>
+
+
+<p><label for="meta-page-headerwidgetdisplay"><?php echo __('Header widget display', 'onepiece'); ?></label>
+<select name="meta-page-headerwidgetdisplay" id="meta-page-headerwidgetdisplay">
+<option value="show" <?php selected( $headerwidgetdisplay, 'show' ); ?>><?php echo __('Show', 'onepiece'); ?></option>
+<option value="hide" <?php selected( $headerwidgetdisplay, 'hide' ); ?>><?php echo __('Hide', 'onepiece'); ?></option></select>
+</p>
+
+<p><label for="meta-page-pagesidebardisplay"><?php echo __('Sidebar display', 'onepiece'); ?></label>
 <select name="meta-page-pagesidebardisplay" id="meta-page-pagesidebardisplay">
 <option value="none" <?php selected( $pagesidebardisplay, 'none' ); ?>><?php echo __('No main or page sidebar', 'onepiece'); ?></option>
 <option value="hide" <?php selected( $pagesidebardisplay, 'hide' ); ?>><?php echo __('No pagesidebar', 'onepiece'); ?></option>
@@ -236,6 +243,11 @@ function save_page_meta_box($post_id, $post, $update)
 
     if( isset( $_POST['meta-page-headerimage'] ) )
         update_post_meta( $post_id, 'meta-page-headerimage', esc_attr(     $_POST['meta-page-headerimage'] ) );
+
+    if( isset( $_POST['meta-page-headerwidgetdisplay'] ) )
+        update_post_meta( $post_id, 'meta-page-headerwidgetdisplay', esc_attr( $_POST['meta-page-headerwidgetdisplay'] ) );
+
+
     if( isset( $_POST['meta-page-specialwidgetsdisplay'] ) )
         update_post_meta( $post_id, 'meta-page-specialwidgetsdisplay', esc_attr(     $_POST['meta-page-specialwidgetsdisplay'] ) );
     if( isset( $_POST['meta-page-beforewidgetsdisplay'] ) )
