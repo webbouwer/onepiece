@@ -149,7 +149,7 @@ if($mobile){
 
 
 // Frontend user login  
-if( get_theme_mod('onepiece_elements_loginbar_option', 'none') != 'none'){
+if( get_theme_mod('onepiece_elements_loginbar_option', 'none') != 'none' || is_active_widget( false, false, 'onepiece_login_widget', true ) ){
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/userlogin.js"></script>'; 
 }
 
