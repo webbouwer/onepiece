@@ -218,7 +218,7 @@ $logindisplay == 'tstop' || $logindisplay == 'tsbot' ){
 
 $count = is_sidebar_active('widgets-top-sidebar');
 echo '<div id="topsidebar" class="colset-'.$count.' '.$topsidebarplace.'side" style="float:'.$topsidebarplace.';width:'.$topsidebarwidth.'%;">';
-
+echo '<div class="sidebarpadding">';
 if( $logindisplay == 'tstop'){
 display_userpanel();
 }
@@ -232,7 +232,7 @@ display_userpanel();
 }
 
 
-echo '<div class="clr"></div></div>';
+echo '<div class="clr"></div></div></div>';
 } 
 
 

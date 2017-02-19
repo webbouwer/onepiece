@@ -39,6 +39,123 @@ function onepiece_dashboard_widget_content() {
 
 
 
+/* Login Widget */
+class onepiece_login_widget extends WP_Widget {
+
+
+	function __construct() {
+		parent::__construct(
+			'onepiece_login_widget', // Base ID
+			__('Onepiece Login Widget', 'onepiece'), // Widget name and description in UI
+			array( 'description' => __( 'Onepiece Login Widget (default settings customizer loginbar)', 'onepiece' ), )
+		);
+	}
+	// Creating widget front-end
+	public function widget( $args, $instance ) {
+
+		$dsp = 1;
+
+		if(isset($instance['dsp']) && $instance['dsp'] !='' )
+		$dsp = $instance['dsp'];
+
+		$title = apply_filters( 'widget_title', $instance['title'] );
+
+		// before and after widget arguments are defined by themes
+		echo $args['before_widget'];
+
+		if ( ! empty( $title ) )
+		echo $args['before_title'] . $title . $args['after_title'];
+
+		// check if customizer loginbar is inactive befor using widget code
+		if(get_theme_mod('onepiece_elements_loginbar_option', 'none') != 'none'){
+		echo '<div class="notice notice-warning is-dismissible"><p>'
+			. __( '! Disable the customizer loginbar first', 'onepiece' ).'</p></div>';
+
+
+		}else{
+		display_userpanel();
+		}
+		echo $args['after_widget'];
+
+	}
+
+
+
+	// Widget Backend
+	public function form( $instance ) {
+
+		if ( isset( $instance[ 'title' ] ) ) {
+		$title = $instance[ 'title' ];
+		}else{
+		$title = __( 'New title', 'Posts listed' );
+		}
+
+		$dsp = 1;
+		if ( isset( $instance[ 'dsp' ] ) ) {
+		$dsp= $instance[ 'dsp' ];
+		}
+
+		/*
+	 	 * Widget admin form
+		 */
+		?>
+		<p>
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php __( 'Title:', 'onepiece' ); ?></label>
+		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+		</p>
+
+		<?php
+		if ( get_theme_mod('onepiece_elements_loginbar_option', 'none') != 'none' ){
+			// https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
+			echo '<div class="notice notice-warning is-dismissible"><p>'
+			. __( '! Disable the customizer loginbar first', 'onepiece' ).'</p></div>';
+
+		}
+		?>
+
+		<p><label for="<?php echo $this->get_field_id( 'dsp' ); ?>">Display(test):</label>
+		<select name="<?php echo $this->get_field_name( 'dsp' ); ?>" id="<?php echo $this->get_field_id( 'dsp' ); ?>">
+		<option value="0" <?php selected( $dsp, '0' ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp, '1' ); ?>>Show</option>
+		</select>
+		</p>
+		<?php
+	}
+
+	// Updating widget replacing old instances with new
+	public function update( $new_instance, $old_instance ) {
+
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['dsp'] = ( ! empty( $new_instance['dsp'] ) ) ? strip_tags( $new_instance['dsp'] ) : '';
+		return $instance;
+
+	}
+}
+
+
+
+// Register and load the widget
+function onepiece_loadlogin_widget() {
+	register_widget( 'onepiece_login_widget' );
+}
+add_action( 'widgets_init', 'onepiece_loadlogin_widget' );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Recent posts Widget */

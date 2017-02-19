@@ -171,6 +171,7 @@ Elements:
 
 	Login tabbar    
         Default display none/positions 
+		Box icon html
 		
     Main menu bar
         Display hide/position horizontal
@@ -1621,7 +1622,28 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'bsbbot'   => __( 'Bottom sidebar bottom', 'onepiece' ),
             	)
     	)));
-		
+		$wp_customize->add_setting( 'onepiece_elements_loginbar_iconhtml' , array(
+		'default' => '<webicon icon="wpf:user-shield"/>',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_loginbar_iconhtml', array(
+            	'label'          => __( 'Loginbar webicon/img html', 'onepiece' ),
+            	'section'        => 'onepiece_elements_loginbar',
+            	'settings'       => 'onepiece_elements_loginbar_iconhtml',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Html for login box img/webicon', 'onepiece' ),
+    	)));
+		$wp_customize->add_setting( 'onepiece_elements_loginbar_usericonhtml' , array(
+		'default' => '<webicon icon="wpf:collaborator"/>',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_loginbar_usericonhtml', array(
+            	'label'          => __( 'Userbox webicon/img html', 'onepiece' ),
+            	'section'        => 'onepiece_elements_loginbar',
+            	'settings'       => 'onepiece_elements_loginbar_usericonhtml',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Html for (loggedin) userbox img/webicon', 'onepiece' ),
+    	)));
 		
     	
 		// ELEMENTS - BREADCRUMBS
