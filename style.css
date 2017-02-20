@@ -83,7 +83,7 @@ webicon,
 .svg-webicon /* div.anythingSlider span.arrow webicon*/
 {
 display: block;
-width:32px;
+max-width:32px;
 height:auto;
 }
 
@@ -127,6 +127,12 @@ min-height:120px;
 max-height:100%;
 }
 
+/* popup min width */
+#mainpopupbox .popupcontent
+{
+min-width:320px;
+max-height:480px;
+}
 
 
 /*********************** default popup styling ********************
@@ -701,10 +707,43 @@ text-align:right !important;
 text-align:center !important; /* available on small screens */
 }
 
+/* Login
+.signintab:before,
+.registertab:before,
+.loggedtext span:before
+{
+content:'\003Cwebicon icon\003D\0022entypo\003Av\002Dcard\0022\002F\003E test';
+}
+*/
+#userpanel .loginboxicon,
+#userpanel .loginboxicon div,
+#userpanel .loginboxicon img,
+#userpanel .loginboxicon webicon,
+#userpanel .loginboxicon webicon svg,
+#userpanel .userboxicon,
+#userpanel .userboxicon div,
+#userpanel .userboxicon img,
+#userpanel .userboxicon webicon,
+#userpanel .userboxicon webicon svg
+{
+position:relative;
+width:34px;
+height:34px;
+}
+#userpanel .loginboxicon,
+#userpanel .userboxicon
+{
+float:left;
+padding:4px;
+}
 
-
-
-
+#userpanel .tabmenu
+{
+}
+#userpanel .tabcontainer
+{
+clear:both;
+}
 
 @media screen and (min-width: 512px) {
   
@@ -876,6 +915,16 @@ margin-left:2%;
 {
 width:auto;
 margin-right:2%;
+}
+
+
+/* popup min width */
+#mainpopupbox .popupcontent
+{
+min-width:560px;
+max-width:1240px;
+min-height:480px;
+max-height:780px;
 }
 
 

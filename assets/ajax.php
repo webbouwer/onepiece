@@ -53,7 +53,7 @@ function ajax_filter_get_posts() {
 
 
     // order data
-    if ( $query->have_posts() ) : 
+    if ( $query->have_posts() ){
     while ( $query->have_posts() ) : $query->the_post();
 
         global $item;
@@ -126,7 +126,11 @@ function ajax_filter_get_posts() {
 	 // the_post_thumbnail();
        ); 
     endwhile;
-    endif;
+
+	}else{
+		// no data return
+		$array = false;
+	}
     wp_reset_query();
     ob_clean();
     echo json_encode($array); // response in json

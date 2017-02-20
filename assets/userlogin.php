@@ -1,4 +1,4 @@
-<?php 
+<?php
 /** Custom Login/Register/Password 
  * source https://digwp.com/2010/12/login-register-password-code/ 
  */
@@ -7,22 +7,28 @@ function display_userpanel(){
 
 
 
-echo '<div id="userpanel"><div class="sidebarpadding">';
+echo '<div id="userpanel">';
+
 
 global $user_ID, $user_identity; wp_get_current_user(); //get_currentuserinfo(); 
+// MU switch_to_blog( 1 );
 $regallowed = get_option( 'users_can_register' );
 
 
 if (!$user_ID) { // is not logged in
 		
-		echo '<ul class="tabmenu"><li>'.__( 'Sign in', 'onepiece' ).'</li>';
+		if( get_theme_mod('onepiece_elements_loginbar_iconhtml','') != ''){
+			echo '<div class="loginboxicon">'.get_theme_mod('onepiece_elements_loginbar_iconhtml','<webicon icon="wpf:user-shield"/>').'</div>';
+		}
+
+		echo '<ul class="tabmenu"><li class="signintab"><span >'.__( 'Sign in', 'onepiece' ).'</span></li>';
 		if ( $regallowed ) {
-		echo '<li>'.__( 'Register', 'onepiece' ).'</li>';
+		echo '<li class="registertab"><span >'.__( 'Register', 'onepiece' ).'</span></li>';
 		}
 		echo '</ul>';
 		
 		echo '<ul class="tabcontainer"><li class="tab1 tab">';
-		
+
 		global $user_login; 
 		global $user_email;
 		global $register;
@@ -52,7 +58,7 @@ if (!$user_ID) { // is not logged in
 		// display login form
 		wp_login_form();
 		
-		echo '<div class="resetlogin">'.__( 'Forgot password?', 'onepiece' ).'</div>';
+		echo '<div class="resetlogin"><span>'.__( 'Forgot password?', 'onepiece' ).'</span></div>';
 		
 		do_action('login_form', 'login'); 
 
@@ -65,13 +71,13 @@ if (!$user_ID) { // is not logged in
 		if ( $regallowed ) {
 		echo '<li class="tab2 tab">';
 		echo '<h3>'.__( 'Register', 'onepiece' ).'</h3>'; 
-		echo '<p>'.__( 'Sign up with email(or social account)', 'onepiece' ).'</p>';
+		echo '<p>'.__( 'Sign up', 'onepiece' ).'</p>';
 ?>
 
 		
 			<form method="post" action="<?php echo site_url('wp-login.php?action=register', 'login_post') ?>" class="wp-user-form">
 			<div class="username">
-			<label for="user_login"><?php _e('Username', 'onepiece' ); ?>: </label>
+			<label for="user_login"><?php __('Username', 'onepiece' ); ?>: </label>
 			<input type="text" name="user_login" value="<?php echo esc_attr(stripslashes($user_login)); ?>" size="20" id="user_login" tabindex="101" />
 			</div>
 			<div class="password">
@@ -117,15 +123,21 @@ if (!$user_ID) { // is not logged in
 
 			global $userdata; 
 			wp_get_current_user(); 
+
+
+			if( get_theme_mod('onepiece_elements_loginbar_usericonhtml','') != ''){
+				echo '<div class="userboxicon">'.get_theme_mod('onepiece_elements_loginbar_usericonhtml','<webicon icon="wpf:collaborator"/>').'</div>';
+			}
 			
 			echo '<div class="infocontainer">';
+
+
 			echo '<div class="usericon">';
-			
-			echo get_avatar($userdata->ID, 60);
-			
+			echo get_avatar($userdata->ID, 46);
 			echo '</div>';
+
 			echo '<div class="userinfo">';
-			echo '<div class="loggedtext">'. __('You are signed in as', 'onepiece') .' <strong>'. $user_identity .'</strong></div>';
+			echo '<div class="loggedtext"><span><strong>'. $user_identity .'</strong></span></div>';
 		
 		
 		 
@@ -150,7 +162,7 @@ if (!$user_ID) { // is not logged in
 		} 
 		*/
 		
-		echo '<li class="menu-item"><a class="logout-link" href="'.wp_logout_url( 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] ).'" title="Sign off">'.__('Sign off', 'onepiece').'</a></li>';
+		echo '<li class="menu-item"><a class="logout-link" href="'.wp_logout_url( 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] ).'" title="Sign off"><span>'.__('Sign off', 'onepiece').'</span></a></li>';
 
 		echo '</ul></div>';
 
@@ -162,6 +174,6 @@ if (!$user_ID) { // is not logged in
 			
 		echo '</div></div>';
 } 
-echo '</div></div>';
+echo '</div>';
 } // end userpanel 
 ?>

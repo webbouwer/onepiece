@@ -27,7 +27,13 @@ function get_fonts_select(){
 
 		'arial'=>'Arial',
 
-		//'AvantGarBoo__'=>'Avant Garde Book',
+		//'Avantgarde__'=>'Avant Garde',
+
+		'BreeThin__'=>'Bree Thin',
+
+		'BreeRegular__'=>'Bree Regular',
+
+		'BreeBold__'=>'Bree Bold',
 
 		'Bubblegum+Sans'=>'Bubblegum Sans',
 
@@ -43,15 +49,21 @@ function get_fonts_select(){
 
 		'Droid+Sans+Mono'=>'Droid Sans Mono',
 
+		'edgars_papercut__'=>'Edgars Papercut',
+
 		'Gochi+Hand'=>'Gochi Hand',
 
 		'GoodDog__'=>'Good Dog',
 
 		'HelveticaNeue__'=>'Helvetica Neue',
 
+		//'HelveticaNeueThin__'=>'Helvetica Neue Thin',
+
+		'Interstate__'=>'Interstate',
+
 		'Italiana'=>'Italiana',
 
-		'Journal__'=>'Journal',
+		'journal__'=>'Journal',
 
 		'Julius+Sans+One'=>'Julius Sans One',
 
@@ -62,6 +74,10 @@ function get_fonts_select(){
 		'Libre+Franklin'=>'Libre Franklin',
 
 		'Lilita+One'=>'Lilita One',
+
+		'Lobster__'=>'Lobster',
+
+		'LobsterTwoBold__'=>'Lobster Two Bold',
 
 		'Magra'=> 'Magra',
 
@@ -103,6 +119,8 @@ function get_fonts_select(){
 
 		'rockwell__'=>'Rockwell',
 
+		'Rockwell_Extra_Bold__'=>'Rockwell Extra Bold',
+
 		'Rosario'=>'Rosario',
 
 		'Sanchez'=>'Sanchez',
@@ -136,9 +154,9 @@ function generate_font_style($fontkey){
 			font-family: '.$fontname.';
 			src: url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.eot" );
 			src: url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.eot?#iefix") format("embedded-opentype"),
+			url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.woff") format("woff"),
 			url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.ttf") format("truetype"),
 		}';
-		/* add woff after the embedded-opentype line .. url( "'.esc_url( get_template_directory_uri() ) . '/fonts/'.$fontname.'.woff") format("woff"), */
 
 	}
 	/*
@@ -179,10 +197,12 @@ function add_fonts_frontend(){
 
 		// main
 		$fontkey_default = get_theme_mod('onepiece_style_fonts_maintype', 'arial' ); // defaults to arial
-		$fontcode .= generate_font_css($fontkey_default,'body');
-		if( strpos($fontkey, '__') !== true ){
-		$googlefontlist .= $fontkey_default;
-		}
+
+		//if( strpos($fontkey, '__')  ){
+			$fontcode .= generate_font_css($fontkey_default,'body');
+		//}else{
+			$googlefontlist .= $fontkey_default;
+		//}
 
 		// page / default / gallery / subtitles
 		if( get_theme_mod('onepiece_style_fonts_pagetitle' ) != 'default' ){
