@@ -1,4 +1,4 @@
-<?php 
+<webicon icon="wpf:user-shield"/><?php
 /** Custom Login/Register/Password 
  * source https://digwp.com/2010/12/login-register-password-code/ 
  */
@@ -11,13 +11,14 @@ echo '<div id="userpanel">';
 
 
 global $user_ID, $user_identity; wp_get_current_user(); //get_currentuserinfo(); 
+// MU switch_to_blog( 1 );
 $regallowed = get_option( 'users_can_register' );
 
 
 if (!$user_ID) { // is not logged in
 		
 		if( get_theme_mod('onepiece_elements_loginbar_iconhtml','') != ''){
-			echo '<div class="loginboxicon">'.get_theme_mod('onepiece_elements_loginbar_iconhtml').'</div>';
+			echo '<div class="loginboxicon">'.get_theme_mod('onepiece_elements_loginbar_iconhtml','<webicon icon="wpf:user-shield"/>').'</div>';
 		}
 
 		echo '<ul class="tabmenu"><li class="signintab"><span >'.__( 'Sign in', 'onepiece' ).'</span></li>';
@@ -125,7 +126,7 @@ if (!$user_ID) { // is not logged in
 
 
 			if( get_theme_mod('onepiece_elements_loginbar_usericonhtml','') != ''){
-				echo '<div class="userboxicon">'.get_theme_mod('onepiece_elements_loginbar_usericonhtml').'</div>';
+				echo '<div class="userboxicon">'.get_theme_mod('onepiece_elements_loginbar_usericonhtml', '<webicon icon="wpf:collaborator"/>').'</div>';
 			}
 			
 			echo '<div class="infocontainer">';
