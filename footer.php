@@ -144,7 +144,7 @@ if( ( $bottomsidebarplace != 'none' && function_exists('is_sidebar_active') && i
 $logindisplay == 'bsbtop' || $logindisplay == 'bsbbot'  ){
 
 $count = is_sidebar_active('widgets-bottom-sidebar');
-echo '<div id="bottomsidebar" class="colset-'.$count.' '.$bottomsidebarplace.'side" style="float:'.$bottomsidebarplace.';width:'.$bottomsidebarwidth.'%;">';
+echo '<div id="bottomsidebar" class="colset-'.$count.' '.$bottomsidebarplace.'side" style="float:'.$bottomsidebarplace.';width:'.$bottomsidebarwidth.'%;"><div class="sidebarpadding">';
 
 if( $logindisplay == 'bsbtop'){
 display_userpanel();
@@ -158,7 +158,7 @@ if( $logindisplay == 'bsbbot'){
 display_userpanel();
 }
 
-echo '<div class="clr"></div></div>';
+echo '<div class="clr"></div></div></div>';
 } 
 
 
