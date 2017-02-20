@@ -1,11 +1,12 @@
 <?php
 
+echo '<div class="sidebarpadding">';
+
 $loginbar_display = get_theme_mod('onepiece_elements_loginbar_option', 'none');
 if($loginbar_display == 'sbtop'){
 display_userpanel();
 }
 
-echo '<div class="sidebarpadding">';
 
 if ( has_nav_menu( 'sidemenu' ) ) { 
 echo '<div id="sidebar-navigation" class="main-navigation" role="navigation"><nav>';
@@ -20,9 +21,11 @@ dynamic_sidebar('sidebar');
 echo '<div class="clr"></div></div>';
 }
 
-echo '</div>'; 
 
 if($loginbar_display == 'sbbottom'){
 display_userpanel();
 }
+
+
+echo '</div>';
 ?>
