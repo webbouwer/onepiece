@@ -1268,6 +1268,7 @@ echo '.item.active .coverbox{ min-height:'.$itembigh.'px !important;}';
  * Set Item view Columns
  * ! make custom sizes?
  */
+
 if( $itemview == 'right'){
 echo '#itemcontainer .item.active .coverbox{ width:60%; float:left; }';
 echo '#itemcontainer .item.active .titlebox, #itemcontainer .item.active .fullinfobox{ width:40%; float:right;}';
@@ -2211,8 +2212,51 @@ echo '#maincontent .post, .post-title, h1, p, .widgetpadding h3, .widgetpadding 
 if( $mainmenubarplace == 'above' ){ 
 echo '#headercontainer #site-navigation{ position: relative; z-index:999;}';
 }
-echo '</style>';
 
+
+
+
+/* POST and LIST image sizes/positioning */
+// img width in percentage
+// img margin is 2% of full width multiplied by half of the (customizer) global spacing
+
+$imgpostwidth = get_theme_mod('onepiece_content_panel_posts_imgwidth',37);
+/* image is inline with content text
+$imgpostmargin = 2 * ( $stylelayout_spacing / 2 );
+$txtpostwidth = 100 - ( $imgpostwidth + $imgpostmargin );
+*/
+echo '.post-content p img.align-right.wp-post-image,
+.post-content p img.align-left.wp-post-image
+{
+width:'.$imgpostwidth.'% !important;
+}';
+
+
+
+$imglistwidth = get_theme_mod('onepiece_content_panel_list_imgwidth',37);
+$imglistmargin = 2 * ( $stylelayout_spacing / 2 );
+$txtlistwidth = 100 - ( $imglistwidth + $imglistmargin );
+
+echo '#maincontent .follow-post .post-coverimage{ width:'.$imglistwidth.'%; };';
+echo '#maincontent .follow-post .imgalign-left .post-coverimage,
+#maincontent .follow-post .imgalign-right .post-coverimage { margin-right:'.$imglistmargin.'%; }';
+
+echo '#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-title,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-subtitle,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .pricebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .sizebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-title,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-subtitle,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .pricebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .sizebox
+{
+width:'.$txtlistwidth.'%;
+}';
+
+
+echo '</style>';
 
 // font (overwrites)
 add_fonts_frontend();

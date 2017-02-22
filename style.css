@@ -410,7 +410,7 @@ list-style-type:none;
 
 #maincontent .first-group-post .post-coverimage
 {
-max-height:140px;
+max-height:240px;
 overflow:hidden;
 }
 
@@ -633,7 +633,7 @@ background-size: cover;
 
 .item.active .coverbox
 {
-min-height:160px;
+min-height:180px;
 }
 
 .item .coverbox img /* deprecaded; cover image becomes background-image */
@@ -685,8 +685,8 @@ position:relative;
 .item .labelbox span.productlabel webicon
 {
 position:relative;
-width:32px;
-height:32px;
+max-width:32px;
+max-height:32px;
 }
 
 
@@ -727,8 +727,8 @@ content:'\003Cwebicon icon\003D\0022entypo\003Av\002Dcard\0022\002F\003E test';
 #userpanel .userboxicon webicon svg
 {
 position:relative;
-width:34px;
-height:34px;
+max-width:32px;
+max-height:32px;
 }
 #userpanel .loginboxicon,
 #userpanel .userboxicon
@@ -983,7 +983,9 @@ text-align:center; /* available on small screens */
 
 
 
-
+/*
+ * Overwriten by customizer variables in end htmlhead.php
+ */
 #maincontent .follow-post .post-coverimage
 {
     width:28%;
@@ -1005,6 +1007,8 @@ text-align:center; /* available on small screens */
     margin:0px auto;
 	text-align:center;
 }
+/**/
+
 
 #maincontent .post-subtitle
 {
