@@ -402,6 +402,20 @@ function new_excerpt_more($more) {
 add_filter('excerpt_more', 'new_excerpt_more');
 
 
+/*
+ * Adjust html output next / prev postlinks
+ */
+function add_class_next_post_link($html){
+	$html = str_replace('<a','<a class="next-post" title="'.__('Next post','onepiece').'"',$html);
+	return $html;
+}
+add_filter('next_post_link','add_class_next_post_link',10,1);
+function add_class_previous_post_link($html){
+	$html = str_replace('<a','<a class="prev-post" title="'.__('Previous post','onepiece').'"',$html);
+	return $html;
+}
+add_filter('previous_post_link','add_class_previous_post_link',10,1);
+
 
 
 /****** Customize Adminbar ******/

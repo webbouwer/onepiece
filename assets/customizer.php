@@ -1130,6 +1130,59 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_previcon' , array(
+		'default' => '<webicon icon="fa:chevron-left"/>',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_previcon', array(
+            	'label'          => __( 'Prev post button', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_previcon',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Prev post button text and/or icon html', 'onepiece' ),
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_nexticon' , array(
+		'default' => '<webicon icon="fa:chevron-right"/>',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_nexticon', array(
+            	'label'          => __( 'Next post button', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_nexticon',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Next post button text and/or icon html', 'onepiece' ),
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_nextprevtitle' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_nextprevtitle', array(
+            	'label'          => __( 'Next / Previous post title', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_nextprevtitle',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Next and Prev title link display in buttons', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No display', 'onepiece' ),
+                    'beside'   => __( 'Show title besides custom icon/text', 'onepiece' ),
+                    'above'   => __( 'Show title above custom icon/text', 'onepiece' ),
+                    'below'   => __( 'Show title below custom icon/text', 'onepiece' ),
+            	)
+    	)));
+
+
+
+
+
+
+
+
+
+
+
 		/*
 		Product
 		.. turn off product options
@@ -1155,7 +1208,6 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	)
     	)));
 
-		
 		// CONTENT - PRODUCT - ORDER BY EMAIL
     	$wp_customize->add_setting( 'onepiece_content_panel_product_orderemailaddress' , array(
 		'default' => get_option('admin_email'), 
@@ -1436,6 +1488,28 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Height (min-height) in px', 'onepiece' ),
     	)));
 		
+
+		// ELEMENTS - HEADER IMAGE - OVERLAY
+		$wp_customize->add_setting( 'onepiece_elements_headerimage_overlay' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_headerimage_overlay', array(
+            	'label'          => __( 'Header overlay', 'onepiece' ),
+            	'section'        => 'header_image',
+            	'settings'       => 'onepiece_elements_headerimage_overlay',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select header overlay', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No overlay', 'onepiece' ),
+                	'blank'   => __( 'Blank (add custom css on .header-overlay)', 'onepiece' ),
+            	)
+    	)));
+	    /*
+			opacity:0.4;
+			background-color:black;
+		*/
 		
 		// ELEMENTS - TOP MENU BAR
 		// above / fixed overlay / absolute overlay

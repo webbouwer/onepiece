@@ -322,6 +322,29 @@ function sizeHeaderElements(){
 
 		$('#headerbar .bglayer').css( 'height' , $('#headerbar').height() );	// reset topbar bglayer height
 
+		<?php
+		/*
+		 * Place header overlay elmenent
+		 */
+		$headeroverlaydisplay = get_theme_mod('onepiece_elements_headerimage_overlay', 'none');
+		if($headeroverlaydisplay != 'none'){
+		?>
+
+		if(!$('.header-overlay').length){
+			//alert('check overlay!');
+			var ol = '<div class="header-overlay"></div>';
+			if($('#headerbar').length){
+				$('#headerbar').append(ol);
+			}else if($('#sliderbox-head').length){
+			    $('#sliderbox-head').append(ol);
+			}
+
+		}
+
+		<?php
+		}
+		?>
+
 }
 
 
