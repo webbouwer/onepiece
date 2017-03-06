@@ -118,7 +118,7 @@ Content:
 
 	Gallery
 		Default category
-		
+		Link Post list Widget
 		.. default gallery filters
 		.. default max items in row
 		.. default item minimal height
@@ -1444,7 +1444,23 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     		'choices' => get_categories_select()
     	)));
 		
+	    // CONTENT - GALELRY - Link Post list Widget
+		$wp_customize->add_setting( 'onepiece_content_gallery_linkpostlistwidget' , array(
+		'default' => 'yes',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
 		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_gallery_linkpostlistwidget', array(
+            	'label'          => __( 'Link widget click', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_gallery',
+            	'settings'       => 'onepiece_content_gallery_linkpostlistwidget',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Link post-list-widget items to gallery click action', 'onepiece' ),
+            	'choices'        => array(
+                	'no'   => __( 'No', 'onepiece' ),
+                	'yes'   => __( 'Yes', 'onepiece' ),
+            	)
+    	)));
 
 
 

@@ -299,12 +299,12 @@ class onepiece_postlist_widget extends WP_Widget {
 		$custom_metabox_useurl = get_post_meta( get_the_ID() , 'meta-box-custom-useurl', true);
 		$custom_metabox_urltext = get_post_meta( get_the_ID() , 'meta-box-custom-urltext', true);
 
-		$title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
+		$title_link = '<a class="rel-item" data-id="'.get_the_ID().'" href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
 
 		if( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceblank'){
-		$title_link = '<a href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
+		$title_link = '<a class="rel-item" data-id="'.get_the_ID().'" href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
 		}elseif( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceself'){
-		$title_link = '<a href="'.$custom_metabox_url.'" target="_self" title="'.get_the_title().'">';
+		$title_link = '<a class="rel-item" data-id="'.get_the_ID().'" href="'.$custom_metabox_url.'" target="_self" title="'.get_the_title().'">';
 		}
 
 

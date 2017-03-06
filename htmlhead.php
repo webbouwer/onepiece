@@ -2025,8 +2025,6 @@ $(document).ready(function() {
 
 
 
-
-
 		$('#mainpopupbox .popupcontent').on('click', 'a.related-item-link', function(r){
 			r.preventDefault();
 
@@ -2096,6 +2094,24 @@ $(document).ready(function() {
 
 	}); 
 	
+
+
+	/* Link post-list-widget items to gallery click action */
+	<?php if(get_theme_mod('onepiece_content_gallery_linkpostlistwidget') == 'yes'){ ?>
+
+
+		$('body').on('click', 'ul li a.rel-item', function(e){
+
+			e.preventDefault();
+				var elid = $( '#post-'+$(this).attr('data-id')+'.item' );
+				loaditems();
+				$container.isotope('layout');
+				elid.trigger( "click" );
+  			return false;
+
+		});
+
+	<? 	} ?>
 
 
 
