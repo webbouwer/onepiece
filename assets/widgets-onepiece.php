@@ -316,7 +316,7 @@ class onepiece_postlist_widget extends WP_Widget {
 
 		echo '<div class="post-titlebox"><h4>'. get_the_title() .'</h4>';
 		if($dsp_date != 0 ){
-		echo '<span class="post-date">'.tweetTime(get_the_date('c')).' </span>';
+		echo '<span class="post-date">'.wp_time_ago(get_the_time( 'U' )).' </span>';
 		}
 		if($dsp_author != 0 ){
 		echo '<span class="post-author">'.get_the_author().' </span>';
