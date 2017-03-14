@@ -763,8 +763,8 @@ left:0px;
 width:100%;
 height:90%;
 z-index:101;
-
 }
+
 #mainpopupbox .popupcontent
 {
 position:relative;
@@ -772,7 +772,7 @@ display: block;
 height:100%;
 width:<?php echo $w; ?>%;
 margin:0px auto;
-background-color: aqua;
+background-color: #fff;
 z-index:110;
 overflow:auto;
 }
@@ -787,10 +787,12 @@ height:48px;
 cursor:pointer;
 z-index:999;
 }
+
 .closegallerypopup
 {
 cursor:pointer;
 }
+
 #mainpopupbox .popupcontent .popupcoverbox
 {
 	height: 60%;
@@ -799,11 +801,11 @@ cursor:pointer;
 #mainpopupbox .popupcontent .popupcoverbox .coverbox
 {
 	height: 100% !important;
-background-position: center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+	background-position: center top;
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
 }
 
 
@@ -926,6 +928,9 @@ $(document).ready(function() {
 /* 
  * Mainmenu sticky / minisize
  */
+
+var menubox;
+
 <?php
 
 /* 
@@ -934,6 +939,7 @@ $(document).ready(function() {
 if( $mainmenubarminisize != 'none' ){
 echo 'var mainmenuminisize = "'.$mainmenubarminisize.'";';
 ?>
+
 
 var menubox = $('#site-navigation nav').prepend('<div class="navcontrol"><div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div></div>');
 
@@ -1116,7 +1122,7 @@ var stickymenutriggerheight = $("#topbar").height();
 
 var offset = $('#site-navigation').offset();
 
-if( (offset.top - $(window).scrollTop()) < stickymenutriggerheight && !menubox.hasClass('sticky')){
+if(  menubox && ( offset.top - $(window).scrollTop() ) < stickymenutriggerheight && !menubox.hasClass('sticky') ){
 	
 	/**
 	 * POSITION MAIN MENU IN TOPBAR 

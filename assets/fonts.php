@@ -27,14 +27,6 @@ function get_fonts_select(){
 
 		'arial'=>'Arial',
 
-		//'Avantgarde__'=>'Avant Garde',
-
-		'BreeThin__'=>'Bree Thin',
-
-		'BreeRegular__'=>'Bree Regular',
-
-		'BreeBold__'=>'Bree Bold',
-
 		'Bubblegum+Sans'=>'Bubblegum Sans',
 
 		'Chelsea+Market'=>'Chelsea Market',
@@ -49,17 +41,11 @@ function get_fonts_select(){
 
 		'Droid+Sans+Mono'=>'Droid Sans Mono',
 
-		'edgars_papercut__'=>'Edgars Papercut',
-
 		'Gochi+Hand'=>'Gochi Hand',
 
 		'GoodDog__'=>'Good Dog',
 
 		'HelveticaNeue__'=>'Helvetica Neue',
-
-		//'HelveticaNeueThin__'=>'Helvetica Neue Thin',
-
-		'Interstate__'=>'Interstate',
 
 		'Italiana'=>'Italiana',
 
@@ -74,10 +60,6 @@ function get_fonts_select(){
 		'Libre+Franklin'=>'Libre Franklin',
 
 		'Lilita+One'=>'Lilita One',
-
-		'Lobster__'=>'Lobster',
-
-		'LobsterTwoBold__'=>'Lobster Two Bold',
 
 		'Magra'=> 'Magra',
 
@@ -118,8 +100,6 @@ function get_fonts_select(){
 		'Russo+One'=>'Russo One',
 
 		'rockwell__'=>'Rockwell',
-
-		'Rockwell_Extra_Bold__'=>'Rockwell Extra Bold',
 
 		'Rosario'=>'Rosario',
 
@@ -181,8 +161,8 @@ function generate_font_css($fontkey,$element){
 
 		$fontcode = generate_font_style($fontkey);
 		$fontname = str_replace('__', '', $fontkey); // remove __ for selfhosted font names
-	    $fontname = str_replace('+', ' ', $fontname); // replace + in most of googlefont names
-		$fontcode .= "\n".$element.'{ font-family: "'.$fontname.'", verdana; }';
+		$fontcode .= "\n";
+		$fontcode .= $element.'{ font-family: "'.$fontname.'", verdana; }';
 		return $fontcode;
 }
 
@@ -195,64 +175,113 @@ function add_fonts_frontend(){
 		$fontcode = '';
 		$googlefontlist = '';
 
+
+
+
+
+
+
 		// main
 		$fontkey_default = get_theme_mod('onepiece_style_fonts_maintype', 'arial' ); // defaults to arial
 
-		//if( strpos($fontkey, '__')  ){
+		if( strpos($fontkey_default, '__')  ){
+			// default is local font
 			$fontcode .= generate_font_css($fontkey_default,'body');
-		//}else{
-			$googlefontlist .= $fontkey_default;
-		//}
+		}else if($fontkey_default != 'arial'){
+			// default is google font
+		    $googlefontlist .= $fontkey_default;
+			$fontcode .= 'body{ font-family: "'.str_replace('+', ' ', $fontkey_default).'", arial, verdana; }';
+		}
+
 
 		// page / default / gallery / subtitles
-		if( get_theme_mod('onepiece_style_fonts_pagetitle' ) != 'default' ){
-		$fontkey = get_theme_mod('onepiece_style_fonts_pagetitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.page-title h1, .category-titlebar h1, .gallery-titlebar h1, #childpagecontent .subtitle h3');
-		if( strpos($fontkey, '__') !== true ){
-		$googlefontlist .= '|'.$fontkey;
+		$fontkey_page = get_theme_mod('onepiece_style_fonts_pagetitle', $fontkey_default ); // defaults to arial
+		if($fontkey_page != 'default'){
+			$css_element = '.page-title h1, .category-titlebar h1, .gallery-titlebar h1, #childpagecontent .subtitle h3';
+		if( strpos($fontkey_page, '__')  ){
+			// default is local font
+			$fontcode .= generate_font_css($fontkey_page,$css_element);
+		}else if($fontkey_page != 'arial'){
+			// default is google font
+		    $googlefontlist .= '|'.$fontkey_page;
+			$fontcode .= "\n";
+			$fontcode .= $css_element.'{ font-family: "'.str_replace('+', ' ', $fontkey_page).'", arial, verdana; }';
 		}
 		}
 
-	    // list titles posts
-		if( get_theme_mod('onepiece_style_fonts_postlisttitle' ) != 'default' ){
-		$fontkey = get_theme_mod('onepiece_style_fonts_postlisttitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.post-title h2, .titlebox h3');
-		if( strpos($fontkey, '__') !== true ){
-		$googlefontlist .= '|'.$fontkey;
+
+		// list titles posts
+		$fontkey_postlist = get_theme_mod('onepiece_style_fonts_postlisttitle', $fontkey_default ); // defaults to arial
+		if($fontkey_postlist != 'default'){
+			$css_element = '.post-title h2, .titlebox h3';
+		if( strpos($fontkey_postlist, '__')  ){
+			// default is local font
+			$fontcode .= generate_font_css($fontkey_postlist,$css_element);
+		}else if($fontkey_postlist != 'arial'){
+			// default is google font
+		    $googlefontlist .= '|'.$fontkey_postlist;
+			$fontcode .= "\n";
+			$fontcode .= $css_element.'{ font-family: "'.str_replace('+', ' ', $fontkey_postlist).'", arial, verdana; }';
 		}
 		}
+
+
 		// single post titles
-		if( get_theme_mod('onepiece_style_fonts_posttitle' ) != 'default' ){
-		$fontkey = get_theme_mod('onepiece_style_fonts_posttitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.post-title h1');
-		if( strpos($fontkey, '__') !== true ){
-		$googlefontlist .= '|'.$fontkey;
+		$fontkey_postsingle = get_theme_mod('onepiece_style_fonts_posttitle', $fontkey_default ); // defaults to arial
+		if($fontkey_postsingle != 'default'){
+			$css_element = '.post-title h1';
+		if( strpos($fontkey_postsingle, '__')  ){
+			// default is local font
+			$fontcode .= generate_font_css($fontkey_postsingle,$css_element);
+		}else if($fontkey_postsingle != 'arial'){
+			// default is google font
+		    $googlefontlist .= '|'.$fontkey_postsingle;
+			$fontcode .= "\n";
+			$fontcode .= $css_element.'{ font-family: "'.str_replace('+', ' ', $fontkey_postsingle).'", arial, verdana; }';
 		}
 		}
+
+
+
+
 
 		// Widget title
-		if( get_theme_mod('onepiece_style_fonts_widgettitle' ) != 'default' ){
-		$fontkey = get_theme_mod('onepiece_style_fonts_widgettitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.widgetpadding h3,.sidebarpadding h3');
-		if( strpos($fontkey, '__') !== true ){
-		$googlefontlist .= '|'.$fontkey;
+		$fontkey_widgettitle = get_theme_mod('onepiece_style_fonts_widgettitle', $fontkey_default ); // defaults to arial
+		if($fontkey_widgettitle != 'default'){
+			$css_element = '.widgetpadding h3,.sidebarpadding h3';
+		if( strpos($fontkey_widgettitle, '__')  ){
+			// default is local font
+			$fontcode .= generate_font_css($fontkey_widgettitle,$css_element);
+		}else if($fontkey_widgettitle != 'arial'){
+			// default is google font
+		    $googlefontlist .= '|'.$fontkey_widgettitle;
+			$fontcode .= "\n";
+			$fontcode .= $css_element.'{ font-family: "'.str_replace('+', ' ', $fontkey_widgettitle).'", arial, verdana; }';
 		}
 		}
 
-		if( get_theme_mod('onepiece_style_fonts_widgetitemtitle' ) != 'default' ){
-		$fontkey = get_theme_mod('onepiece_style_fonts_widgetitemtitle', $fontkey_default );
-		$fontcode .= generate_font_css($fontkey,'.widgetpadding ul li h4');
-		if( strpos($fontkey, '__') !== true ){
-		$googlefontlist .= '|'.$fontkey;
+
+		// Widget title
+		$fontkey_widgetitemtitle = get_theme_mod('onepiece_style_fonts_widgetitemtitle', $fontkey_default ); // defaults to arial
+		if($fontkey_widgetitemtitle != 'default'){
+			$css_element = '.widgetpadding ul li h4';
+		if( strpos($fontkey_widgetitemtitle, '__')  ){
+			// default is local font
+			$fontcode .= generate_font_css($fontkey_widgetitemtitle,$css_element);
+		}else if($fontkey_widgetitemtitle != 'arial'){
+			// default is google font
+		    $googlefontlist .= '|'.$fontkey_widgetitemtitle;
+			$fontcode .= "\n";
+			$fontcode .= $css_element.'{ font-family: "'.str_replace('+', ' ', $fontkey_widgetitemtitle).'", arial, verdana; }';
 		}
 		}
 
-		if($googlefontlist !== ''){
-		echo '<link href="https://fonts.googleapis.com/css?family='.$googlefontlist.'" rel="stylesheet">';
-		}
 
 
-		echo '<style>'.$fontcode.'</style>';
+		if( !empty($googlefontlist) ) echo '<link href="https://fonts.googleapis.com/css?family='.$googlefontlist.'" rel="stylesheet">';
+
+
+		if( !empty( $fontcode) ) echo '<style>'.$fontcode.'</style>';
 
 }
 
