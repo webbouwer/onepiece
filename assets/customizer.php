@@ -89,6 +89,7 @@ Content:
 		.>.inline image width
 		text alignment 
         Display date/author
+		..Date format (date/ago/date&time)
         Display tag none/below title/below content
         Display category none/below title/below content
         Display next/prev none/ below content / above footer / content sides
@@ -106,12 +107,13 @@ Content:
 		coming soon
 		alltimefavourite
         
-    List (replacng category section)
+    List (replacing category section)
         Use highlight first posts
 		Excerpt length (amount of words)
 		inline image alignment
 		.>.inline image width
 		excerpt text alignment 
+		..Date format (date/ago/date&time)
 		display post read more link inline/left/right
 		Exclude categories
         Display category list Title & Description 
@@ -1067,6 +1069,25 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'single'   => __( 'Both in single post view only', 'onepiece' ),
             	)
     	)));
+
+		// CONTENT - POSTS - DATE FORMAT
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_dateformat' , array(
+		'default' => '1',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_dateformat', array(
+            	'label'          => __( 'Post Date Format', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_dateformat',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Date display format', 'onepiece' ),
+            	'choices'        => array(
+                	'1'   => __( 'Time Ago', 'onepiece' ),
+                	'2'   => __( 'Date', 'onepiece' ),
+                	'3'   => __( 'Date and Time', 'onepiece' ),
+            	)
+    	)));
 		
 
 		
@@ -1289,6 +1310,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 
+
+
     	// CONTENT - LIST - HIGHLIGHT
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
 		'default' => '3', 
@@ -1301,6 +1324,27 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    		'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
     	)));
+
+
+		// CONTENT - LIST - DATE FORMAT
+		$wp_customize->add_setting( 'onepiece_content_panel_postlist_dateformat' , array(
+		'default' => '1',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_dateformat', array(
+            	'label'          => __( 'Post listed date Format', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_postlist_dateformat',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Date display format', 'onepiece' ),
+            	'choices'        => array(
+                	'1'   => __( 'Time Ago', 'onepiece' ),
+                	'2'   => __( 'Date', 'onepiece' ),
+                	'3'   => __( 'Date and Time', 'onepiece' ),
+            	)
+    	)));
+
 		
 		// CONTENT - LIST - EXCERPT LENGTH
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
@@ -1889,6 +1933,25 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 
 
+
+		$wp_customize->add_setting( 'onepiece_elements_mainsidebar_sticky' , array(
+		'default' => '0',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainsidebar_sticky', array(
+            	'label'          => __( 'Sticky behavior', 'onepiece' ),
+            	'section'        => 'onepiece_elements_sidebar',
+            	'settings'       => 'onepiece_elements_mainsidebar_sticky',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Make sidebar sticky (medium and large screens)', 'onepiece' ),
+            	'choices'        => array(
+                	'0'   => __( 'Not sticky, scroll with content', 'onepiece' ),
+            		'1'   => __( 'Stick to page top/topbar on scroll', 'onepiece' ),
+            	)
+    	)));
+
+
+
 		
 		// SECOND SIDEBAR
 		$wp_customize->add_setting( 'onepiece_elements_sidebar2_position' , array(
@@ -1952,6 +2015,26 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'after'   => __( 'after main content', 'onepiece' ),
             	)
     	)));
+
+
+
+		$wp_customize->add_setting( 'onepiece_elements_sidebar2_sticky' , array(
+		'default' => '0',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_sidebar2_sticky', array(
+            	'label'          => __( 'Sticky behavior', 'onepiece' ),
+            	'section'        => 'onepiece_elements_sidebar2',
+            	'settings'       => 'onepiece_elements_sidebar2_sticky',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Make second sidebar sticky (medium and large screens)', 'onepiece' ),
+            	'choices'        => array(
+                	'0'   => __( 'Not sticky, scroll with content', 'onepiece' ),
+            		'1'   => __( 'Stick to page top/topbar on scroll', 'onepiece' ),
+            	)
+    	)));
+
+
 
 
 

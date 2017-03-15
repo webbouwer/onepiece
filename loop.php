@@ -139,9 +139,28 @@ echo '<div class="post-subtitle">';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 
+
+	$postlisteddateformat = get_theme_mod('onepiece_content_panel_postlist_dateformat', '2');
+
+
+	if($postlisteddateformat == '1'){
+	echo '<span class="post-date time-ago">';
+	echo wp_time_ago(get_the_time( 'U' ));
+	echo '</span>';
+	}
+
+	if($postlisteddateformat == '2'){
 	echo '<span class="post-date">';
 	echo get_the_date();
 	echo '</span>';
+	}
+
+	if($postlisteddateformat == '3'){
+	echo '<span class="post-date date-time">';
+	echo get_the_date().' - '.get_the_time();
+	echo '</span>';
+	}
+
 }
 
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
@@ -208,7 +227,29 @@ if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ||
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'datesingle'){
-echo '<span class="post-date">'.get_the_date().' </span>';
+
+
+	$postdateformat = get_theme_mod('onepiece_content_panel_posts_dateformat', '2');
+
+
+	if($postdateformat == '1'){
+	echo '<span class="post-date time-ago">';
+	echo wp_time_ago(get_the_time( 'U' ));
+	echo '</span>';
+	}
+
+	if($postdateformat == '2'){
+	echo '<span class="post-date">';
+	echo get_the_date();
+	echo '</span>';
+	}
+
+	if($postdateformat == '3'){
+	echo '<span class="post-date date-time">';
+	echo get_the_date().' - '.get_the_time();
+	echo '</span>';
+	}
+
 }
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single'){

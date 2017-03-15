@@ -55,6 +55,8 @@ function get_fonts_select(){
 
 		'Kelly+Slab'=> 'Kelly Slab',
 
+		'Lato'=>'Lato',
+
 		'Lemon'=>'Lemon',
 
 		'Libre+Franklin'=>'Libre Franklin',
@@ -68,6 +70,8 @@ function get_fonts_select(){
 		'MarkerFelt-Thin__'=>'MarkerFelt Thin',
 
 		'MarkerFelt-Wide__'=>'MarkerFelt Wide',
+
+		'Martel'=> 'Martel',
 
 		'Marvel'=> 'Marvel',
 
