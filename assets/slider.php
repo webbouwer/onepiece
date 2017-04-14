@@ -8,7 +8,7 @@ function sliderhtml($category, $mobile, $id = null){
     $cat = get_category_by_slug( $category );
     $sliderhtml = '';
     if( $cat->term_id ){
-	    query_posts('category_name='.$cat->cat_name);
+	    query_posts('category_name='.$category);
         $sliderhtml .= '<div class="topelement"></div>';
 		$sliderhtml .= '<ul id="slider-'.$id.'" class="sliderarea">';
         if (have_posts()) : while (have_posts()) : the_post();
