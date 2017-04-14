@@ -63,6 +63,7 @@ $sliderwidth = get_post_meta(get_the_ID(), "pagetheme_slide_displaywidth", true)
  */
 
 $headerimagedefaultheight = get_theme_mod('onepiece_elements_headerimage_height', '180'); //
+
 // header image default height
 if( !empty( $header_image ) && $useheaderimage != 'hide' && ( $useheaderimage == 'replace' || $childpagedisplay == 'fade' )  ){
 	// % $sliderdefaultheight

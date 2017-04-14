@@ -322,6 +322,29 @@ function sizeHeaderElements(){
 
 		$('#headerbar .bglayer').css( 'height' , $('#headerbar').height() );	// reset topbar bglayer height
 
+		<?php
+		/*
+		 * Place header overlay elmenent
+		 */
+		$headeroverlaydisplay = get_theme_mod('onepiece_elements_headerimage_overlay', 'none');
+		if($headeroverlaydisplay != 'none'){
+		?>
+
+		if(!$('.header-overlay').length){
+			//alert('check overlay!');
+			var ol = '<div class="header-overlay"></div>';
+			if($('#headerbar').length){
+				$('#headerbar').append(ol);
+			}else if($('#sliderbox-head').length){
+			    $('#sliderbox-head').append(ol);
+			}
+
+		}
+
+		<?php
+		}
+		?>
+
 }
 
 
@@ -740,8 +763,8 @@ left:0px;
 width:100%;
 height:90%;
 z-index:101;
-
 }
+
 #mainpopupbox .popupcontent
 {
 position:relative;
@@ -749,7 +772,7 @@ display: block;
 height:100%;
 width:<?php echo $w; ?>%;
 margin:0px auto;
-background-color: aqua;
+background-color: #fff;
 z-index:110;
 overflow:auto;
 }
@@ -764,10 +787,12 @@ height:48px;
 cursor:pointer;
 z-index:999;
 }
+
 .closegallerypopup
 {
 cursor:pointer;
 }
+
 #mainpopupbox .popupcontent .popupcoverbox
 {
 	height: 60%;
@@ -776,11 +801,11 @@ cursor:pointer;
 #mainpopupbox .popupcontent .popupcoverbox .coverbox
 {
 	height: 100% !important;
-background-position: center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+	background-position: center top;
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
 }
 
 
@@ -903,6 +928,9 @@ $(document).ready(function() {
 /* 
  * Mainmenu sticky / minisize
  */
+
+var menubox;
+
 <?php
 
 /* 
@@ -911,6 +939,7 @@ $(document).ready(function() {
 if( $mainmenubarminisize != 'none' ){
 echo 'var mainmenuminisize = "'.$mainmenubarminisize.'";';
 ?>
+
 
 var menubox = $('#site-navigation nav').prepend('<div class="navcontrol"><div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div></div>');
 
@@ -1093,7 +1122,7 @@ var stickymenutriggerheight = $("#topbar").height();
 
 var offset = $('#site-navigation').offset();
 
-if( (offset.top - $(window).scrollTop()) < stickymenutriggerheight && !menubox.hasClass('sticky')){
+if(  menubox && ( offset.top - $(window).scrollTop() ) < stickymenutriggerheight && !menubox.hasClass('sticky') ){
 	
 	/**
 	 * POSITION MAIN MENU IN TOPBAR 
@@ -1268,6 +1297,7 @@ echo '.item.active .coverbox{ min-height:'.$itembigh.'px !important;}';
  * Set Item view Columns
  * ! make custom sizes?
  */
+
 if( $itemview == 'right'){
 echo '#itemcontainer .item.active .coverbox{ width:60%; float:left; }';
 echo '#itemcontainer .item.active .titlebox, #itemcontainer .item.active .fullinfobox{ width:40%; float:right;}';
@@ -1859,7 +1889,7 @@ $(document).ready(function() {
 		$(this).find('.coverbox').unwrap();
 
 		var returnbut = '<div class="closegallerypopup"><?php echo __('Return to overview','onepiece'); ?></div>';
-
+		<?php // <webicon style="width:48px;height:48px;" icon="glyphicons:remove-sign"/> ?>
 
 		/* id related.. */
 		var pid = $(this).attr('data-id');
@@ -1968,7 +1998,7 @@ $(document).ready(function() {
 
 		// markup
 		var content =  '<div class="popupcoverbox">'+ image +'</div>';
-		content += '<div class="popupcontentbox">'+ title + text + returnbut + related +'</div>';
+		content += '<div class="popupcontentbox">'+ returnbut + title + text + related +'</div>';
 
 
 		//loadpopup( content );
@@ -1989,7 +2019,8 @@ $(document).ready(function() {
 
 				$('#mainpopupbox,.popupcloak').remove();
 
-				$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div><div class="popupclosebutton"><webicon style="width:48px;height:48px;" icon="glyphicons:remove-sign"/></div></div>');
+				$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div>');
+
 
     			$('#mainpopupbox').hide();
     			$('.popupcloak').hide();
@@ -1998,8 +2029,6 @@ $(document).ready(function() {
 			});
 
 		});
-
-
 
 
 
@@ -2072,6 +2101,24 @@ $(document).ready(function() {
 
 	}); 
 	
+
+
+	/* Link post-list-widget items to gallery click action */
+	<?php if(get_theme_mod('onepiece_content_gallery_linkpostlistwidget') == 'yes'){ ?>
+
+
+		$('body').on('click', 'ul li a.rel-item', function(e){
+
+			e.preventDefault();
+				var elid = $( '#post-'+$(this).attr('data-id')+'.item' );
+				loaditems();
+				$container.isotope('layout');
+				elid.trigger( "click" );
+  			return false;
+
+		});
+
+	<? 	} ?>
 
 
 
@@ -2211,8 +2258,51 @@ echo '#maincontent .post, .post-title, h1, p, .widgetpadding h3, .widgetpadding 
 if( $mainmenubarplace == 'above' ){ 
 echo '#headercontainer #site-navigation{ position: relative; z-index:999;}';
 }
-echo '</style>';
 
+
+
+
+/* POST and LIST image sizes/positioning */
+// img width in percentage
+// img margin is 2% of full width multiplied by half of the (customizer) global spacing
+
+$imgpostwidth = get_theme_mod('onepiece_content_panel_posts_imgwidth',37);
+/* image is inline with content text
+$imgpostmargin = 2 * ( $stylelayout_spacing / 2 );
+$txtpostwidth = 100 - ( $imgpostwidth + $imgpostmargin );
+*/
+echo '.post-content p img.align-right.wp-post-image,
+.post-content p img.align-left.wp-post-image
+{
+width:'.$imgpostwidth.'% !important;
+}';
+
+
+
+$imglistwidth = get_theme_mod('onepiece_content_panel_list_imgwidth',37);
+$imglistmargin = 2 * ( $stylelayout_spacing / 2 );
+$txtlistwidth = 100 - ( $imglistwidth + $imglistmargin );
+
+echo '#maincontent .follow-post .post-coverimage{ width:'.$imglistwidth.'%; };';
+echo '#maincontent .follow-post .imgalign-left .post-coverimage,
+#maincontent .follow-post .imgalign-right .post-coverimage { margin-right:'.$imglistmargin.'%; }';
+
+echo '#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-title,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-subtitle,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .pricebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-right .sizebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-title,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-subtitle,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .post-content,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .pricebox,
+#maincontent .follow-post.has-post-thumbnail .imgalign-left .sizebox
+{
+width:'.$txtlistwidth.'%;
+}';
+
+
+echo '</style>';
 
 // font (overwrites)
 add_fonts_frontend();

@@ -5,6 +5,10 @@ $mobile = mobile_device_detect(true,true,true,true,true,true,true,false,false);
 // amount of top posts (first group in pages)
 $firstcount = get_theme_mod('onepiece_content_panel_postlist_firstcount', 3);
 $excerptlength = get_theme_mod('onepiece_content_panel_postlist_excerptlength', 25);
+$imagewidth = get_theme_mod('onepiece_content_panel_list_imgwidth', 37);
+
+
+
 
 
 $breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
@@ -12,6 +16,45 @@ $breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , '
 if($breadcrumbsdisplay == 'befor'){
 custom_breadcrumbs();
 }
+
+
+
+
+
+
+
+function nextprevbuttondisplay(){
+
+		$prevcustombut = get_theme_mod('onepiece_content_panel_posts_previcon', 'Next >');
+		$nextcustombut = get_theme_mod('onepiece_content_panel_posts_nexticon', '< Previous');
+		$nextprevtitle = get_theme_mod('onepiece_content_panel_posts_nextprevtitle', 'none');
+
+		if($nextprevtitle == 'above' ){
+
+			previous_post_link('%link', '<div class="above"><h5>%title</h5>'.__($prevcustombut, 'onepiece' ).'</div>', TRUE);
+			next_post_link('%link', '<div class="above"><h5>%title</h5>'.__($nextcustombut, 'onepiece' ).'</div>', TRUE);
+
+		}elseif($nextprevtitle == 'below' ){
+
+			previous_post_link('%link', '<div class="below">'.__($prevcustombut, 'onepiece' ).'<h5>%title</h5>'.'</div>', TRUE);
+			next_post_link('%link', '<div class="below">'.__($nextcustombut, 'onepiece' ).'<h5>%title</h5>'.'</div>', TRUE);
+
+		}elseif($nextprevtitle == 'beside'){
+
+    		previous_post_link('%link', '<div class="beside">'.__($prevcustombut, 'onepiece' ).'%title'.'</div>', TRUE);
+    		next_post_link('%link', '<div class="beside">'.'%title'.__($nextcustombut, 'onepiece' ).'</div>', TRUE);
+
+		}else{
+
+    		previous_post_link('%link', __($prevcustombut, 'onepiece' ), TRUE);
+    		next_post_link('%link', __($nextcustombut, 'onepiece' ), TRUE);
+
+		}
+		echo '<div class="clr"></div>';
+
+}
+
+
 
 
 
@@ -96,9 +139,28 @@ echo '<div class="post-subtitle">';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 
+
+	$postlisteddateformat = get_theme_mod('onepiece_content_panel_postlist_dateformat', '2');
+
+
+	if($postlisteddateformat == '1'){
+	echo '<span class="post-date time-ago">';
+	echo wp_time_ago(get_the_time( 'U' ));
+	echo '</span>';
+	}
+
+	if($postlisteddateformat == '2'){
 	echo '<span class="post-date">';
 	echo get_the_date();
 	echo '</span>';
+	}
+
+	if($postlisteddateformat == '3'){
+	echo '<span class="post-date date-time">';
+	echo get_the_date().' - '.get_the_time();
+	echo '</span>';
+	}
+
 }
 
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
@@ -165,7 +227,29 @@ if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ||
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'datesingle'){
-echo '<span class="post-date">'.get_the_date().' </span>';
+
+
+	$postdateformat = get_theme_mod('onepiece_content_panel_posts_dateformat', '2');
+
+
+	if($postdateformat == '1'){
+	echo '<span class="post-date time-ago">';
+	echo wp_time_ago(get_the_time( 'U' ));
+	echo '</span>';
+	}
+
+	if($postdateformat == '2'){
+	echo '<span class="post-date">';
+	echo get_the_date();
+	echo '</span>';
+	}
+
+	if($postdateformat == '3'){
+	echo '<span class="post-date date-time">';
+	echo get_the_date().' - '.get_the_time();
+	echo '</span>';
+	}
+
 }
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single'){
@@ -182,9 +266,6 @@ echo '</div>';
 $tagdisplay = get_theme_mod('onepiece_content_panel_posts_tagdisplay', 'belowcontent');
 $catdisplay = get_theme_mod('onepiece_content_panel_posts_catdisplay', 'belowcontent');
 $nextprevdisplay = get_theme_mod('onepiece_content_panel_posts_nextprevdisplay', 'belowcontent');
-
-
-
 
 
 
@@ -267,8 +348,7 @@ if ( !is_single() && !is_page() ) {
 
 	if( is_single() && $nextprevdisplay == 'belowcontent' ){
     	// prev / next posts
-    	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
-    	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
+    	nextprevbuttondisplay();
 	}
 
 	if( $catdisplay == 'belowcontent' ){
@@ -314,8 +394,7 @@ echo '</div>';
 
 if( is_single() && ($nextprevdisplay == 'contentside' || $nextprevdisplay == 'abovefooter' )){ 
     	// prev / next posts fixed positioned
-    	previous_post_link('%link', __('prev', 'onepiece' ).': %title', TRUE);
-    	next_post_link('%link', __('next', 'onepiece' ).': %title', TRUE);
+    	nextprevbuttondisplay();
 }
 
 

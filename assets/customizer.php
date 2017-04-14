@@ -54,31 +54,27 @@ Identity:
         Site Description/Tagline
         Site Icon image
     
-    Site info viral / default sharing
+    Sharing
 
         Site featured image
 	    Site featured description
-		.. site sharing url (might be optimized page for social media etc.)
 		
 	SEO
-		default website (meta) keywords
-		default (meta) description
+		site (meta) keywords
+		site (meta) description
+		analytics code
 
 
-Api
-	.. Linkedin
-	.. Twitter
-	.. Facebook
-	.. Github
-	.. Google+
-	.. Pinterest
-	.. Instagram
-	.. Thumblr
-	..
-
-	   
-
-
+	Api
+		.. Linkedin
+		.. Twitter
+		.. Facebook
+		.. Github
+		.. Google+
+		.. Pinterest
+		.. Instagram
+		.. Thumblr
+		..
 
 
 Content:
@@ -90,18 +86,19 @@ Content:
 
     Post
         Featured image display replace header/inline left/right/ content
-		..inline image width
+		.>.inline image width
 		text alignment 
         Display date/author
+		..Date format (date/ago/date&time)
         Display tag none/below title/below content
         Display category none/below title/below content
         Display next/prev none/ below content / above footer / content sides
 	
 	
 	Product
-		.. turn off product options
-		product order email address
 
+		product order email address
+		.>. turn off product options
 
 		.. product labels
 		new
@@ -110,19 +107,20 @@ Content:
 		coming soon
 		alltimefavourite
         
-    List (replacng category section)
+    List (replacing category section)
         Use highlight first posts
 		Excerpt length (amount of words)
 		inline image alignment
-		..inline image width
+		.>.inline image width
 		excerpt text alignment 
+		..Date format (date/ago/date&time)
 		display post read more link inline/left/right
 		Exclude categories
         Display category list Title & Description 
 
 	Gallery
 		Default category
-		
+		Link Post list Widget
 		.. default gallery filters
 		.. default max items in row
 		.. default item minimal height
@@ -1016,6 +1014,20 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                     'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
             	)
     	)));
+
+
+		//CONTENT - POSTS - IMAGE WIDTH
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_imgwidth' , array(
+		'default' => '37',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_imgwidth', array(
+            	'label'          => __( 'Image width', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_imgwidth',
+            	'type'           => 'text',
+ 	    		'description'    => __( 'Single Post Image width (only left/right in %)', 'onepiece' ),
+    	)));
 		
 		// CONTENT - POSTS - SINGLE POST ALIGNMENT
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_textalign' , array(
@@ -1055,6 +1067,25 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'date'   => __( 'Display date only', 'onepiece' ),
                 	'datesingle'   => __( 'Date in single post view only', 'onepiece' ),
                 	'single'   => __( 'Both in single post view only', 'onepiece' ),
+            	)
+    	)));
+
+		// CONTENT - POSTS - DATE FORMAT
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_dateformat' , array(
+		'default' => '1',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_dateformat', array(
+            	'label'          => __( 'Post Date Format', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_dateformat',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Date display format', 'onepiece' ),
+            	'choices'        => array(
+                	'1'   => __( 'Time Ago', 'onepiece' ),
+                	'2'   => __( 'Date', 'onepiece' ),
+                	'3'   => __( 'Date and Time', 'onepiece' ),
             	)
     	)));
 		
@@ -1120,13 +1151,84 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 		
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_previcon' , array(
+		'default' => '<webicon icon="fa:chevron-left"/>',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_previcon', array(
+            	'label'          => __( 'Prev post button', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_previcon',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Prev post button text and/or icon html', 'onepiece' ),
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_nexticon' , array(
+		'default' => '<webicon icon="fa:chevron-right"/>',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_nexticon', array(
+            	'label'          => __( 'Next post button', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_nexticon',
+            	'type'           => 'text',
+ 	    	'description'    => __( 'Next post button text and/or icon html', 'onepiece' ),
+    	)));
+
+		$wp_customize->add_setting( 'onepiece_content_panel_posts_nextprevtitle' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_nextprevtitle', array(
+            	'label'          => __( 'Next / Previous post title', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_posts',
+            	'settings'       => 'onepiece_content_panel_posts_nextprevtitle',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Next and Prev title link display in buttons', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No display', 'onepiece' ),
+                    'beside'   => __( 'Show title besides custom icon/text', 'onepiece' ),
+                    'above'   => __( 'Show title above custom icon/text', 'onepiece' ),
+                    'below'   => __( 'Show title below custom icon/text', 'onepiece' ),
+            	)
+    	)));
+
+
+
+
+
+
+
+
+
+
+
 		/*
 		Product
 		.. turn off product options
-		.. product order email address
-		.. product order phonenumber
+		product order email address
 		*/
-		
+
+
+
+		// CONTENT - PRODUCT - orderby
+    	$wp_customize->add_setting( 'onepiece_content_panel_product_orderby_display' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_orderby_display', array(
+            	'label'          => __( 'Product order options', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_product',
+            	'settings'       => 'onepiece_content_panel_product_orderby_display',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Select order option', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'Do not use', 'onepiece' ),
+                	'email'   => __( 'Order by Email', 'onepiece' ),
+            	)
+    	)));
+
 		// CONTENT - PRODUCT - ORDER BY EMAIL
     	$wp_customize->add_setting( 'onepiece_content_panel_product_orderemailaddress' , array(
 		'default' => get_option('admin_email'), 
@@ -1145,6 +1247,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 
 
+
 		//Product LABELS
 		$wp_customize->add_setting( 'onepiece_content_panel_product_label_new' , array(
 		'default' => 'New',
@@ -1157,6 +1260,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
     	)));
+
 		$wp_customize->add_setting( 'onepiece_content_panel_product_label_special' , array(
 		'default' => 'Special',
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1168,6 +1272,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
     	)));
+
 		$wp_customize->add_setting( 'onepiece_content_panel_product_label_featured' , array(
 		'default' => 'Featured',
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1179,6 +1284,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
     	)));
+
 		$wp_customize->add_setting( 'onepiece_content_panel_product_label_comingsoon' , array(
 		'default' => 'Coming soon',
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1190,6 +1296,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
     	)));
+
 		$wp_customize->add_setting( 'onepiece_content_panel_product_label_alltimefavourite' , array(
 		'default' => 'All time favourite',
 		'sanitize_callback' => 'onepiece_sanitize_default',
@@ -1203,6 +1310,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 		
 
+
+
     	// CONTENT - LIST - HIGHLIGHT
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
 		'default' => '3', 
@@ -1215,6 +1324,27 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    		'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
     	)));
+
+
+		// CONTENT - LIST - DATE FORMAT
+		$wp_customize->add_setting( 'onepiece_content_panel_postlist_dateformat' , array(
+		'default' => '1',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_dateformat', array(
+            	'label'          => __( 'Post listed date Format', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_postlist_dateformat',
+            	'type'           => 'select',
+ 	    	    'description'    => __( 'Date display format', 'onepiece' ),
+            	'choices'        => array(
+                	'1'   => __( 'Time Ago', 'onepiece' ),
+                	'2'   => __( 'Date', 'onepiece' ),
+                	'3'   => __( 'Date and Time', 'onepiece' ),
+            	)
+    	)));
+
 		
 		// CONTENT - LIST - EXCERPT LENGTH
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
@@ -1247,6 +1377,21 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'zigzag'   => __( 'Inline odd left and even right', 'onepiece' ),
                 	'center'   => __( 'Center', 'onepiece' ),
             	)
+    	)));
+
+
+
+		//CONTENT - LIST - IMAGE WIDTH
+		$wp_customize->add_setting( 'onepiece_content_panel_list_imgwidth' , array(
+		'default' => '37',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_product_label_new', array(
+            	'label'          => __( 'Image width', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_list',
+            	'settings'       => 'onepiece_content_panel_list_imgwidth',
+            	'type'           => 'text',
+ 	    		'description'    => __( 'Listed Post Image width (left/right in %)', 'onepiece' ),
     	)));
 		
 		
@@ -1343,7 +1488,23 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     		'choices' => get_categories_select()
     	)));
 		
+	    // CONTENT - GALELRY - Link Post list Widget
+		$wp_customize->add_setting( 'onepiece_content_gallery_linkpostlistwidget' , array(
+		'default' => 'yes',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
 		
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_gallery_linkpostlistwidget', array(
+            	'label'          => __( 'Link widget click', 'onepiece' ),
+            	'section'        => 'onepiece_content_panel_gallery',
+            	'settings'       => 'onepiece_content_gallery_linkpostlistwidget',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Link post-list-widget items to gallery click action', 'onepiece' ),
+            	'choices'        => array(
+                	'no'   => __( 'No', 'onepiece' ),
+                	'yes'   => __( 'Yes', 'onepiece' ),
+            	)
+    	)));
 
 
 
@@ -1387,6 +1548,28 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Height (min-height) in px', 'onepiece' ),
     	)));
 		
+
+		// ELEMENTS - HEADER IMAGE - OVERLAY
+		$wp_customize->add_setting( 'onepiece_elements_headerimage_overlay' , array(
+		'default' => 'none',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+
+		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_headerimage_overlay', array(
+            	'label'          => __( 'Header overlay', 'onepiece' ),
+            	'section'        => 'header_image',
+            	'settings'       => 'onepiece_elements_headerimage_overlay',
+            	'type'           => 'select',
+ 	    		'description'    => __( 'Select header overlay', 'onepiece' ),
+            	'choices'        => array(
+                	'none'   => __( 'No overlay', 'onepiece' ),
+                	'blank'   => __( 'Blank (add custom css on .header-overlay)', 'onepiece' ),
+            	)
+    	)));
+	    /*
+			opacity:0.4;
+			background-color:black;
+		*/
 		
 		// ELEMENTS - TOP MENU BAR
 		// above / fixed overlay / absolute overlay
@@ -1750,6 +1933,25 @@ function onepiece_register_theme_customizer( $wp_customize ) {
     	)));
 
 
+
+		$wp_customize->add_setting( 'onepiece_elements_mainsidebar_sticky' , array(
+		'default' => '0',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainsidebar_sticky', array(
+            	'label'          => __( 'Sticky behavior', 'onepiece' ),
+            	'section'        => 'onepiece_elements_sidebar',
+            	'settings'       => 'onepiece_elements_mainsidebar_sticky',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Make sidebar sticky (medium and large screens)', 'onepiece' ),
+            	'choices'        => array(
+                	'0'   => __( 'Not sticky, scroll with content', 'onepiece' ),
+            		'1'   => __( 'Stick to page top/topbar on scroll', 'onepiece' ),
+            	)
+    	)));
+
+
+
 		
 		// SECOND SIDEBAR
 		$wp_customize->add_setting( 'onepiece_elements_sidebar2_position' , array(
@@ -1813,6 +2015,26 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'after'   => __( 'after main content', 'onepiece' ),
             	)
     	)));
+
+
+
+		$wp_customize->add_setting( 'onepiece_elements_sidebar2_sticky' , array(
+		'default' => '0',
+		'sanitize_callback' => 'onepiece_sanitize_default',
+    	));
+    	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_sidebar2_sticky', array(
+            	'label'          => __( 'Sticky behavior', 'onepiece' ),
+            	'section'        => 'onepiece_elements_sidebar2',
+            	'settings'       => 'onepiece_elements_sidebar2_sticky',
+            	'type'           => 'select',
+ 	    	'description'    => __( 'Make second sidebar sticky (medium and large screens)', 'onepiece' ),
+            	'choices'        => array(
+                	'0'   => __( 'Not sticky, scroll with content', 'onepiece' ),
+            		'1'   => __( 'Stick to page top/topbar on scroll', 'onepiece' ),
+            	)
+    	)));
+
+
 
 
 

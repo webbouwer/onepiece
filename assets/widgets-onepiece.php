@@ -299,12 +299,12 @@ class onepiece_postlist_widget extends WP_Widget {
 		$custom_metabox_useurl = get_post_meta( get_the_ID() , 'meta-box-custom-useurl', true);
 		$custom_metabox_urltext = get_post_meta( get_the_ID() , 'meta-box-custom-urltext', true);
 
-		$title_link = '<a href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
+		$title_link = '<a class="rel-item" data-id="'.get_the_ID().'" href="'.get_the_permalink().'" target="_self" title="'.get_the_title().'">';
 
 		if( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceblank'){
-		$title_link = '<a href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
+		$title_link = '<a class="rel-item" data-id="'.get_the_ID().'" href="'.$custom_metabox_url.'" target="_blank" title="'.get_the_title().'">';
 		}elseif( $custom_metabox_url != '' && $custom_metabox_useurl == 'replaceself'){
-		$title_link = '<a href="'.$custom_metabox_url.'" target="_self" title="'.get_the_title().'">';
+		$title_link = '<a class="rel-item" data-id="'.get_the_ID().'" href="'.$custom_metabox_url.'" target="_self" title="'.get_the_title().'">';
 		}
 
 
@@ -315,9 +315,20 @@ class onepiece_postlist_widget extends WP_Widget {
 		echo '<li>'. $title_link;
 
 		echo '<div class="post-titlebox"><h4>'. get_the_title() .'</h4>';
-		if($dsp_date != 0 ){
-		echo '<span class="post-date">'.tweetTime(get_the_date('c')).' </span>';
+
+
+		if($dsp_date == 1 ){
+		echo '<span class="post-date time-ago">'.wp_time_ago(get_the_time( 'U' )).' </span>';
 		}
+
+		if($dsp_date == 2 ){
+		echo '<span class="post-date">'.get_the_date().' </span>';
+		}
+
+		if($dsp_date == 3 ){
+		echo '<span class="post-date date-time">'.get_the_date().' - '.get_the_time().'</span>';
+		}
+
 		if($dsp_author != 0 ){
 		echo '<span class="post-author">'.get_the_author().' </span>';
 		}
@@ -488,10 +499,12 @@ class onepiece_postlist_widget extends WP_Widget {
 		}
 
 		?>
-		<p><label for="<?php echo $this->get_field_id( 'dsp_date' ); ?>">Show date:</label>
+		<p><label for="<?php echo $this->get_field_id( 'dsp_date' ); ?>">Show Post Time:</label>
 		<select name="<?php echo $this->get_field_name( 'dsp_date' ); ?>" id="<?php echo $this->get_field_id( 'dsp_date' ); ?>">
-		<option value="0" <?php selected( $dsp_date, '0' ); ?>>Hide</option>
-		<option value="1" <?php selected( $dsp_date, '1' ); ?>>Show</option>
+		<option value="0" <?php selected( $dsp_date, 0 ); ?>>Hide</option>
+		<option value="1" <?php selected( $dsp_date, '1' ); ?>>Show Time Ago</option>
+		<option value="2" <?php selected( $dsp_date, '2' ); ?>>Show Date</option>
+		<option value="3" <?php selected( $dsp_date, '3' ); ?>>Show Date and Time</option>
 		</select>
 		</p>
 

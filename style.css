@@ -355,7 +355,17 @@ z-index:50;
 {
 }
 
+.header-overlay
+{
+position:absolute;
+left:0px;
+top:0px;
+width:100%;
+height:100%;
 
+opacity:0.2;
+background-color:black;
+}
 
 /* Breadcrumb styles */
 #breadcrumbs{
@@ -410,7 +420,7 @@ list-style-type:none;
 
 #maincontent .first-group-post .post-coverimage
 {
-max-height:140px;
+max-height:240px;
 overflow:hidden;
 }
 
@@ -488,6 +498,23 @@ span.edit-link a
 display:inline-block;
 font-size:0.8em;
 padding:1px 2px;
+}
+
+
+a.prev-post,
+a.next-post
+{
+display: inline-block;
+}
+a.prev-post
+{
+width:auto;
+float:left;
+}
+a.next-post
+{
+width:auto;
+float:right;
 }
 
 
@@ -633,7 +660,7 @@ background-size: cover;
 
 .item.active .coverbox
 {
-min-height:160px;
+min-height:180px;
 }
 
 .item .coverbox img /* deprecaded; cover image becomes background-image */
@@ -685,8 +712,8 @@ position:relative;
 .item .labelbox span.productlabel webicon
 {
 position:relative;
-width:32px;
-height:32px;
+max-width:32px;
+max-height:32px;
 }
 
 
@@ -727,8 +754,8 @@ content:'\003Cwebicon icon\003D\0022entypo\003Av\002Dcard\0022\002F\003E test';
 #userpanel .userboxicon webicon svg
 {
 position:relative;
-width:34px;
-height:34px;
+max-width:32px;
+max-height:32px;
 }
 #userpanel .loginboxicon,
 #userpanel .userboxicon
@@ -983,7 +1010,9 @@ text-align:center; /* available on small screens */
 
 
 
-
+/*
+ * Overwriten by customizer variables in end htmlhead.php
+ */
 #maincontent .follow-post .post-coverimage
 {
     width:28%;
@@ -1005,6 +1034,8 @@ text-align:center; /* available on small screens */
     margin:0px auto;
 	text-align:center;
 }
+/**/
+
 
 #maincontent .post-subtitle
 {
