@@ -402,6 +402,20 @@ function new_excerpt_more($more) {
 add_filter('excerpt_more', 'new_excerpt_more');
 
 
+/*
+ * Adjust html output next / prev postlinks
+ */
+function add_class_next_post_link($html){
+	$html = str_replace('<a','<a class="next-post" title="'.__('Next post','onepiece').'"',$html);
+	return $html;
+}
+add_filter('next_post_link','add_class_next_post_link',10,1);
+function add_class_previous_post_link($html){
+	$html = str_replace('<a','<a class="prev-post" title="'.__('Previous post','onepiece').'"',$html);
+	return $html;
+}
+add_filter('previous_post_link','add_class_previous_post_link',10,1);
+
 
 
 /****** Customize Adminbar ******/
@@ -551,36 +565,12 @@ add_filter( 'wp_terms_checklist_args', 'onepiece_wp_terms_checklist_args', 1, 2 
 /**
  * Date display in tweet('time ago') format
  */
-function tweetTime( $t ) {
-	/**** Begin Time Loop ****/
-	// Set time zone
-	date_default_timezone_set('America/New_York');
-	// Get Current Server Time
-	$server_time = $_SERVER['REQUEST_TIME'];
-	// Convert Twitter Time to UNIX
-	$new_tweet_time = strtotime($t);
-	// Set Up Output for the Timestamp if over 24 hours
-	$this_tweet_day =  date('D. M j, Y', strtotime($t));
-	// Subtract Twitter time from current server time
-	$time = $server_time - $new_tweet_time;
-	// less than an hour, output 'minutes' messaging
-	if( $time < 3599) {
-		$time = round($time / 60) . ' minutes ago';
-			}
-	// less than a day but over an hour, output 'hours' messaging
-	else if ($time >= 3600 && $time <= 86400) {
-		$time = round($time / 3600) . ' hours ago';
-		}
-	// over a day, output the $tweet_day formatting
-	else if ( $time > 86400)  {
-		$time = $this_tweet_day;
-		}
-	// return final time from tweetTime()
-	return $time;
-	/**** End Time Loop ****/
+function wp_time_ago( $t ) {
+	// https://codex.wordpress.org/Function_Reference/human_time_diff
+	//get_the_time( 'U' )
+	printf( _x( '%s ago', '%s = human-readable time difference', 'onepiece' ), human_time_diff( $t, current_time( 'timestamp' ) ) );
+
 }
-
-
 
 
 /***********************
