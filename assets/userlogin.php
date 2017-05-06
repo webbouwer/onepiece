@@ -17,7 +17,7 @@ $regallowed = get_option( 'users_can_register' );
 
 if (!$user_ID) { // is not logged in
 		
-
+	
 		// box icon
 		if( get_theme_mod('onepiece_elements_loginbar_iconhtml','') != ''){
 			echo '<div class="loginboxicon">'.get_theme_mod('onepiece_elements_loginbar_iconhtml','<webicon icon="wpf:user-shield"/>').'</div>';
@@ -25,18 +25,18 @@ if (!$user_ID) { // is not logged in
 
 		// sign-in link or button
 		echo '<ul class="tabmenu"><li class="signintab"><span >'.__( 'Sign in', 'onepiece' ).'</span></li>';
-
+	
 		// sign-up link or button
 		if ( $regallowed ) {
-
+		
 			echo '<li class="registertab"><span >'.__( 'Register', 'onepiece' ).'</span></li>';
 		}
 		echo '</ul>';
 		
-
-
-
-
+	
+	
+	
+	
 		echo '<ul class="tabcontainer"><li class="tab1 tab" style="display:none">';
 
 		global $user_login; 
@@ -47,7 +47,7 @@ if (!$user_ID) { // is not logged in
 
 		if (isset(  $_GET['reset'] )) { $ $reset = $_GET['reset'];} 
 
-
+ 
 		if ($register == true && $regallowed) { 
 		
 			// registered with succes
@@ -73,13 +73,13 @@ if (!$user_ID) { // is not logged in
 		do_action('login_form', 'login'); 
 
 		//echo do_shortcode( '' );
-
+		
 		echo '</li>';
 
-
-
-
-
+	
+	
+	
+	
 		if ( $regallowed ) {
 		echo '<li class="tab2 tab" style="display:none">';
 		echo '<h3>'.__( 'Register', 'onepiece' ).'</h3>'; 
@@ -154,8 +154,8 @@ if (!$user_ID) { // is not logged in
 			echo get_avatar($userdata->ID, 46);
 			echo '</div>';
 
-
-
+	
+	
 			echo '<div class="userinfo">';
 			echo '<div class="loggedtext"><span><strong>'. $user_identity .'</strong></span></div>';
 		
@@ -168,33 +168,33 @@ if (!$user_ID) { // is not logged in
 			if (!empty($page1) && current_user_can('manage_options') ) {
 			// link to profile
 			echo '<li class="menu-item"><a href="'.get_bloginfo('siteurl').'/user-info">' . __('Info', 'fndtn' ) . '</a></li>';
-			}
+			} 
 			if (!empty($page2)) {
 			// link to profile
 			echo '<li class="menu-item"><a href="'.get_bloginfo('siteurl').'/user-profile">' . __('Profile', 'fndtn' ) . '</a></li>';
-			}
+			} 
 
-			if (current_user_can('manage_options')) {
+			if (current_user_can('manage_options')) { 
 			echo '<li class="menu-item"><a href="' . admin_url() . '">' . __('Admin', 'fndtn' ) . '</a></li>';
-			}
+			} 
 			*/
 
 			echo '<li class="menu-item"><a class="logout-link" href="'.wp_logout_url( 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] ).'" title="Sign off"><span>'.__('Sign off', 'onepiece').'</span></a></li>';
 
 			echo '</ul></div>';
 
-
-
-			if ( has_nav_menu( 'usermenu' ) ) {
+	
+	
+			if ( has_nav_menu( 'usermenu' ) ) { 
 			echo '<div class="usermenubar">';
-			wp_nav_menu( array( 'theme_location' => 'usermenu' ) );
+			wp_nav_menu( array( 'theme_location' => 'usermenu' ) ); 
 			echo '<div class="clr"></div></div>';
 			}
 			
 		echo '</div></div>';
 } 
-
+	
 echo '</div>';
-
+	
 } // end userpanel 
 ?>

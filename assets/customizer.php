@@ -87,6 +87,7 @@ Content:
     Post
         Featured image display replace header/inline left/right/ content
 		.>.inline image width
+		.. gallery dynamic_Featured_Image
 		text alignment 
         Display date/author
 		..Date format (date/ago/date&time)
@@ -995,24 +996,39 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 
 
     	// CONTENT - POSTS - FEATURED IMAGE DISPLAY
-		$wp_customize->add_setting( 'onepiece_content_panel_posts_featuredimage' , array(
+
+	// Prepare plugin options:
+	$featured_images_options = array(
+                	'default'   => __( 'On top of the content', 'onepiece' ),
+                	'left'   => __( 'Inline left with content (medium sized)', 'onepiece' ),
+                	'right'   => __( 'Inline right with content (medium sized)', 'onepiece' ),
+                	'replace'   => __( 'Replace Header Window width', 'onepiece' ),
+                    	'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
+        	);
+
+	// check for multiple featured images and extend/adjust options
+	if( class_exists('Dynamic_Featured_Image') ) {
+		$featured_images_options = array(
+                	'default'   => __( 'On top of the content with thumbnav', 'onepiece' ),
+                	'left'   => __( 'Inline left with thumbnav (medium sized)', 'onepiece' ),
+                	'right'   => __( 'Inline right with thumbnav (medium sized)', 'onepiece' ),
+                	'replace'   => __( 'Replace Header with thumbnav (Window width)', 'onepiece' ),
+                    	'replacemargin'   => __( 'Replace Header with thumbnav (Content width)', 'onepiece' ),
+        	);
+	}
+	
+	$wp_customize->add_setting( 'onepiece_content_panel_posts_featuredimage' , array(
 		'default' => 'default', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
 		
-		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_featuredimage', array(
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_featuredimage', array(
             	'label'          => __( 'Featured image display', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_posts',
             	'settings'       => 'onepiece_content_panel_posts_featuredimage',
             	'type'           => 'select',
  	    	    'description'    => __( 'Featured image display in single post view', 'onepiece' ),
-            	'choices'        => array(
-                	'default'   => __( 'On top of the content', 'onepiece' ),
-                	'left'   => __( 'Inline left with content (medium sized)', 'onepiece' ),
-                	'right'   => __( 'Inline right with content (medium sized)', 'onepiece' ),
-                	'replace'   => __( 'Replace Header Window width', 'onepiece' ),
-                    'replacemargin'   => __( 'Replace Header Content width', 'onepiece' ),
-            	)
+            	'choices'        => $featured_images_options
     	)));
 
 
@@ -1069,13 +1085,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'single'   => __( 'Both in single post view only', 'onepiece' ),
             	)
     	)));
-
+	
 		// CONTENT - POSTS - DATE FORMAT
 		$wp_customize->add_setting( 'onepiece_content_panel_posts_dateformat' , array(
-		'default' => '1',
+		'default' => '1', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
-    	));
-
+    	)); 
+		
 		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_posts_dateformat', array(
             	'label'          => __( 'Post Date Format', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_posts',
@@ -1309,8 +1325,8 @@ function onepiece_register_theme_customizer( $wp_customize ) {
  	    	'description'    => __( 'Label text and/or icon html', 'onepiece' ),
     	)));
 		
-
-
+	
+	
 
     	// CONTENT - LIST - HIGHLIGHT
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_firstcount' , array(
@@ -1324,14 +1340,14 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             	'type'           => 'text',
  	    		'description'    => __( 'Amount of first posts to highlight in a (basic)list.', 'onepiece' ),
     	)));
-
-
-		// CONTENT - LIST - DATE FORMAT
+	
+	
+		// CONTENT - LIST - DATE FORMAT 
 		$wp_customize->add_setting( 'onepiece_content_panel_postlist_dateformat' , array(
-		'default' => '1',
+		'default' => '1', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
-    	));
-
+    	)); 
+		
 		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_dateformat', array(
             	'label'          => __( 'Post listed date Format', 'onepiece' ),
             	'section'        => 'onepiece_content_panel_list',
@@ -1344,7 +1360,7 @@ function onepiece_register_theme_customizer( $wp_customize ) {
                 	'3'   => __( 'Date and Time', 'onepiece' ),
             	)
     	)));
-
+	
 		
 		// CONTENT - LIST - EXCERPT LENGTH
     	$wp_customize->add_setting( 'onepiece_content_panel_postlist_excerptlength' , array(
@@ -1364,6 +1380,17 @@ function onepiece_register_theme_customizer( $wp_customize ) {
 		'default' => 'left', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
     	)); 
+		
+		/* check for multiple featured images and extend/adjust options
+		if( class_exists('Dynamic_Featured_Image') ) {
+			$featured_images_options = array(
+						'default'   => __( 'On top of the content with thumbnav', 'onepiece' ),
+						'left'   => __( 'Inline left with thumbnav (medium sized)', 'onepiece' ),
+						'right'   => __( 'Inline right with thumbnav (medium sized)', 'onepiece' ),
+						'replace'   => __( 'Replace Header with thumbnav (Window width)', 'onepiece' ),
+							'replacemargin'   => __( 'Replace Header with thumbnav (Content width)', 'onepiece' ),
+				);
+		}*/
 		
 		$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_content_panel_postlist_inlineimage', array(
             	'label'          => __( 'Inline image alignment', 'onepiece' ),
@@ -1931,13 +1958,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'after'   => __( 'after main content', 'onepiece' ),
             	)
     	)));
-
-
-
+	
+	
+		
 		$wp_customize->add_setting( 'onepiece_elements_mainsidebar_sticky' , array(
-		'default' => '0',
+		'default' => '0', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
-    	));
+    	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_mainsidebar_sticky', array(
             	'label'          => __( 'Sticky behavior', 'onepiece' ),
             	'section'        => 'onepiece_elements_sidebar',
@@ -2015,13 +2042,13 @@ function onepiece_register_theme_customizer( $wp_customize ) {
             		'after'   => __( 'after main content', 'onepiece' ),
             	)
     	)));
-
-
-
+	
+		
+		
 		$wp_customize->add_setting( 'onepiece_elements_sidebar2_sticky' , array(
-		'default' => '0',
+		'default' => '0', 
 		'sanitize_callback' => 'onepiece_sanitize_default',
-    	));
+    	)); 
     	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'onepiece_elements_sidebar2_sticky', array(
             	'label'          => __( 'Sticky behavior', 'onepiece' ),
             	'section'        => 'onepiece_elements_sidebar2',
