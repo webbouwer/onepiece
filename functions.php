@@ -451,6 +451,76 @@ function remove_max_srcset_image_width( $max_width ){
 add_filter( 'max_srcset_image_width', 'remove_max_srcset_image_width' );
 
 
+
+
+// Check for multiple images from plugin https://wordpress.org/plugins/dynamic-featured-image/
+function post_dynamic_featured_image_gallery($post_id, $format = 'text'){
+	if( class_exists('Dynamic_Featured_Image') ) {
+       		
+		global $dynamic_featured_image;
+       	$featured_dynamic_images = $dynamic_featured_image->get_featured_images($post_id);
+		if( count($featured_dynamic_images) ){
+		
+		if($format == 'text'){
+		$thumb_gallery = '<ul class="featured_image_nav">';
+		foreach($featured_dynamic_images as $img){
+			$thumb_gallery .= '<li data-image="'.$img["full"].'"><img src="'.$img["thumb"].'" /></li>';
+		}
+		$thumb_gallery .= '</ul>';
+		return $thumb_gallery;
+		}else{
+		return $featured_dynamic_images;
+		}
+		
+		}
+   	}
+}
+
+// https://codex.wordpress.org/AJAX_in_Plugins
+//add_action( 'wp_ajax_dfimage_gallery', 'dfimage_gallery' );
+add_action('wp_ajax_get_post_gallery_content', 'get_post_gallery_content'); // ajax.php
+add_action('wp_ajax_nopriv_get_post_gallery_content', 'get_post_gallery_content');
+// ajax multiple images from plugin https://wordpress.org/plugins/dynamic-featured-image/
+function get_post_gallery_content(){
+
+		global $wpdb;
+		$postdata = get_post($_POST['post_id']);
+		
+		$response = [];
+		$response['title'] = $postdata->post_title;
+		
+		if( $postdata->post_content != '' ){ 
+			$response['content'] = $postdata->post_content;
+		}else{
+			$response['content'] = $postdata->post_excerpt; //mysql_real_escape_string
+		}
+		
+		$images = [];
+		$images[0]['thumb'] = get_the_post_thumbnail_url( $_POST['post_id'], 'thumbnail' );
+		$images[0]['full'] = get_the_post_thumbnail_url( $_POST['post_id'], 'full' ); 
+		
+		if( class_exists('Dynamic_Featured_Image') ) {
+			$moreimages = post_dynamic_featured_image_gallery( $_POST['post_id'], 'array' );
+			if(is_array($moreimages)){
+				// image box with nav
+				$c = 1;
+				foreach($moreimages as $img){
+					$images[$c]['thumb'] = $img['thumb'];
+					$images[$c]['full'] = $img['full'];
+					$c++;
+				}
+			}
+		}
+		$response['images'] = $images;
+		
+		echo json_encode($response, JSON_PRETTY_PRINT);
+		
+		wp_die();
+}
+
+
+
+
 /*
  * body tag class
  */
@@ -568,8 +638,8 @@ add_filter( 'wp_terms_checklist_args', 'onepiece_wp_terms_checklist_args', 1, 2 
 function wp_time_ago( $t ) {
 	// https://codex.wordpress.org/Function_Reference/human_time_diff
 	//get_the_time( 'U' )
-	printf( _x( '%s ago', '%s = human-readable time difference', 'onepiece' ), human_time_diff( $t, current_time( 'timestamp' ) ) );
-
+	printf( _x( '%s ago', '%s = human-readable time difference', 'onepiece' ), human_time_diff( $t, current_time( 'timestamp' ) ) ); 
+	
 }
 
 

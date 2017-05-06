@@ -315,20 +315,20 @@ class onepiece_postlist_widget extends WP_Widget {
 		echo '<li>'. $title_link;
 
 		echo '<div class="post-titlebox"><h4>'. get_the_title() .'</h4>';
-
-
+		
+			
 		if($dsp_date == 1 ){
 		echo '<span class="post-date time-ago">'.wp_time_ago(get_the_time( 'U' )).' </span>';
 		}
-
+			
 		if($dsp_date == 2 ){
 		echo '<span class="post-date">'.get_the_date().' </span>';
 		}
-
+			
 		if($dsp_date == 3 ){
 		echo '<span class="post-date date-time">'.get_the_date().' - '.get_the_time().'</span>';
 		}
-
+			
 		if($dsp_author != 0 ){
 		echo '<span class="post-author">'.get_the_author().' </span>';
 		}

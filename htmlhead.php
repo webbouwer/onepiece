@@ -23,19 +23,10 @@ global $post;
 // $pageTemplate 'TEMPLATE_FILENAME' (gallery.php,page.php,index.php)
 $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
 
-
-
 // default SEO
 $seodesc = get_theme_mod('onepiece_identity_panel_seo_description', 'Check out this cool website!');
 $seokeywords = get_theme_mod('onepiece_identity_panel_seo_keywords', 'cool, website, webdesign');
 $seotrackcode = get_theme_mod('onepiece_identity_panel_seo_trackcode', '');
-
-
-
-
-
-
-
 
 /**
  * PAGE TEMPLATE GALLERY
@@ -78,12 +69,6 @@ $topcat = 'uncategorized';
 
 } // end gallery page template
 
-
-
-
-
-
-
 /**
  * HTML HEAD THEME CORE
  * index.php, page.php, gallery.php
@@ -109,8 +94,6 @@ if( is_category() ){
 		$site_description = $seodesc;
 }
 
-
-
 $site_keywords = 'cool, website, amazing, webdesign';
 if( !empty($seokeywords)){
 $site_keywords = $seokeywords;
@@ -124,7 +107,6 @@ echo '<meta name="description" content="'.$site_description.'">'
 	.'<link rel="stylesheet" type="text/css" href="'.esc_url( get_template_directory_uri() ).'/style.css" />'
 	.'<link rel="stylesheet" type="text/css" href="'.esc_url( get_template_directory_uri() ).'/'.get_theme_mod('onepiece_identity_stylelayout_stylesheet', 'default.css').'" />';
 
-
 /**
  * share meta info 
  * ! should get featured image (header)
@@ -134,7 +116,6 @@ echo '<meta property="og:title" content="'.esc_attr( get_bloginfo( 'name', 'disp
 	.'<meta property="og:image" content="'.get_theme_mod( 'onepiece_identity_featured_image' ).'"/>'
 	.'<meta property="og:description" content="'.get_theme_mod( 'onepiece_identity_panel_sharing_description' ).' '.get_bloginfo( 'description' ).'"/>'
 	.'<meta property="og:url" content="'.esc_url( home_url( '/' ) ).'" />';
-
 
 // mobile meta 
 /* echo '<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>'; */
@@ -187,14 +168,6 @@ $popupoverlaycolor = get_theme_mod('onepiece_content_mainpopup_overlaycolor', '#
 $popupoverlayopacity = get_theme_mod('onepiece_content_mainpopup_overlayopacity', 20 );
 
 
-
-
-
-
-
-
-
-
 /**
  * PAGE HEADER IMAGE / REPLACE / SLIDER 
  * :jquery anythingslider 
@@ -227,7 +200,6 @@ echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_t
 // Anything Slider optional FX extension
 echo '<script type="text/javascript" language="javascript" src="'.esc_url( get_template_directory_uri() ).'/assets/jquery.anythingslider.fx.min.js"></script>'; 
 
-
 // get default slider options
 $sliderdefaultdisplay = get_theme_mod('onepiece_content_sliderbar_display', 'default' );
 $sliderdefaultcat = get_theme_mod('onepiece_content_sliderbar_category', 'uncategorized' );
@@ -259,7 +231,6 @@ if( $sliderdisplay == 'topfooter' ){
     $footerheight = $sliderdefaultheight;
 }
 
-
 // output html slider codes 
 ?>
 <script type="text/javascript" language="javascript">
@@ -271,21 +242,14 @@ Loaderbox icon image
 */
 //$('.loadbox span').html('<img width="100%" height="auto" src="<?php echo $loaderboxicon;?>" alt="loader" />');
 
-
-
-
 jQuery(document).ready(function($) {
-
-
-
-	/*
+/*
 Header Height Resize
 */
 var rtime;
 var timeout = false;
 var delta = 20;
 $(window).resize(function() {
-
 
 	rtime = new Date();
     if (timeout === false) {
@@ -311,8 +275,6 @@ function sizeHeaderElements(){
 		var rMinHeight = $('#topbar .outermargin').outerHeight();
 		var rSetHeight = ($(window).height() / 100) * <?php echo $displaytype; ?>;
 		//var rToHeight = (  rMinHeight > rSetHeight ? rMinHeight : rSetHeight );
-
-
 		$("#sliderbox-head").css("min-height", rMinHeight );
 
 		// check if slider active > slide min-height
@@ -346,10 +308,6 @@ function sizeHeaderElements(){
 		?>
 
 }
-
-
-
-
 
 /* AnythingSlider */
 $(window).trigger('resize'); // adjust slider on resize
@@ -422,12 +380,9 @@ var setupSwipe = function(slider) {
         mv = (touch) ? 'touchmove' : 'mousemove',
         en = (touch) ? 'touchend' : 'mouseup';
 
-
-
 		/*
 		 * Add swipe events to another layer ( in the background of clickable content elements )
 		 */
-
 		$('<div class="swipe-overlay"></div>').appendTo(slider.$window).bind(st, function(e) {
             // prevent image drag (Firefox)//
 			e.preventDefault();
@@ -463,17 +418,14 @@ var setupSwipe = function(slider) {
                 t = 0;
                 x = 0;
             }
-
 	    var yscrolling = 0;
 
 	    if (t !== 0 && dt - t < time && v > range && yscrolling == 0) {
-
-
                 if ( newy < y ) {
                     //alert('scroll down'); 
-			$('html, body').animate({
-				scrollTop: $("#contentcontainer").offset().top - $("#topbar").outerHeight(true)
-			},{
+				$('html, body').animate({
+					scrollTop: $("#contentcontainer").offset().top - $("#topbar").outerHeight(true)
+				},{
         			duration: <?php echo $stylelayout_speed*4; ?>,
         			complete: function () { 
                 		
@@ -482,22 +434,18 @@ var setupSwipe = function(slider) {
                 }
 
                 if ( newy > y ) {
-
-			 $('html, body').animate({
-				scrollTop: $("#topbar").offset().top 
-			},{
+					$('html, body').animate({
+					scrollTop: $("#topbar").offset().top 
+				},{
         			duration: <?php echo $stylelayout_speed/2; ?>,
         			complete: function () {
         			}
       			});
 
                 }
-          
                 t = 0;
                 y = 0;
-
             }
-  
   });
   
 }; // END TOUCH SCROLL SLIDER
@@ -522,7 +470,6 @@ $toppos = 'relative';
 }
 ?>
 
-
 /*
  * SLIDER STYLING 
  */
@@ -543,7 +490,6 @@ echo 'max-height:680px;';
 } ?>
 }
 
-
 /* Slider decoration layers */
 #sliderbox-head .topelement,
 #sliderbox-head .bottomelement {
@@ -563,7 +509,6 @@ bottom: 0;
 left: 0;
 }
 
-
 /* Slider swipe overlay */
 .swipe-overlay {
 position: absolute;
@@ -574,7 +519,6 @@ left: 0;
 z-index: 50;
 }
 
- 
 /* Slider default styles */
 .sliderarea {
 position:relative;
@@ -652,7 +596,6 @@ width:90%;
 z-index: 65;
 }
 
-
 .anythingBase {
 	background: transparent;
 	list-style: none;
@@ -699,7 +642,6 @@ width:40%;
 } // end if header area slider/image
 ?>
 
-
 <style type="text/css">
 
 /* final header styling	*/
@@ -715,8 +657,6 @@ position:<?php if( $topbarbehavior == 'fixe' || $topbarbehavior == 'mini' || $to
 top:0px;
 left:0px;
 }
-
-
 
 /*
  *
@@ -742,7 +682,6 @@ $o = ( 100 - $popupoverlayopacity) / 100;
 }
 ?>
 
-
 .popupcloak
 {
 position:fixed;
@@ -758,10 +697,10 @@ opacity:<?php echo $o; ?>;
 #mainpopupbox
 {
 position:fixed;
-top:7%;
+top:0px;
 left:0px;
 width:100%;
-height:90%;
+height:100%;
 z-index:101;
 }
 
@@ -793,25 +732,83 @@ z-index:999;
 cursor:pointer;
 }
 
+
+
+
 #mainpopupbox .popupcontent .popupcoverbox
 {
 	height: 60%;
+    position: relative;
+    overflow: hidden;
 }
 
-#mainpopupbox .popupcontent .popupcoverbox .coverbox
+#mainpopupbox .popupcontent .popupcoverbox .imageholder
 {
+   position: absolute;
+   z-index:120;
+   left: 50%;
+   top: 50%;
+   -webkit-transform: translateY(-50%) translateX(-50%);
+	/*
 	height: 100% !important;
 	background-position: center top;
   	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
+	*/	
+	
+}
+#mainpopupbox .popupcontent .popupcoverbox .imageholder img
+{
+min-width:100%;
+max-width:680px;
+height:auto;
 }
 
+#mainpopupbox .popupcontent .popupcoverbox ul.gallerynav
+{
+position:absolute;
+z-index:160;
+top:2px;
+left:2px;
+}
 
+ul.gallerynav li.option
+{
+float:left;
+margin:4px;
+overflow:hidden;
+width:48px;
+height:48px;
+}
 
+ul.gallerynav li.active
+{
+border:2px solid #999999;
+margin:2px;
+}
+
+#mainpopupbox .popupcontent .popupcoverbox ul.gallerynav li img
+{
+width:48px;
+height:auto;
+border:none;
+}
+
+#mainpopupbox .labelbox
+{
+position:absolute;
+top:5px;
+right:5px;
+}
 /* columns on larger screens */
 @media screen and (min-width: 512px) {
+#mainpopupbox
+{
+top:12%;
+height:68%;
+}
 
 /* ! check page gallery single item view custom field */
 #mainpopupbox .popupcontent .popupcoverbox
@@ -825,23 +822,24 @@ cursor:pointer;
 	width:35%;
 	float:right;
 }
+#mainpopupbox .popupcontent .popupcoverbox .imageholder img
+{
+min-width:100%;
+max-width:1500px;
+height:auto;
+}
+#mainpopupbox .popupcontent .popupcontentbox h3
+{
+padding:10px 0px 4px;
+}
+#mainpopupbox .popupcontent .popupcontentbox > *
+{
+margin:0px 4% 0px 4%;
+}
 
 }
 
-
-
 </style>
-
-
-
-
-
-
-
-
-
-
-
 <?php
 
 /**
@@ -895,7 +893,6 @@ echo '</style>';
 <script type="text/javascript" language="javascript">
 jQuery(function ($) { 
 
-
 $(document).ready(function() {   
 
 	<?php if($topbarbgfixed == 'keep'){ ?>
@@ -918,17 +915,10 @@ $(document).ready(function() {
    <?php 
    } 
 	?>
-   
-
-
-
-
-
-   
+  
 /* 
  * Mainmenu sticky / minisize
  */
-
 var menubox;
 
 <?php
@@ -940,13 +930,9 @@ if( $mainmenubarminisize != 'none' ){
 echo 'var mainmenuminisize = "'.$mainmenubarminisize.'";';
 ?>
 
-
 var menubox = $('#site-navigation nav').prepend('<div class="navcontrol"><div class="menu-button"><?php echo __('Menu', 'onepiece'); ?></div></div>');
-
 var menubutton = $('#site-navigation nav .menu-button').hide();
-
 var menupanel = $('#site-navigation nav div ul.menu');
-
 
 function setminisizemenu(){
 
@@ -1016,15 +1002,10 @@ echo  'var width_responsive_menu = '.get_theme_mod('onepiece_responsive_medium_m
 ?>
 
 
-
-
-
-
 /**
  * TOPBAR FIXED / STICKY / MINIFY ONSCROLL
  */ 
 $(window).on("mousewheel scroll", function() {
-
 
 // sticky
 <?php
@@ -1035,7 +1016,6 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 	/**
 	 * FIX TOPBAR & ADD BG
 	 */
-
 	 $("#topbar .minifiedtopbarbg").remove();
      $("#topbar").addClass('minified').append( $("<div>")
       .attr('class', 'minifiedtopbarbg')
@@ -1051,8 +1031,6 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
       }) 
     );
 
-	
-	
  	<?php if($topbarbehavior == 'mini' || $topbarbehavior == 'relf'){ ?>
 	/**
 	 * MINIFY TOPBAR & BG
@@ -1063,15 +1041,10 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
    $(".logobox a img").stop().animate({
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_minwidth',80).'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
-  
-
 
   <?php } ?>
 
-
 }else if( $(window).scrollTop() <= 0 && $("#topbar").hasClass('minified') ){
-   
-
 
    <?php if($topbarbgfixed != 'keep'){ ?>
 	/**
@@ -1090,8 +1063,6 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 				width:'<?php echo get_theme_mod('onepiece_identity_panel_logo_maxwidth').'px'; ?>',
    }, <?php echo $stylelayout_speed; ?>);
 
-   
-
    $("#topbar").removeClass('minified');
 
 } // end minify logobox
@@ -1100,11 +1071,6 @@ if( $(window).scrollTop() > 0 && !$("#topbar").hasClass('minified')){
 
 <?php  
 } // end minify logobox or fixed topbar
-
-
-
-
-
 
 /** 
  * onscroll for fixed / minisize topbar:
@@ -1119,7 +1085,6 @@ if( $mainmenubarbehavior == 'stic' && ( $topbarbehavior == 'fixe' || $topbarbeha
 //$stickymenu_triggerheight = '$("#topbar").height()';
 
 var stickymenutriggerheight = $("#topbar").height();
-
 var offset = $('#site-navigation').offset();
 
 if(  menubox && ( offset.top - $(window).scrollTop() ) < stickymenutriggerheight && !menubox.hasClass('sticky') ){
@@ -1127,8 +1092,6 @@ if(  menubox && ( offset.top - $(window).scrollTop() ) < stickymenutriggerheight
 	/**
 	 * POSITION MAIN MENU IN TOPBAR 
 	 */
-
-
 	menubox.addClass('sticky');
 	if( $('#minibar-navigation').length > 0 ){
 	$('#minibar-navigation').next().after(menubox);
@@ -1159,7 +1122,6 @@ if(  menubox && ( offset.top - $(window).scrollTop() ) < stickymenutriggerheight
    	resetminisizemenu();
 	}
 
-
 	<?php
 	if($mainmenubarplace == 'content'){
 	?>
@@ -1179,8 +1141,6 @@ if(  menubox && ( offset.top - $(window).scrollTop() ) < stickymenutriggerheight
 	
 } // end  onscroll for fixed topbar
 
-
-
 <?php
 } // end topbarbehavior sticky / minisize
 ?>
@@ -1192,7 +1152,6 @@ if(  menubox && ( offset.top - $(window).scrollTop() ) < stickymenutriggerheight
 /*
 if($mainmenubarplace == 'below'){
 ?>
-
     //alert('!check!');
 	if( ($('#sliderbox-head').length == 0 && $('#headerbar').length == 0)&& $('#site-navigation') ){
 		//alert('!check!');
@@ -1202,37 +1161,15 @@ if($mainmenubarplace == 'below'){
 		$("#headercontainer").append($('#site-navigation'));
 		//$('#topbarmenu').append($('#site-navigation'));
 		// $('#headercontainer').prepend( $("#topbar") ); works only for maincontent
-
 	}
-
 <?php
 }*/
 ?>
-
-
     //$(window).trigger('scroll');
-
-
+	
 });// end ready doc
-
-
-
-
 });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <?php
 /**
@@ -1248,7 +1185,6 @@ echo '<script src="'.get_template_directory_uri().'/assets/imagesloaded.js" type
 
 }
 
-
 /**
  * GLOBAL CSS 
  */ 
@@ -1259,7 +1195,6 @@ echo '@media screen and (max-width: '.get_theme_mod('onepiece_responsive_small_m
 echo '.outermargin { width:'.get_theme_mod('onepiece_responsive_small_width', 98).'%; max-width:'.get_theme_mod('onepiece_responsive_small_outermargin').'px; margin:0 auto; }'; 
 echo '#maincontent,#mainsidebar,#pagesidebarcontainer,#sidebar2{float:none !important;width:100% !important;margin:0px auto;}'; 
 echo '}';
-
 
 /**
  * PAGE TEMPLATE GALLERY
@@ -1297,7 +1232,6 @@ echo '.item.active .coverbox{ min-height:'.$itembigh.'px !important;}';
  * Set Item view Columns
  * ! make custom sizes?
  */
-
 if( $itemview == 'right'){
 echo '#itemcontainer .item.active .coverbox{ width:60%; float:left; }';
 echo '#itemcontainer .item.active .titlebox, #itemcontainer .item.active .fullinfobox{ width:40%; float:right;}';
@@ -1306,9 +1240,7 @@ if( $itemview == 'left'){
 echo '#itemcontainer .item.active .coverbox{ width:60%; float:right; }';
 echo '#itemcontainer .item.active .titlebox, #itemcontainer .item.active .fullinfobox{ width:40%; float:left;}';
 }
-
 echo '}'; // end medium screen
-
 
 echo '@media screen and (min-width: '.get_theme_mod('onepiece_responsive_medium_max', 1280).'px) {';
 echo '.outermargin { max-width:'.get_theme_mod('onepiece_responsive_large_outermargin').'px; }'; 
@@ -1319,15 +1251,10 @@ $aw = 3;
 }
 echo '#itemcontainer .item{width:'.(100 / $maxinrow).'%;}'; 
 echo '#itemcontainer .item.active{ width:'.((100 / $maxinrow)*$aw).'%; }';
-
 echo '}'; // end large screen
-
-
 } //end gallery css 
 
 echo '</style>';
-
-
 
 /**
  * PAGE TEMPLATE GALLERY ISOTOPE
@@ -1349,28 +1276,23 @@ $(document).ready(function() {
     var $itemamount = <?php echo isset( $maxinrow ) ? ( $maxinrow * 3 ) : 8; ?>;
     var $itemList = [];
     var $noloading = 0;
-
-
-
+	
 	var keyhash = window.location.hash.substr(1);
 	if(keyhash){
-	
 		
 		if( $(document).find('a.cat-'+keyhash).length > 0  ){
-		
 		$catList = keyhash;
 		$tagList = '';
-			
 		}
 		if( $(document).find('a.tag-'+keyhash).length > 0 ){
-		
 		$catList = '';
         $tagList = keyhash;
-			
+		}
+		if( $('*[data-slug="'+keyhash+'"]').length > 0 ){ 
+			//alert('check');
 		}
 		
 	}
-
 	
     // init isotope :: http://isotope.metafizzy.co/layout-modes/masonry.html
     $container.isotope({ 
@@ -1389,9 +1311,7 @@ $(document).ready(function() {
     
     /* load posts to container */
     loaditems();
-        
-	
-    
+   
 	/* on resize */
 	var resizeId;
 	$(window).resize(function() {
@@ -1426,7 +1346,6 @@ $(document).ready(function() {
     }
     });
     
-
     function loaditems(){
         data = {
           action: 'filter_posts', // function to execute
@@ -1439,17 +1358,32 @@ $(document).ready(function() {
 
 	$.post( afp_vars.afp_ajax_url, data, function(response) {
           if( response.length > 0 ){  
-	  var elems = '';
+	  		  var elems = '';
               $.each( $.parseJSON(response), function(idx, obj) {
+			  	  if( obj ){
                   $itemsloaded.push(obj.id); // add loaded items id
-		  $itemList[obj.id] = obj;
+		  		  $itemList[obj.id] = obj;
                   elems += itemmarkup(obj); // item html markup
+				  }
               });
 
               $newItems = $( elems );
               $container.append( $newItems ).isotope( 'appended', $newItems );
+			  
+			// prevend doubled items
+			var seen = {};
+				$('.item').each(function() {
+					var txt = $(this).text();
+					if (seen[txt])
+						$(this).remove();
+					else
+						seen[txt] = true;
+				});
+			  
           }
         }).done(function( data ) {
+		
+	  		  
             $container.imagesLoaded( function(){
                 $items = $('.item');
                 $container.isotope( 'updateSortData', $items).isotope( 'layout' );
@@ -1462,9 +1396,223 @@ $(document).ready(function() {
 
     }
 
+
+	
+
+	/*
+	 * Label
+	 */ 
+	function display_postlabel(obj){
+
+		var output = '';
+		var product_labelicons = <?php echo json_encode($GLOBALS['product_label_webicons']); ?>;
+	
+		if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
+		
+			var labelcontent = obj.meta['meta-box-product-label'];
+			if( product_labelicons != '' &&  typeof product_labelicons !== 'undefined'){
+				labelcontent = product_labelicons[labelcontent];
+			}
+		
+			output += '<div class="labelbox">';
+			output += '<span class="productlabel">'+labelcontent+'</span>';
+			output += '</div>';
+		
+		}
+		return output;
+	}
+	
+	
+	/*
+	 * PRICE
+	 */ 
+	function display_postprice(obj){
+	
+		var output = '';
+		
+		/* CURRENCY MAP */
+		var currency_map = <?php echo json_encode($GLOBALS['currency_symbols']); ?>;
+	
+		var used_currency =  obj.meta['meta-box-product-currency'];
+		
+		if( obj.meta['meta-box-product-currency'] != '' &&  typeof obj.meta['meta-box-product-currency'] !== 'undefined' && typeof currency_map !== 'undefined'){
+		used_currency = currency_map[ obj.meta['meta-box-product-currency'] ];
+		}
+		
+		if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' ){
+		output += '<div class="pricebox">';
+		
+		if( obj.meta['meta-box-product-discount'] != '' && typeof obj.meta['meta-box-product-discount'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-discount']) && !isNaN(obj.meta['meta-box-product-price']) ){
+		
+			output += '<span class="discount"><?php echo __('Discount', 'onepiece'); ?> '+ obj.meta['meta-box-product-discount']+'% </span>';
+		
+			var price = '<span class="price"> '+ used_currency +' '+ (obj.meta['meta-box-product-price'] / 100) * (100 - obj.meta['meta-box-product-discount']) +'</span>';
+			
+		}else if( !isNaN(obj.meta['meta-box-product-price']) ){
+		
+			var price = '<span class="price"> '+ obj.meta['meta-box-product-currency'] +' '+ obj.meta['meta-box-product-price'] +'</span>';
+			
+		}else{
+		
+			var price = '<span class="price"> '+ obj.meta['meta-box-product-price'] +'</span>'; // text
+		}
+		
+		output += price;
+		output += '</div>';
+		
+		}
+		
+		return output;
+	
+	}
+	
+	
+	
+	
+	/*SIZE MAP */
+	function display_postsize(obj){
+		
+		var output = '';
+		var size_map = <?php echo json_encode($GLOBALS['size_select']); ?>;
+			
+		/* SIZE */
+		if( obj.meta['meta-box-product-size'] != '' && obj.meta['meta-box-product-size'] != 'none' && typeof obj.meta['meta-box-product-size'] !== 'undefined'){
+		 
+		output += '<div class="sizebox">';
+		output += '<span class="size">'+size_map[ obj.meta['meta-box-product-size'] ]+'</span>';
+		output += '</div>';
+		
+		}
+		return output;
+	}
+	
+	
+	/* PACKAGE */
+	function display_postpackagesize(obj){
+	
+		var output = '';
+		
+		if( obj.meta['meta-box-product-dms'] != 'none' && obj.meta['meta-box-product-dms'] != '' && typeof obj.meta['meta-box-product-dms'] !== 'undefined' ){
+		
+		var packsize = '';
+		if( obj.meta['meta-box-product-dmx'] != '' && typeof obj.meta['meta-box-product-dmx'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmx'])){
+		packsize += obj.meta['meta-box-product-dmx']+' ';
+		}
+		if( obj.meta['meta-box-product-dmy'] != '' && typeof obj.meta['meta-box-product-dmy'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmy'])){
+		packsize += 'x '+obj.meta['meta-box-product-dmy']+' ';
+		}
+		if( obj.meta['meta-box-product-dmz'] != '' && typeof obj.meta['meta-box-product-dmz'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmz'])){
+		packsize += 'x '+obj.meta['meta-box-product-dmz'];
+		}
+		
+		}
+		if(packsize != '' && typeof packsize !== 'undefined'){
+		
+		output += '<div class="packagebox">';
+		output += '<span class="packagesize">'+packsize+' '+obj.meta['meta-box-product-dms']+'</span>';
+		output += '</div>';
+		}
+		
+		if( obj.meta['meta-box-product-wms'] != 'none' && obj.meta['meta-box-product-wmn'] != '' && typeof obj.meta['meta-box-product-wmn'] !== 'undefined'
+		&& !isNaN(obj.meta['meta-box-product-wmn']) && typeof obj.meta['meta-box-product-wms'] !== 'undefined' ){
+		output += '<div class="packagebox">';
+		output += '<span class="packageweight">'+obj.meta['meta-box-product-wmn']+' '+obj.meta['meta-box-product-wms']+'</span>';
+		output += '</div>';
+		}
+		
+		return output;
+	
+	}
+	
+	
+	
+	/*
+	 * ORDER BY MAIL
+	 */
+	function display_orderbymail(obj){
+	 
+	 	var output = '';
+		if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' 
+		&& obj.meta['meta-box-product-orderbymail'] != 'none' &&  typeof obj.meta['meta-box-product-orderbymail'] !== 'undefined' ){
+		
+		var orderbymailmarkup = '<?php echo antispambot( get_theme_mod('onepiece_content_panel_product_orderemailaddress', get_option('admin_email') ) ); ?>';
+		orderbymailmarkup += '?subject=Order request <?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>-'+obj.title;
+		orderbymailmarkup += '&body=<?php echo __('Hi,%0AIs this product still available? I would like to buy it. ', 'onepiece'); ?>';
+		orderbymailmarkup += '%0A%0A'+obj.title;
+		if( obj.posturl ){ 
+		//markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
+		orderbymailmarkup += '%0A'+obj.posturl;
+		// https://gist.github.com/CatTail/4174511 
+		}
+		orderbymailmarkup += '%0A'+obj.content.replace(/<\/?[^>]+(>|$)/g, "");
+		
+		
+		output += '<div class="orderbox"><ul>';
+		output += '<li><span><a class="orderbyemailbutton" href="mailto:'+orderbymailmarkup+'" target="_self"><?php echo __('Order by Email', 'onepiece'); ?></a></span></li>';
+		output += '</ul></div>';
+		
+		}
+		return output; 
+	}// end function
+	
+	
+	
+	function display_customreadmore(obj){
+	
+		var customurl = obj.meta['meta-box-custom-url'];
+		var useurl = obj.meta['meta-box-custom-useurl'];
+		
+		var itemreadmore = '';
+		var urltext = '<?php echo __('Read more', 'onepiece'); ?>';
+	
+		if( customurl != '' && typeof customurl !== 'undefined' && ( useurl == 'internal' || useurl == 'external' ) ){
+	
+		if( customurl != '' && useurl == 'internal' ){
+			var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_self">';
+		}
+		if( customurl != '' && useurl == 'external' ){
+			var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_blank">';
+		}
+		if( obj.meta['meta-box-custom-urltext'] ){
+			urltext = obj.meta['meta-box-custom-urltext'];  
+		}
+		
+		itemreadmore += urltext+'</a>'; 
+		
+		}
+		return itemreadmore;
+	
+	}
+	
+	
+	
+	function display_posttime(obj){
+	
+		var output = '';
+		<?php // check for customizer posts display settings
+		if( get_theme_mod('onepiece_content_panel_postlist_authortime') ){
+		echo "var authortime = '".get_theme_mod('onepiece_content_panel_postlist_authortime')."'; // from php";
+		?>
+		
+		if( authortime == 'both' || authortime ==  'date' ){
+			output += '<span class="datebox">'+obj.date+'</span>';
+		}
+		if( authortime == 'both'  ){
+			output += ' by <span class="authorbox">'+obj.author+'</span>';
+		}
+		<?php } ?>
+		
+		return output;
+		
+	}
+	
+	
+	
+	
+
     
     function itemmarkup(obj){
-
+	
 	// get item categories
     var cat = '';
     if(obj['category'].length > 0 ){
@@ -1481,16 +1629,16 @@ $(document).ready(function() {
     }
 	// add custom field product label to item tags
 	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
-		tags += 'label-'+obj.meta['meta-box-product-label'];
+		tags += obj.meta['meta-box-product-label']; //'label-'+obj.meta['meta-box-product-label'];
 	}
 
 
 	/*
 	 * Item (custom) url/clickaction
  	 */
-
 	var readmoreurl = obj.posturl;
     var itemdatalink = readmoreurl;
+	var objslug =  obj.slug;
 	var customurl = obj.meta['meta-box-custom-url'];
 	var useurl = obj.meta['meta-box-custom-useurl'];
 
@@ -1505,11 +1653,10 @@ $(document).ready(function() {
 	if( customurl != '' && typeof customurl !== 'undefined'){
 		itemdatalink = customurl;
 	}
-
-
-    var markup = '<div id="post-'+obj.id+'" data-id="'+obj.id+'" data-category="'+cat+'" data-link="'+itemdatalink+'" data-linktarget="'+useurl+'" data-related="'+tags+'" class="item '+cat + tags+'"><div class="innerpadding">';
-
-
+	
+	
+    var markup = '<div id="post-'+obj.id+'" data-id="'+obj.id+'" data-category="'+cat+'" data-slug="'+objslug+'" data-link="'+itemdatalink+'" data-linktarget="'+useurl+'" data-related="'+tags+'" class="item '+cat + tags+'"><div class="innerpadding">';
+	
 	var smallscreen = false;
  	<?php // check for customizer posts display settings
     if( $mobile ){
@@ -1517,17 +1664,13 @@ $(document).ready(function() {
 	}
     ?>
 
-
  	if( smallscreen === false && obj.largeimg ){ 
 	
 	//markup += '<div class="coverbox"><img class="coverimage" src="'+obj.largeimg[0]+'" alt="'+obj.title+'" /></div>';
 	markup += '<div class="coverbox" style="background-image:url('+obj.largeimg[0]+');min-height:<?php echo $itemminh; ?>px;"></div>'; 
-	
 	}else if( obj.mediumimg ){ 
-	
     //markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
 	markup += '<div class="coverbox" style="background-image:url('+obj.mediumimg[0]+');min-height:<?php echo $itemminh; ?>px;"></div>';
-	
     }
 	
     // META DATA .. JSON.stringify(obj.meta)
@@ -1535,33 +1678,11 @@ $(document).ready(function() {
 	/*
 	 * LABEL
 	 */
-
-	var product_labelicons = <?php echo json_encode($GLOBALS['product_label_webicons']); ?>;
-
-
-
-
-	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
-	
-	var labelcontent = obj.meta['meta-box-product-label'];
-	if( product_labelicons != '' &&  typeof product_labelicons !== 'undefined'){
-		labelcontent = product_labelicons[labelcontent];
-	}
-
-	markup += '<div class="labelbox">';
-	
-	markup += '<span class="productlabel">'+labelcontent+'</span>';
-
-	markup += '</div>';
-	
-	}
-	
-	
+	markup += display_postlabel(obj);
 	
 	/*
 	 * Titlebox
-	 */ 
-	
+	 */
     markup += '<div class="titlebox"><h3>';
 	
 	<?php if( isset($clickaction) && $clickaction != 'none' ){ ?>
@@ -1574,207 +1695,42 @@ $(document).ready(function() {
 
 	<?php } ?>
 
-
-
-
-    <?php // check for customizer posts display settings
-    if( get_theme_mod('onepiece_content_panel_postlist_authortime') ){
-    echo "var authortime = '".get_theme_mod('onepiece_content_panel_postlist_authortime')."'; // from php";
-    ?>
-    
-    if( authortime == 'both' || authortime ==  'date' ){
-        markup += '<span class="datebox">'+obj.date+'</span>';
-    }
-    if( authortime == 'both'  ){
-        markup += ' by <span class="authorbox">'+obj.author+'</span>';
-    }
-    <?php } ?>
+    markup += display_posttime(obj);
 
     markup += '</div>';
-	
-	
-	
-	var itemreadmore = '';
-	var urltext = '<?php echo __('Read more', 'onepiece'); ?>';
 
-	if( customurl != '' && typeof customurl !== 'undefined' && ( useurl == 'internal' || useurl == 'external' ) ){
 
-	if( customurl != '' && useurl == 'internal' ){
-		var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_self">';
-	}
-	if( customurl != '' && useurl == 'external' ){
-		var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_blank">';
-	}
-	if( obj.meta['meta-box-custom-urltext'] ){
-		urltext = obj.meta['meta-box-custom-urltext'];  
-	}
 	
-	itemreadmore += urltext+'</a>'; 
 	
-	}
 	
-    
+	
 	markup += '<div class="fullinfobox hidden">';
 	
-		
-	/**
- 	 * CURRENCY MAP
-  	 */
-	var currency_map = <?php echo json_encode($GLOBALS['currency_symbols']); ?>;
+	markup += display_postprice(obj);
+	
+	markup += display_postsize(obj);
+	
+	/* Description / text */
+	markup += '<div class="textbox">'+obj.excerpt;
+	
+	markup += display_customreadmore(obj);
+	
+	markup += '</div>'; 
+	
+	markup += display_postpackagesize(obj);
 
+	markup += display_orderbymail(obj);
 	
-		
-	/**
- 	 * SIZE MAP
-  	 */
-	var size_map = <?php echo json_encode($GLOBALS['size_select']); ?>;
-
+	/* Wishlist.. // https://pippinsplugins.com/storing-session-data-in-wordpress-without-_session/ */
 	
-	
-	/*
-	 * PRICE
-	 */
-	 
-	var used_currency =  obj.meta['meta-box-product-currency'];
-	
-
-	
-	if( obj.meta['meta-box-product-currency'] != '' &&  typeof obj.meta['meta-box-product-currency'] !== 'undefined' && typeof currency_map !== 'undefined'){
-	used_currency = currency_map[ obj.meta['meta-box-product-currency'] ];
-	}
-	
-	 
-	if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' ){
-	markup += '<div class="pricebox">';
-	
-	if( obj.meta['meta-box-product-discount'] != '' && typeof obj.meta['meta-box-product-discount'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-discount']) && !isNaN(obj.meta['meta-box-product-price']) ){
-	
-		markup += '<span class="discount"><?php echo __('Discount', 'onepiece'); ?> '+ obj.meta['meta-box-product-discount']+'% </span>';
-	
-		var price = '<span class="price"> '+ used_currency +' '+ (obj.meta['meta-box-product-price'] / 100) * (100 - obj.meta['meta-box-product-discount']) +'</span>';
-		
-	}else if( !isNaN(obj.meta['meta-box-product-price']) ){
-	
-		var price = '<span class="price"> '+ obj.meta['meta-box-product-currency'] +' '+ obj.meta['meta-box-product-price'] +'</span>';
-		
-	}else{
-	
-		var price = '<span class="price"> '+ obj.meta['meta-box-product-price'] +'</span>'; // text
-	}
-	
-	markup += price;
-	
-	markup += '</div>';
-	}
-	
-	
-	
-	
-		
-	/*
-	 * SIZE
-	 */
-	
-	if( obj.meta['meta-box-product-size'] != '' && obj.meta['meta-box-product-size'] != 'none' && typeof obj.meta['meta-box-product-size'] !== 'undefined'){
-	 
-	markup += '<div class="sizebox">';
-	
-	markup += '<span class="size">'+size_map[ obj.meta['meta-box-product-size'] ]+'</span>';
-	
-	markup += '</div>';
-	
-	}
-	
-	
-	
-	/*
-	 * Description / text
-	 */
-	markup += '<div class="textbox">'+obj.excerpt+'</div>'; 
-	
-	
-	/*
-	 * PACKAGE
-	 */
-	
-	if( obj.meta['meta-box-product-dms'] != 'none' && obj.meta['meta-box-product-dms'] != '' && typeof obj.meta['meta-box-product-dms'] !== 'undefined' ){
-	
-	var packsize = '';
-	if( obj.meta['meta-box-product-dmx'] != '' && typeof obj.meta['meta-box-product-dmx'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmx'])){
-	packsize += obj.meta['meta-box-product-dmx']+' ';
-	}
-	if( obj.meta['meta-box-product-dmy'] != '' && typeof obj.meta['meta-box-product-dmy'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmy'])){
-	packsize += 'x '+obj.meta['meta-box-product-dmy']+' ';
-	}
-	if( obj.meta['meta-box-product-dmz'] != '' && typeof obj.meta['meta-box-product-dmz'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmz'])){
-	packsize += 'x '+obj.meta['meta-box-product-dmz'];
-	}
-	
-	}
-	if(packsize != '' && typeof packsize !== 'undefined'){
-	
-	markup += '<div class="packagebox">';
-	markup += '<span class="packagesize">'+packsize+' '+obj.meta['meta-box-product-dms']+'</span>';
-	markup += '</div>';
-	}
-	
-	if( obj.meta['meta-box-product-wms'] != 'none' && obj.meta['meta-box-product-wmn'] != '' && typeof obj.meta['meta-box-product-wmn'] !== 'undefined'
-	&& !isNaN(obj.meta['meta-box-product-wmn']) && typeof obj.meta['meta-box-product-wms'] !== 'undefined' ){
-	markup += '<div class="packagebox">';
-	markup += '<span class="packageweight">'+obj.meta['meta-box-product-wmn']+' '+obj.meta['meta-box-product-wms']+'</span>';
-	markup += '</div>';
-	}
-	
-	
-	
-	if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' 
-	&& obj.meta['meta-box-product-orderbymail'] != 'none' &&  typeof obj.meta['meta-box-product-orderbymail'] !== 'undefined' ){
-	
-	var orderbymailmarkup = '<?php echo antispambot( get_theme_mod('onepiece_content_panel_product_orderemailaddress', get_option('admin_email') ) ); ?>';
-	orderbymailmarkup += '?subject=Order request <?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>-'+obj.title;
-	orderbymailmarkup += '&body=<?php echo __('Hi,%0AIs this product still available? I would like to buy it. ', 'onepiece'); ?>';
-	orderbymailmarkup += '%0A%0A'+obj.title;
-	
-	if( obj.posturl ){ 
-    //markup += '<div class="coverbox"><img class="coverimage" src="'+obj.mediumimg[0]+'" alt="'+obj.title+'" /></div>';
-	orderbymailmarkup += '%0A'+obj.posturl;
-	// https://gist.github.com/CatTail/4174511 
-    }
-	orderbymailmarkup += '%0A'+obj.content.replace(/<\/?[^>]+(>|$)/g, "");
-	
-	markup += '<div class="orderbox"><ul>';
-	markup += '<li><span><a class="orderbyemailbutton" href="mailto:'+orderbymailmarkup+'" target="_self"><?php echo __('Order by Email', 'onepiece'); ?></a></span></li>';
-	markup += '</ul></div>';
-	
-	}
-	
-	/*
-	 // https://pippinsplugins.com/storing-session-data-in-wordpress-without-_session/
-	markup += '<div class="clientbox">';
-	markup += '<span class="addtowishlistbutton"><a href="#wishlist"><?php echo __('Add to wishlist', 'onepiece'); ?></a></span>';
-	markup += '<ul class="wishlist"><li></li></ul></div>';
-	*/
-	
-	
-	//markup += itemreadmore;	
-	//markup += JSON.stringify(obj.meta);
-	
-	/*
-	markup += '<div class="sharebox">';
-	markup += '<span class="menubutton">Share</span>';
-	markup += '</div>';
-	*/
 	markup += '</div>';
 	
     markup += '<div class="clr"></div></div></div>';
+	
 	return markup;
 	
-    /* 'id,'type','date','title','category','excerpt','content','meta','tags', 'imageurl','posturl','slug','customfieldarray','post_data' */
-	/* meta-box-product-size,meta-box-product-dmx,meta-box-product-dmy,meta-box-product-dmz,meta-box-product-dms,_thumbnail_id,meta-box-custom-url,meta-box-product-label */
     }
    
-
-
     // Grid items
 	function loadpopup( popcontent ){
 		$('.popupcloak').fadeIn(300);
@@ -1794,7 +1750,7 @@ $(document).ready(function() {
 		});
 
 	<?php } ?>
-	
+
 	
 	$container.on('click', '.item', function(e){
 
@@ -1807,12 +1763,10 @@ $(document).ready(function() {
             return false;
         }
 
-
 		<?php if( $clickaction == 'sizeup' ){ ?>
 
 		$('.item').removeClass('active');
 
-		
 		$('.item .fullinfobox').addClass('hidden');
 		
 		<?php if( $mobile ){ ?>
@@ -1840,12 +1794,8 @@ $(document).ready(function() {
   			console.log( laidOutItems.length );
 			$('html, body').animate({ scrollTop: $('#itemcontainer').offset().top -  ( $(window).height() / 4 )  }, 400);
 		});
-		
-
-
-
+	
 		<?php }else if( $clickaction == 'poppost' ){ ?>
-
 
 		var title = $(this).find('.titlebox').wrap('<p/>').parent().html();
 		var image = $(this).find('.coverbox').wrap('<p/>').parent().html();
@@ -1857,8 +1807,6 @@ $(document).ready(function() {
 	
 		<?php }else if( $clickaction == 'link' ){ ?>
 
-
-
 		var dataUrl = $(this).attr('data-link');
 		var dataTarget = "_blank";
 		if( $(this).attr('data-linktarget') == 'replaceself'){
@@ -1867,37 +1815,22 @@ $(document).ready(function() {
 		e.preventDefault();
 		window.open( dataUrl, dataTarget );
 
-
-
 		<?php }else if( $clickaction == 'popcat' ){ ?>
-
-
-
-
 
 		/*
 		 * Single view popup with related links
 		 */
-
-		// get and prepare item info
-		var title = $(this).find('.titlebox').wrap('<p/>').parent().html();
-		var image = $(this).find('.coverbox').wrap('<p/>').parent().html();
-		var text =  $(this).find('.fullinfobox').html();
-
-		// reset html
-		$(this).find('.titlebox').unwrap();
-		$(this).find('.coverbox').unwrap();
-
-		var returnbut = '<div class="closegallerypopup"><?php echo __('Return to overview','onepiece'); ?></div>';
-		<?php // <webicon style="width:48px;height:48px;" icon="glyphicons:remove-sign"/> ?>
-
+		
 		/* id related.. */
-		var pid = $(this).attr('data-id');
+		var pid = $(this).attr('data-id'); 
     	var catstr = $(this).attr('data-category');
     	var tagstr = $(this).attr('data-related');
-    	var filter = cats+' '+tagstr;
+		
+		window.location.hash = '#' + $(this).attr('data-slug');
+		
+    	var filter = catstr+' '+tagstr;
     	var obj = $itemList[pid];
-    	var datastring = ' '+JSON.stringify( obj );
+    	//var datastring = ' '+JSON.stringify( obj );
 
 		var cats = '';
 		if( catstr != '' ){
@@ -1928,8 +1861,6 @@ $(document).ready(function() {
 			}
 		}
 
-
-
 		if( realtags.length > 0 ){
 			for(i=0;i < realtags.length; i++){
 
@@ -1939,10 +1870,58 @@ $(document).ready(function() {
 			tags = '<div class="reltags"><span>tagged:</span>'+tags+'</div>';
 		}
 
-
-
 	    var related = '<div class="postrelated">'+cats+tags+'</div>';
-
+		
+		
+		
+		// markup
+		var content = '<div class="popupcoverbox"></div><div class="popupcontentbox"><div class="titlebox"></div><div class="textcontent"></div></div>';
+		
+		//loadpopup( content );
+		$('.popupcloak').fadeIn(300);
+		
+		$('#mainpopupbox .popupcontent').html( content );
+		
+		$('.popupcoverbox,.popupcontentbox').hide();
+		
+		$('#mainpopupbox').append( $('.popupclosebutton') );
+		
+		$('body > .loadbox').fadeIn(300);
+		
+			
+		$('#mainpopupbox').fadeIn( 300 );
+		
+		// get post content and image(s) 
+		getImgGallery(pid);
+		
+		
+		var timebox = display_posttime(obj);
+		$('.popupcontentbox .titlebox').append( timebox );
+		
+		var labelbox = display_postlabel(obj);
+		$('.popupcoverbox').prepend( labelbox );
+		
+		var readmore = display_customreadmore(obj)
+		$('.popupcontentbox').append( readmore );
+		
+		var sizebox = display_postsize(obj);
+		$('.popupcontentbox').append( sizebox ); 
+		
+		var pricebox = display_postprice(obj);
+		$('.popupcontentbox').append( pricebox );
+		
+		var packagesizebox = display_postpackagesize(obj);
+		$('.popupcontentbox').append( packagesizebox );
+		
+		var orderbymailbox = display_orderbymail(obj);
+		$('.popupcontentbox').append( orderbymailbox );
+		
+		$('.popupcontentbox').append( related );
+		
+		// get related items 
+		loadRelatedItems(realtags,realcats,obj); // placed inside popupcontent > postrelated element
+		
+		
 
 		function loadRelatedItems(tags,cats,el){
 			/*if( $noloading == 0 ){
@@ -1968,83 +1947,145 @@ $(document).ready(function() {
 					  var reltitles = '';
 
 				$.post( afp_vars.afp_ajax_url, data, function(response) {
-				  if( response.length > 0 ){
-					  //alert(response);
-
+				  if( response.length > 0 ){ //alert(response);
 					  $.each( $.parseJSON(response), function(idx, obj) {
 
 						  if(obj != 'false' && obj.slug != el.slug )
 						  //alert(obj);
-						  reltitles += ' <li><img src="'+obj.thumbimg[0]+'" height="auto" width="48px" /><a href="#'+ obj.slug +'" class="related-item-link" data-id="'+ obj.id +'">'+ obj.title +'</a></li>';
+						  reltitles += ' <li><a href="#'+ obj.slug +'" class="related-item-link" data-id="'+ obj.id +'"><img src="'+obj.thumbimg[0]+'" height="auto" width="48px" />'+ obj.title +'</a></li>';
 
 					  });
-
 				  }
 				}).done(function( loadeditems ) {
-
 					 $('.popupcontentbox .postrelated .relatedmenu').remove();
 					  if( reltitles != '' )
 					  $('.popupcontentbox .postrelated').append( '<div class="relatedmenu">Related:<ul class="links">'+reltitles+'</ul><div class="clr"></div></div>');
-
+				
 				});
+				return true;
+				
+		}
+		
+		
+		
+		function getImgGallery(postID){
+		// get dynamic featured images 
+		var data = {
+			action: 'get_post_gallery_content',
+			afp_nonce: afp_vars.afp_nonce, // wp_nonce
+			post_id: postID,
+			dataType: 'json',
+			cache: false 
+		}; 
+
+		$.post( afp_vars.afp_ajax_url, data, function( response ) {
+			
+			if( response.length > 0   ){ 
+			
+				var postdata = JSON.parse(response);
+				
+				var titletext = '<h3>'+ postdata.title +'</h3>';
+				var textcontent = '<div>'+ postdata.content +'</div>';
+				
+				
+				var imgdisplay = '';
+				if( postdata.images.length > 1 ){
+					imgdisplay = '<div class="imageholder"><img class="gallerycover" src="'+postdata.images[0]['full']+'" /></div><ul class="gallerynav">';
+					//imgdisplay += '<li class="active option" data-image="'+postdata.images[0]['full']+'"><img src="'+postdata.images[0]['thumb']+'" /></li>';
+					$.each( postdata.images, function(nr, img){
+						imgdisplay += '<li class="option" data-image="'+img['full']+'"><img class="thumb" src="'+img['thumb']+'" /></li>';
+					});
+					imgdisplay += '</ul>';
+				}else{
+					imgdisplay = '<div class="imageholder"><img class="singlecover" src="'+postdata.images[0]['full']+'" /></div>';
+				}
+				
+				$('#mainpopupbox .popupcoverbox').append( imgdisplay ).fadeIn('300', function(){
+					$('#mainpopupbox .popupcoverbox ul.gallerynav li:first').addClass('active');
+					$('#mainpopupbox .popupcontentbox .titlebox').prepend(titletext);
+					$('#mainpopupbox .popupcontentbox .textcontent').html( textcontent );
+					$('#mainpopupbox .popupcontentbox').fadeIn('300', function(){
+							$('body > .loadbox').fadeOut(200);
+						});
+				});
+				
+			}
+			
+		});
+		
 		}
 
+		<?php }?>
 
-		loadRelatedItems(realtags,realcats,obj);
+		return false;
 
-		$('.popupcontentbox .titlebox').append( $('.popupclosebutton') );
-
-
-
-		// markup
-		var content =  '<div class="popupcoverbox">'+ image +'</div>';
-		content += '<div class="popupcontentbox">'+ returnbut + title + text + related +'</div>';
-
-
-		//loadpopup( content );
-		$('.popupcloak').fadeIn(300);
-
-		$('#mainpopupbox .popupcontent').html(  content );
-
-		$('#mainpopupbox').fadeIn(300);
-
-
-
-
-		$('.closegallerypopup').on('click', function(g){
+	}); 
+	
+	
+	<? if( $clickaction == 'popcat' ){ ?>
+	
+	$('.closegallerypopup').on('click', function(g){
 
 			g.preventDefault();
-			$('.popupcloak').fadeOut(300);
-			$('#mainpopupbox').fadeOut(300, function(){
-
-				$('#mainpopupbox,.popupcloak').remove();
-
-				$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div>');
-
-
-    			$('#mainpopupbox').hide();
-    			$('.popupcloak').hide();
-    			$('div.childpages.pop .moretextbox').hide();
-
+			
+			$('#mainpopupbox .popupcontentbox').fadeOut('200');
+			$('#mainpopupbox .popupccoverbox').fadeOut('200', function(){
+			
+			
+				$('.popupcloak').fadeOut(500);
+				$('#mainpopupbox').fadeOut(500, function(){
+	
+					$('#mainpopupbox,.popupcloak').remove();
+	
+					$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div>');
+					$('#mainpopupbox').hide();
+					$('.popupcloak').hide();
+					$('div.childpages.pop .moretextbox').hide();
+					
+					
+					
+	
+				});
 			});
-
+			
 		});
 
 
 
-		$('#mainpopupbox .popupcontent').on('click', 'a.related-item-link', function(r){
-			r.preventDefault();
+		$('#mainpopupbox .popupcontent').on('click', 'ul.gallerynav li.option', function(im){
+		
+			im.preventDefault();
 
-				var elid = $( '#post-'+$(this).attr('data-id')+'.item' );
-				elid.trigger( "click" );
-
+			if( !$(this).hasClass('active') ){
+			
+				$('ul.gallerynav li.option').removeClass('active');
+				$(this).addClass('active');
+				$('#mainpopupbox .popupcoverbox .imageholder').addClass('prev');
+				$('#mainpopupbox .popupcoverbox').prepend( '<div class="imageholder"><img class="gallerycover" src="'+$(this).attr('data-image')+'" /></div>' );
+				$('#mainpopupbox .popupcoverbox .prev').fadeOut('100', function(){
+					$('#mainpopupbox .popupcoverbox .prev').remove();
+				});
+			}
+				
   			return false;
 
 		});
+	
+		
+	
+		$('#mainpopupbox .popupcontent').on('click', 'a.related-item-link', function(r){
+		
+			r.preventDefault();
 
+			loaditems();
+			$container.isotope('layout');
+				
+			var elid = $( '#post-'+$(this).attr('data-id')+'.item' );
+			elid.trigger( "click" );
+				
+  			return false;
 
-
-
+		});
 
 		$('#mainpopupbox .popupcontent').on('click', 'a.tag-link,a.category-link', function(c){
 
@@ -2093,16 +2134,10 @@ $(document).ready(function() {
 	    return false;
     });
 
-
-
-		<?php }?>
-
-		return false;
-
-	}); 
 	
-
-
+	<?php } ?>
+	
+	
 	/* Link post-list-widget items to gallery click action */
 	<?php if(get_theme_mod('onepiece_content_gallery_linkpostlistwidget') == 'yes'){ ?>
 
@@ -2111,9 +2146,15 @@ $(document).ready(function() {
 
 			e.preventDefault();
 				var elid = $( '#post-'+$(this).attr('data-id')+'.item' );
-				loaditems();
-				$container.isotope('layout');
-				elid.trigger( "click" );
+				if( elid.length > 0 ){
+					loaditems();
+					$container.isotope('layout');
+					elid.trigger( "click" );
+				}else{
+					window.location = $(this).attr('href');
+					//alert('item not loaded');
+					//trigger category first, then load popup
+				}
   			return false;
 
 		});
@@ -2122,13 +2163,6 @@ $(document).ready(function() {
 
 
 
-	/*
-	$container.on('click', '.orderbyemailbutton', function(e){
-
-		// order form popup
-        return false;
- 	});
-	*/
 	
 	/*
 	 * Gallery tagmenu
@@ -2220,6 +2254,8 @@ $(document).ready(function() {
 
 $(window).load(function() {
 
+		
+
 });
 
 });
@@ -2272,7 +2308,11 @@ $imgpostmargin = 2 * ( $stylelayout_spacing / 2 );
 $txtpostwidth = 100 - ( $imgpostwidth + $imgpostmargin );
 */
 echo '.post-content p img.align-right.wp-post-image,
-.post-content p img.align-left.wp-post-image
+.post-content p img.align-left.wp-post-image,
+.post-content .featured_gallery_box.left, 
+.post-content .featured_gallery_box.right,
+.post-content .align-left .post-coverimage,
+.post-content .align-right .post-coverimage
 {
 width:'.$imgpostwidth.'% !important;
 }';
@@ -2306,8 +2346,6 @@ echo '</style>';
 
 // font (overwrites)
 add_fonts_frontend();
-
-
 
 echo '</head><body '; body_class(); 
 echo '>';
