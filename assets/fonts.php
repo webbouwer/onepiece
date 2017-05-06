@@ -56,7 +56,7 @@ function get_fonts_select(){
 		'Kelly+Slab'=> 'Kelly Slab',
 
 		'Lato'=>'Lato',
-
+		
 		'Lemon'=>'Lemon',
 
 		'Libre+Franklin'=>'Libre Franklin',
@@ -72,12 +72,12 @@ function get_fonts_select(){
 		'MarkerFelt-Wide__'=>'MarkerFelt Wide',
 
 		'Martel'=> 'Martel',
-
+		
 		'Marvel'=> 'Marvel',
 
 		'Permanent+Marker'=>'Permanent+Marker',
 
-		'playbill'=>'Playbill',
+		'playbill'=>'Playbill', 
 
 		'Poiret+One'=> 'Poiret One',
 

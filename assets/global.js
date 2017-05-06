@@ -6,27 +6,22 @@
  *
  */
 jQuery(function ($) { 
-
-
 $(document).ready(function() {    
-
-	
+						   
 /*
  * Available js variables (localized)
  * functions.php - $$wp_global_data array
  * functions.php - onepiece_global_js function
  * !! get api / user variables out of public var
  */
-var $wp_custom_vars = JSON.parse(site_data['customizer']);
-// example: alert($wp_custom_vars['onepiece_elements_topsidebar_responsive']);
-
-/**
- * RESPONSIVE ORDER
- * #topbarmargin, #topsidebar, #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
- */
-
-
  
+var $wp_custom_vars = JSON.parse(site_data['customizer']);
+	// example: alert($wp_custom_vars['onepiece_elements_topsidebar_responsive']);
+
+	/**
+	 * RESPONSIVE ORDER
+	 * #topbarmargin, #topsidebar, #contentcontainer .outermargin, #sidebar, #sidebar2, #pagesidebarcontainer (index.php, page.php, gallery.php)
+	 */
 	if( $("#topsidebar").length > 0 ){ // check top sidebar first
 		var topstyleside = $("#topsidebar").attr('style');
 		var topstylemain = $("#topbarmargin").attr('style');
@@ -41,7 +36,6 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 
 	function ResponsiveReorder(){
 
-
 		var small = 512 ; // defaults
 		var medium = 1024; // defaults
 		var small = $wp_custom_vars['onepiece_responsive_small_outermargin'];
@@ -54,9 +48,6 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 
 		var mainsidebarwidth = $wp_custom_vars['onepiece_elements_mainsidebar_width'];
 		var sidebar2width = $wp_custom_vars['onepiece_elements_sidebar2_width'];
-
-		
-
 
 		/*
 		 * Large / Medium Screens
@@ -91,7 +82,6 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 			cw = cw - mainsidebarwidth;
 			}
 			$('#maincontent').css('width', cw+'%' );
-
 
 	    }
 
@@ -131,8 +121,7 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 
 				// new content width
 				$('#maincontent').css('width', ( 100 - mainsidebarwidth )+'%' );
-
-
+				
 	        }
 
 		}
@@ -143,14 +132,11 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 
 	    if( $(window).width() <= small ){
 			
-
 			if( $("#bottomsidebar").length > 0 ){ // check top sidebar first
 				$("#bottomsidebar").attr('style', 'width:100%;'); //.appendTo("#footercontainer .outermargin");
 				$("#bottombarmargin").attr('style', 'width:100%;');
 			}
 			
-
-
 	        // append    
 	        if( $("#sidebar2").hasClass('ins') ){
 
@@ -177,8 +163,7 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 				}else if(mainsidebarrepos == 'hide'){
 					$("#pagesidebarcontainer").hide();
 				}
-
-
+				
 			 }else if( $("#mainsidebar").length ){
 
 				if(mainsidebarrepos == 'after'){
@@ -190,8 +175,7 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 				}else if(mainsidebarrepos == 'hide'){
 					$("#mainsidebar").hide();
 				}
-
-
+				
 	        }
 
 
@@ -331,17 +315,11 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	});
 	
 	
-	
 
-
-
-	
-	
-
-/**
- * CONTENT POPUPBOX
- * body (index.php, page.php, gallery.php)
- */
+	/**
+	 * CONTENT POPUPBOX
+	 * body (index.php, page.php, gallery.php)
+	 */
 
 	$('body').append('<div class="popupcloak"></div><div id="mainpopupbox"><div class="popupcontent outermargin"></div><div class="popupclosebutton"><webicon style="width:48px;height:48px;" icon="glyphicons:remove-sign"/></div></div>');
 
@@ -375,50 +353,66 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
 	$("#mainpopupbox .popupcontent").click(function(e) {
         e.stopPropagation();
    	});
+	
+	
+	
+	// post dynamic featured images
+	$('.featured_gallery_box').on('click', 'ul.featured_image_nav li', function(pi){
+		
+			pi.preventDefault();
+
+				var addthumb = '<li data-image="'+$(this).parent().parent().find('.post-coverimage img').attr('src')+'"><img src="'+$('.featured_gallery_box .post-coverimage').attr('data-image')+'" /></li>';
+				
+				//var newwidth = $(this).parent().parent().find('.post-coverimage img').width();
+				var newlarge = $(this).attr('data-image');
+				var newthumb = $(this).find('img').attr('src');
+				var newsrcset = $(this).attr('data-image');
+				
+				//$(this).parent().parent().find('.post-coverimage img').attr('width',newwidth);
+				$(this).parent().parent().find('.post-coverimage img').attr('srcset', newsrcset);
+				$(this).parent().parent().find('.post-coverimage img').attr('src', newlarge);
+				$(this).parent().parent().find('.post-coverimage').attr('data-image', newthumb);
+				
+				$('.featured_gallery_box ul.featured_image_nav').append(addthumb);
+				$(this).remove();
+				
+  			return false;
+
+		});
     
 	
 	
 
 $(window).load(function() { 
-    
-	 
-/**
- * HTML THEME PAGE SCROLL
- * smooth scroll
- * html content anchors (index.php, page.php, gallery.php)
- */  
-$('a[href*=#]:not([href=#])').click(function() {
-    if (location.pathname.replace(/^\//,'') == 	this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-        var target = $(this.hash);
-        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-        if (target.length) {
-            $('html,body').animate({
-            scrollTop: target.offset().top
-            }, 800);
-            return false;
-        }
-    }
-}); 
-
-
-
+						
+	/**
+	 * HTML THEME PAGE SCROLL
+	 * smooth scroll
+	 * html content anchors (index.php, page.php, gallery.php)
+	 */  
+	$('a[href*=#]:not([href=#])').click(function() {
+		if (location.pathname.replace(/^\//,'') == 	this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+			var target = $(this.hash);
+			target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+			if (target.length) {
+				$('html,body').animate({
+				scrollTop: target.offset().top
+				}, 800);
+				return false;
+			}
+		}
+	}); 
 
 	doneGlobalResizing();
 
-/**
- * LOADER BOX
- * onload/content loaded
- */  
+	/**
+	 * LOADER BOX
+	 * onload/content loaded
+	 */  
 	$('body > .loadbox').fadeOut(1200);
 
 });
  
 
-
-
-
-
 });
- 
- 
 });

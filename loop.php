@@ -7,20 +7,11 @@ $firstcount = get_theme_mod('onepiece_content_panel_postlist_firstcount', 3);
 $excerptlength = get_theme_mod('onepiece_content_panel_postlist_excerptlength', 25);
 $imagewidth = get_theme_mod('onepiece_content_panel_list_imgwidth', 37);
 
-
-
-
-
 $breadcrumbsdisplay = get_theme_mod( 'onepiece_elements_breadcrumbs_display' , 'top');
 
 if($breadcrumbsdisplay == 'befor'){
 custom_breadcrumbs();
 }
-
-
-
-
-
 
 
 function nextprevbuttondisplay(){
@@ -55,9 +46,6 @@ function nextprevbuttondisplay(){
 }
 
 
-
-
-
 if ( is_category() && get_theme_mod( 'onepiece_content_panel_list_titledisplay' ) != 'none') {
 echo '<div class="category-titlebar"><h1>'.single_cat_title( '', false ).'</h1>';
 if ( category_description() && get_theme_mod( 'onepiece_content_panel_category_titledisplay' ) == 'text') : 
@@ -83,6 +71,7 @@ $classproductlabel = get_post_meta( get_the_ID() , 'meta-box-product-label', tru
 if( $counter < $firstcount && !$paged  ){
 post_class('first-group-post label-'.$classproductlabel);
 }else{
+
 post_class('follow-post label-'.$classproductlabel);
 }
 
@@ -139,28 +128,28 @@ echo '<div class="post-subtitle">';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' ){
 
-
+	
 	$postlisteddateformat = get_theme_mod('onepiece_content_panel_postlist_dateformat', '2');
-
-
+	
+	
 	if($postlisteddateformat == '1'){
 	echo '<span class="post-date time-ago">';
 	echo wp_time_ago(get_the_time( 'U' ));
 	echo '</span>';
 	}
-
+	
 	if($postlisteddateformat == '2'){
 	echo '<span class="post-date">';
 	echo get_the_date();
 	echo '</span>';
-	}
-
+	} 
+	
 	if($postlisteddateformat == '3'){
 	echo '<span class="post-date date-time">';
 	echo get_the_date().' - '.get_the_time();
 	echo '</span>';
 	}
-
+	
 }
 
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' ){
@@ -173,6 +162,9 @@ echo '</div>';
 }
 
 
+
+
+
 // featured (cover) image
 $postimagesingle = get_theme_mod('onepiece_content_panel_posts_featuredimage', 'default');  
 
@@ -183,25 +175,37 @@ if( is_single() && ($postimagesingle == 'replace' || $postimagesingle == 'replac
 
 if ( has_post_thumbnail()  ) {
 
-echo '<div class="post-coverimage">'.$title_link;
-if($mobile){
-    if( $counter < $firstcount && !$paged ){ // (first page)
-        the_post_thumbnail('medium');
-    }else{
-        the_post_thumbnail('big-thumb');
-    }
-}else{
-    if( $counter < $firstcount && !$paged ){
-        the_post_thumbnail('large');
-    }else{
-        the_post_thumbnail('normal');
-    }
-}
-echo '</a></div>'; // default, 'thumb' or 'medium'
+
+
+	if( post_dynamic_featured_image_gallery(get_the_ID()) != '' && is_single() ){
+		echo '<div class="featured_gallery_box '.$postimagesingle.'">'; 
+	}
+
+	echo '<div class="post-coverimage" data-image="'.get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' ).'">'.$title_link;
+		
+		if($mobile){
+			if( $counter < $firstcount && !$paged ){ // (first page)
+				the_post_thumbnail('medium');
+			}else{
+				the_post_thumbnail('big-thumb');
+			}
+		}else{
+			if( $counter < $firstcount && !$paged ){
+				the_post_thumbnail('large');
+			}else{
+				the_post_thumbnail('normal');
+			}
+		}
+		
+	echo '</a></div>'; // default, 'thumb' or 'medium'
+
+	if( post_dynamic_featured_image_gallery(get_the_ID()) != '' && is_single() ){
+		echo  post_dynamic_featured_image_gallery($post_id, 'text').'</div>'; 
+	}
 
 }else{
 
-echo '<div class="clr"></div>';
+	echo '<div class="clr"></div>';
 
 }
 
@@ -221,35 +225,36 @@ echo $productlabel;
 if ( is_single() || is_page() ) { 
 echo '<div class="post-title"><h1>'. $title_link . get_the_title().'</a></h1></div>';
 
+
 if(get_theme_mod('onepiece_content_panel_postlist_authortime') != 'none'){
 echo '<div class="post-subtitle">';
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'date' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'datesingle'){
-
-
+	
+	
 	$postdateformat = get_theme_mod('onepiece_content_panel_posts_dateformat', '2');
-
-
+	
+	
 	if($postdateformat == '1'){
 	echo '<span class="post-date time-ago">';
 	echo wp_time_ago(get_the_time( 'U' ));
 	echo '</span>';
 	}
-
+	
 	if($postdateformat == '2'){
 	echo '<span class="post-date">';
 	echo get_the_date();
 	echo '</span>';
-	}
-
+	} 
+	
 	if($postdateformat == '3'){
 	echo '<span class="post-date date-time">';
 	echo get_the_date().' - '.get_the_time();
 	echo '</span>';
-	}
-
+	}	
+	
 }
 if( get_theme_mod('onepiece_content_panel_postlist_authortime') == 'both' || 
 get_theme_mod('onepiece_content_panel_postlist_authortime') == 'single'){
@@ -267,6 +272,8 @@ $tagdisplay = get_theme_mod('onepiece_content_panel_posts_tagdisplay', 'belowcon
 $catdisplay = get_theme_mod('onepiece_content_panel_posts_catdisplay', 'belowcontent');
 $nextprevdisplay = get_theme_mod('onepiece_content_panel_posts_nextprevdisplay', 'belowcontent');
 
+
+	
 
 
 // content
@@ -304,17 +311,22 @@ if ( !is_single() && !is_page() ) {
 		echo '</div>'; 
 	}
 
-
+	// prepare content
 	$maintext = get_the_content();
 
 	if( $postimagesingle == 'left' || $postimagesingle == 'right' ){
-			// start maintext with image
-				if($mobile){
-					$maintext = get_the_post_thumbnail( get_the_ID(), 'big-thumb' , array( 'class' => 'align-'.$postimagesingle ) ) . $maintext;
-				}else{
-					$maintext = get_the_post_thumbnail( get_the_ID(), 'medium' , array( 'align' => $postimagesingle, 'class' => 'align-'.$postimagesingle ) ) . $maintext;
-				}
 
+	if($mobile){
+		$pthumb = '<div class="post-coverimage" data-image="'.get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' ).'">'.get_the_post_thumbnail( get_the_ID(), 'big-thumb' , array( 'class' => 'align-'.$postimagesingle ) ).'</div>';
+	}else{
+		$pthumb = '<div class="post-coverimage" data-image="'.get_the_post_thumbnail_url( get_the_ID(), 'thumbnail' ).'">'.get_the_post_thumbnail( get_the_ID(), 'medium' , array( 'align' => $postimagesingle, 'class' => 'align-'.$postimagesingle ) ).'</div>';
+	}
+	
+	if( post_dynamic_featured_image_gallery( get_the_ID() ) != ''){
+		$maintext = '<div class="featured_gallery_box '.$postimagesingle.'">'. $pthumb . post_dynamic_featured_image_gallery( get_the_ID() ) . '</div>' . $maintext; 
+	}else{
+		$maintext = $pthumb . $maintext; 
+	}
 	
 	}
 	
