@@ -762,6 +762,7 @@ cursor:pointer;
 #mainpopupbox .popupcontent .popupcoverbox .imageholder img
 {
 min-width:100%;
+max-width:680px;
 height:auto;
 }
 
@@ -769,13 +770,14 @@ height:auto;
 {
 position:absolute;
 z-index:160;
-top:5px;
-left:5px;
+top:2px;
+left:2px;
 }
 
 ul.gallerynav li.option
 {
-margin:0px 0px 4px 0px;
+float:left;
+margin:4px;
 overflow:hidden;
 width:48px;
 height:48px;
@@ -784,7 +786,7 @@ height:48px;
 ul.gallerynav li.active
 {
 border:2px solid #999999;
-margin:-2px 0px 4px -2px;
+margin:2px;
 }
 
 #mainpopupbox .popupcontent .popupcoverbox ul.gallerynav li img
@@ -794,12 +796,18 @@ height:auto;
 border:none;
 }
 
+#mainpopupbox .labelbox
+{
+position:absolute;
+top:5px;
+right:5px;
+}
 /* columns on larger screens */
 @media screen and (min-width: 512px) {
 #mainpopupbox
 {
-top:7%;
-height:90%;
+top:12%;
+height:68%;
 }
 
 /* ! check page gallery single item view custom field */
@@ -813,6 +821,12 @@ height:90%;
 {
 	width:35%;
 	float:right;
+}
+#mainpopupbox .popupcontent .popupcoverbox .imageholder img
+{
+min-width:100%;
+max-width:1500px;
+height:auto;
 }
 #mainpopupbox .popupcontent .popupcontentbox h3
 {
@@ -1274,6 +1288,9 @@ $(document).ready(function() {
 		$catList = '';
         $tagList = keyhash;
 		}
+		if( $('*[data-slug="'+keyhash+'"]').length > 0 ){ 
+			//alert('check');
+		}
 		
 	}
 	
@@ -1411,41 +1428,41 @@ $(document).ready(function() {
 	 */ 
 	function display_postprice(obj){
 	
-	var output = '';
-	
-	/* CURRENCY MAP */
-	var currency_map = <?php echo json_encode($GLOBALS['currency_symbols']); ?>;
-
-	var used_currency =  obj.meta['meta-box-product-currency'];
-	
-	if( obj.meta['meta-box-product-currency'] != '' &&  typeof obj.meta['meta-box-product-currency'] !== 'undefined' && typeof currency_map !== 'undefined'){
-	used_currency = currency_map[ obj.meta['meta-box-product-currency'] ];
-	}
-	
-	if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' ){
-	output += '<div class="pricebox">';
-	
-	if( obj.meta['meta-box-product-discount'] != '' && typeof obj.meta['meta-box-product-discount'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-discount']) && !isNaN(obj.meta['meta-box-product-price']) ){
-	
-		output += '<span class="discount"><?php echo __('Discount', 'onepiece'); ?> '+ obj.meta['meta-box-product-discount']+'% </span>';
-	
-		var price = '<span class="price"> '+ used_currency +' '+ (obj.meta['meta-box-product-price'] / 100) * (100 - obj.meta['meta-box-product-discount']) +'</span>';
+		var output = '';
 		
-	}else if( !isNaN(obj.meta['meta-box-product-price']) ){
+		/* CURRENCY MAP */
+		var currency_map = <?php echo json_encode($GLOBALS['currency_symbols']); ?>;
 	
-		var price = '<span class="price"> '+ obj.meta['meta-box-product-currency'] +' '+ obj.meta['meta-box-product-price'] +'</span>';
+		var used_currency =  obj.meta['meta-box-product-currency'];
 		
-	}else{
-	
-		var price = '<span class="price"> '+ obj.meta['meta-box-product-price'] +'</span>'; // text
-	}
-	
-	output += price;
-	output += '</div>';
-	
-	}
-	
-	return output;
+		if( obj.meta['meta-box-product-currency'] != '' &&  typeof obj.meta['meta-box-product-currency'] !== 'undefined' && typeof currency_map !== 'undefined'){
+		used_currency = currency_map[ obj.meta['meta-box-product-currency'] ];
+		}
+		
+		if( obj.meta['meta-box-product-price'] != '' &&  typeof obj.meta['meta-box-product-price'] !== 'undefined' ){
+		output += '<div class="pricebox">';
+		
+		if( obj.meta['meta-box-product-discount'] != '' && typeof obj.meta['meta-box-product-discount'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-discount']) && !isNaN(obj.meta['meta-box-product-price']) ){
+		
+			output += '<span class="discount"><?php echo __('Discount', 'onepiece'); ?> '+ obj.meta['meta-box-product-discount']+'% </span>';
+		
+			var price = '<span class="price"> '+ used_currency +' '+ (obj.meta['meta-box-product-price'] / 100) * (100 - obj.meta['meta-box-product-discount']) +'</span>';
+			
+		}else if( !isNaN(obj.meta['meta-box-product-price']) ){
+		
+			var price = '<span class="price"> '+ obj.meta['meta-box-product-currency'] +' '+ obj.meta['meta-box-product-price'] +'</span>';
+			
+		}else{
+		
+			var price = '<span class="price"> '+ obj.meta['meta-box-product-price'] +'</span>'; // text
+		}
+		
+		output += price;
+		output += '</div>';
+		
+		}
+		
+		return output;
 	
 	}
 	
@@ -1473,37 +1490,37 @@ $(document).ready(function() {
 	/* PACKAGE */
 	function display_postpackagesize(obj){
 	
-	var output = '';
-	
-	if( obj.meta['meta-box-product-dms'] != 'none' && obj.meta['meta-box-product-dms'] != '' && typeof obj.meta['meta-box-product-dms'] !== 'undefined' ){
-	
-	var packsize = '';
-	if( obj.meta['meta-box-product-dmx'] != '' && typeof obj.meta['meta-box-product-dmx'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmx'])){
-	packsize += obj.meta['meta-box-product-dmx']+' ';
-	}
-	if( obj.meta['meta-box-product-dmy'] != '' && typeof obj.meta['meta-box-product-dmy'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmy'])){
-	packsize += 'x '+obj.meta['meta-box-product-dmy']+' ';
-	}
-	if( obj.meta['meta-box-product-dmz'] != '' && typeof obj.meta['meta-box-product-dmz'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmz'])){
-	packsize += 'x '+obj.meta['meta-box-product-dmz'];
-	}
-	
-	}
-	if(packsize != '' && typeof packsize !== 'undefined'){
-	
-	output += '<div class="packagebox">';
-	output += '<span class="packagesize">'+packsize+' '+obj.meta['meta-box-product-dms']+'</span>';
-	output += '</div>';
-	}
-	
-	if( obj.meta['meta-box-product-wms'] != 'none' && obj.meta['meta-box-product-wmn'] != '' && typeof obj.meta['meta-box-product-wmn'] !== 'undefined'
-	&& !isNaN(obj.meta['meta-box-product-wmn']) && typeof obj.meta['meta-box-product-wms'] !== 'undefined' ){
-	output += '<div class="packagebox">';
-	output += '<span class="packageweight">'+obj.meta['meta-box-product-wmn']+' '+obj.meta['meta-box-product-wms']+'</span>';
-	output += '</div>';
-	}
-	
-	return output;
+		var output = '';
+		
+		if( obj.meta['meta-box-product-dms'] != 'none' && obj.meta['meta-box-product-dms'] != '' && typeof obj.meta['meta-box-product-dms'] !== 'undefined' ){
+		
+		var packsize = '';
+		if( obj.meta['meta-box-product-dmx'] != '' && typeof obj.meta['meta-box-product-dmx'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmx'])){
+		packsize += obj.meta['meta-box-product-dmx']+' ';
+		}
+		if( obj.meta['meta-box-product-dmy'] != '' && typeof obj.meta['meta-box-product-dmy'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmy'])){
+		packsize += 'x '+obj.meta['meta-box-product-dmy']+' ';
+		}
+		if( obj.meta['meta-box-product-dmz'] != '' && typeof obj.meta['meta-box-product-dmz'] !== 'undefined' && !isNaN(obj.meta['meta-box-product-dmz'])){
+		packsize += 'x '+obj.meta['meta-box-product-dmz'];
+		}
+		
+		}
+		if(packsize != '' && typeof packsize !== 'undefined'){
+		
+		output += '<div class="packagebox">';
+		output += '<span class="packagesize">'+packsize+' '+obj.meta['meta-box-product-dms']+'</span>';
+		output += '</div>';
+		}
+		
+		if( obj.meta['meta-box-product-wms'] != 'none' && obj.meta['meta-box-product-wmn'] != '' && typeof obj.meta['meta-box-product-wmn'] !== 'undefined'
+		&& !isNaN(obj.meta['meta-box-product-wmn']) && typeof obj.meta['meta-box-product-wms'] !== 'undefined' ){
+		output += '<div class="packagebox">';
+		output += '<span class="packageweight">'+obj.meta['meta-box-product-wmn']+' '+obj.meta['meta-box-product-wms']+'</span>';
+		output += '</div>';
+		}
+		
+		return output;
 	
 	}
 	
@@ -1537,9 +1554,65 @@ $(document).ready(function() {
 		}
 		return output; 
 	}// end function
+	
+	
+	
+	function display_customreadmore(obj){
+	
+		var customurl = obj.meta['meta-box-custom-url'];
+		var useurl = obj.meta['meta-box-custom-useurl'];
+		
+		var itemreadmore = '';
+		var urltext = '<?php echo __('Read more', 'onepiece'); ?>';
+	
+		if( customurl != '' && typeof customurl !== 'undefined' && ( useurl == 'internal' || useurl == 'external' ) ){
+	
+		if( customurl != '' && useurl == 'internal' ){
+			var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_self">';
+		}
+		if( customurl != '' && useurl == 'external' ){
+			var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_blank">';
+		}
+		if( obj.meta['meta-box-custom-urltext'] ){
+			urltext = obj.meta['meta-box-custom-urltext'];  
+		}
+		
+		itemreadmore += urltext+'</a>'; 
+		
+		}
+		return itemreadmore;
+	
+	}
+	
+	
+	
+	function display_posttime(obj){
+	
+		var output = '';
+		<?php // check for customizer posts display settings
+		if( get_theme_mod('onepiece_content_panel_postlist_authortime') ){
+		echo "var authortime = '".get_theme_mod('onepiece_content_panel_postlist_authortime')."'; // from php";
+		?>
+		
+		if( authortime == 'both' || authortime ==  'date' ){
+			output += '<span class="datebox">'+obj.date+'</span>';
+		}
+		if( authortime == 'both'  ){
+			output += ' by <span class="authorbox">'+obj.author+'</span>';
+		}
+		<?php } ?>
+		
+		return output;
+		
+	}
+	
+	
+	
+	
 
     
     function itemmarkup(obj){
+	
 	// get item categories
     var cat = '';
     if(obj['category'].length > 0 ){
@@ -1556,7 +1629,7 @@ $(document).ready(function() {
     }
 	// add custom field product label to item tags
 	if( obj.meta['meta-box-product-label'] != '' && obj.meta['meta-box-product-label'] != 'none' && typeof obj.meta['meta-box-product-label'] !== 'undefined'){
-		tags += 'label-'+obj.meta['meta-box-product-label'];
+		tags += obj.meta['meta-box-product-label']; //'label-'+obj.meta['meta-box-product-label'];
 	}
 
 
@@ -1565,6 +1638,7 @@ $(document).ready(function() {
  	 */
 	var readmoreurl = obj.posturl;
     var itemdatalink = readmoreurl;
+	var objslug =  obj.slug;
 	var customurl = obj.meta['meta-box-custom-url'];
 	var useurl = obj.meta['meta-box-custom-useurl'];
 
@@ -1579,8 +1653,9 @@ $(document).ready(function() {
 	if( customurl != '' && typeof customurl !== 'undefined'){
 		itemdatalink = customurl;
 	}
-    var markup = '<div id="post-'+obj.id+'" data-id="'+obj.id+'" data-category="'+cat+'" data-link="'+itemdatalink+'" data-linktarget="'+useurl+'" data-related="'+tags+'" class="item '+cat + tags+'"><div class="innerpadding">';
 	
+	
+    var markup = '<div id="post-'+obj.id+'" data-id="'+obj.id+'" data-category="'+cat+'" data-slug="'+objslug+'" data-link="'+itemdatalink+'" data-linktarget="'+useurl+'" data-related="'+tags+'" class="item '+cat + tags+'"><div class="innerpadding">';
 	
 	var smallscreen = false;
  	<?php // check for customizer posts display settings
@@ -1588,7 +1663,6 @@ $(document).ready(function() {
     echo "smallscreen = true;";
 	}
     ?>
-
 
  	if( smallscreen === false && obj.largeimg ){ 
 	
@@ -1604,9 +1678,6 @@ $(document).ready(function() {
 	/*
 	 * LABEL
 	 */
-
-	
-	
 	markup += display_postlabel(obj);
 	
 	/*
@@ -1624,39 +1695,11 @@ $(document).ready(function() {
 
 	<?php } ?>
 
-    <?php // check for customizer posts display settings
-    if( get_theme_mod('onepiece_content_panel_postlist_authortime') ){
-    echo "var authortime = '".get_theme_mod('onepiece_content_panel_postlist_authortime')."'; // from php";
-    ?>
-    
-    if( authortime == 'both' || authortime ==  'date' ){
-        markup += '<span class="datebox">'+obj.date+'</span>';
-    }
-    if( authortime == 'both'  ){
-        markup += ' by <span class="authorbox">'+obj.author+'</span>';
-    }
-    <?php } ?>
+    markup += display_posttime(obj);
 
     markup += '</div>';
 
-	var itemreadmore = '';
-	var urltext = '<?php echo __('Read more', 'onepiece'); ?>';
 
-	if( customurl != '' && typeof customurl !== 'undefined' && ( useurl == 'internal' || useurl == 'external' ) ){
-
-	if( customurl != '' && useurl == 'internal' ){
-		var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_self">';
-	}
-	if( customurl != '' && useurl == 'external' ){
-		var itemreadmore = '<a class="urlbutton" href="'+customurl+'" title="'+obj.title+'" target="_blank">';
-	}
-	if( obj.meta['meta-box-custom-urltext'] ){
-		urltext = obj.meta['meta-box-custom-urltext'];  
-	}
-	
-	itemreadmore += urltext+'</a>'; 
-	
-	}
 	
 	
 	
@@ -1667,35 +1710,26 @@ $(document).ready(function() {
 	
 	markup += display_postsize(obj);
 	
-	
 	/* Description / text */
-	markup += '<div class="textbox">'+obj.excerpt+'</div>'; 
+	markup += '<div class="textbox">'+obj.excerpt;
 	
+	markup += display_customreadmore(obj);
 	
+	markup += '</div>'; 
 	
 	markup += display_postpackagesize(obj);
-	
-	/*
-	 * ORDER BY MAIL
-	 */
+
 	markup += display_orderbymail(obj);
 	
-	/* Wishlist..
-	 // https://pippinsplugins.com/storing-session-data-in-wordpress-without-_session/
-	*/
+	/* Wishlist.. // https://pippinsplugins.com/storing-session-data-in-wordpress-without-_session/ */
 	
 	markup += '</div>';
 	
     markup += '<div class="clr"></div></div></div>';
+	
 	return markup;
 	
-    /* 'id,'type','date','title','category','excerpt','content','meta','tags', 'imageurl','posturl','slug','customfieldarray','post_data' */
-	/* dynamic featured images .. */
-	/* meta-box-product-size,meta-box-product-dmx,meta-box-product-dmy,meta-box-product-dmz,meta-box-product-dms,_thumbnail_id,meta-box-custom-url,meta-box-product-label */
     }
-   
-   
-   
    
     // Grid items
 	function loadpopup( popcontent ){
@@ -1785,22 +1819,14 @@ $(document).ready(function() {
 
 		/*
 		 * Single view popup with related links
-		
-
-		// get and prepare item info
-		var title = $(this).find('.titlebox').wrap('<p/>').parent().html();
-		var image = $(this).find('.coverbox').wrap('<p/>').parent().html();
-		var text =  $(this).find('.fullinfobox').html();
-
-		// reset html
-		$(this).find('.titlebox').unwrap();
-		$(this).find('.coverbox').unwrap();
 		 */
 		
 		/* id related.. */
 		var pid = $(this).attr('data-id'); 
     	var catstr = $(this).attr('data-category');
     	var tagstr = $(this).attr('data-related');
+		
+		window.location.hash = '#' + $(this).attr('data-slug');
 		
     	var filter = catstr+' '+tagstr;
     	var obj = $itemList[pid];
@@ -1847,21 +1873,9 @@ $(document).ready(function() {
 	    var related = '<div class="postrelated">'+cats+tags+'</div>';
 		
 		
-
+		
 		// markup
-		var content = '';
-		
-		/*
-		content +=  '<div class="popupcoverbox">'+ image +'</div>';
-		
-		//var returnbut = '<div class="popupclosebutton"><?php echo __('Return to overview','onepiece'); ?></div>';
-		//content += '<div class="popupcontentbox">'+ returnbut + title + text + related +'</div>';
-		
-		content += '<div class="popupcontentbox">'+ title + text + related +'</div>';
-		*/
-		
-		content +=  '<div class="popupcoverbox"></div>';
-		content += '<div class="popupcontentbox"></div>';
+		var content = '<div class="popupcoverbox"></div><div class="popupcontentbox"><div class="titlebox"></div><div class="textcontent"></div></div>';
 		
 		//loadpopup( content );
 		$('.popupcloak').fadeIn(300);
@@ -1872,14 +1886,23 @@ $(document).ready(function() {
 		
 		$('#mainpopupbox').append( $('.popupclosebutton') );
 		
-		
 		$('body > .loadbox').fadeIn(300);
+		
+			
+		$('#mainpopupbox').fadeIn( 300 );
 		
 		// get post content and image(s) 
 		getImgGallery(pid);
 		
+		
+		var timebox = display_posttime(obj);
+		$('.popupcontentbox .titlebox').append( timebox );
+		
 		var labelbox = display_postlabel(obj);
-		$('.popupcontentbox').append( labelbox );
+		$('.popupcoverbox').prepend( labelbox );
+		
+		var readmore = display_customreadmore(obj)
+		$('.popupcontentbox').append( readmore );
 		
 		var sizebox = display_postsize(obj);
 		$('.popupcontentbox').append( sizebox ); 
@@ -1892,8 +1915,6 @@ $(document).ready(function() {
 		
 		var orderbymailbox = display_orderbymail(obj);
 		$('.popupcontentbox').append( orderbymailbox );
-		
-		
 		
 		$('.popupcontentbox').append( related );
 		
@@ -1940,12 +1961,6 @@ $(document).ready(function() {
 					  if( reltitles != '' )
 					  $('.popupcontentbox .postrelated').append( '<div class="relatedmenu">Related:<ul class="links">'+reltitles+'</ul><div class="clr"></div></div>');
 				
-						
-						$('#mainpopupbox').fadeIn(300, function(){
-							$('body > .loadbox').fadeOut(200);
-						});
-
-				
 				});
 				return true;
 				
@@ -1969,7 +1984,9 @@ $(document).ready(function() {
 			
 				var postdata = JSON.parse(response);
 				
-				var textcontent = '<h3>'+ postdata.title +'</h3><div>'+ postdata.content +'</div>';
+				var titletext = '<h3>'+ postdata.title +'</h3>';
+				var textcontent = '<div>'+ postdata.content +'</div>';
+				
 				
 				var imgdisplay = '';
 				if( postdata.images.length > 1 ){
@@ -1985,7 +2002,11 @@ $(document).ready(function() {
 				
 				$('#mainpopupbox .popupcoverbox').append( imgdisplay ).fadeIn('300', function(){
 					$('#mainpopupbox .popupcoverbox ul.gallerynav li:first').addClass('active');
-					$('#mainpopupbox .popupcontentbox').prepend( textcontent ).fadeIn('300');
+					$('#mainpopupbox .popupcontentbox .titlebox').prepend(titletext);
+					$('#mainpopupbox .popupcontentbox .textcontent').html( textcontent );
+					$('#mainpopupbox .popupcontentbox').fadeIn('300', function(){
+							$('body > .loadbox').fadeOut(200);
+						});
 				});
 				
 			}
@@ -2007,9 +2028,9 @@ $(document).ready(function() {
 
 			g.preventDefault();
 			
-			
 			$('#mainpopupbox .popupcontentbox').fadeOut('200');
 			$('#mainpopupbox .popupccoverbox').fadeOut('200', function(){
+			
 			
 				$('.popupcloak').fadeOut(500);
 				$('#mainpopupbox').fadeOut(500, function(){
@@ -2020,9 +2041,13 @@ $(document).ready(function() {
 					$('#mainpopupbox').hide();
 					$('.popupcloak').hide();
 					$('div.childpages.pop .moretextbox').hide();
+					
+					
+					
 	
 				});
 			});
+			
 		});
 
 
@@ -2138,13 +2163,6 @@ $(document).ready(function() {
 
 
 
-	/*
-	$container.on('click', '.orderbyemailbutton', function(e){
-
-		// order form popup
-        return false;
- 	});
-	*/
 	
 	/*
 	 * Gallery tagmenu
