@@ -124,6 +124,9 @@ margin:5px auto;
 
 
 
+
+
+/* POPUP (GALLERY) */
 #pagecontainer
 {
 position:relative;
@@ -137,16 +140,6 @@ width:100%;
 min-height:120px;
 max-height:100%;
 }
-
-/* popup min width */
-#mainpopupbox .popupcontent
-{
-min-width:320px;
-max-height:480px;
-}
-
-
-/*********************** default popup styling ********************
 .popupcloak
 {
 position:fixed;
@@ -154,24 +147,162 @@ top:0px;
 left:0px;
 height:100%;
 width:100%;
-z-index:80;
+z-index:101;
+/* background-color: custom in htmlhead; */
+/* opacity: custom in htmlhead; */
 }
+
 #mainpopupbox
 {
 position:fixed;
-top:10%;
-left:8%;
-height:80%;
-width:auto;
-background-color:#ffffff;
-z-index:81;
+top:0px;
+left:0px;
+width:100%;
+height:100%;
+z-index:101;
 }
+.popupclosebutton
+{
+position: absolute;
+top:0px;
+right:0px;
+width:48px;
+height:48px;
+cursor:pointer;
+z-index:999;
+}
+
 #mainpopupbox .popupcontent
 {
+position:relative;
+display: block;
+height:100%;
+/* width: custom in htmlhead; */
+margin:0px auto;
+z-index:110;
+background-color:#ffffff;
+}
+
+/* small screens */
+#mainpopupbox .popupcontent .popupcontentbox
+{
+height:55%;
+overflow:auto;
+}
+
+#mainpopupbox .popupcontent .popupcontentbox h3
+{
+padding:10px 0px 4px;
+}
+
+#mainpopupbox .links li
+{
+max-height:48px;
+list-style-type:none;
+margin-bottom:4px;
+}
+#mainpopupbox .links li a img
+{
+vertical-align: text-top;
+margin-right:4px;
+}
+
+#mainpopupbox .popupcontent .popupcoverbox
+{
+	height: 45%;
+    position: relative;
+    overflow: hidden;
+}
+#mainpopupbox .labelbox
+{
+position:absolute;
+bottom:5px;
+right:5px;
+z-index:699;
+}
+#mainpopupbox .popupcontent .popupcoverbox .imageholder
+{
+   position: absolute;
+   z-index:120;
+   left: 50%;
+   top: 50%;
+   -webkit-transform: translateY(-50%) translateX(-50%);
+}
+#mainpopupbox .popupcontent .popupcoverbox .imageholder img
+{
+min-width:100%;
+max-width:560px;
+height:auto;
+}
+
+#mainpopupbox .popupcontent .popupcoverbox ul.gallerynav
+{
+position:absolute;
+z-index:160;
+top:2px;
+left:2px;
+}
+ul.gallerynav li.option
+{
+float:left;
+margin:4px;
+overflow:hidden;
+width:48px;
+height:48px;
+}
+
+ul.gallerynav li.active
+{
+border:2px solid #999999;
+margin:2px;
+}
+
+#mainpopupbox .popupcontent .popupcoverbox ul.gallerynav li img
+{
+width:48px;
+height:auto;
+border:none;
 }
 
 
-*/
+@media screen and (max-width: 512px) {
+    #mainpopupbox .popupcontent.outermargin
+    {
+        width:100%;
+    }
+}
+
+/* large screens*/
+@media screen and (min-width: 512px) {
+#mainpopupbox
+{
+top:12%;
+height:68%;
+}
+#mainpopupbox .popupcontent .popupcontentbox
+{
+	width:35%;
+    height:100%;
+	float:right;
+}
+#mainpopupbox .popupcontent .popupcoverbox
+{
+	width:65%;
+	float:left;
+	height:100%;
+}
+#mainpopupbox .labelbox
+{
+top:5px;
+}
+#mainpopupbox .popupcontent .popupcoverbox .imageholder img
+{
+max-width:1200px;
+}
+
+}
+
+
 
 
 /*************************** WP CORE ***************************/

@@ -331,13 +331,18 @@ var $wp_custom_vars = JSON.parse(site_data['customizer']);
     function loadpopup( popcontent ){
 		$('.popupcloak').fadeIn(300);
 		$('#mainpopupbox .popupcontent').html( popcontent );
+		$('body').css('overflow', 'hidden');
 		$('#mainpopupbox').fadeIn(300);
     }
 	function closepopup(){
 		$('.popupcloak').fadeOut(300);
-
+        
+		$('body').css('overflow', 'auto');
+		
 		$('#mainpopupbox').fadeOut(300, function(){
+		    
 			$('#mainpopupbox .popupcontent').html('');
+			
 		});
 	}
 

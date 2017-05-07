@@ -658,11 +658,7 @@ top:0px;
 left:0px;
 }
 
-/*
- *
- * POPUP STYLING 
- *
- */
+/* POPUP STYLING */
 <?php // popup variable display
 if($mobile){
 $w = 96;
@@ -684,162 +680,16 @@ $o = ( 100 - $popupoverlayopacity) / 100;
 
 .popupcloak
 {
-position:fixed;
-top:0px;
-left:0px;
-height:100%;
-width:100%;
-z-index:101;
 background-color:<?php echo $c; ?>;
 opacity:<?php echo $o; ?>;
 }
-
-#mainpopupbox
-{
-position:fixed;
-top:0px;
-left:0px;
-width:100%;
-height:100%;
-z-index:101;
-}
-
 #mainpopupbox .popupcontent
 {
-position:relative;
-display: block;
-height:100%;
 width:<?php echo $w; ?>%;
-margin:0px auto;
-background-color: #fff;
-z-index:110;
-overflow:auto;
-}
-
-.popupclosebutton
-{
-position: absolute;
-top:0px;
-right:0px;
-width:48px;
-height:48px;
-cursor:pointer;
-z-index:999;
-}
-
-.closegallerypopup
-{
-cursor:pointer;
-}
-
-
-
-
-#mainpopupbox .popupcontent .popupcoverbox
-{
-	height: 60%;
-    position: relative;
-    overflow: hidden;
-}
-
-#mainpopupbox .popupcontent .popupcoverbox .imageholder
-{
-   position: absolute;
-   z-index:120;
-   left: 50%;
-   top: 50%;
-   -webkit-transform: translateY(-50%) translateX(-50%);
-	/*
-	height: 100% !important;
-	background-position: center top;
-  	-webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
-  	background-size: cover;
-	*/	
-	
-}
-#mainpopupbox .popupcontent .popupcoverbox .imageholder img
-{
-min-width:100%;
-max-width:680px;
-height:auto;
-}
-
-#mainpopupbox .popupcontent .popupcoverbox ul.gallerynav
-{
-position:absolute;
-z-index:160;
-top:2px;
-left:2px;
-}
-
-ul.gallerynav li.option
-{
-float:left;
-margin:4px;
-overflow:hidden;
-width:48px;
-height:48px;
-}
-
-ul.gallerynav li.active
-{
-border:2px solid #999999;
-margin:2px;
-}
-
-#mainpopupbox .popupcontent .popupcoverbox ul.gallerynav li img
-{
-width:48px;
-height:auto;
-border:none;
-}
-
-#mainpopupbox .labelbox
-{
-position:absolute;
-top:5px;
-right:5px;
-}
-/* columns on larger screens */
-@media screen and (min-width: 512px) {
-#mainpopupbox
-{
-top:12%;
-height:68%;
-}
-
-/* ! check page gallery single item view custom field */
-#mainpopupbox .popupcontent .popupcoverbox
-{
-	width:65%;
-	float:left;
-	height:100%;
-}
-#mainpopupbox .popupcontent .popupcontentbox
-{
-	width:35%;
-	float:right;
-}
-#mainpopupbox .popupcontent .popupcoverbox .imageholder img
-{
-min-width:100%;
-max-width:1500px;
-height:auto;
-}
-#mainpopupbox .popupcontent .popupcontentbox h3
-{
-padding:10px 0px 4px;
-}
-#mainpopupbox .popupcontent .popupcontentbox > *
-{
-margin:0px 4% 0px 4%;
-}
-
 }
 
 </style>
+
 <?php
 
 /**
@@ -1294,6 +1144,9 @@ $(document).ready(function() {
 		
 	}
 	
+	
+	var $newload = 0;
+	
     // init isotope :: http://isotope.metafizzy.co/layout-modes/masonry.html
     $container.isotope({ 
        	itemSelector: '.item',	  
@@ -1386,7 +1239,14 @@ $(document).ready(function() {
 	  		  
             $container.imagesLoaded( function(){
                 $items = $('.item');
+				
+				if( $newload == 0 ){
+				$newload = 1;
+                $container.isotope('shuffle').isotope( 'layout' );
+				}else{
                 $container.isotope( 'updateSortData', $items).isotope( 'layout' );
+				}
+				
                 $noloading = 0;
                 //$('#contentloadbox').remove();
             });
@@ -1882,9 +1742,11 @@ $(document).ready(function() {
 		
 		$('#mainpopupbox .popupcontent').html( content );
 		
+		$('body').css('overflow', 'hidden');
+		
 		$('.popupcoverbox,.popupcontentbox').hide();
 		
-		$('#mainpopupbox').append( $('.popupclosebutton') );
+		$('#mainpopupbox').prepend( $('.popupclosebutton') );
 		
 		$('body > .loadbox').fadeIn(300);
 		
@@ -2033,6 +1895,7 @@ $(document).ready(function() {
 			
 			
 				$('.popupcloak').fadeOut(500);
+				
 				$('#mainpopupbox').fadeOut(500, function(){
 	
 					$('#mainpopupbox,.popupcloak').remove();
@@ -2169,6 +2032,7 @@ $(document).ready(function() {
 	 */
 
     // Filter menu's
+	
     $('ul.tagmenu').hide();
 	
     $('ul.tagmenu.active').slideDown();
@@ -2199,10 +2063,11 @@ $(document).ready(function() {
         $catList = '<?php echo $topcat; ?>';//[];
 		
 		var submenu = 'ul.tagmenu.overview';
-	    
+		
     	}else{ 
 		
         var keyword = '.'+$(this).attr('data-filter');
+		
         // multiple filters: $catList += ','+$(this).attr('data-filter');
         $tagList = '';
         $catList = $(this).attr('data-filter');
@@ -2241,7 +2106,9 @@ $(document).ready(function() {
 		$(this).addClass('selected');
 
 	    loaditems();
-     	$container.isotope({ filter: keyword }).isotope('layout'); 
+		
+		$container.isotope({ filter: keyword }).isotope('layout'); 
+		
      	var iid = '#' + $tags;
 		window.location.hash = iid;
 	    return false;
@@ -2253,8 +2120,7 @@ $(document).ready(function() {
 
 
 $(window).load(function() {
-
-		
+	 
 
 });
 
