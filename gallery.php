@@ -69,42 +69,43 @@ $args = array(
 $categories = get_categories( $args );
 $cat_tags = ''; // tags by category
 $tag_idx = ''; // all tags csv string for javascript array
+$idxtags = '';
 $alltags = array(); // all tags csv string for javascript array
 $filtermenubox = ''; // output taglists ordered by category filter 
 
 
 $filtermenubox .= '<ul id="topgridmenu" class="categorymenu">';// start filtermenu html
 $filtermenubox .= '<li><a class="category selected" href="#" data-filter="*">All</a></li>';
+
 foreach ( $categories as $category ) {
 if( $category->slug != $topcat ){
 $filtermenubox .= '<li><a class="category cat-' . $category->slug . '" href="#" data-filter="' . $category->slug . '">' . $category->name . '</a>'; 
 
     if( $filters == 'all'){
-	query_posts('category_name='.$category->slug); // or use  something with get_category_link( $category )
-    $posttags = ''; // tags by post
-    $idxtags =''; // tagslisting
-    if (have_posts()) : while (have_posts()) : the_post();
-        if( get_the_tag_list() ){
-            //$posttags .= get_the_tag_list('<li>','</li><li>','</li>'); // WP Function not used
-			$posttags = '';
-            $listtags = get_the_tags();
-			$taglisted = array();
-            foreach($listtags as $tag) {
-				if( !in_array( $tag->name, $taglisted) ){
-				$taglisted[] = $tag->name;
-				$posttags .='<li><a class="tag-'.$tag->name.'" href="'.get_site_url().'/tag/'.$tag->name.'/" rel="tag">'.$tag->name.'</a></li>';
-				}
-				
-				if( !in_array( $tag->name, $alltags) ){
+	
+	
+	$posttags = '';
+	$postids = get_objects_in_term( $category->term_id, 'category' );
+      if( !is_wp_error( $postids ) && !empty( $postids ) ){
+        //get the tags for the posts...
+        $tags = wp_get_object_terms( (array)$postids, 'post_tag' );
+        if( !is_wp_error( $tags ) && !empty( $tags ) ){
+          //make a link for each tag...
+          foreach( $tags as $tag ){
+            //simple paragraph containing linked tag name...
+            $posttags .='<li><a class="tag-'.$tag->name.'" href="'.get_site_url().'/tag/'.$tag->name.'/" rel="tag">'.$tag->name.'</a></li>';
+			if( !in_array( $tag->name, $alltags) ){
 				$alltags[] = $tag->name; 
-				$idxtags .= '"'.$tag->name.'",'; 
-				}
-            }
+				$idxtags .= '"'.$tag->name.'", '; 
+			}
+          }
         }
-    endwhile; endif; 
+      }
+	
     $cat_tags .='<ul class="tagmenu '.$category->slug.'">'.$posttags.'</ul>';
     $tag_idx .= $idxtags;
-    wp_reset_query(); 
+   
+	
     }
 	$filtermenubox .= '</li>';
 }
