@@ -439,6 +439,14 @@ function is_sidebar_active( $sidebar_id ){
         return count( $the_sidebars[$sidebar_id] );
 }
 
+/*
+ * body tag class
+ */
+function onepiece_body_class( $classes ) {
+	$classes[] = 'frontpage-'.get_theme_mod('onepiece_settings_frontpage_type');
+	return $classes;
+}
+add_filter( 'body_class', 'onepiece_body_class' );
 
 
 /*
@@ -521,15 +529,31 @@ function get_post_gallery_content(){
 
 
 
-/*
- * body tag class
- */
-function onepiece_body_class( $classes ) {
-	$classes[] = 'frontpage-'.get_theme_mod('onepiece_settings_frontpage_type');
-	return $classes;
+// check post by slug
+add_action('wp_ajax_get_post_id_by_slug', 'get_post_id_by_slug'); // ajax.php
+add_action('wp_ajax_nopriv_get_post_id_by_slug', 'get_post_id_by_slug');
+function get_post_id_by_slug(){
+		global $wpdb;
+		$args = array(
+		  'name'        => $_POST['post_slug'],
+		  'post_type'   => 'post',
+		  'post_status' => 'publish',
+		  'numberposts' => 1
+		);
+		$dapost = get_posts($args);
+		if ($dapost) {
+			$dapost[0]->meta = get_post_meta( $dapost[0]->ID );
+			$dapost[0]->category = wp_get_post_categories($dapost[0]->ID);
+			$dapost[0]->tags = wp_get_post_terms( $dapost[0]->ID, 'post_tag', array("fields" => "slugs"));
+			
+			$response = $dapost[0];
+			
+		} else {
+			$response = '';
+		}
+		echo json_encode($response, JSON_PRETTY_PRINT);
+		wp_die();
 }
-add_filter( 'body_class', 'onepiece_body_class' );
-
 
 
 

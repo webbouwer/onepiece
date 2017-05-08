@@ -1127,22 +1127,58 @@ $(document).ready(function() {
     var $itemList = [];
     var $noloading = 0;
 	
+	var $checkpopup = 0;
+	
 	var keyhash = window.location.hash.substr(1);
 	if(keyhash){
 		
 		if( $(document).find('a.cat-'+keyhash).length > 0  ){
 		$catList = keyhash;
 		$tagList = '';
-		}
-		if( $(document).find('a.tag-'+keyhash).length > 0 ){
+		
+		}else if( $(document).find('a.tag-'+keyhash).length > 0 ){
+		
 		$catList = '';
         $tagList = keyhash;
-		}
-		if( $('*[data-slug="'+keyhash+'"]').length > 0 ){ 
-			//alert('check');
+		
+		}else{ 
+			$checkpopup = 1;
+			$startslug = keyhash;
+			//check_popuppost_by_slug(keyhash);
 		}
 		
 	}
+	
+	
+	function check_popuppost_by_slug(slug){
+				// check for post id
+				
+				if( $('div[data-slug="'+slug+'"]').length > 0 && $checkpopup == 1){
+					$checkpopup = 0;
+					//alert(slug);
+					var elid = $( 'div[data-slug="'+slug+'"]' );
+					elid.trigger( "click" );
+				}
+				/*data = {
+					action: 'get_post_id_by_slug', // function to execute
+					afp_nonce: afp_vars.afp_nonce, // wp_nonce
+					post_slug:  slug
+				};  
+				
+				$.post( afp_vars.afp_ajax_url, data, function(response) {
+					if( response.length > 0 && response != ''){ 
+					
+						var postdata = $.parseJSON(response);
+						
+						alert(postdata.ID +' - '+postdata.category+' - '+postdata.tags);
+						
+					}
+				}).done(function( data ) {
+				
+				});*/
+			
+	}
+	
 	
 	
 	var $newload = 0;
@@ -1198,6 +1234,10 @@ $(document).ready(function() {
         loaditems();
     }
     });
+	
+	
+	
+	
     
     function loaditems(){
         data = {
@@ -1248,6 +1288,10 @@ $(document).ready(function() {
 				}
 				
                 $noloading = 0;
+				
+				if( $checkpopup == 1){
+					check_popuppost_by_slug($startslug);
+				}
                 //$('#contentloadbox').remove();
             });
 
@@ -1680,13 +1724,16 @@ $(document).ready(function() {
 		/*
 		 * Single view popup with related links
 		 */
+		popup_gallerypost( $(this).attr('data-id'), $(this).attr('data-category'), $(this).attr('data-related'), $(this).attr('data-slug') );
+		 
+		function popup_gallerypost(pid, catstr, tagstr, postslug){
 		
-		/* id related.. */
-		var pid = $(this).attr('data-id'); 
-    	var catstr = $(this).attr('data-category');
-    	var tagstr = $(this).attr('data-related');
+		/* id related.. 
+		var pid = ; 
+    	var catstr = ;
+    	var tagstr = ;*/
 		
-		window.location.hash = '#' + $(this).attr('data-slug');
+		window.location.hash = '#' + postslug;
 		
     	var filter = catstr+' '+tagstr;
     	var obj = $itemList[pid];
@@ -1783,6 +1830,7 @@ $(document).ready(function() {
 		// get related items 
 		loadRelatedItems(realtags,realcats,obj); // placed inside popupcontent > postrelated element
 		
+		}
 		
 
 		function loadRelatedItems(tags,cats,el){
