@@ -833,6 +833,8 @@ overflow:hidden;
 {
 display:block;
 position:relative;
+min-height:30px;
+color:#232323;
 }
 .item .coverbox
 {
