@@ -1029,6 +1029,7 @@ if($mainmenubarplace == 'below'){
 if($pageTemplate == 'gallery.php'){
 
 // include Isotope & Imagesloaded javascript libs
+echo '<script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>';
 echo '<script src="'.get_template_directory_uri().'/assets/isotope.js" type="text/javascript" language="javascript"></script>';
 echo '<script src="'.get_template_directory_uri().'/assets/isotope-packery.js" type="text/javascript" language="javascript"></script>';
 echo '<script src="'.get_template_directory_uri().'/assets/imagesloaded.js" type="text/javascript" language="javascript"></script>';
