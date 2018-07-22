@@ -110,7 +110,7 @@ echo '</div>';
  *
  */
 if( ( $subcontentsidebarplace != 'none' && function_exists('is_sidebar_active') && is_sidebar_active('widgets-subcontent-sidebar') ) ||
-$logindisplay == 'sbctop' || $logindisplay == 'sbcbot'  ){
+( isset($logindisplay) && ( $logindisplay == 'sbctop' || $logindisplay == 'sbcbot' )) ){
 
 $count = is_sidebar_active('widgets-subcontent-sidebar');
 echo '<div id="subcontentsidebar" class="colset-'.$count.' '.$subcontentsidebarplace.'side" style="float:'.$subcontentsidebarplace.';width:'.$subcontentsidebarwidth.'%;">';

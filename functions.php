@@ -562,7 +562,7 @@ function get_post_id_by_slug(){
  */
 add_action( 'pre_get_posts', 'exclude_specific_cats' );
 function exclude_specific_cats( $wp_query ) {   
-    if( !is_admin() && is_main_query() && is_home() ){
+    if( !is_admin() && $wp_query->is_main_query() && is_home() ){
 		$exclude_cats = '-'.str_replace(",",",-", get_theme_mod('onepiece_content_exclude_categories') );
         $wp_query->set( 'cat', $exclude_cats ); // ! '-1' not allowed = buggy in WP Multisitesq
     }

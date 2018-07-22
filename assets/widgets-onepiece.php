@@ -58,8 +58,10 @@ class onepiece_login_widget extends WP_Widget {
 		if(isset($instance['dsp']) && $instance['dsp'] !='' )
 		$dsp = $instance['dsp'];
 
+        $title = 'Login';
+        if( isset($instance['title']) ){
 		$title = apply_filters( 'widget_title', $instance['title'] );
-
+        }
 		// before and after widget arguments are defined by themes
 		echo $args['before_widget'];
 

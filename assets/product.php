@@ -11,7 +11,7 @@
 
 	if( isset($post_meta_label) && $post_meta_label != 'none'){
 
-		if($productlabelicons[$post_meta_label]){
+		if( isset($productlabelicons[$post_meta_label]) ){
 			$post_meta_label = $productlabelicons[$post_meta_label];
 		}
 		$productlabel = '<div class="labelbox"><span class="productlabel">'.$post_meta_label.'</span></div>';
@@ -119,7 +119,7 @@
 
 	}
 
-	if($packsize != ''){
+	if( isset($packsize) && $packsize != ''){
 	$packagebox .= '<div class="packagebox">';
 	$packagebox .= '<span class="packagesize">'.$packsize.' '.$dms.'</span>';
 	$packagebox .= '</div>';
